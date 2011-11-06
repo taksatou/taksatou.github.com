@@ -26,6 +26,18 @@ href="/blog/feed/atom" />
   google.load("search", "1");
   google.load("jquery", "1.6.4");
   google.load("jqueryui", "1.8.16");
+
+  
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26834066-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
 </script>
 
 
@@ -99,14 +111,23 @@ href="/blog/feed/atom" />
   <div id="archives">			
     <h1>Recent posts</h1>
     <article>
+      <figure> <img src="/images/rena.jpg" alt="Article Image" style="width: 119px;  " /> </figure>
+      <header><a href="/blog/2011/11/06/0002-blofofile-test.markdown" title="blogofileでサムネイル画像を表示する方法"><h5>blogofileでサムネイル画像を表示する方法</h5></a></header>
+      <p style="word-break: break-all; word-wrap: break-word; overflow: hidden;" >こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。例えば、http://mojavy.comのトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。これをするには、postオブジェクトにそういう属性をもたせればよいの ...  
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown" alt="はてなブックマーク - blogofileでサムネイル画像を表示する方法" title="はてなブックマーク - blogofileでサムネイル画像を表示する方法">
+</a>
+<a href="/blog/2011/11/06/0002-blofofile-test.markdown" title="Read More" class="readmore" style="">Read more</a> </p>
+      </article>
+    <article>
       <figure> <img src="images/articleimage.jpg" alt="Article Image" /> </figure>
       <header><a href="/blog/2011/11/06/0001-new_blog.rst" title="ブログ移転しました"><h5>ブログ移転しました</h5></a></header>
       <p style="word-break: break-all; word-wrap: break-word; overflow: hidden;" >http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/を参考にしてblogofileとgithub pagesでブログを構築しました。デザインはhttp://www.webdesignlon ...  
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/0001-new_blog.rst">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/11/06/0001-new_blog.rst" alt="はてなブックマーク - ブログ移転しました" title="はてなブックマーク - ブログ移転しました">
 </a>
-</p>
-      <a href="/blog/2011/11/06/0001-new_blog.rst" title="Read More" class="readmore">Read more</a> </article>
+<a href="/blog/2011/11/06/0001-new_blog.rst" title="Read More" class="readmore" style="">Read more</a> </p>
+      </article>
 </div>
   </section>
 </div>

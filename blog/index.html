@@ -26,6 +26,18 @@ href="/blog/feed/atom" />
   google.load("search", "1");
   google.load("jquery", "1.6.4");
   google.load("jqueryui", "1.8.16");
+
+  
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26834066-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
 </script>
 
 
@@ -58,6 +70,64 @@ href="/blog/feed/atom" />
           
 <div id="maincontent2" class="bodywidth">
 <div id="blogleft">
+  
+<div class="blog_post">
+  <a name="blogofileでサムネイル画像を表示する方法"></a>
+  <h2 class="blog_post_title"><a href="/blog/2011/11/06/0002-blofofile-test.markdown" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
+  <small>November 06, 2011 at 08:32 PM | categories: 
+
+<a href='/blog/category/test'>test</a>, <a href='/blog/category/blogofile'>blogofile</a>
+ | <a href="http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown#disqus_thread">View Comments</a>
+</small>
+
+<a href="http://b.hatena.ne.jp/entry/add/http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown">
+<img src="http://b.hatena.ne.jp/images/append.gif" width="16" height="12" style="border: none;" alt="このエントリーをはてなブックマークに追加" title="このエントリーをはてなブックマークに追加" /></a>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown">
+<img src="http://b.hatena.ne.jp/images/entry.gif" width="16" height="12" style="border: none;" alt="このエントリーを含むはてなブックマーク" title="このエントリーを含むはてなブックマーク" /></a>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown" alt="はてなブックマーク - blogofileでサムネイル画像を表示する方法" title="はてなブックマーク - blogofileでサムネイル画像を表示する方法">
+</a>
+
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="rena" src="/images/rena.jpg" /></p>
+<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
+<p>例えば、
+<a href="http://mojavy.com">http://mojavy.com</a>
+のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
+<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
+<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
+         self.slug = None
+         self.draft = False
+         self.filters = None
+<span class="gi">+        self.image = None</span>
+         self.__parse()
+         self.__post_process()
+</pre></div>
+
+<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
+<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span> 
+<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span> 
+<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
+</pre></div>
+
+<p>のようにすれば${post.image}のようにして参照できる。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a> </li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+
+
+  <div class="after_post"><a href="http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown#disqus_thread">Read and Post Comments</a></div>
+  <hr class="interblog" />
   
 <div class="blog_post">
   <a name="ブログ移転しました"></a>
@@ -109,6 +179,11 @@ href="/blog/feed/atom" />
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2011/11/06/0002-blofofile-test.markdown" title="blogofileでサムネイル画像を表示する方法"><p>blogofileでサムネイル画像を表示する方法</a><span style="font-size: 80%;">(November 06, 2011 at 08:32 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown" alt="はてなブックマーク - blogofileでサムネイル画像を表示する方法" title="はてなブックマーク - blogofileでサムネイル画像を表示する方法">
+</a>
+</li>
       <li><a href="/blog/2011/11/06/0001-new_blog.rst" title="ブログ移転しました"><p>ブログ移転しました</a><span style="font-size: 80%;">(November 06, 2011 at 07:44 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/0001-new_blog.rst">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/11/06/0001-new_blog.rst" alt="はてなブックマーク - ブログ移転しました" title="はてなブックマーク - ブログ移転しました">
@@ -122,7 +197,8 @@ href="/blog/feed/atom" />
     <h1>Categories</h1>
     <ul>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/test">test</a> (<a href="/blog/category/test/feed">rss</a>) (1)</li>
     </ul>
   </div> 
 
@@ -130,7 +206,7 @@ href="/blog/feed/atom" />
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2011/11/1" title="November 2011">November 2011</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2011/11/1" title="November 2011">November 2011</a>&nbsp;(2)</li>
     </ul>
   </div>
 

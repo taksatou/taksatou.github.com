@@ -93,6 +93,7 @@ class Post(object):
         self.slug = None
         self.draft = False
         self.filters = None
+        self.image = None
         self.__parse()
         self.__post_process()
         
@@ -172,6 +173,7 @@ class Post(object):
             self.date = datetime.datetime.now(pytz.timezone(self.__timezone))
         if not self.updated:
             self.updated = self.date
+
 
         if not self.categories or len(self.categories) == 0:
             self.categories = set([Category('Uncategorized')])
