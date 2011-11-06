@@ -8,7 +8,7 @@
       <ul>
         <li><a href="/" title="Home">Home</a></li>
         <li><a href="/blog" title="Blog">Blog</a></li>
-        <li><a href="/apps" title="Apps">Apps</a></li>
+        <li><a href="/apps.html" title="Apps">Apps</a></li>
         <li><a href="http://twitter.com/#!/taksatou" title="Twitter">Twitter</a></li>
         <li><a href="https://github.com/taksatou" title="github">github</a></li>
         <li><a href="/about.html" title="About">About</a></li>
