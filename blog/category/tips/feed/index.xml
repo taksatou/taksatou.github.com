@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Sun, 06 Nov 2011 10:27:10 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>既存ブログサービスの問題に対する考察</title>
+      <link>http://mojavy.com/blog/2011/10/29/0001-new_blog.rst</link>
+      <pubDate>Sat, 29 Oct 2011 19:00:00 JST</pubDate>
+      <category><![CDATA[python]]></category>
+      <category><![CDATA[tips]]></category>
+      <category><![CDATA[ubuntu]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2011/10/29/0001-new_blog.rst</guid>
+      <description>既存ブログサービスの問題に対する考察</description>
+      <content:encoded><![CDATA[<div class="document">
+<div class="contents topic" id="id1">
+<p class="topic-title first">目次</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id2" id="id3">背景</a></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h1><a class="toc-backref" href="#id3">背景</a></h1>
+<p>2009/08 - 2010/07まで、ブログを1年間毎日更新する、という目標を掲げて、
+365記事以上書き、アクセスを増やした中で一番感じたことは、</p>
+<p><strong>ブログを更新することは面倒である</strong></p>
+<p>ということだった。</p>
+<p>自分で書きためたネタを、時間がたって忘れたときに自分で検索して思い出したり、
+書くことで頭が整理された、などの多大なメリットがあったにも関わらず、
+最終的には、 <em>面倒</em> がメリットをうわまって更新を続けられなくなってしまった。</p>
+</div>
+</div>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

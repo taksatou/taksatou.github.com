@@ -16,12 +16,16 @@ ${", ".join(category_links)}
 % if bf.config.blog.disqus.enabled:
  | <a href="${post.permalink}#disqus_thread">View Comments</a>
 % endif
-</small><p/>
+</small>
+<%include file="hatebu.mako" args="post=post" />
+<p/>
   <div class="post_prose">
     ${self.post_prose(post)}
   </div>
 </div>
 
 <%def name="post_prose(post)">
+<div class="blogbody">
   ${post.content}
+</div>
 </%def>

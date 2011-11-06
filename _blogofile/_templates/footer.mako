@@ -1,13 +1,6 @@
 <div id="footerwrap">
   <footer id="mainfooter" class="bodywidth">
-<p><a href="${bf.util.site_path_helper(bf.config.blog.path,'feed')}">RSS feeds for Entries</a>
-% if bf.config.blog.disqus.enabled:
- and <a
-href="http://${bf.config.blog.disqus.name}.disqus.com/latest.rss">Comments</a>.
-% endif
-</p>
-    <p class="copyright">Copyright &copy; 2011 <a href="/" title="">mojavy</a>.</p>
-
+    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>.</p>
   </footer>
 </div>
 % if bf.config.blog.disqus.enabled:

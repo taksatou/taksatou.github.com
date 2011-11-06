@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2011-11-06T10:21:43Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Post 7]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2009/08/29/007---post-7.markdown" />
+    <id>http://mojavy.com/blog/2009/08/29/007---post-7.markdown</id>
+    <updated>2009-08-29T15:25:00Z</updated>
+    <published>2009-08-29T15:25:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="General Stuff" />
+    <category scheme="http://mojavy.com/blog" term="bar" />
+    <category scheme="http://mojavy.com/blog" term="foo" />
+    <summary type="html"><![CDATA[Post 7]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2009/08/29/007---post-7.markdown"><![CDATA[<p>This is post #7</p>]]></content>
+  </entry>
+</feed>

@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sat, 05 Nov 2011 12:18:32 GMT</pubDate>
+    <pubDate>Sun, 06 Nov 2011 10:21:43 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -19,6 +19,8 @@
       <link>http://mojavy.com/blog/2009/08/29/007---post-7.markdown</link>
       <pubDate>Sat, 29 Aug 2009 15:25:00 JST</pubDate>
       <category><![CDATA[General Stuff]]></category>
+      <category><![CDATA[bar]]></category>
+      <category><![CDATA[foo]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2009/08/29/007---post-7.markdown</guid>
       <description>Post 7</description>
       <content:encoded><![CDATA[<p>This is post #7</p>]]></content:encoded>

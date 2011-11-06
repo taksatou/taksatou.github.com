@@ -14,5 +14,11 @@
 </div>
 <section id="blogright">
 <%include file="recent_posts.mako" />
+<hr />
+<%include file="categories.mako" />
+<hr />
+<%include file="archives.mako" />
+<hr />
+<%include file="feed.mako" />
 </section>
 </div>
