@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2011-11-06T14:38:54Z</updated>
+  <updated>2011-11-06T14:45:54Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -27,8 +27,9 @@
     <category scheme="http://mojavy.com/blog" term="blogofile" />
     <summary type="html"><![CDATA[ブログ引越しました]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/0001-new_blog.rst"><![CDATA[<div class="document">
+<p>いままでblogger使ってましたが、github pagesに引越しました。</p>
 <p><a class="reference external" href="http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/">http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/</a>
-を参考にしてblogofileとgithub pagesでブログを構築しました。</p>
+を参考にしてblogofileとで構築しました。</p>
 <p>デザインは
 <a class="reference external" href="http://www.webdesignlondon-tristar.co.uk/website-templates">http://www.webdesignlondon-tristar.co.uk/website-templates</a>
 から拝借しました。</p>
