@@ -8,7 +8,7 @@ image: https://a248.e.akamai.net/assets.github.com/images/modules/header/logov6-
 いままでblogger使ってましたが、github pagesに引越しました。
 
 http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/ 
-を参考にしてblogofileとで構築しました。
+を参考にしてblogofileで構築しました。
 
 デザインは
 http://www.webdesignlondon-tristar.co.uk/website-templates
