@@ -2,10 +2,13 @@
 date: 2011/11/06 19:44:40
 categories: blog, blogofile
 title: ブログ引越しました
+image: https://a248.e.akamai.net/assets.github.com/images/modules/header/logov6-hover.svg
 ---
 
+いままでblogger使ってましたが、github pagesに引越しました。
+
 http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/ 
-を参考にしてblogofileとgithub pagesでブログを構築しました。
+を参考にしてblogofileとで構築しました。
 
 デザインは
 http://www.webdesignlondon-tristar.co.uk/website-templates
