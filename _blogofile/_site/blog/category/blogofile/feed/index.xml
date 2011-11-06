@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sun, 06 Nov 2011 13:23:23 GMT</pubDate>
+    <pubDate>Sun, 06 Nov 2011 14:38:54 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -51,13 +51,13 @@
 </ul>]]></content:encoded>
     </item>
     <item>
-      <title>ブログ移転しました</title>
+      <title>ブログ引越しました</title>
       <link>http://mojavy.com/blog/2011/11/06/0001-new_blog.rst</link>
       <pubDate>Sun, 06 Nov 2011 19:44:40 JST</pubDate>
       <category><![CDATA[blog]]></category>
       <category><![CDATA[blogofile]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/0001-new_blog.rst</guid>
-      <description>ブログ移転しました</description>
+      <description>ブログ引越しました</description>
       <content:encoded><![CDATA[<div class="document">
 <p><a class="reference external" href="http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/">http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/</a>
 を参考にしてblogofileとgithub pagesでブログを構築しました。</p>

@@ -1,7 +1,7 @@
 ---
 date: 2011/11/06 19:44:40
 categories: blog, blogofile
-title: ブログ移転しました
+title: ブログ引越しました
 ---
 
 http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/ 
