@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2011-11-06T16:09:11Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[haskell + gtk2hs + glade でデスクトップアプリ作る]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/11/07/0003-haskell_gtk.markdown" />
+    <id>http://mojavy.com/blog/2011/11/07/0003-haskell_gtk.markdown</id>
+    <updated>2011-11-07T00:30:47Z</updated>
+    <published>2011-11-07T00:30:47Z</published>
+    <category scheme="http://mojavy.com/blog" term="gtk" />
+    <category scheme="http://mojavy.com/blog" term="haskell" />
+    <summary type="html"><![CDATA[haskell + gtk2hs + glade でデスクトップアプリ作る]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2011/11/07/0003-haskell_gtk.markdown"><![CDATA[<p><img alt="haskell" src="/images/haskell_logo.png" /></p>
+<div class="toc">
+<ul>
+<li><a href="#h1">h1</a><ul>
+<li><a href="#h2">h2</a></li>
+</ul>
+</li>
+<li><a href="#hasdf">hasdf</a></li>
+</ul>
+</div>
+<h1 id="h1">h1</h1>
+<p>dsf</p>
+<h2 id="h2">h2</h2>
+<p>adf</p>
+<h1 id="hasdf">hasdf</h1>]]></content>
+  </entry>
+</feed>

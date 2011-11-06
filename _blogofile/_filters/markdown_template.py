@@ -1,6 +1,8 @@
 import markdown
 import logging
 
+import markdown_ext_toc
+
 config = {
     'name': "Markdown",
     'description': "Renders markdown formatted text to HTML",
@@ -13,4 +15,4 @@ logging.getLogger("MARKDOWN").setLevel(logging.ERROR)
 
 
 def run(content):
-    return markdown.markdown(content)
+    return markdown.markdown(content, ['toc'])

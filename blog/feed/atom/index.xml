@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2011-11-06T14:45:54Z</updated>
+  <updated>2011-11-06T16:12:47Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -23,7 +23,7 @@
     <id>http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown</id>
     <updated>2011-11-06T20:32:51Z</updated>
     <published>2011-11-06T20:32:51Z</published>
-    <category scheme="http://mojavy.com/blog" term="test" />
+    <category scheme="http://mojavy.com/blog" term="python" />
     <category scheme="http://mojavy.com/blog" term="blogofile" />
     <summary type="html"><![CDATA[blogofileでサムネイル画像を表示する方法]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown"><![CDATA[<p><img alt="rena" src="/images/rena.jpg" /></p>
@@ -70,7 +70,7 @@
     <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/0001-new_blog.rst"><![CDATA[<div class="document">
 <p>いままでblogger使ってましたが、github pagesに引越しました。</p>
 <p><a class="reference external" href="http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/">http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/</a>
-を参考にしてblogofileとで構築しました。</p>
+を参考にしてblogofileで構築しました。</p>
 <p>デザインは
 <a class="reference external" href="http://www.webdesignlondon-tristar.co.uk/website-templates">http://www.webdesignlondon-tristar.co.uk/website-templates</a>
 から拝借しました。</p>

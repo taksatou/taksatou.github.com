@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2011-11-06T10:27:10Z</updated>
+  <updated>2011-11-06T16:12:47Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -18,33 +18,40 @@
       <name></name>
       <uri>http://mojavy.com/blog</uri>
     </author>
-    <title type="html"><![CDATA[既存ブログサービスの問題に対する考察]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/10/29/0001-new_blog.rst" />
-    <id>http://mojavy.com/blog/2011/10/29/0001-new_blog.rst</id>
-    <updated>2011-10-29T19:00:00Z</updated>
-    <published>2011-10-29T19:00:00Z</published>
+    <title type="html"><![CDATA[blogofileでサムネイル画像を表示する方法]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown" />
+    <id>http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown</id>
+    <updated>2011-11-06T20:32:51Z</updated>
+    <published>2011-11-06T20:32:51Z</published>
     <category scheme="http://mojavy.com/blog" term="python" />
-    <category scheme="http://mojavy.com/blog" term="tips" />
-    <category scheme="http://mojavy.com/blog" term="ubuntu" />
-    <summary type="html"><![CDATA[既存ブログサービスの問題に対する考察]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2011/10/29/0001-new_blog.rst"><![CDATA[<div class="document">
-<div class="contents topic" id="id1">
-<p class="topic-title first">目次</p>
-<ul class="simple">
-<li><a class="reference internal" href="#id2" id="id3">背景</a></li>
-</ul>
-</div>
-<div class="section" id="id2">
-<h1><a class="toc-backref" href="#id3">背景</a></h1>
-<p>2009/08 - 2010/07まで、ブログを1年間毎日更新する、という目標を掲げて、
-365記事以上書き、アクセスを増やした中で一番感じたことは、</p>
-<p><strong>ブログを更新することは面倒である</strong></p>
-<p>ということだった。</p>
-<p>自分で書きためたネタを、時間がたって忘れたときに自分で検索して思い出したり、
-書くことで頭が整理された、などの多大なメリットがあったにも関わらず、
-最終的には、 <em>面倒</em> がメリットをうわまって更新を続けられなくなってしまった。</p>
-</div>
-</div>
-]]></content>
+    <category scheme="http://mojavy.com/blog" term="blogofile" />
+    <summary type="html"><![CDATA[blogofileでサムネイル画像を表示する方法]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown"><![CDATA[<p><img alt="rena" src="/images/rena.jpg" /></p>
+<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
+<p>例えば、
+<a href="http://mojavy.com">http://mojavy.com</a>
+のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
+<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
+<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
+         self.slug = None
+         self.draft = False
+         self.filters = None
+<span class="gi">+        self.image = None</span>
+         self.__parse()
+         self.__post_process()
+</pre></div>
+
+<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
+<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span> 
+<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span> 
+<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
+</pre></div>
+
+<p>のようにすれば${post.image}のようにして参照できる。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a> </li>
+</ul>]]></content>
   </entry>
 </feed>

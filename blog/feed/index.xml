@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sun, 06 Nov 2011 14:45:54 GMT</pubDate>
+    <pubDate>Sun, 06 Nov 2011 16:12:47 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -18,7 +18,7 @@
       <title>blogofileでサムネイル画像を表示する方法</title>
       <link>http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown</link>
       <pubDate>Sun, 06 Nov 2011 20:32:51 JST</pubDate>
-      <category><![CDATA[test]]></category>
+      <category><![CDATA[python]]></category>
       <category><![CDATA[blogofile]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown</guid>
       <description>blogofileでサムネイル画像を表示する方法</description>
@@ -61,7 +61,7 @@
       <content:encoded><![CDATA[<div class="document">
 <p>いままでblogger使ってましたが、github pagesに引越しました。</p>
 <p><a class="reference external" href="http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/">http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/</a>
-を参考にしてblogofileとで構築しました。</p>
+を参考にしてblogofileで構築しました。</p>
 <p>デザインは
 <a class="reference external" href="http://www.webdesignlondon-tristar.co.uk/website-templates">http://www.webdesignlondon-tristar.co.uk/website-templates</a>
 から拝借しました。</p>

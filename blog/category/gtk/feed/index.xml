@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Sun, 06 Nov 2011 16:09:11 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>haskell + gtk2hs + glade でデスクトップアプリ作る</title>
+      <link>http://mojavy.com/blog/2011/11/07/0003-haskell_gtk.markdown</link>
+      <pubDate>Mon, 07 Nov 2011 00:30:47 JST</pubDate>
+      <category><![CDATA[gtk]]></category>
+      <category><![CDATA[haskell]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/07/0003-haskell_gtk.markdown</guid>
+      <description>haskell + gtk2hs + glade でデスクトップアプリ作る</description>
+      <content:encoded><![CDATA[<p><img alt="haskell" src="/images/haskell_logo.png" /></p>
+<div class="toc">
+<ul>
+<li><a href="#h1">h1</a><ul>
+<li><a href="#h2">h2</a></li>
+</ul>
+</li>
+<li><a href="#hasdf">hasdf</a></li>
+</ul>
+</div>
+<h1 id="h1">h1</h1>
+<p>dsf</p>
+<h2 id="h2">h2</h2>
+<p>adf</p>
+<h1 id="hasdf">hasdf</h1>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

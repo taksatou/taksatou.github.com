@@ -1,5 +1,5 @@
 ---
-categories: blogofile, test
+categories: blogofile, python
 date: 2011/11/06 20:32:51
 title: blogofileでサムネイル画像を表示する方法
 image: /images/rena.jpg
@@ -38,6 +38,4 @@ $$/code
 のようにすれば${post.image}のようにして参照できる。
 
 - [https://github.com/taksatou/taksatou.github.com](https://github.com/taksatou/taksatou.github.com) 
-
-
 

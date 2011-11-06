@@ -17,7 +17,6 @@ ${", ".join(category_links)}
  | <a href="${post.permalink}#disqus_thread">View Comments</a>
 % endif
 </small>
-<%include file="hatebu.mako" args="post=post" />
 <p/>
   <div class="post_prose">
     ${self.post_prose(post)}
@@ -29,3 +28,6 @@ ${", ".join(category_links)}
   ${post.content}
 </div>
 </%def>
+<hr>
+<%include file="social_buttons.mako" args="post=post" />
+
