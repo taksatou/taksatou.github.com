@@ -10,17 +10,17 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sun, 06 Nov 2011 16:12:47 GMT</pubDate>
+    <pubDate>Wed, 09 Nov 2011 16:25:57 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>blogofileでサムネイル画像を表示する方法</title>
-      <link>http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown</link>
+      <link>http://mojavy.com/blog/2011/11/06/blofofile-test</link>
       <pubDate>Sun, 06 Nov 2011 20:32:51 JST</pubDate>
       <category><![CDATA[python]]></category>
       <category><![CDATA[blogofile]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/0002-blofofile-test.markdown</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/blofofile-test</guid>
       <description>blogofileでサムネイル画像を表示する方法</description>
       <content:encoded><![CDATA[<p><img alt="rena" src="/images/rena.jpg" /></p>
 <p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>

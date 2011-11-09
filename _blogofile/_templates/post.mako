@@ -14,7 +14,7 @@
 %>
 ${", ".join(category_links)}
 % if bf.config.blog.disqus.enabled:
- | <a href="${post.permalink}#disqus_thread">View Comments</a>
+ | <a href="${post.permalink}#disqus_thread"></a>
 % endif
 </small>
 <p/>
@@ -28,6 +28,5 @@ ${", ".join(category_links)}
   ${post.content}
 </div>
 </%def>
-<hr>
+<hr class="intersocial">
 <%include file="social_buttons.mako" args="post=post" />
-

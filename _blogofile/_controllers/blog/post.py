@@ -88,6 +88,7 @@ class Post(object):
         self.content = u""
         self.excerpt = u""
         self.filename = filename
+        self.filename_noext = "-".join((".".join(filename.split(".")[:-1])).split("-")[1:])
         self.author = ""
         self.guid = None
         self.slug = None
@@ -195,7 +196,7 @@ class Post(object):
             # TODO: slugification should be abstracted out somewhere reusable
             self.permalink = re.sub(
                     ":filename", re.sub(
-                            "[ ?]", "-", self.filename).lower(), self.permalink)
+                            "[ ?]", "-", self.filename_noext).lower(), self.permalink)
 
             # Generate sha hash based on title
             self.permalink = re.sub(":uuid", hashlib.sha1(

@@ -51,8 +51,9 @@ blog.disqus.enabled   = True
 blog.disqus.name = "mojavy"
 blog.disqus.shortname = "mojavy"
 
-blog.posts_per_page = 3
+blog.posts_per_page = 5
 blog.auto_permalink.enabled = True
+
 blog.auto_permalink.path = ":blog_path/:year/:month/:day/:filename"
 
 

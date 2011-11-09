@@ -70,70 +70,7 @@ href="/blog/feed/atom" />
           
 <div id="maincontent2" class="bodywidth">
 <div id="blogleft">
-  
-<div class="blog_post">
-  <a name="blogofileでサムネイル画像を表示する方法"></a>
-  <h2 class="blog_post_title"><a href="/blog/2011/11/06/blofofile-test" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
-  <small>November 06, 2011 at 08:32 PM | categories: 
 
-<a href='/blog/category/python'>python</a>, <a href='/blog/category/blogofile'>blogofile</a>
- | <a href="http://mojavy.com/blog/2011/11/06/blofofile-test#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="rena" src="/images/rena.jpg" /></p>
-<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
-<p>例えば、
-<a href="http://mojavy.com">http://mojavy.com</a>
-のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
-<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
-<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
-         self.slug = None
-         self.draft = False
-         self.filters = None
-<span class="gi">+        self.image = None</span>
-         self.__parse()
-         self.__post_process()
-</pre></div>
-
-<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span> 
-<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
-<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span> 
-<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
-</pre></div>
-
-<p>のようにすれば${post.image}のようにして参照できる。</p>
-<ul>
-<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a> </li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-<hr class="intersocial">
-
-<!-- Place this tag where you want the +1 button to render -->
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
-  
 <div class="blog_post">
   <a name="ブログ引越しました"></a>
   <h2 class="blog_post_title"><a href="/blog/2011/11/06/new_blog" rel="bookmark" title="Permanent Link to ブログ引越しました">ブログ引越しました</a></h2>
@@ -181,9 +118,12 @@ href="/blog/feed/atom" />
 </script>
 
 
-  <div class="interblog-sep"><hr class="interblog" /></div>
-<div style="text-align: right;">
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_url = "http://mojavy.com/blog/2011/11/06/new_blog";
+</script>
+<script type="text/javascript" src="http://disqus.com/forums/mojavy/embed.js"></script>
+<noscript><a href="http://mojavy.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 
 </div>
 <section id="blogright">
