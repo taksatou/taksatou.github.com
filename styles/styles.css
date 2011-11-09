@@ -22,6 +22,8 @@ h1,h2,h3,h4,h5,h6						{ color: #2f2f2f; font-family: "Ubuntu", arial; }
 div.interblog-sep { margin: 15px 0 5px 0; }
 hr.interblog  { border: solid; border-color: #888888; border-width: 1px 0 0 0 ; height: 1px; clear:both; }
 hr.intersocial { border: solid; border-color: #e0e0e0; border-width: 1px 0 0 0 ; height: 1px; clear:both; }
+pre { border: solid; border-color: #888888; border-width: 1px; padding: 8px 5px 8px 5px; margin: 3px 0 3px 0; }
+
 /* Header */
 #headerwrap								{ width: 100%; background: url('../images/headerbg.jpg') repeat-x 0 0; height: 117px;  }
 #mainheader								{ padding: 35px 0 0 0; color: #2f2f2f; text-shadow: 0px 0px 1px #fff; }
