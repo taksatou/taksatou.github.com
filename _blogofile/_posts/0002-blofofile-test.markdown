@@ -1,5 +1,5 @@
 ---
-categories: blogofile, python
+categories: blogofile, python, memo
 date: 2011/11/06 20:32:51
 title: blogofileでサムネイル画像を表示する方法
 image: /images/rena.jpg
@@ -29,13 +29,13 @@ $$/code
 そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、
 
 $$code(lang=yaml)
-categories: 
+categories:
 date: 2011/11/06 20:32:51
-title: 
+title:
 image: /images/rena.jpg
 $$/code
 
 のようにすれば${post.image}のようにして参照できる。
 
-- [https://github.com/taksatou/taksatou.github.com](https://github.com/taksatou/taksatou.github.com) 
+- [https://github.com/taksatou/taksatou.github.com](https://github.com/taksatou/taksatou.github.com)
 
