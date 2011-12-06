@@ -4,8 +4,11 @@ date: 2011/12/06 01:05:10
 title: tmuxに独自機能を追加する
 ---
 
-これは[ターミナルマルチプレクサ Advent Calendar 2011](http://atnd.org/events/22320)の6日目です。
+これは[ターミナルマルチプレクサ Advent Calendar 2011](http://atnd.org/events/22320)の<s>6日目</s>7日目です。(netmark.jpさん,matsuuさん、すいません、出遅れました。)
+
 5日目はyoshikawさんの[開発版GNU Screenを使ってみよう](http://yskwkzhr.blogspot.com/2011/12/lets-use-development-version-gnu-screen.html)でした。
+
+6日目はnetmark.jpさんの[yoshikaw](http://netmark.jp/2011/12/gnu-screen-plusone.html)でした。
 
 この記事ではtmuxのいじり方を簡単に紹介してみます。
 
