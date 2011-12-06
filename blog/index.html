@@ -229,7 +229,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 </pre></div>
 
 <p>あとは設定ファイルに以下を追加してmakeしたtmuxを起動してみます。</p>
-<div class="pygments_murphy"><pre><span class="nb">bind </span>r <span class="nb">source</span> ~/.tmux.conf
+<div class="pygments_murphy"><pre><span class="nb">set</span> -g reverse-buffer on
 </pre></div>
 
 <p>バッファにコピーした文字列がlist-buffersの後ろに追加されていけば成功です。

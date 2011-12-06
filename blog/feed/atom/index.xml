@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2011-12-06T14:52:25Z</updated>
+  <updated>2011-12-06T15:05:02Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -171,7 +171,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 </pre></div>
 
 <p>あとは設定ファイルに以下を追加してmakeしたtmuxを起動してみます。</p>
-<div class="pygments_murphy"><pre><span class="nb">bind </span>r <span class="nb">source</span> ~/.tmux.conf
+<div class="pygments_murphy"><pre><span class="nb">set</span> -g reverse-buffer on
 </pre></div>
 
 <p>バッファにコピーした文字列がlist-buffersの後ろに追加されていけば成功です。

@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 06 Dec 2011 14:52:25 GMT</pubDate>
+    <pubDate>Tue, 06 Dec 2011 15:05:02 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -167,7 +167,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 </pre></div>
 
 <p>あとは設定ファイルに以下を追加してmakeしたtmuxを起動してみます。</p>
-<div class="pygments_murphy"><pre><span class="nb">bind </span>r <span class="nb">source</span> ~/.tmux.conf
+<div class="pygments_murphy"><pre><span class="nb">set</span> -g reverse-buffer on
 </pre></div>
 
 <p>バッファにコピーした文字列がlist-buffersの後ろに追加されていけば成功です。

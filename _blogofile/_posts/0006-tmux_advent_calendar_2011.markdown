@@ -182,7 +182,7 @@ $$/code
 あとは設定ファイルに以下を追加してmakeしたtmuxを起動してみます。
 
 $$code(lang=bash)
-bind r source ~/.tmux.conf
+set -g reverse-buffer on
 $$/code
 
 バッファにコピーした文字列がlist-buffersの後ろに追加されていけば成功です。
