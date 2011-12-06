@@ -8,7 +8,7 @@ title: tmuxに独自機能を追加する
 
 5日目はyoshikawさんの[開発版GNU Screenを使ってみよう](http://yskwkzhr.blogspot.com/2011/12/lets-use-development-version-gnu-screen.html)でした。
 
-6日目はnetmark.jpさんの[yoshikaw](http://netmark.jp/2011/12/gnu-screen-plusone.html)でした。
+6日目はnetmark.jpさんの[GNU screenをもうちょっとだけ便利に使おう！](http://netmark.jp/2011/12/gnu-screen-plusone.html)でした。
 
 この記事ではtmuxのいじり方を簡単に紹介してみます。
 
