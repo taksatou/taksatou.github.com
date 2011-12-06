@@ -62,6 +62,7 @@ a.findoutmore:hover						{ background-color: #2f2f2f; background-image: none; te
 #articlesright h5:hover					{ color: #2f2f2f; }
 
 /* .blog_post_title                                      { font-size: 2.4em; font-family: "Ubuntu", arial; font-weight: bold; } */
+.blog_post_title a                                      { font-size: 140%;  }
 .blogbody							{ font-size: 115%; }
 .blogbody hr  { border: solid; border-color: #b0b0b0; border-width: 1px 0 0 0 ; margin: 5px 15px 7px 15px; height: 1px; clear:both; }
 #blogleft								{ float: left; width: 620px; }

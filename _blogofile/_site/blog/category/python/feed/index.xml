@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 09 Nov 2011 16:32:53 GMT</pubDate>
+    <pubDate>Tue, 06 Dec 2011 14:41:12 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -19,6 +19,7 @@
       <link>http://mojavy.com/blog/2011/11/06/blofofile-test</link>
       <pubDate>Sun, 06 Nov 2011 20:32:51 JST</pubDate>
       <category><![CDATA[python]]></category>
+      <category><![CDATA[memo]]></category>
       <category><![CDATA[blogofile]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/blofofile-test</guid>
       <description>blogofileでサムネイル画像を表示する方法</description>
@@ -39,15 +40,15 @@
 </pre></div>
 
 <p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span> 
+<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
 <span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
-<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span> 
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
 <span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
 </pre></div>
 
 <p>のようにすれば${post.image}のようにして参照できる。</p>
 <ul>
-<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a> </li>
+<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
 </ul>]]></content:encoded>
     </item>
   </channel>
