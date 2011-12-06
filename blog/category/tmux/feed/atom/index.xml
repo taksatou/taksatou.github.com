@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2011-12-06T14:41:12Z</updated>
+  <updated>2011-12-06T14:52:25Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -44,7 +44,7 @@ tmuxのバッファにはホスト名とかよくつかうコマンドとかを�
 <li><a href="#_2">準備</a><ul>
 <li><a href="#_3">ソースをとってくる</a></li>
 <li><a href="#_4">依存パッケージを入れる</a></li>
-<li><a href="#_5">とりあえずビルド</a></li>
+<li><a href="#_5">ビルド</a></li>
 </ul>
 </li>
 <li><a href="#_6">ソース構成</a></li>
@@ -63,7 +63,7 @@ ubuntuだと以下パッケージを入れとけばたぶん大丈夫です。</
 <div class="pygments_murphy"><pre>sudo apt-get install libevent-dev libncurses5-dev
 </pre></div>
 
-<h2 id="_5">とりあえずビルド</h2>
+<h2 id="_5">ビルド</h2>
 <div class="pygments_murphy"><pre>./configure <span class="o">&amp;&amp;</span> make
 </pre></div>
 
@@ -177,7 +177,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 <p>バッファにコピーした文字列がlist-buffersの後ろに追加されていけば成功です。
 簡単ですよね？</p>
 <h1 id="_8">まとめ</h1>
-<p>以上、tmuxにreverse-bufferというオプションを追加して、バッファの挙動を変更できるようにしてみました。
-端末制御のプログラムは普段あまり触れる機会がないし複雑そうなイメージがあって敬遠しがちですが、ちょっとした機能を追加するだけだったら意外と簡単だったりするのでどんどんいじってみるといいと思います。</p>]]></content>
+<p>以上、tmuxにreverse-bufferというオプションを追加して、バッファの挙動を変更できるようにしてみました。</p>
+<p>端末制御のプログラムは普段あまり触れる機会がないし複雑そうなイメージがあって敬遠しがちですが、ちょっとした機能を追加するだけだったら意外と簡単だったりするのでどんどんいじってみるといいと思います。</p>]]></content>
   </entry>
 </feed>

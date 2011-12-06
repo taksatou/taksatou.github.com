@@ -43,7 +43,7 @@ $$code(lang=bash)
 sudo apt-get install libevent-dev libncurses5-dev
 $$/code
 
-## とりあえずビルド
+## ビルド
 
 $$code(lang=bash)
 ./configure && make
