@@ -77,7 +77,14 @@ a.findoutmore:hover						{ background-color: #2f2f2f; background-image: none; te
 #blogleft hr                                            { margin-top: 5px; margin-bottom: 5px; }
 #blogleft .topic-title                          	{ display: none; }
 #blogleft #toc                                            { font-size: 1em; font-family: "Ubuntu", arial; font-weight: bold; }
-#blogleft ul                                            { font-size: 95%; padding-left: 15px;  list-style-type: none; }
+#blogleft ul                                            { font-size: 95%; padding-left: 15px;  list-style-type: disc; }
+#blogleft dl                                            {padding: 3px; }
+#blogleft dt                                            {padding-top: 4px; font-weight: bold;}
+#blogleft dd                                            {padding-left: 15px; }
+#blogleft table                                         {border-top: solid 1px #b0b0b0; border-left: solid 1px #b0b0b0; border-collapse:colapse; border-spacing:0; }
+#blogleft table th                                      {border-bottom: solid 1px #b0b0b0; border-right: solid 1px #b0b0b0; background-color: #f0f0f0; padding: 2px; }
+#blogleft table td                                     {border-bottom: solid 1px #b0b0b0; border-right: solid 1px #b0b0b0; padding: 2px; }
+
 #blogright							{ float: right; width: 300px; }
 #blogright article					{ clear: both; margin: 0 0 20px 0; overflow: hidden; }
 #blogright figure					{ padding: 5px; border: 0px #dbdbdb solid; float: left; width: 119px; height: 119px; margin: 0 15px 0 0; } 
