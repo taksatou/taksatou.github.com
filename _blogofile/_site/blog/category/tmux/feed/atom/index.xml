@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2011-12-06T15:43:19Z</updated>
+  <updated>2011-12-10T14:43:46Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -23,6 +23,7 @@
     <id>http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011</id>
     <updated>2011-12-06T01:05:10Z</updated>
     <published>2011-12-06T01:05:10Z</published>
+    <category scheme="http://mojavy.com/blog" term="advent calendar" />
     <category scheme="http://mojavy.com/blog" term="tmux" />
     <summary type="html"><![CDATA[tmuxに独自機能を追加する]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011"><![CDATA[<p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の<s>6日目</s>7日目です。(netmark.jpさん,matsuuさん、すいません、出遅れました。)</p>
@@ -72,10 +73,16 @@ ubuntuだと以下パッケージを入れとけばたぶん大丈夫です。</
 <h1 id="_6">ソース構成</h1>
 <p>結構たくさんファイルがありますが、ファイル名を見れば大体雰囲気がつかめると思います。</p>
 <p>何か機能を追加したいだけなら、いじる必要のあるファイルはごく一部です。</p>
-<p>tmux.h
-: ほとんどのコマンドは全部ここに宣言がまとめられてるのでほぼ必ずいじります。
-options-table.c
-: オプション追加する場合はここに追加します。値の肩などを定義するテーブルが宣言されているので、中身を見れば大体わかると思います。</p>
+<dl>
+<dt>tmux.h</dt>
+<dd>
+<dl>
+<dt>ほとんどのコマンドは全部ここに宣言がまとめられてるのでほぼ必ずいじります。</dt>
+<dt>options-table.c</dt>
+<dd>オプション追加する場合はここに追加します。値の肩などを定義するテーブルが宣言されているので、中身を見れば大体わかると思います。</dd>
+</dl>
+</dd>
+</dl>
 <p>いじる必要はないですがarray.hはいろんなところでつかわれてるので目を通しとくとよいと思います。
 Cでリストが使いたい場合は他のとこでも流用できそうな便利なヘッダです。</p>
 <p>あとは必要に応じて関係しそうなところをみていけばよいです。</p>
@@ -146,7 +153,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
           <span class="p">.</span><span class="n">default_num</span> <span class="o">=</span> <span class="mi">20</span>
         <span class="p">},</span>
 
-<p><span class="o">+</span>       <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;reverse-buffer&quot;</span><span class="p">,</span>
+<span class="o">+</span>       <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;reverse-buffer&quot;</span><span class="p">,</span>
 <span class="o">+</span>         <span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">OPTIONS_TABLE_FLAG</span><span class="p">,</span>
 <span class="o">+</span>         <span class="p">.</span><span class="n">default_num</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="o">+</span>       <span class="p">},</span>
@@ -154,7 +161,8 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
         <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;escape-time&quot;</span><span class="p">,</span>
           <span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">OPTIONS_TABLE_NUMBER</span><span class="p">,</span>
           <span class="p">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-</pre></div></p>
+</pre></div>
+
 <p>実際にバッファの制御関数を呼び出しているのはwindow-copy.cなので、さっき追加したオプションの値をみて切り替えられるようにします。</p>
 <div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/window-copy.c tmux-1.5-patched/window-copy.c</span>
 <span class="gd">--- tmux-1.5/window-copy.c      2011-07-09 18:42:38.000000000 +0900</span>

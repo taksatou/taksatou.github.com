@@ -85,7 +85,7 @@ href="/blog/feed/atom" />
   <h2 class="blog_post_title"><a href="/blog/2011/12/06/tmux_advent_calendar_2011" rel="bookmark" title="Permanent Link to tmuxに独自機能を追加する">tmuxに独自機能を追加する</a></h2>
   <small>December 06, 2011 at 01:05 AM | categories: 
 
-<a href='/blog/category/tmux'>tmux</a>
+<a href='/blog/category/advent-calendar'>advent calendar</a>, <a href='/blog/category/tmux'>tmux</a>
  | <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011#disqus_thread"></a>
 </small>
 <p/>
@@ -139,10 +139,16 @@ ubuntuだと以下パッケージを入れとけばたぶん大丈夫です。</
 <h1 id="_6">ソース構成</h1>
 <p>結構たくさんファイルがありますが、ファイル名を見れば大体雰囲気がつかめると思います。</p>
 <p>何か機能を追加したいだけなら、いじる必要のあるファイルはごく一部です。</p>
-<p>tmux.h
-: ほとんどのコマンドは全部ここに宣言がまとめられてるのでほぼ必ずいじります。
-options-table.c
-: オプション追加する場合はここに追加します。値の肩などを定義するテーブルが宣言されているので、中身を見れば大体わかると思います。</p>
+<dl>
+<dt>tmux.h</dt>
+<dd>
+<dl>
+<dt>ほとんどのコマンドは全部ここに宣言がまとめられてるのでほぼ必ずいじります。</dt>
+<dt>options-table.c</dt>
+<dd>オプション追加する場合はここに追加します。値の肩などを定義するテーブルが宣言されているので、中身を見れば大体わかると思います。</dd>
+</dl>
+</dd>
+</dl>
 <p>いじる必要はないですがarray.hはいろんなところでつかわれてるので目を通しとくとよいと思います。
 Cでリストが使いたい場合は他のとこでも流用できそうな便利なヘッダです。</p>
 <p>あとは必要に応じて関係しそうなところをみていけばよいです。</p>
@@ -213,7 +219,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
           <span class="p">.</span><span class="n">default_num</span> <span class="o">=</span> <span class="mi">20</span>
         <span class="p">},</span>
 
-<p><span class="o">+</span>       <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;reverse-buffer&quot;</span><span class="p">,</span>
+<span class="o">+</span>       <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;reverse-buffer&quot;</span><span class="p">,</span>
 <span class="o">+</span>         <span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">OPTIONS_TABLE_FLAG</span><span class="p">,</span>
 <span class="o">+</span>         <span class="p">.</span><span class="n">default_num</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="o">+</span>       <span class="p">},</span>
@@ -221,7 +227,8 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
         <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;escape-time&quot;</span><span class="p">,</span>
           <span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">OPTIONS_TABLE_NUMBER</span><span class="p">,</span>
           <span class="p">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-</pre></div></p>
+</pre></div>
+
 <p>実際にバッファの制御関数を呼び出しているのはwindow-copy.cなので、さっき追加したオプションの値をみて切り替えられるようにします。</p>
 <div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/window-copy.c tmux-1.5-patched/window-copy.c</span>
 <span class="gd">--- tmux-1.5/window-copy.c      2011-07-09 18:42:38.000000000 +0900</span>
@@ -303,6 +310,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
   <div id="categories">
     <h1>Categories</h1>
     <ul>
+     <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (1)</li>

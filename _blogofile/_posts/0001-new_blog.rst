@@ -2,7 +2,7 @@
 date: 2011/11/06 19:44:40
 categories: blog, blogofile
 title: ブログ引越しました
-image: https://a248.e.akamai.net/assets.github.com/images/modules/header/logov6-hover.svg
+image: /images/github_logo.svg
 ---
 
 いままでblogger使ってましたが、github pagesに引越しました。

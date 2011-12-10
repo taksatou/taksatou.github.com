@@ -1,7 +1,8 @@
 ---
-categories: tmux
+categories: tmux, advent calendar
 date: 2011/12/06 01:05:10
 title: tmuxに独自機能を追加する
+image: /images/terminal.png
 ---
 
 これは[ターミナルマルチプレクサ Advent Calendar 2011](http://atnd.org/events/22320)の<s>6日目</s>7日目です。(netmark.jpさん,matsuuさん、すいません、出遅れました。)
