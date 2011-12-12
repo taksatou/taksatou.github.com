@@ -7,12 +7,55 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2011-12-10T14:43:46Z</updated>
+  <updated>2011-12-12T18:56:55Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[tmuxでマウスを使う]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011" />
+    <id>http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011</id>
+    <updated>2011-12-13T00:58:29Z</updated>
+    <published>2011-12-13T00:58:29Z</published>
+    <category scheme="http://mojavy.com/blog" term="advent calendar" />
+    <category scheme="http://mojavy.com/blog" term="tmux" />
+    <summary type="html"><![CDATA[tmuxでマウスを使う]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011"><![CDATA[<p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の13日目です。
+12日目はnetmarkjpさんの<a href="http://netmark.jp/2011/12/gnu-screen-xmodem.html">GNU screen でシリアル通信 + xmodem転送</a>でした。</p>
+<p>今日はtmuxのマウスまわりの設定について紹介してみます。</p>
+<p>tmuxにはマウスで操作するための機能がいくつか提供されています。ChangeLogを見る限りでは結構前からマウスサポートはされているようですが、mac portから入れたtmuxでは動かなかったのでソースから最新版をいれることをおすすめします。
+macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/tmatsuu/20111130/1322677832">matsuuさんが紹介してくれている</a>のでそちらを参考にしてください。</p>
+<p>tmux-1.5の時点で使えるマウス関連の設定項目は以下の通りです。</p>
+<dl>
+<dt>mode-mouse</dt>
+<dd>onにすると、マウスで画面をドラッグしたときにコピーモードに入ります。マウスホイールでスクロールすることもできます。</dd>
+<dt>mouse-select-pane</dt>
+<dd>マウスクリックでpaneを選択できるようになります。</dd>
+<dt>mouse-select-window</dt>
+<dd>statusを有効にしているときに、window名の部分をクリックすることでwindowを切り替えられます。</dd>
+<dt>mouse-utf8</dt>
+<dd>マウスの入力をutf-8として扱うための設定だそうです。効果はよくわかりませんでした。</dd>
+</dl>
+<p>なお、shiftを押しながらターミナルをクリックすれば、本来のマウスの動作になります。</p>
+<p>macのiTerm, windowsのputty, ubuntuのgnome-terminalで動作確認できました。
+たまに画面が乱れることがありますが、再描画すると直ります。</p>
+<h1 id="">まとめ</h1>
+<p>以下を.tmux.confにコピペするとtmuxでマウスがつかえます。</p>
+<div class="pygments_murphy"><pre><span class="nb">set</span> -g mode-mouse on
+<span class="nb">set</span> -g mouse-resize-pane on
+<span class="nb">set</span> -g mouse-select-pane on
+<span class="nb">set</span> -g mouse-select-window on
+</pre></div>
+
+<p>本当は、set-clipboardという機能も紹介したかったのですが、ちゃんと動かすことができなかったのでまたの機会にします。
+以上非常に簡単でしたがマウスサポート機能の紹介でした。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
