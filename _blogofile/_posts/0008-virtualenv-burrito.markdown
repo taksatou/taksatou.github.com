@@ -7,7 +7,7 @@ image: /images/python-logo.gif
 
 ![python](/images/python-logo.gif)
 
-pythonにはvirtualenvというユーティリティを使って複数の環境を切り替えることができます。しかしvirtualenvはセットアップがちょっとわかりにくかったりバージョンによってはこけたりしていまいち使いこなせていませんでした。久し振りにブログを書くついでにpython環境を再構築しようと思って調べたところ、[virtualenv-burrito](https://github.com/brainsik/virtualenv-burrito) というのが使いやすかったので紹介します。これを使えば非常に簡単にpython環境を整えることができます。
+pythonではvirtualenvというユーティリティを使って複数の環境を切り替えることができます。しかしvirtualenvはセットアップがちょっとわかりにくかったりバージョンによってはこけたりしていまいち使いこなせていませんでした。久し振りにブログを書くついでにpython環境を再構築しようと思って調べたところ、[virtualenv-burrito](https://github.com/brainsik/virtualenv-burrito) というのが使いやすかったので紹介します。これを使えば非常に簡単にpython環境を整えることができます。
 
 # インストール
 
