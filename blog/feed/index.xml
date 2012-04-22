@@ -10,10 +10,65 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Mon, 12 Dec 2011 18:56:55 GMT</pubDate>
+    <pubDate>Sun, 22 Apr 2012 10:39:36 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>1分でpython環境を整える方法</title>
+      <link>http://mojavy.com/blog/2012/04/22/virtualenv-burrito</link>
+      <pubDate>Sun, 22 Apr 2012 17:30:00 JST</pubDate>
+      <category><![CDATA[python]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/04/22/virtualenv-burrito</guid>
+      <description>1分でpython環境を整える方法</description>
+      <content:encoded><![CDATA[<p><img alt="python" src="/images/python-logo.gif" /></p>
+<p>pythonにはvirtualenvというユーティリティを使って複数の環境を切り替えることができます。しかしvirtualenvはセットアップがちょっとわかりにくかったりバージョンによってはこけたりしていまいち使いこなせていませんでした。久し振りにブログを書くついでにpython環境を再構築しようと思って調べたところ、<a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a> というのが使いやすかったので紹介します。これを使えば非常に簡単にpython環境を整えることができます。</p>
+<h1 id="">インストール</h1>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
+</pre></div>
+
+<p>として再ログインするだけです。勝手にパスやシェルの補完設定もしてくれます。</p>
+<h1 id="_1">使い方</h1>
+<p>新しい環境の構築は、</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>mkvirtualenv newname
+</pre></div>
+
+<p><br></p>
+<p>環境の切り替えは、</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>workon newname
+<span class="nv">$ </span><span class="c"># or</span>
+<span class="nv">$ </span>workon 2.7
+</pre></div>
+
+<p><br></p>
+<p>不要な環境の削除は、</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>rmvirtualenv newname
+</pre></div>
+
+<p><br></p>
+<p>以上が基本的な使い方です。さらに詳しい使い方は<a href="http://www.doughellmann.com/docs/virtualenvwrapper/command_ref.html">virtualenvwrapperのコマンドリファレンス</a>等をみてください。</p>
+<h1 id="_2">解説</h1>
+<p>virtualenv-burrito自体はvirtualenv+virtualenvwrapperの環境を構築するだけなので、本格的に使いたい場合はvirtualenvについての理解が必要です。ただ、ほとんどの場合は単にバージョンとパッケージが切り替えられればいいと思うので、mkvirtualenvとworkonさえ覚えておけば十分です。
+いくつか注意点もあります。</p>
+<ul>
+<li>pythonのバイナリはあらかじめインストールされている必要があります。</li>
+<li>python3だとうごきません。python3環境が作れないという意味ではなく、デフォルトパスのpythonバージョンが3だとvirtualenv-burritoのセットアップ途中でこけます。その場合はpython2系をつかってください。</li>
+<li>pipのインストールでこける場合があります。その場合は以下のようなコマンドで回避できます。 <a href="https://github.com/brainsik/virtualenv-burrito/issues/16">(参考)</a></li>
+</ul>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
+<span class="nv">$ </span>mkvirtualenv -p <span class="k">$(</span>which python3.2<span class="k">)</span> --distribute py32
+</pre></div>
+
+<h1 id="_3">まとめ</h1>
+<p>いまからpython環境を構築するならvirtualenv-burritoつかっとくと、virtualenvとvirtualenvwrapperをセットアップするまでの手間が省けていいと思います</p>
+<h1 id="_4">関連リンク</h1>
+<ul>
+<li><a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a></li>
+<li><a href="http://pypi.python.org/pypi/virtualenv">virtualenv</a></li>
+<li><a href="http://www.doughellmann.com/docs/virtualenvwrapper/">virtualenvwrapper</a>
+<br></li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>tmuxでマウスを使う</title>
       <link>http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011</link>

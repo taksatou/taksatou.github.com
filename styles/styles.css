@@ -25,8 +25,8 @@ hr.intersocial { border: solid; border-color: #e0e0e0; border-width: 1px 0 0 0 ;
 pre { border: solid; border-color: #888888; border-width: 1px; padding: 8px 5px 8px 5px; margin: 3px 0 3px 0; }
 
 /* Header */
-#headerwrap								{ width: 100%; background: url('../images/headerbg.jpg') repeat-x 0 0; height: 117px;  }
-#mainheader								{ padding: 35px 0 0 0; color: #2f2f2f; text-shadow: 0px 0px 1px #fff; }
+#headerwrap								{ width: 100%; background: url('../images/headerbg.jpg') repeat-x 0 0; height: 45px;  }
+#mainheader								{ padding: 8px 0 0 0; color: #2f2f2f; text-shadow: 0px 0px 1px #fff; }
 .logo									{ float: left; margin: 0 10px 0 0; -webkit-transition: -webkit-transform 0.4s ease-out; -moz-transition: -moz-transform 0.4s ease-out; transition: transform 0.4s ease-out; }
 .logo:hover								{ cursor: pointer; -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); transform: rotate(360deg); }
 #websitetitle							{ float: left; margin: -8px 0 0 0; }
@@ -56,7 +56,7 @@ a.findoutmore:hover						{ background-color: #2f2f2f; background-image: none; te
 #aboutleft p							{ line-height: 135%; margin: 0 0 15px 0; }
 #articlesright							{ float: right; width: 380px; }
 #articlesright article					{ clear: both; margin: 0 0 20px 0; overflow: hidden; }
-#articlesright figure					{ padding: 5px; border: 0px #dbdbdb solid; float: left; width: 119px; height: 119px; margin: 0 15px 0 0; } 
+#articlesright figure					{ padding: 5px; border: 0px #dbdbdb solid; float: left; width: 119px; height: 119px; margin: 0 15px 0 0; }
 #articlesright p						{ line-height: 135%; }
 #articlesright h5						{ font-size: 1.3em; margin: 0 0 6px 0; color: #4086c6; }
 #articlesright h5:hover					{ color: #2f2f2f; }
@@ -87,7 +87,7 @@ a.findoutmore:hover						{ background-color: #2f2f2f; background-image: none; te
 
 #blogright							{ float: right; width: 300px; }
 #blogright article					{ clear: both; margin: 0 0 20px 0; overflow: hidden; }
-#blogright figure					{ padding: 5px; border: 0px #dbdbdb solid; float: left; width: 119px; height: 119px; margin: 0 15px 0 0; } 
+#blogright figure					{ padding: 5px; border: 0px #dbdbdb solid; float: left; width: 119px; height: 119px; margin: 0 15px 0 0; }
 #blogright p						{ line-height: 135%; }
 #blogright h5						{ font-size: 1.3em; margin: 0 0 6px 0; color: #4086c6; }
 #blogright h5:hover					{ color: #2f2f2f; }
