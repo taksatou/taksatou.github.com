@@ -5,7 +5,7 @@ title: debian lennyのEnd Of Life対応
 image: /images/debian_logo.png
 ---
 
-![debian](/images/debian_logo.gif)
+![debian](/images/debian_logo.png)
 
 debian lennyは2012-02-06にEnd of lifeを迎えました。
 それに伴いlennyのリポジトリもoldstable扱いとなりパスが変わったため、デフォルトのsources.listでは404 Not Foundとなってパッケージがインストールできなくなってしまいました。

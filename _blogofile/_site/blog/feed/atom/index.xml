@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-06-06T01:53:36Z</updated>
+  <updated>2012-06-06T01:56:18Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -25,7 +25,7 @@
     <published>2012-06-06T10:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="python" />
     <summary type="html"><![CDATA[debian lennyのEnd Of Life対応]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable"><![CDATA[<p><img alt="debian" src="/images/debian_logo.gif" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable"><![CDATA[<p><img alt="debian" src="/images/debian_logo.png" /></p>
 <p>debian lennyは2012-02-06にEnd of lifeを迎えました。
 それに伴いlennyのリポジトリもoldstable扱いとなりパスが変わったため、デフォルトのsources.listでは404 Not Foundとなってパッケージがインストールできなくなってしまいました。
 早めにアップデートしたほうが好ましいですが、そのまま引き続きlennyを使いたい場合もあると思います。
