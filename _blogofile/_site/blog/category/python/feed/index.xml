@@ -10,10 +10,38 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sun, 22 Apr 2012 10:42:06 GMT</pubDate>
+    <pubDate>Wed, 06 Jun 2012 01:53:36 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>debian lennyのEnd Of Life対応</title>
+      <link>http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable</link>
+      <pubDate>Wed, 06 Jun 2012 10:30:00 JST</pubDate>
+      <category><![CDATA[python]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable</guid>
+      <description>debian lennyのEnd Of Life対応</description>
+      <content:encoded><![CDATA[<p><img alt="debian" src="/images/debian_logo.gif" /></p>
+<p>debian lennyは2012-02-06にEnd of lifeを迎えました。
+それに伴いlennyのリポジトリもoldstable扱いとなりパスが変わったため、デフォルトのsources.listでは404 Not Foundとなってパッケージがインストールできなくなってしまいました。
+早めにアップデートしたほうが好ましいですが、そのまま引き続きlennyを使いたい場合もあると思います。
+そのような場合は以下のようにsources.listを変更してやれば今までどおりパッケージをとれるようになります。</p>
+<div class="pygments_murphy"><pre>deb http://archive.debian.org/debian-security/ lenny/updates main
+deb-src http://archive.debian.org/debian-security/ lenny/updates main
+
+deb http://archive.debian.org/debian/ lenny main
+deb-src http://archive.debian.org/debian/ lenny main
+</pre></div>
+
+<p>backportsなどもarchiveのほうにあるのでお好みで追加してください。</p>
+<h1 id="">参考</h1>
+<ul>
+<li><a href="http://archive.debian.org/">http://archive.debian.org/</a></li>
+<li><a href="http://wiki.debian.org/DebianLenny">http://wiki.debian.org/DebianLenny</a></li>
+<li><a href="http://wiki.debian.org/DebianOldStable">http://wiki.debian.org/DebianOldStable</a></li>
+</ul>
+<p><br></p>]]></content:encoded>
+    </item>
     <item>
       <title>1分でpython環境を整える方法</title>
       <link>http://mojavy.com/blog/2012/04/22/virtualenv-burrito</link>

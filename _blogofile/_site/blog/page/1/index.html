@@ -81,6 +81,62 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="debian-lennyのend-of-life対応"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/06/06/debian-lenny-oldstable" rel="bookmark" title="Permanent Link to debian lennyのEnd Of Life対応">debian lennyのEnd Of Life対応</a></h2>
+  <small>June 06, 2012 at 10:30 AM | categories: 
+
+<a href='/blog/category/python'>python</a>
+ | <a href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="debian" src="/images/debian_logo.gif" /></p>
+<p>debian lennyは2012-02-06にEnd of lifeを迎えました。
+それに伴いlennyのリポジトリもoldstable扱いとなりパスが変わったため、デフォルトのsources.listでは404 Not Foundとなってパッケージがインストールできなくなってしまいました。
+早めにアップデートしたほうが好ましいですが、そのまま引き続きlennyを使いたい場合もあると思います。
+そのような場合は以下のようにsources.listを変更してやれば今までどおりパッケージをとれるようになります。</p>
+<div class="pygments_murphy"><pre>deb http://archive.debian.org/debian-security/ lenny/updates main
+deb-src http://archive.debian.org/debian-security/ lenny/updates main
+
+deb http://archive.debian.org/debian/ lenny main
+deb-src http://archive.debian.org/debian/ lenny main
+</pre></div>
+
+<p>backportsなどもarchiveのほうにあるのでお好みで追加してください。</p>
+<h1 id="">参考</h1>
+<ul>
+<li><a href="http://archive.debian.org/">http://archive.debian.org/</a></li>
+<li><a href="http://wiki.debian.org/DebianLenny">http://wiki.debian.org/DebianLenny</a></li>
+<li><a href="http://wiki.debian.org/DebianOldStable">http://wiki.debian.org/DebianOldStable</a></li>
+</ul>
+<p><br></p>
+</div>
+
+  </div>
+</div>
+
+
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<g:plusone size="medium"></g:plusone>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="1分でpython環境を整える方法"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/04/22/virtualenv-burrito" rel="bookmark" title="Permanent Link to 1分でpython環境を整える方法">1分でpython環境を整える方法</a></h2>
   <small>April 22, 2012 at 05:30 PM | categories: 
@@ -488,56 +544,8 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="ブログ引越しました"></a>
-  <h2 class="blog_post_title"><a href="/blog/2011/11/06/new_blog" rel="bookmark" title="Permanent Link to ブログ引越しました">ブログ引越しました</a></h2>
-  <small>November 06, 2011 at 07:44 PM | categories: 
-
-<a href='/blog/category/blog'>blog</a>, <a href='/blog/category/blogofile'>blogofile</a>
- | <a href="http://mojavy.com/blog/2011/11/06/new_blog#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <div class="document">
-<p>いままでblogger使ってましたが、github pagesに引越しました。</p>
-<p><a class="reference external" href="http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/">http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/</a>
-を参考にしてblogofileで構築しました。</p>
-<p>デザインは
-<a class="reference external" href="http://www.webdesignlondon-tristar.co.uk/website-templates">http://www.webdesignlondon-tristar.co.uk/website-templates</a>
-から拝借しました。</p>
-<p>blogofileのテンプレートは
-<a class="reference external" href="https://github.com/mpirnat/blogofile.com">https://github.com/mpirnat/blogofile.com</a>
-あたりを参考にするとよいと思います。</p>
-<p>よくあるブログサービスをそのまま使う場合と比べると構築までのハードルが若干高いですが、今後ちょっとしたウェブページをつくりたくなったときもソースをそのまま流用できるし、bloggerで色々不満だったことが解消できてよい感じです。</p>
-</div>
-
-</div>
-
-  </div>
-</div>
-
-
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
+ <a href="../2">Next »</a>
 </div>
 
 </div>
@@ -545,6 +553,11 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/06/06/debian-lenny-oldstable" title="debian lennyのEnd Of Life対応"><p>debian lennyのEnd Of Life対応</a><span style="font-size: 80%;">(June 06, 2012 at 10:30 AM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable" alt="はてなブックマーク - debian lennyのEnd Of Life対応" title="はてなブックマーク - debian lennyのEnd Of Life対応">
+</a>
+</li>
       <li><a href="/blog/2012/04/22/virtualenv-burrito" title="1分でpython環境を整える方法"><p>1分でpython環境を整える方法</a><span style="font-size: 80%;">(April 22, 2012 at 05:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/04/22/virtualenv-burrito">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/04/22/virtualenv-burrito" alt="はてなブックマーク - 1分でpython環境を整える方法" title="はてなブックマーク - 1分でpython環境を整える方法">
@@ -565,11 +578,6 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/11/06/blofofile-test" alt="はてなブックマーク - blogofileでサムネイル画像を表示する方法" title="はてなブックマーク - blogofileでサムネイル画像を表示する方法">
 </a>
 </li>
-      <li><a href="/blog/2011/11/06/new_blog" title="ブログ引越しました"><p>ブログ引越しました</a><span style="font-size: 80%;">(November 06, 2011 at 07:44 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/new_blog">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/11/06/new_blog" alt="はてなブックマーク - ブログ引越しました" title="はてなブックマーク - ブログ引越しました">
-</a>
-</li>
     </ul>
   </div>
 
@@ -581,7 +589,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
     </ul>
   </div> 
@@ -590,6 +598,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2011/11/1" title="November 2011">November 2011</a>&nbsp;(2)</li>
