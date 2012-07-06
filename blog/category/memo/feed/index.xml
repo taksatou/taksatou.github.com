@@ -10,10 +10,34 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 06 Jun 2012 01:56:18 GMT</pubDate>
+    <pubDate>Fri, 06 Jul 2012 12:30:08 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>sbclでクラスのスロット一覧を取得する方法</title>
+      <link>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</link>
+      <pubDate>Fri, 06 Jul 2012 18:30:00 JST</pubDate>
+      <category><![CDATA[memo]]></category>
+      <category><![CDATA[sbcl]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</guid>
+      <description>sbclでクラスのスロット一覧を取得する方法</description>
+      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
+<p>メモメモ</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
+(#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::INO&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::DEV&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::NLINK&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::UID&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::GID&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::SIZE&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::ATIME&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MTIME&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::CTIME&gt;)
+</pre></div>]]></content:encoded>
+    </item>
     <item>
       <title>blogofileでサムネイル画像を表示する方法</title>
       <link>http://mojavy.com/blog/2011/11/06/blofofile-test</link>
