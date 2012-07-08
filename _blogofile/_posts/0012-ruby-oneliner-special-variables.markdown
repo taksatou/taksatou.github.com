@@ -48,5 +48,5 @@ $$/code
 
 # 参考
 
-* http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/
-* http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html
+* [http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/](http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/)
+* [http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html](http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html)
