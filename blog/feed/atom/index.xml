@@ -7,12 +7,54 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-07-06T12:30:08Z</updated>
+  <updated>2012-07-08T07:59:16Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[rubyのワンライナーで便利な変数まとめ]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables" />
+    <id>http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables</id>
+    <updated>2012-07-08T18:30:00Z</updated>
+    <published>2012-07-08T18:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="ruby" />
+    <summary type="html"><![CDATA[rubyのワンライナーで便利な変数まとめ]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
+<h1 id="">$.</h1>
+<p>現在の行番号を表します。awkでいうNRと同じです。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
+</pre></div>
+
+<h1 id="-i">$-i</h1>
+<p>この値を文字列で上書きするとin-place置換を行うようになります。オリジナルのファイルはここで指定した文字が拡張子についたファイルとして保存されます。オリジナルファイルが不要なら空文字を設定すればOKです。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+
+<h1 id="_1">$/</h1>
+<p>入力の区切り文字を表わす文字です。デフォルトは改行です。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
+</pre></div>
+
+<h1 id="_2">$, 、$;</h1>
+<p>$, はjoinのデフォルト区切り文字で、$; はsplitのデフォルト区切り文字です。
+ワンライナーではjoinとsplitをよく使うと思うので、BEGINで上書きしておけばワンライナーを多少短く書けます。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
+</pre></div>
+
+<h1 id="_3">まとめ</h1>
+<p>まだ他にも知らないテクニックがたくさんありそうですが、新しく見つけたら追記していきます。</p>
+<h1 id="_4">参考</h1>
+<ul>
+<li>http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/</li>
+<li>http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html</li>
+</ul>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

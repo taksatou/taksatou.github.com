@@ -10,10 +10,47 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Fri, 06 Jul 2012 12:30:08 GMT</pubDate>
+    <pubDate>Sun, 08 Jul 2012 07:59:16 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>rubyのワンライナーで便利な変数まとめ</title>
+      <link>http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables</link>
+      <pubDate>Sun, 08 Jul 2012 18:30:00 JST</pubDate>
+      <category><![CDATA[ruby]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables</guid>
+      <description>rubyのワンライナーで便利な変数まとめ</description>
+      <content:encoded><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
+<h1 id="">$.</h1>
+<p>現在の行番号を表します。awkでいうNRと同じです。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
+</pre></div>
+
+<h1 id="-i">$-i</h1>
+<p>この値を文字列で上書きするとin-place置換を行うようになります。オリジナルのファイルはここで指定した文字が拡張子についたファイルとして保存されます。オリジナルファイルが不要なら空文字を設定すればOKです。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+
+<h1 id="_1">$/</h1>
+<p>入力の区切り文字を表わす文字です。デフォルトは改行です。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
+</pre></div>
+
+<h1 id="_2">$, 、$;</h1>
+<p>$, はjoinのデフォルト区切り文字で、$; はsplitのデフォルト区切り文字です。
+ワンライナーではjoinとsplitをよく使うと思うので、BEGINで上書きしておけばワンライナーを多少短く書けます。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
+</pre></div>
+
+<h1 id="_3">まとめ</h1>
+<p>まだ他にも知らないテクニックがたくさんありそうですが、新しく見つけたら追記していきます。</p>
+<h1 id="_4">参考</h1>
+<ul>
+<li>http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/</li>
+<li>http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html</li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>sbclでクラスのスロット一覧を取得する方法</title>
       <link>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</link>
