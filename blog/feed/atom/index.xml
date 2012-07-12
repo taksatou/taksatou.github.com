@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-07-12T03:01:46Z</updated>
+  <updated>2012-07-12T03:08:04Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -32,7 +32,7 @@
 このあたりのうざい動きを抑えつつ最低限の設定を追加した設定をつくりました。</p>
 <script src="https://gist.github.com/3095366.js"> </script>
 
-<p>これを/Users/takayuki.sato/Library/Developer/Xcode/UserData/KeyBindings あたりに保存すれば、
+<p>これを$HOME/Library/Developer/Xcode/UserData/KeyBindings あたりに保存すれば、
 xcodeのkey bindingsの設定に読ませることができると思います。</p>
 <p>もっと良い設定があれば教えてほしいです。</p>]]></content>
   </entry>

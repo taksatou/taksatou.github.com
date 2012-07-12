@@ -15,7 +15,7 @@ C-xC-sで変な文字が入ったり、escで補完リストのポップアッ�
 <script src="https://gist.github.com/3095366.js"> </script>
 
 
-これを/Users/takayuki.sato/Library/Developer/Xcode/UserData/KeyBindings あたりに保存すれば、
+これを$HOME/Library/Developer/Xcode/UserData/KeyBindings あたりに保存すれば、
 xcodeのkey bindingsの設定に読ませることができると思います。
 
 もっと良い設定があれば教えてほしいです。
