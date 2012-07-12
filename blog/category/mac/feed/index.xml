@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Thu, 12 Jul 2012 03:01:46 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Xcodeのキーバインディングをもっとemacsっぽくする</title>
+      <link>http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings</link>
+      <pubDate>Thu, 12 Jul 2012 12:30:00 JST</pubDate>
+      <category><![CDATA[xcode]]></category>
+      <category><![CDATA[mac]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings</guid>
+      <description>Xcodeのキーバインディングをもっとemacsっぽくする</description>
+      <content:encoded><![CDATA[<p><img alt="xcode" src="/images/xcode-logo.png" /></p>
+<p>xcodeのキーバインディングはデフォルトでemacsっぽいものが使えますが、普段emacsを使ってる身としては中途半端すぎて逆にいらつきます。</p>
+<p>C-xC-sで変な文字が入ったり、escで補完リストのポップアップをトグル表示とかやめてほしかったので、
+このあたりのうざい動きを抑えつつ最低限の設定を追加した設定をつくりました。</p>
+<script src="https://gist.github.com/3095366.js"> </script>
+
+<p>これを/Users/takayuki.sato/Library/Developer/Xcode/UserData/KeyBindings あたりに保存すれば、
+xcodeのkey bindingsの設定に読ませることができると思います。</p>
+<p>もっと良い設定があれば教えてほしいです。</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

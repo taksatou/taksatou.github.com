@@ -7,12 +7,35 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-07-08T08:04:54Z</updated>
+  <updated>2012-07-12T03:01:46Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Xcodeのキーバインディングをもっとemacsっぽくする]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings" />
+    <id>http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings</id>
+    <updated>2012-07-12T12:30:00Z</updated>
+    <published>2012-07-12T12:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="xcode" />
+    <category scheme="http://mojavy.com/blog" term="mac" />
+    <summary type="html"><![CDATA[Xcodeのキーバインディングをもっとemacsっぽくする]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings"><![CDATA[<p><img alt="xcode" src="/images/xcode-logo.png" /></p>
+<p>xcodeのキーバインディングはデフォルトでemacsっぽいものが使えますが、普段emacsを使ってる身としては中途半端すぎて逆にいらつきます。</p>
+<p>C-xC-sで変な文字が入ったり、escで補完リストのポップアップをトグル表示とかやめてほしかったので、
+このあたりのうざい動きを抑えつつ最低限の設定を追加した設定をつくりました。</p>
+<script src="https://gist.github.com/3095366.js"> </script>
+
+<p>これを/Users/takayuki.sato/Library/Developer/Xcode/UserData/KeyBindings あたりに保存すれば、
+xcodeのkey bindingsの設定に読ませることができると思います。</p>
+<p>もっと良い設定があれば教えてほしいです。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

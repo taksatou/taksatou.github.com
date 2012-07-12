@@ -10,10 +10,28 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sun, 08 Jul 2012 08:04:54 GMT</pubDate>
+    <pubDate>Thu, 12 Jul 2012 03:01:46 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Xcodeのキーバインディングをもっとemacsっぽくする</title>
+      <link>http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings</link>
+      <pubDate>Thu, 12 Jul 2012 12:30:00 JST</pubDate>
+      <category><![CDATA[xcode]]></category>
+      <category><![CDATA[mac]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings</guid>
+      <description>Xcodeのキーバインディングをもっとemacsっぽくする</description>
+      <content:encoded><![CDATA[<p><img alt="xcode" src="/images/xcode-logo.png" /></p>
+<p>xcodeのキーバインディングはデフォルトでemacsっぽいものが使えますが、普段emacsを使ってる身としては中途半端すぎて逆にいらつきます。</p>
+<p>C-xC-sで変な文字が入ったり、escで補完リストのポップアップをトグル表示とかやめてほしかったので、
+このあたりのうざい動きを抑えつつ最低限の設定を追加した設定をつくりました。</p>
+<script src="https://gist.github.com/3095366.js"> </script>
+
+<p>これを/Users/takayuki.sato/Library/Developer/Xcode/UserData/KeyBindings あたりに保存すれば、
+xcodeのkey bindingsの設定に読ませることができると思います。</p>
+<p>もっと良い設定があれば教えてほしいです。</p>]]></content:encoded>
+    </item>
     <item>
       <title>rubyのワンライナーで便利な変数まとめ</title>
       <link>http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables</link>
