@@ -9,10 +9,27 @@ image: /images/nextstep-logo.png
 
 * objective-cではカテゴリという機能を使ってクラスの拡張ができる。
 * javascriptのprototypeのようなもの。
+* 一旦上書きしたメソッドにアクセスする方法はない。メソッドを上書きする必要がある場合はサブクラスとして実装するべき。
 * プライベートメソッドは無名カテゴリを使って実装できる。
 * 別の名前のカテゴリでもメソッド名は一意にしなければならない。
-* メソッド名にコンフリクトが発生した場合の動作は未定義。
+* 別のカテゴリとの間にメソッド名でコンフリクトが発生した場合、どちらが呼ばれるかは未定義。
 * カテゴリ名自体にソースコード上での可読性以上の実質的な意味は無いらしい。
+
+
+## 例
+
+$$code(lang=objective-c)
+@interface NSObject (MyExt)
+-(void) doit: (NSString *) arg;
+@end
+
+@implementation NSObject (MyExt)
+-(void) doit: (NSString *) arg
+{
+   // do something
+}
+@end
+$$/code
 
 ## 参考
 
