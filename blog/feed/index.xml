@@ -10,10 +10,29 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Thu, 12 Jul 2012 03:08:04 GMT</pubDate>
+    <pubDate>Fri, 13 Jul 2012 10:05:28 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>objective-cのカテゴリついてのメモ</title>
+      <link>http://mojavy.com/blog/2012/07/13/objective-c-memo</link>
+      <pubDate>Fri, 13 Jul 2012 18:30:00 JST</pubDate>
+      <category><![CDATA[objective-c]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/13/objective-c-memo</guid>
+      <description>objective-cのカテゴリついてのメモ</description>
+      <content:encoded><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<ul>
+<li>objective-cではカテゴリという機能を使ってクラスの拡張ができる。</li>
+<li>javascriptのprototypeのようなもの。</li>
+<li>プライベートメソッドは無名カテゴリを使って実装できる。</li>
+<li>別の名前のカテゴリでもメソッド名は一意にしなければならない。</li>
+<li>メソッド名にコンフリクトが発生した場合の動作は未定義。</li>
+<li>カテゴリ名自体にソースコード上での可読性以上の実質的な意味は無いらしい。</li>
+</ul>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>]]></content:encoded>
+    </item>
     <item>
       <title>Xcodeのキーバインディングをもっとemacsっぽくする</title>
       <link>http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings</link>

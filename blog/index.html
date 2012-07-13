@@ -81,6 +81,53 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="objective-cのカテゴリついてのメモ"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/07/13/objective-c-memo" rel="bookmark" title="Permanent Link to objective-cのカテゴリついてのメモ">objective-cのカテゴリついてのメモ</a></h2>
+  <small>July 13, 2012 at 06:30 PM | categories: 
+
+<a href='/blog/category/objective-c'>objective-c</a>
+ | <a href="http://mojavy.com/blog/2012/07/13/objective-c-memo#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<ul>
+<li>objective-cではカテゴリという機能を使ってクラスの拡張ができる。</li>
+<li>javascriptのprototypeのようなもの。</li>
+<li>プライベートメソッドは無名カテゴリを使って実装できる。</li>
+<li>別の名前のカテゴリでもメソッド名は一意にしなければならない。</li>
+<li>メソッド名にコンフリクトが発生した場合の動作は未定義。</li>
+<li>カテゴリ名自体にソースコード上での可読性以上の実質的な意味は無いらしい。</li>
+</ul>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
+</div>
+
+  </div>
+</div>
+
+
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<g:plusone size="medium"></g:plusone>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="xcodeのキーバインディングをもっとemacsっぽくする"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/07/12/xcode-emacs-like-keybindings" rel="bookmark" title="Permanent Link to Xcodeのキーバインディングをもっとemacsっぽくする">Xcodeのキーバインディングをもっとemacsっぽくする</a></h2>
   <small>July 12, 2012 at 12:30 PM | categories: 
@@ -295,89 +342,6 @@ deb-src http://archive.debian.org/debian/ lenny main
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="1分でpython環境を整える方法"></a>
-  <h2 class="blog_post_title"><a href="/blog/2012/04/22/virtualenv-burrito" rel="bookmark" title="Permanent Link to 1分でpython環境を整える方法">1分でpython環境を整える方法</a></h2>
-  <small>April 22, 2012 at 05:30 PM | categories: 
-
-<a href='/blog/category/python'>python</a>
- | <a href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="python" src="/images/python-logo.gif" /></p>
-<p>pythonではvirtualenvというユーティリティを使って複数の環境を切り替えることができます。しかしvirtualenvはセットアップがちょっとわかりにくかったりバージョンによってはこけたりしていまいち使いこなせていませんでした。久し振りにブログを書くついでにpython環境を再構築しようと思って調べたところ、<a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a> というのが使いやすかったので紹介します。これを使えば非常に簡単にpython環境を整えることができます。</p>
-<h1 id="">インストール</h1>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
-</pre></div>
-
-<p>として再ログインするだけです。勝手にパスやシェルの補完設定もしてくれます。</p>
-<h1 id="_1">使い方</h1>
-<p>新しい環境の構築は、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>mkvirtualenv newname
-</pre></div>
-
-<p><br></p>
-<p>環境の切り替えは、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>workon newname
-<span class="nv">$ </span><span class="c"># or</span>
-<span class="nv">$ </span>workon 2.7
-</pre></div>
-
-<p><br></p>
-<p>不要な環境の削除は、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>rmvirtualenv newname
-</pre></div>
-
-<p><br></p>
-<p>以上が基本的な使い方です。さらに詳しい使い方は<a href="http://www.doughellmann.com/docs/virtualenvwrapper/command_ref.html">virtualenvwrapperのコマンドリファレンス</a>等をみてください。</p>
-<h1 id="_2">解説</h1>
-<p>virtualenv-burrito自体はvirtualenv+virtualenvwrapperの環境を構築するだけなので、本格的に使いたい場合はvirtualenvについての理解が必要です。ただ、ほとんどの場合は単にバージョンとパッケージが切り替えられればいいと思うので、mkvirtualenvとworkonさえ覚えておけば十分です。
-いくつか注意点もあります。</p>
-<ul>
-<li>pythonのバイナリはあらかじめインストールされている必要があります。</li>
-<li>python3だとうごきません。python3環境が作れないという意味ではなく、デフォルトパスのpythonバージョンが3だとvirtualenv-burritoのセットアップ途中でこけます。その場合はpython2系をつかってください。</li>
-<li>pipのインストールでこける場合があります。その場合は以下のようなコマンドで回避できます。 <a href="https://github.com/brainsik/virtualenv-burrito/issues/16">(参考)</a></li>
-</ul>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
-<span class="nv">$ </span>mkvirtualenv -p <span class="k">$(</span>which python3.2<span class="k">)</span> --distribute py32
-</pre></div>
-
-<h1 id="_3">まとめ</h1>
-<p>いまからpython環境を構築するならvirtualenv-burritoつかっとくと、virtualenvとvirtualenvwrapperをセットアップするまでの手間が省けていいと思います</p>
-<h1 id="_4">関連リンク</h1>
-<ul>
-<li><a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a></li>
-<li><a href="http://pypi.python.org/pypi/virtualenv">virtualenv</a></li>
-<li><a href="http://www.doughellmann.com/docs/virtualenvwrapper/">virtualenvwrapper</a>
-<br></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/page/2">Next »</a>
 </div>
@@ -387,6 +351,11 @@ deb-src http://archive.debian.org/debian/ lenny main
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/07/13/objective-c-memo" title="objective-cのカテゴリついてのメモ"><p>objective-cのカテゴリついてのメモ</a><span style="font-size: 80%;">(July 13, 2012 at 06:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/13/objective-c-memo">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/13/objective-c-memo" alt="はてなブックマーク - objective-cのカテゴリついてのメモ" title="はてなブックマーク - objective-cのカテゴリついてのメモ">
+</a>
+</li>
       <li><a href="/blog/2012/07/12/xcode-emacs-like-keybindings" title="Xcodeのキーバインディングをもっとemacsっぽくする"><p>Xcodeのキーバインディングをもっとemacsっぽくする</a><span style="font-size: 80%;">(July 12, 2012 at 12:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings" alt="はてなブックマーク - Xcodeのキーバインディングをもっとemacsっぽくする" title="はてなブックマーク - Xcodeのキーバインディングをもっとemacsっぽくする">
@@ -407,11 +376,6 @@ deb-src http://archive.debian.org/debian/ lenny main
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable" alt="はてなブックマーク - debian lennyのEnd Of Life対応" title="はてなブックマーク - debian lennyのEnd Of Life対応">
 </a>
 </li>
-      <li><a href="/blog/2012/04/22/virtualenv-burrito" title="1分でpython環境を整える方法"><p>1分でpython環境を整える方法</a><span style="font-size: 80%;">(April 22, 2012 at 05:30 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/04/22/virtualenv-burrito">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/04/22/virtualenv-burrito" alt="はてなブックマーク - 1分でpython環境を整える方法" title="はてなブックマーク - 1分でpython環境を整える方法">
-</a>
-</li>
     </ul>
   </div>
 
@@ -425,6 +389,7 @@ deb-src http://archive.debian.org/debian/ lenny main
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (1)</li>
@@ -437,7 +402,7 @@ deb-src http://archive.debian.org/debian/ lenny main
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>
