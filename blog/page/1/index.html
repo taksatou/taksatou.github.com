@@ -96,12 +96,26 @@ href="/blog/feed/atom" />
 <ul>
 <li>objective-cではカテゴリという機能を使ってクラスの拡張ができる。</li>
 <li>javascriptのprototypeのようなもの。</li>
+<li>一旦上書きしたメソッドにアクセスする方法はない。メソッドを上書きする必要がある場合はサブクラスとして実装するべき。</li>
 <li>プライベートメソッドは無名カテゴリを使って実装できる。</li>
 <li>別の名前のカテゴリでもメソッド名は一意にしなければならない。</li>
-<li>メソッド名にコンフリクトが発生した場合の動作は未定義。</li>
+<li>別のカテゴリとの間にメソッド名でコンフリクトが発生した場合、どちらが呼ばれるかは未定義。</li>
 <li>カテゴリ名自体にソースコード上での可読性以上の実質的な意味は無いらしい。</li>
 </ul>
-<h2 id="">参考</h2>
+<h2 id="">例</h2>
+<div class="pygments_murphy"><pre><span class="k">@interface</span> <span class="nc">NSObject</span> <span class="nl">(MyExt)</span>
+<span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">doit:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">NSObject</span> <span class="nl">(MyExt)</span>
+<span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">doit:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span>
+<span class="p">{</span>
+   <span class="c1">// do something</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</pre></div>
+
+<h2 id="_1">参考</h2>
 <ul>
 <li><a href="http://stackoverflow.com/questions/5689088/do-objective-c-category-names-do-anything">http://stackoverflow.com/questions/5689088/do-objective-c-category-names-do-anything</a></li>
 </ul>

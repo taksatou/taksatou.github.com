@@ -3,6 +3,7 @@ categories: objective-c
 date: 2012/07/14 18:30:00
 title: objective-cのプロトコルとデリゲーションについてのメモ
 image: /images/nextstep-logo.png
+draft: True
 ---
 
 ![objective-c](/images/nextstep-logo.png)
@@ -15,16 +16,6 @@ image: /images/nextstep-logo.png
 ## 例
 
 $$code(lang=objective-c)
-@interface NSObject (MyExt)
--(void) doit: (NSString *) arg;
-@end
-
-@implementation NSObject (MyExt)
--(void) doit: (NSString *) arg
-{
-   // do something
-}
-@end
 $$/code
 
 
