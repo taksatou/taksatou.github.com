@@ -79,46 +79,83 @@ href="/blog/feed/atom" />
           
 <div id="maincontent2" class="bodywidth">
 <div id="blogleft">
-  
-<div class="blog_post">
-  <a name="blogofileでサムネイル画像を表示する方法"></a>
-  <h2 class="blog_post_title"><a href="/blog/2011/11/06/blofofile-test" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
-  <small>November 06, 2011 at 08:32 PM | categories: 
 
-<a href='/blog/category/python'>python</a>, <a href='/blog/category/memo'>memo</a>, <a href='/blog/category/blogofile'>blogofile</a>
- | <a href="http://mojavy.com/blog/2011/11/06/blofofile-test#disqus_thread"></a>
+<div class="blog_post">
+  <a name="objective-cのプロトコルとデリゲーションについてのメモ"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/07/17/objective-c-memo-protocol" rel="bookmark" title="Permanent Link to objective-cのプロトコルとデリゲーションについてのメモ">objective-cのプロトコルとデリゲーションについてのメモ</a></h2>
+  <small>July 17, 2012 at 06:30 PM | categories: 
+
+<a href='/blog/category/objective-c'>objective-c</a>
+ | <a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol#disqus_thread"></a>
 </small>
 <p/>
   <div class="post_prose">
     
 <div class="blogbody">
-  <p><img alt="rena" src="/images/rena.jpg" /></p>
-<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
-<p>例えば、
-<a href="http://mojavy.com">http://mojavy.com</a>
-のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
-<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
-<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
-         self.slug = None
-         self.draft = False
-         self.filters = None
-<span class="gi">+        self.image = None</span>
-         self.__parse()
-         self.__post_process()
-</pre></div>
-
-<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
-<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
-</pre></div>
-
-<p>のようにすれば${post.image}のようにして参照できる。</p>
+  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
 <ul>
-<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
+<li>プロトコルとはクラス間で共有するメソッドのリスト。</li>
+<li>javaでいうinterfaceのようなもの。</li>
+<li>@optionalディレクティブ以降のメソッドは実装が任意。</li>
+<li>@requiredディレクティブで必須。</li>
+<li>プロトコルに必要なメソッドは直接そのクラスで実装してもいいし、継承元の親クラスで実装してもよい。</li>
+<li>requiredがすべて実装されていなかった場合、コンパイラーはワーニングを出す。(エラーではない)</li>
+<li>すべてのrequiredメソッドを実装したクラスはそのプロトコルにconform(もしくはadopt)したという。</li>
+<li>そのオブジェクトがconformしているかどうかチェックするには、conformsToProtocolメソッドを使う。</li>
+<li>そのオブジェクトがoptionalなメソッドを実装しているかどうかをチェックするには、respondsToSelectorを使う。</li>
+<li>コンパイル時に型チェックが行われる。型宣言に<protocol名>を含めるとよい。</li>
+<li>カテゴリもプロトコルにadoptできる。</li>
+<li>プロトコルの名前はユニークでなければならない。</li>
+<li>delegationとはプロトコルで定義されたメソッドを実装したクラスを定義すること。</li>
+<li>informal protocolというものもあるが、これは単に実装がないカテゴリのこと。abstract protocolともいう。ドキュメンテーションやモジュラリティのために用いる。コンパイル時チェックはなし。プロトコルの@optionalディレクトリはObjective-C 2.0で追加されたので、こちらをつかえばよい。</li>
+<li>eclipseでいうデリゲートは、Composite Objectとよばれる</li>
 </ul>
+<h2 id="">例</h2>
+<h3 id="myprotocolh">myProtocol.h</h3>
+<div class="pygments_murphy"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplh">myProtocolImpl.h</h3>
+<div class="pygments_murphy"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+<span class="cp">#import &quot;myProtocol.h&quot;</span>
+
+<span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplm">myProtocolImpl.m</h3>
+<h1 id="import-myprotocolimplh">import "myProtocolImpl.h"</h1>
+<p>@implementation myProtocolImpl</p>
+<ul>
+<li>
+<p>(void)f1
+{
+    NSLog(@"called f0");
+}</p>
+</li>
+<li>
+<p>(void)f2: (id)obj0 withObject1:(id)obj1
+{
+    NSLog(@"called f2");
+}</p>
+</li>
+</ul>
+<p>@end
+$$/code</p>
+<h2 id="_1">参考</h2>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
 </div>
 
   </div>
@@ -141,58 +178,12 @@ href="/blog/feed/atom" />
 </script>
 
 
-  <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="ブログ引越しました"></a>
-  <h2 class="blog_post_title"><a href="/blog/2011/11/06/new_blog" rel="bookmark" title="Permanent Link to ブログ引越しました">ブログ引越しました</a></h2>
-  <small>November 06, 2011 at 07:44 PM | categories: 
-
-<a href='/blog/category/blog'>blog</a>, <a href='/blog/category/blogofile'>blogofile</a>
- | <a href="http://mojavy.com/blog/2011/11/06/new_blog#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <div class="document">
-<p>いままでblogger使ってましたが、github pagesに引越しました。</p>
-<p><a class="reference external" href="http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/">http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/</a>
-を参考にしてblogofileで構築しました。</p>
-<p>デザインは
-<a class="reference external" href="http://www.webdesignlondon-tristar.co.uk/website-templates">http://www.webdesignlondon-tristar.co.uk/website-templates</a>
-から拝借しました。</p>
-<p>blogofileのテンプレートは
-<a class="reference external" href="https://github.com/mpirnat/blogofile.com">https://github.com/mpirnat/blogofile.com</a>
-あたりを参考にするとよいと思います。</p>
-<p>よくあるブログサービスをそのまま使う場合と比べると構築までのハードルが若干高いですが、今後ちょっとしたウェブページをつくりたくなったときもソースをそのまま流用できるし、bloggerで色々不満だったことが解消できてよい感じです。</p>
-</div>
-
-</div>
-
-  </div>
-</div>
-
-
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
+<div id="disqus_thread"></div>
 <script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
+  var disqus_url = "http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol";
 </script>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
-<div style="text-align: right;">
-</div>
+<script type="text/javascript" src="http://disqus.com/forums/mojavy/embed.js"></script>
+<noscript><a href="http://mojavy.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 
 </div>
 <section id="blogright">

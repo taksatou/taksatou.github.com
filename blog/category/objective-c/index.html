@@ -81,6 +81,106 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="objective-cのプロトコルとデリゲーションについてのメモ"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/07/17/objective-c-memo-protocol" rel="bookmark" title="Permanent Link to objective-cのプロトコルとデリゲーションについてのメモ">objective-cのプロトコルとデリゲーションについてのメモ</a></h2>
+  <small>July 17, 2012 at 06:30 PM | categories: 
+
+<a href='/blog/category/objective-c'>objective-c</a>
+ | <a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<ul>
+<li>プロトコルとはクラス間で共有するメソッドのリスト。</li>
+<li>javaでいうinterfaceのようなもの。</li>
+<li>@optionalディレクティブ以降のメソッドは実装が任意。</li>
+<li>@requiredディレクティブで必須。</li>
+<li>プロトコルに必要なメソッドは直接そのクラスで実装してもいいし、継承元の親クラスで実装してもよい。</li>
+<li>requiredがすべて実装されていなかった場合、コンパイラーはワーニングを出す。(エラーではない)</li>
+<li>すべてのrequiredメソッドを実装したクラスはそのプロトコルにconform(もしくはadopt)したという。</li>
+<li>そのオブジェクトがconformしているかどうかチェックするには、conformsToProtocolメソッドを使う。</li>
+<li>そのオブジェクトがoptionalなメソッドを実装しているかどうかをチェックするには、respondsToSelectorを使う。</li>
+<li>コンパイル時に型チェックが行われる。型宣言に<protocol名>を含めるとよい。</li>
+<li>カテゴリもプロトコルにadoptできる。</li>
+<li>プロトコルの名前はユニークでなければならない。</li>
+<li>delegationとはプロトコルで定義されたメソッドを実装したクラスを定義すること。</li>
+<li>informal protocolというものもあるが、これは単に実装がないカテゴリのこと。abstract protocolともいう。ドキュメンテーションやモジュラリティのために用いる。コンパイル時チェックはなし。プロトコルの@optionalディレクトリはObjective-C 2.0で追加されたので、こちらをつかえばよい。</li>
+<li>eclipseでいうデリゲートは、Composite Objectとよばれる</li>
+</ul>
+<h2 id="">例</h2>
+<h3 id="myprotocolh">myProtocol.h</h3>
+<div class="pygments_murphy"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplh">myProtocolImpl.h</h3>
+<div class="pygments_murphy"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+<span class="cp">#import &quot;myProtocol.h&quot;</span>
+
+<span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplm">myProtocolImpl.m</h3>
+<h1 id="import-myprotocolimplh">import "myProtocolImpl.h"</h1>
+<p>@implementation myProtocolImpl</p>
+<ul>
+<li>
+<p>(void)f1
+{
+    NSLog(@"called f0");
+}</p>
+</li>
+<li>
+<p>(void)f2: (id)obj0 withObject1:(id)obj1
+{
+    NSLog(@"called f2");
+}</p>
+</li>
+</ul>
+<p>@end
+$$/code</p>
+<h2 id="_1">参考</h2>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
+</div>
+
+  </div>
+</div>
+
+
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<g:plusone size="medium"></g:plusone>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="objective-cのカテゴリついてのメモ"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/07/13/objective-c-memo" rel="bookmark" title="Permanent Link to objective-cのカテゴリついてのメモ">objective-cのカテゴリついてのメモ</a></h2>
   <small>July 13, 2012 at 06:30 PM | categories: 
@@ -152,6 +252,11 @@ href="/blog/feed/atom" />
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/07/17/objective-c-memo-protocol" title="objective-cのプロトコルとデリゲーションについてのメモ"><p>objective-cのプロトコルとデリゲーションについてのメモ</a><span style="font-size: 80%;">(July 17, 2012 at 06:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol" alt="はてなブックマーク - objective-cのプロトコルとデリゲーションについてのメモ" title="はてなブックマーク - objective-cのプロトコルとデリゲーションについてのメモ">
+</a>
+</li>
       <li><a href="/blog/2012/07/13/objective-c-memo" title="objective-cのカテゴリついてのメモ"><p>objective-cのカテゴリついてのメモ</a><span style="font-size: 80%;">(July 13, 2012 at 06:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/13/objective-c-memo">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/13/objective-c-memo" alt="はてなブックマーク - objective-cのカテゴリついてのメモ" title="はてなブックマーク - objective-cのカテゴリついてのメモ">
@@ -172,11 +277,6 @@ href="/blog/feed/atom" />
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots" alt="はてなブックマーク - sbclでクラスのスロット一覧を取得する方法" title="はてなブックマーク - sbclでクラスのスロット一覧を取得する方法">
 </a>
 </li>
-      <li><a href="/blog/2012/06/06/debian-lenny-oldstable" title="debian lennyのEnd Of Life対応"><p>debian lennyのEnd Of Life対応</a><span style="font-size: 80%;">(June 06, 2012 at 10:30 AM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable" alt="はてなブックマーク - debian lennyのEnd Of Life対応" title="はてなブックマーク - debian lennyのEnd Of Life対応">
-</a>
-</li>
     </ul>
   </div>
 
@@ -190,7 +290,7 @@ href="/blog/feed/atom" />
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (1)</li>
@@ -203,7 +303,7 @@ href="/blog/feed/atom" />
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>

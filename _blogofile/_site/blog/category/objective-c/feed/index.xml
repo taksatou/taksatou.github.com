@@ -10,10 +10,82 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Fri, 13 Jul 2012 10:34:31 GMT</pubDate>
+    <pubDate>Tue, 17 Jul 2012 09:55:36 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>objective-cのプロトコルとデリゲーションについてのメモ</title>
+      <link>http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol</link>
+      <pubDate>Tue, 17 Jul 2012 18:30:00 JST</pubDate>
+      <category><![CDATA[objective-c]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol</guid>
+      <description>objective-cのプロトコルとデリゲーションについてのメモ</description>
+      <content:encoded><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<ul>
+<li>プロトコルとはクラス間で共有するメソッドのリスト。</li>
+<li>javaでいうinterfaceのようなもの。</li>
+<li>@optionalディレクティブ以降のメソッドは実装が任意。</li>
+<li>@requiredディレクティブで必須。</li>
+<li>プロトコルに必要なメソッドは直接そのクラスで実装してもいいし、継承元の親クラスで実装してもよい。</li>
+<li>requiredがすべて実装されていなかった場合、コンパイラーはワーニングを出す。(エラーではない)</li>
+<li>すべてのrequiredメソッドを実装したクラスはそのプロトコルにconform(もしくはadopt)したという。</li>
+<li>そのオブジェクトがconformしているかどうかチェックするには、conformsToProtocolメソッドを使う。</li>
+<li>そのオブジェクトがoptionalなメソッドを実装しているかどうかをチェックするには、respondsToSelectorを使う。</li>
+<li>コンパイル時に型チェックが行われる。型宣言に<protocol名>を含めるとよい。</li>
+<li>カテゴリもプロトコルにadoptできる。</li>
+<li>プロトコルの名前はユニークでなければならない。</li>
+<li>delegationとはプロトコルで定義されたメソッドを実装したクラスを定義すること。</li>
+<li>informal protocolというものもあるが、これは単に実装がないカテゴリのこと。abstract protocolともいう。ドキュメンテーションやモジュラリティのために用いる。コンパイル時チェックはなし。プロトコルの@optionalディレクトリはObjective-C 2.0で追加されたので、こちらをつかえばよい。</li>
+<li>eclipseでいうデリゲートは、Composite Objectとよばれる</li>
+</ul>
+<h2 id="">例</h2>
+<h3 id="myprotocolh">myProtocol.h</h3>
+<div class="pygments_murphy"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplh">myProtocolImpl.h</h3>
+<div class="pygments_murphy"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+<span class="cp">#import &quot;myProtocol.h&quot;</span>
+
+<span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplm">myProtocolImpl.m</h3>
+<h1 id="import-myprotocolimplh">import "myProtocolImpl.h"</h1>
+<p>@implementation myProtocolImpl</p>
+<ul>
+<li>
+<p>(void)f1
+{
+    NSLog(@"called f0");
+}</p>
+</li>
+<li>
+<p>(void)f2: (id)obj0 withObject1:(id)obj1
+{
+    NSLog(@"called f2");
+}</p>
+</li>
+</ul>
+<p>@end
+$$/code</p>
+<h2 id="_1">参考</h2>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>]]></content:encoded>
+    </item>
     <item>
       <title>objective-cのカテゴリついてのメモ</title>
       <link>http://mojavy.com/blog/2012/07/13/objective-c-memo</link>
