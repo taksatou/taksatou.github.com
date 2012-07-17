@@ -54,6 +54,7 @@ $$/code
 
 
 ### myProtocolImpl.m
+$$code(lang=objective-c)
 #import "myProtocolImpl.h"
 
 @implementation myProtocolImpl
