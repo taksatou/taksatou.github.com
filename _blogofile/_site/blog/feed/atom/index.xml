@@ -7,12 +7,69 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-07-17T09:58:36Z</updated>
+  <updated>2012-07-17T11:47:38Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[objective-cのメモリマネージメントについて]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management" />
+    <id>http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management</id>
+    <updated>2012-07-18T18:30:00Z</updated>
+    <published>2012-07-18T18:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="objective-c" />
+    <summary type="html"><![CDATA[objective-cのメモリマネージメントについて]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management"><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<p>現在のところ3つの方法がある</p>
+<h2 id="1-gabage-collection">1. Gabage Collection</h2>
+<ul>
+<li>Objective-C 2.0から導入された。</li>
+<li>ただし、iOSの実行環境には含まれない。</li>
+<li>Max OS Xでなら使えるらしい。</li>
+</ul>
+<h2 id="2-manual-reference-counting">2. Manual Reference Counting</h2>
+<ul>
+<li>retainは参照カウントを1あげる。releaseは1さげる</li>
+<li>参照カウントが0でdeallocするとすぐに削除される</li>
+<li>NSMutableArrayのaddObjectやremoveObjectAtIndexなどはオブジェクトの参照カウントを増減させる。</li>
+<li>余分にreleaseしたりするとcrashする</li>
+</ul>
+<h2 id="3-automatic-reference-counting-arc">3. Automatic Reference Counting (ARC)</h2>
+<ul>
+<li>システムが自動的に参照カウントをしてくれる。</li>
+<li>強い変数と弱い変数がある</li>
+</ul>
+<h4 id="">強い変数</h4>
+<ul>
+<li>デフォルトでは、オブジェクトのポインタは強い変数。そのようなポインタにアサインした参照は自動的にretainされる。</li>
+<li>新しい参照をアサインする前に古い参照はreleaseされる</li>
+<li>_ _strong キーワードをつかって明示的に強い変数を宣言できる。</li>
+<li>プロパティはデフォルトではstrongではない</li>
+<li>C++のshared_ptrのようなもの？</li>
+</ul>
+<h4 id="_1">弱い変数</h4>
+<ul>
+<li>循環参照している場合や、しても開放されるようにするときに使える。</li>
+<li>親が子の強い参照を持っており、子が親の弱い参照を持っている場合、retainのサイクルが形成されなくなるのでオブジェクトを開放できる。</li>
+<li>_ _weakキーワードを使う。</li>
+<li>iOS4ではサポートされていない</li>
+<li>C++のweak_ptrのようなもの？</li>
+</ul>
+<h4 id="non-arc">Non-ARCのコード</h4>
+<ul>
+<li>init, alloc, copy, new, mutableCopyをprefixにもつメソッドはそのオブジェクトの所有権を返す、というネーミングコンベンションに従っている場合は自動的にARCが適用される。</li>
+<li>名前のコンベンションとは関係なしに、明示的にオブジェクトの所有権を返すメソッドをコンパイラに伝える方法もある。</li>
+</ul>
+<h2 id="_2">参考</h2>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -536,47 +593,5 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 <h1 id="_8">まとめ</h1>
 <p>以上、tmuxにreverse-bufferというオプションを追加して、バッファの挙動を変更できるようにしてみました。</p>
 <p>端末制御のプログラムは普段あまり触れる機会がないし複雑そうなイメージがあって敬遠しがちですが、ちょっとした機能を追加するだけだったら意外と簡単だったりするのでどんどんいじってみるといいと思います。</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[blogofileでサムネイル画像を表示する方法]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/11/06/blofofile-test" />
-    <id>http://mojavy.com/blog/2011/11/06/blofofile-test</id>
-    <updated>2011-11-06T20:32:51Z</updated>
-    <published>2011-11-06T20:32:51Z</published>
-    <category scheme="http://mojavy.com/blog" term="python" />
-    <category scheme="http://mojavy.com/blog" term="memo" />
-    <category scheme="http://mojavy.com/blog" term="blogofile" />
-    <summary type="html"><![CDATA[blogofileでサムネイル画像を表示する方法]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/blofofile-test"><![CDATA[<p><img alt="rena" src="/images/rena.jpg" /></p>
-<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
-<p>例えば、
-<a href="http://mojavy.com">http://mojavy.com</a>
-のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
-<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
-<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
-         self.slug = None
-         self.draft = False
-         self.filters = None
-<span class="gi">+        self.image = None</span>
-         self.__parse()
-         self.__post_process()
-</pre></div>
-
-<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
-<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
-</pre></div>
-
-<p>のようにすれば${post.image}のようにして参照できる。</p>
-<ul>
-<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
-</ul>]]></content>
   </entry>
 </feed>
