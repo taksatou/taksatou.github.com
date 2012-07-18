@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 18 Jul 2012 03:11:37 GMT</pubDate>
+    <pubDate>Wed, 18 Jul 2012 03:13:15 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -30,9 +30,9 @@
 </pre></div>
 
 <p>デフォルトポートは8000ですが、引数で指定することもできます。</p>
-<p>ちなみにrubyでもwebrickを使って同様のことができますが、<a href="http://d.hatena.ne.jp/rx7/20090812/p1">こちら</a> で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。</p>
-<p><br></p>
-<p>リクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
+<p>ちなみにrubyでもwebrickを使って同様のことができますが、<a href="http://d.hatena.ne.jp/rx7/20090812/p1">こちら</a> で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。
+<br>
+リクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
 <div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
