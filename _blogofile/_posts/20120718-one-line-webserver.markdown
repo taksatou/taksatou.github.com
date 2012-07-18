@@ -14,20 +14,18 @@ $$code(lang=bash)
 $ python -mSimpleHTTPServer 3333
 $$/code
 
-
 デフォルトポートは8000ですが、引数で指定することもできます。
-
+<br>
 ちなみにrubyでもwebrickを使って同様のことができますが、[こちら](http://d.hatena.ne.jp/rx7/20090812/p1) で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。
 <br>
-リクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。
-
+<br>
+でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。
 $$code(lang=bash)
 $ ruby -rsinatra -e 'get("/"){sleep 3}'
 $$/code
 
 
 ポートを変更する場合は以下のようにします
-
 $$code(lang=bash)
 $ ruby -rsinatra -e 'set :port,3333; get("/"){sleep 3}'
 $$/code

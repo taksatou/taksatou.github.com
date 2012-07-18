@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-07-18T03:13:15Z</updated>
+  <updated>2012-07-18T03:15:25Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -33,10 +33,12 @@
 <div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
 </pre></div>
 
-<p>デフォルトポートは8000ですが、引数で指定することもできます。</p>
-<p>ちなみにrubyでもwebrickを使って同様のことができますが、<a href="http://d.hatena.ne.jp/rx7/20090812/p1">こちら</a> で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。
+<p>デフォルトポートは8000ですが、引数で指定することもできます。
 <br>
-リクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
+ちなみにrubyでもwebrickを使って同様のことができますが、<a href="http://d.hatena.ne.jp/rx7/20090812/p1">こちら</a> で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。
+<br>
+<br>
+でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
 <div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
