@@ -7,12 +7,48 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-07-17T11:47:38Z</updated>
+  <updated>2012-07-18T03:06:36Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[ワンライナーでウェブサーバを起動する方法]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/18/one-line-webserver" />
+    <id>http://mojavy.com/blog/2012/07/18/one-line-webserver</id>
+    <updated>2012-07-18T12:30:00Z</updated>
+    <published>2012-07-18T12:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="python" />
+    <category scheme="http://mojavy.com/blog" term="web" />
+    <category scheme="http://mojavy.com/blog" term="ruby" />
+    <summary type="html"><![CDATA[ワンライナーでウェブサーバを起動する方法]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/18/one-line-webserver"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
+<p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
+起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxであればデフォルトではいってるpythonで使えると思います。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
+</pre></div>
+
+<p>デフォルトポートは8000ですが、引数で指定することもできます。
+ちなみにrubyでもwebrickを使って同様のことができますが、<a href="http://d.hatena.ne.jp/rx7/20090812/p1">こちら</a> で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。</p>
+<p><br></p>
+<p>リクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
+</pre></div>
+
+<p>ポートを変更する場合は以下のようにします</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
+</pre></div>
+
+<h2 id="">参考</h2>
+<ul>
+<li><a href="http://d.hatena.ne.jp/rx7/20090812/p1">コマンド1つで今すぐWebサーバを起動させるためのワンライナー(Ruby or Python)</a></li>
+</ul>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

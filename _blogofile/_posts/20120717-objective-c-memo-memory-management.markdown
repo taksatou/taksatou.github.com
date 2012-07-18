@@ -1,6 +1,6 @@
 ---
 categories: objective-c
-date: 2012/07/18 18:30:00
+date: 2012/07/18 11:30:00
 title: objective-cのメモリマネージメントについて
 image: /images/nextstep-logo.png
 ---

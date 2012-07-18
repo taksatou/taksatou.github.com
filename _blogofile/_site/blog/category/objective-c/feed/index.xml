@@ -10,14 +10,14 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 17 Jul 2012 11:47:38 GMT</pubDate>
+    <pubDate>Wed, 18 Jul 2012 03:06:36 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>objective-cのメモリマネージメントについて</title>
       <link>http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management</link>
-      <pubDate>Wed, 18 Jul 2012 18:30:00 JST</pubDate>
+      <pubDate>Wed, 18 Jul 2012 11:30:00 JST</pubDate>
       <category><![CDATA[objective-c]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management</guid>
       <description>objective-cのメモリマネージメントについて</description>
