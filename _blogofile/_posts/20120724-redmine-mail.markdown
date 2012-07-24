@@ -9,5 +9,7 @@ image: /images/redmine-logo.png
 
 
 redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。
+
 いままでgmailでフィルタリングしてたので気付かなかった。。
-gmailで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。
+
+メールクライアントはgmailのウェブアプリで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。

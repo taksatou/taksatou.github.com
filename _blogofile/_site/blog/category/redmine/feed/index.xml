@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 24 Jul 2012 15:12:14 GMT</pubDate>
+    <pubDate>Tue, 24 Jul 2012 15:16:32 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -23,9 +23,9 @@
       <guid isPermaLink="true">http://mojavy.com/blog/2012/07/24/redmine-mail</guid>
       <description>redmineのメールを効率良くフィルタリングする</description>
       <content:encoded><![CDATA[<p><img alt="redmine" src="/images/redmine-logo.png" /></p>
-<p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。
-いままでgmailでフィルタリングしてたので気付かなかった。。
-gmailで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。</p>]]></content:encoded>
+<p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。</p>
+<p>いままでgmailでフィルタリングしてたので気付かなかった。。</p>
+<p>メールクライアントはgmailのウェブアプリで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

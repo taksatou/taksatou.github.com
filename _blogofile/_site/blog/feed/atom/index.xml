@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-07-24T15:12:14Z</updated>
+  <updated>2012-07-24T15:16:32Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -27,9 +27,9 @@
     <category scheme="http://mojavy.com/blog" term="redmine" />
     <summary type="html"><![CDATA[redmineのメールを効率良くフィルタリングする]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2012/07/24/redmine-mail"><![CDATA[<p><img alt="redmine" src="/images/redmine-logo.png" /></p>
-<p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。
-いままでgmailでフィルタリングしてたので気付かなかった。。
-gmailで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。</p>]]></content>
+<p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。</p>
+<p>いままでgmailでフィルタリングしてたので気付かなかった。。</p>
+<p>メールクライアントはgmailのウェブアプリで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。</p>]]></content>
   </entry>
   <entry>
     <author>
