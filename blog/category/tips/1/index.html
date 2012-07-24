@@ -26,11 +26,32 @@ href="/blog/feed/atom" />
   google.load("search", "1");
   google.load("jquery", "1.6.4");
   google.load("jqueryui", "1.8.16");
+
+  
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26834066-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
 </script>
 
 
   </head>
   <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
     <div id="content">
       
   <div id="headerwrap">
@@ -43,7 +64,7 @@ href="/blog/feed/atom" />
       <ul>
         <li><a href="/" title="Home">Home</a></li>
         <li><a href="/blog" title="Blog">Blog</a></li>
-        <li><a href="/apps" title="Apps">Apps</a></li>
+        <li><a href="/apps.html" title="Apps">Apps</a></li>
         <li><a href="http://twitter.com/#!/taksatou" title="Twitter">Twitter</a></li>
         <li><a href="https://github.com/taksatou" title="github">github</a></li>
         <li><a href="/about.html" title="About">About</a></li>
@@ -60,54 +81,44 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
-  <a name="既存ブログサービスの問題に対する考察"></a>
-  <h2 class="blog_post_title"><a href="/blog/2011/10/29/0001-new_blog.rst" rel="bookmark" title="Permanent Link to 既存ブログサービスの問題に対する考察">既存ブログサービスの問題に対する考察</a></h2>
-  <small>October 29, 2011 at 07:00 PM | categories: 
+  <a name="redmineのメールを効率良くフィルタリングする"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/07/24/redmine-mail" rel="bookmark" title="Permanent Link to redmineのメールを効率良くフィルタリングする">redmineのメールを効率良くフィルタリングする</a></h2>
+  <small>July 24, 2012 at 11:30 PM | categories: 
 
-<a href='/blog/category/python'>python</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/ubuntu'>ubuntu</a>
- | <a href="http://mojavy.com/blog/2011/10/29/0001-new_blog.rst#disqus_thread">View Comments</a>
+<a href='/blog/category/tips'>tips</a>, <a href='/blog/category/redmine'>redmine</a>
+ | <a href="http://mojavy.com/blog/2012/07/24/redmine-mail#disqus_thread"></a>
 </small>
-
-<a href="http://b.hatena.ne.jp/entry/add/http://mojavy.com/blog/2011/10/29/0001-new_blog.rst">
-<img src="http://b.hatena.ne.jp/images/append.gif" width="16" height="12" style="border: none;" alt="このエントリーをはてなブックマークに追加" title="このエントリーをはてなブックマークに追加" /></a>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/10/29/0001-new_blog.rst">
-<img src="http://b.hatena.ne.jp/images/entry.gif" width="16" height="12" style="border: none;" alt="このエントリーを含むはてなブックマーク" title="このエントリーを含むはてなブックマーク" /></a>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/10/29/0001-new_blog.rst">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/10/29/0001-new_blog.rst" alt="はてなブックマーク - 既存ブログサービスの問題に対する考察" title="はてなブックマーク - 既存ブログサービスの問題に対する考察">
-</a>
-
 <p/>
   <div class="post_prose">
     
 <div class="blogbody">
-  <div class="document">
-<div class="contents topic" id="id1">
-<p class="topic-title first">目次</p>
-<ul class="simple">
-<li><a class="reference internal" href="#id2" id="id3">背景</a></li>
-</ul>
-</div>
-<div class="section" id="id2">
-<h1><a class="toc-backref" href="#id3">背景</a></h1>
-<p>2009/08 - 2010/07まで、ブログを1年間毎日更新する、という目標を掲げて、
-365記事以上書き、アクセスを増やした中で一番感じたことは、</p>
-<p><strong>ブログを更新することは面倒である</strong></p>
-<p>ということだった。</p>
-<p>自分で書きためたネタを、時間がたって忘れたときに自分で検索して思い出したり、
-書くことで頭が整理された、などの多大なメリットがあったにも関わらず、
-最終的には、 <em>面倒</em> がメリットをうわまって更新を続けられなくなってしまった。</p>
-</div>
-</div>
-
+  <p><img alt="redmine" src="/images/redmine-logo.png" /></p>
+<p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。
+いままでgmailでフィルタリングしてたので気付かなかった。。
+gmailで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。</p>
 </div>
 
   </div>
 </div>
 
 
+<hr class="intersocial">
 
-  <div class="after_post"><a href="http://mojavy.com/blog/2011/10/29/0001-new_blog.rst#disqus_thread">Read and Post Comments</a></div>
-  <hr class="interblog" />
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<g:plusone size="medium"></g:plusone>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
 </div>
 
@@ -116,9 +127,29 @@ href="/blog/feed/atom" />
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
-      <li><a href="/blog/2011/10/29/0001-new_blog.rst" title="既存ブログサービスの問題に対する考察"><p>既存ブログサービスの問題に対する考察</a><span style="font-size: 80%;">(October 29, 2011 at 07:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/10/29/0001-new_blog.rst">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/10/29/0001-new_blog.rst" alt="はてなブックマーク - 既存ブログサービスの問題に対する考察" title="はてなブックマーク - 既存ブログサービスの問題に対する考察">
+      <li><a href="/blog/2012/07/24/redmine-mail" title="redmineのメールを効率良くフィルタリングする"><p>redmineのメールを効率良くフィルタリングする</a><span style="font-size: 80%;">(July 24, 2012 at 11:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/24/redmine-mail">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/24/redmine-mail" alt="はてなブックマーク - redmineのメールを効率良くフィルタリングする" title="はてなブックマーク - redmineのメールを効率良くフィルタリングする">
+</a>
+</li>
+      <li><a href="/blog/2012/07/18/one-line-webserver" title="ワンライナーでウェブサーバを起動する方法"><p>ワンライナーでウェブサーバを起動する方法</a><span style="font-size: 80%;">(July 18, 2012 at 12:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/one-line-webserver">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/one-line-webserver" alt="はてなブックマーク - ワンライナーでウェブサーバを起動する方法" title="はてなブックマーク - ワンライナーでウェブサーバを起動する方法">
+</a>
+</li>
+      <li><a href="/blog/2012/07/18/objective-c-memo-memory-management" title="objective-cのメモリマネージメントについて"><p>objective-cのメモリマネージメントについて</a><span style="font-size: 80%;">(July 18, 2012 at 11:30 AM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management" alt="はてなブックマーク - objective-cのメモリマネージメントについて" title="はてなブックマーク - objective-cのメモリマネージメントについて">
+</a>
+</li>
+      <li><a href="/blog/2012/07/17/objective-c-memo-protocol" title="objective-cのプロトコルとデリゲーションについてのメモ"><p>objective-cのプロトコルとデリゲーションについてのメモ</a><span style="font-size: 80%;">(July 17, 2012 at 06:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol" alt="はてなブックマーク - objective-cのプロトコルとデリゲーションについてのメモ" title="はてなブックマーク - objective-cのプロトコルとデリゲーションについてのメモ">
+</a>
+</li>
+      <li><a href="/blog/2012/07/13/objective-c-memo" title="objective-cのカテゴリついてのメモ"><p>objective-cのカテゴリついてのメモ</a><span style="font-size: 80%;">(July 13, 2012 at 06:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/13/objective-c-memo">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/13/objective-c-memo" alt="はてなブックマーク - objective-cのカテゴリついてのメモ" title="はてなブックマーク - objective-cのカテゴリついてのメモ">
 </a>
 </li>
     </ul>
@@ -128,9 +159,21 @@ href="/blog/feed/atom" />
   <div id="categories">
     <h1>Categories</h1>
     <ul>
-     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
     </ul>
   </div> 
 
@@ -138,7 +181,11 @@ href="/blog/feed/atom" />
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2011/10/1" title="October 2011">October 2011</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(8)</li>
+      <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2011/11/1" title="November 2011">November 2011</a>&nbsp;(2)</li>
     </ul>
   </div>
 

@@ -81,6 +81,71 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="tmuxでマウスを使う"></a>
+  <h2 class="blog_post_title"><a href="/blog/2011/12/13/tmux_advent_calendar_2_2011" rel="bookmark" title="Permanent Link to tmuxでマウスを使う">tmuxでマウスを使う</a></h2>
+  <small>December 13, 2011 at 12:58 AM | categories: 
+
+<a href='/blog/category/advent-calendar'>advent calendar</a>, <a href='/blog/category/tmux'>tmux</a>
+ | <a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の13日目です。
+12日目はnetmarkjpさんの<a href="http://netmark.jp/2011/12/gnu-screen-xmodem.html">GNU screen でシリアル通信 + xmodem転送</a>でした。</p>
+<p>今日はtmuxのマウスまわりの設定について紹介してみます。</p>
+<p>tmuxにはマウスで操作するための機能がいくつか提供されています。ChangeLogを見る限りでは結構前からマウスサポートはされているようですが、mac portから入れたtmuxでは動かなかったのでソースから最新版をいれることをおすすめします。
+macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/tmatsuu/20111130/1322677832">matsuuさんが紹介してくれている</a>のでそちらを参考にしてください。</p>
+<p>tmux-1.5の時点で使えるマウス関連の設定項目は以下の通りです。</p>
+<dl>
+<dt>mode-mouse</dt>
+<dd>onにすると、マウスで画面をドラッグしたときにコピーモードに入ります。マウスホイールでスクロールすることもできます。</dd>
+<dt>mouse-select-pane</dt>
+<dd>マウスクリックでpaneを選択できるようになります。</dd>
+<dt>mouse-select-window</dt>
+<dd>statusを有効にしているときに、window名の部分をクリックすることでwindowを切り替えられます。</dd>
+<dt>mouse-utf8</dt>
+<dd>マウスの入力をutf-8として扱うための設定だそうです。効果はよくわかりませんでした。</dd>
+</dl>
+<p>なお、shiftを押しながらターミナルをクリックすれば、本来のマウスの動作になります。</p>
+<p>macのiTerm, windowsのputty, ubuntuのgnome-terminalで動作確認できました。
+たまに画面が乱れることがありますが、再描画すると直ります。</p>
+<h1 id="">まとめ</h1>
+<p>以下を.tmux.confにコピペするとtmuxでマウスがつかえます。</p>
+<div class="pygments_murphy"><pre><span class="nb">set</span> -g mode-mouse on
+<span class="nb">set</span> -g mouse-resize-pane on
+<span class="nb">set</span> -g mouse-select-pane on
+<span class="nb">set</span> -g mouse-select-window on
+</pre></div>
+
+<p>本当は、set-clipboardという機能も紹介したかったのですが、ちゃんと動かすことができなかったのでまたの機会にします。
+以上非常に簡単でしたがマウスサポート機能の紹介でした。</p>
+</div>
+
+  </div>
+</div>
+
+
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<g:plusone size="medium"></g:plusone>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="tmuxに独自機能を追加する"></a>
   <h2 class="blog_post_title"><a href="/blog/2011/12/06/tmux_advent_calendar_2011" rel="bookmark" title="Permanent Link to tmuxに独自機能を追加する">tmuxに独自機能を追加する</a></h2>
   <small>December 06, 2011 at 01:05 AM | categories: 
@@ -398,6 +463,11 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/07/24/redmine-mail" title="redmineのメールを効率良くフィルタリングする"><p>redmineのメールを効率良くフィルタリングする</a><span style="font-size: 80%;">(July 24, 2012 at 11:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/24/redmine-mail">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/24/redmine-mail" alt="はてなブックマーク - redmineのメールを効率良くフィルタリングする" title="はてなブックマーク - redmineのメールを効率良くフィルタリングする">
+</a>
+</li>
       <li><a href="/blog/2012/07/18/one-line-webserver" title="ワンライナーでウェブサーバを起動する方法"><p>ワンライナーでウェブサーバを起動する方法</a><span style="font-size: 80%;">(July 18, 2012 at 12:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/one-line-webserver">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/one-line-webserver" alt="はてなブックマーク - ワンライナーでウェブサーバを起動する方法" title="はてなブックマーク - ワンライナーでウェブサーバを起動する方法">
@@ -418,11 +488,6 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/13/objective-c-memo" alt="はてなブックマーク - objective-cのカテゴリついてのメモ" title="はてなブックマーク - objective-cのカテゴリついてのメモ">
 </a>
 </li>
-      <li><a href="/blog/2012/07/12/xcode-emacs-like-keybindings" title="Xcodeのキーバインディングをもっとemacsっぽくする"><p>Xcodeのキーバインディングをもっとemacsっぽくする</a><span style="font-size: 80%;">(July 12, 2012 at 12:30 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings" alt="はてなブックマーク - Xcodeのキーバインディングをもっとemacsっぽくする" title="はてなブックマーク - Xcodeのキーバインディングをもっとemacsっぽくする">
-</a>
-</li>
     </ul>
   </div>
 
@@ -438,8 +503,10 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
@@ -450,7 +517,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(7)</li>
+      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>
