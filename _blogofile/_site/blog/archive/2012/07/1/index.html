@@ -81,6 +81,50 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/07/25/ios-simulator-log" rel="bookmark" title="Permanent Link to xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる">xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる</a></h2>
+  <small>July 25, 2012 at 08:30 PM | categories: 
+
+<a href='/blog/category/ios'>ios</a>
+ | <a href="http://mojavy.com/blog/2012/07/25/ios-simulator-log#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="ios" src="/images/ios-logo.png" /></p>
+<p>タイトルの通りです。</p>
+<p>iosエミュレータで標準出力に書いたものはsystem.logに吐かれます。</p>
+<p>ちなみに最近のxcodeのiosプロジェクトは以下のようなコマンドでシンタックスチェックができます。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>clang -Wall -Wextra -Wno-unused-parameter -fsyntax-only  -miphoneos-version-min<span class="o">=</span>4.3 -xobjective-c -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk *.m
+</pre></div>
+
+<p>参考：　<a href="http://sakito.jp/emacs/emacsobjectivec.html">http://sakito.jp/emacs/emacsobjectivec.html</a></p>
+</div>
+
+  </div>
+</div>
+
+
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<g:plusone size="medium"></g:plusone>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="redmineのメールを効率良くフィルタリングする"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/07/24/redmine-mail" rel="bookmark" title="Permanent Link to redmineのメールを効率良くフィルタリングする">redmineのメールを効率良くフィルタリングする</a></h2>
   <small>July 24, 2012 at 11:30 PM | categories: 
@@ -357,71 +401,6 @@ href="/blog/feed/atom" />
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="objective-cのカテゴリついてのメモ"></a>
-  <h2 class="blog_post_title"><a href="/blog/2012/07/13/objective-c-memo" rel="bookmark" title="Permanent Link to objective-cのカテゴリついてのメモ">objective-cのカテゴリついてのメモ</a></h2>
-  <small>July 13, 2012 at 06:30 PM | categories: 
-
-<a href='/blog/category/objective-c'>objective-c</a>
- | <a href="http://mojavy.com/blog/2012/07/13/objective-c-memo#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
-<ul>
-<li>objective-cではカテゴリという機能を使ってクラスの拡張ができる。</li>
-<li>javascriptのprototypeのようなもの。</li>
-<li>一旦上書きしたメソッドにアクセスする方法はない。メソッドを上書きする必要がある場合はサブクラスとして実装するべき。</li>
-<li>プライベートメソッドは無名カテゴリを使って実装できる。</li>
-<li>別の名前のカテゴリでもメソッド名は一意にしなければならない。</li>
-<li>別のカテゴリとの間にメソッド名でコンフリクトが発生した場合、どちらが呼ばれるかは未定義。</li>
-<li>カテゴリ名自体にソースコード上での可読性以上の実質的な意味は無いらしい。</li>
-</ul>
-<h2 id="">例</h2>
-<div class="pygments_murphy"><pre><span class="k">@interface</span> <span class="nc">NSObject</span> <span class="nl">(MyExt)</span>
-<span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">doit:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span><span class="p">;</span>
-<span class="k">@end</span>
-
-<span class="k">@implementation</span> <span class="nc">NSObject</span> <span class="nl">(MyExt)</span>
-<span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">doit:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span>
-<span class="p">{</span>
-   <span class="c1">// do something</span>
-<span class="p">}</span>
-<span class="k">@end</span>
-</pre></div>
-
-<h2 id="_1">参考</h2>
-<ul>
-<li><a href="http://stackoverflow.com/questions/5689088/do-objective-c-category-names-do-anything">http://stackoverflow.com/questions/5689088/do-objective-c-category-names-do-anything</a></li>
-</ul>
-<p><br>
-<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
-</div>
-
-  </div>
-</div>
-
-
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../2">Next »</a>
 </div>
@@ -431,6 +410,11 @@ href="/blog/feed/atom" />
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/07/25/ios-simulator-log" title="xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる"><p>xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる</a><span style="font-size: 80%;">(July 25, 2012 at 08:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/25/ios-simulator-log">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/25/ios-simulator-log" alt="はてなブックマーク - xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる" title="はてなブックマーク - xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる">
+</a>
+</li>
       <li><a href="/blog/2012/07/24/redmine-mail" title="redmineのメールを効率良くフィルタリングする"><p>redmineのメールを効率良くフィルタリングする</a><span style="font-size: 80%;">(July 24, 2012 at 11:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/24/redmine-mail">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/24/redmine-mail" alt="はてなブックマーク - redmineのメールを効率良くフィルタリングする" title="はてなブックマーク - redmineのメールを効率良くフィルタリングする">
@@ -451,11 +435,6 @@ href="/blog/feed/atom" />
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol" alt="はてなブックマーク - objective-cのプロトコルとデリゲーションについてのメモ" title="はてなブックマーク - objective-cのプロトコルとデリゲーションについてのメモ">
 </a>
 </li>
-      <li><a href="/blog/2012/07/13/objective-c-memo" title="objective-cのカテゴリついてのメモ"><p>objective-cのカテゴリついてのメモ</a><span style="font-size: 80%;">(July 13, 2012 at 06:30 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/13/objective-c-memo">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/13/objective-c-memo" alt="はてなブックマーク - objective-cのカテゴリついてのメモ" title="はてなブックマーク - objective-cのカテゴリついてのメモ">
-</a>
-</li>
     </ul>
   </div>
 
@@ -467,6 +446,7 @@ href="/blog/feed/atom" />
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (3)</li>
@@ -485,7 +465,7 @@ href="/blog/feed/atom" />
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(8)</li>
+      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>

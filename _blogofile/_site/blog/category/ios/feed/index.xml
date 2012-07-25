@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Wed, 25 Jul 2012 11:58:41 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる</title>
+      <link>http://mojavy.com/blog/2012/07/25/ios-simulator-log</link>
+      <pubDate>Wed, 25 Jul 2012 20:30:00 JST</pubDate>
+      <category><![CDATA[ios]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/25/ios-simulator-log</guid>
+      <description>xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる</description>
+      <content:encoded><![CDATA[<p><img alt="ios" src="/images/ios-logo.png" /></p>
+<p>タイトルの通りです。</p>
+<p>iosエミュレータで標準出力に書いたものはsystem.logに吐かれます。</p>
+<p>ちなみに最近のxcodeのiosプロジェクトは以下のようなコマンドでシンタックスチェックができます。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>clang -Wall -Wextra -Wno-unused-parameter -fsyntax-only  -miphoneos-version-min<span class="o">=</span>4.3 -xobjective-c -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk *.m
+</pre></div>
+
+<p>参考：　<a href="http://sakito.jp/emacs/emacsobjectivec.html">http://sakito.jp/emacs/emacsobjectivec.html</a></p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>
