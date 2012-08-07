@@ -13,7 +13,7 @@ image: /images/jenkins-logo.png
 ## 目的
 
 * jenkinsでiOSアプリをビルドする
-* ビルドしたアプリは、UDIDの登録なしに実機確認したい
+* ビルドしたアプリは、UDIDの登録なしに実機インストールして確認してもらいたい
 
 ## 手順
 
@@ -21,7 +21,7 @@ image: /images/jenkins-logo.png
 
 実機インストールするだけなら通常のデベロッパーアカウントでも大丈夫ですが、UDIDの登録なしにwifiから配布するためにはエンタープライズプログラムに参加する必要があります。
 
-エンタープライズプログラムに参加すればapp storeを経由せずに自由にインストールできるようになりますが、アクセスできるのが特定の組織内に限定されるように適切に制限をかけてかなければ規約違反になります。
+エンタープライズプログラムに参加すればapp storeを経由せずに自由にインストールできるようになりますが、アクセスできるのが特定の組織内に限定されるように適切に制限をかけなければ規約違反になります。
 
 [https://developer.apple.com/jp/programs/ios/enterprise/](https://developer.apple.com/jp/programs/ios/enterprise/)
 
@@ -35,14 +35,13 @@ Build SettingsのArchitectures に 'armv6' を手動で追記すれば大丈夫�
 ### 実機確認
 
 jenkinsでビルドする際は後述のビルドスクリプトを使うのですが、provisioning profileの設定等が正しくされていることを確認するために、一旦ここでxcodeのUI上で作成したipaファイルをiPhone構成ユーティリティを使って実機インストールしてみます。
-
-[http://support.apple.com/kb/DL1465?viewlocale=ja_JP](http://support.apple.com/kb/DL1465?viewlocale=ja_JP)
+xcodeでipaファイルをビルドする方法はすぐにでてくると思うので、適宜調べて下さい。
 
 ここで正常にインストールできなければ、provisioning profile等の状態を確認してください。
 
 ### jenkinsのセットアップ
 
-jenkinsを用意します。ビルド専用機が用意できない場合でも、開発に用いているmacをJNLP経由でそのままスレーブとして使うことができます。
+jenkinsを用意します。ビルド専用macが用意できない場合でも、開発に用いているmacをJNLP経由でそのままスレーブとして使うことができます。
 
 jenkins自体の細かいセットアップ方法は割愛しますが、JNLP経由でスレーブを起動する場合は以下のようなスクリプトをバックグランドで起動するようにしておくと便利です。
 
@@ -207,4 +206,5 @@ iOSアプリをコマンドラインからビルドするスクリプトを作�
 * [https://developer.apple.com/jp/programs/ios/enterprise/](https://developer.apple.com/jp/programs/ios/enterprise/)
 * [http://www.apple.com/jp/support/iphone/enterprise/](http://www.apple.com/jp/support/iphone/enterprise/)
 * [https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf](https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf)
+* [http://support.apple.com/kb/DL1465?viewlocale=ja_JP](http://support.apple.com/kb/DL1465?viewlocale=ja_JP)
 

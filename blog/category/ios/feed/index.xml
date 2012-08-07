@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 07 Aug 2012 06:02:31 GMT</pubDate>
+    <pubDate>Tue, 07 Aug 2012 06:09:41 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -27,23 +27,23 @@
 <h2 id="">目的</h2>
 <ul>
 <li>jenkinsでiOSアプリをビルドする</li>
-<li>ビルドしたアプリは、UDIDの登録なしに実機確認したい</li>
+<li>ビルドしたアプリは、UDIDの登録なしに実機インストールして確認してもらいたい</li>
 </ul>
 <h2 id="_1">手順</h2>
 <h3 id="ios-developer-enterprise-program">iOS Developer Enterprise Program への参加</h3>
 <p>実機インストールするだけなら通常のデベロッパーアカウントでも大丈夫ですが、UDIDの登録なしにwifiから配布するためにはエンタープライズプログラムに参加する必要があります。</p>
-<p>エンタープライズプログラムに参加すればapp storeを経由せずに自由にインストールできるようになりますが、アクセスできるのが特定の組織内に限定されるように適切に制限をかけてかなければ規約違反になります。</p>
+<p>エンタープライズプログラムに参加すればapp storeを経由せずに自由にインストールできるようになりますが、アクセスできるのが特定の組織内に限定されるように適切に制限をかけなければ規約違反になります。</p>
 <p><a href="https://developer.apple.com/jp/programs/ios/enterprise/">https://developer.apple.com/jp/programs/ios/enterprise/</a></p>
 <h3 id="xcode">xcodeの設定</h3>
 <p><a href="http://golog.plus.vc/iphone/3355/">http://golog.plus.vc/iphone/3355/</a> などを参考に、xcodeからprovisioning profileを設定します。</p>
 <p>また、最近のxcodeではデフォルトではarmv7用バイナリしかビルドしないので、armv6用もビルドするように設定しておきます。
 Build SettingsのArchitectures に 'armv6' を手動で追記すれば大丈夫です。</p>
 <h3 id="_2">実機確認</h3>
-<p>jenkinsでビルドする際は後述のビルドスクリプトを使うのですが、provisioning profileの設定等が正しくされていることを確認するために、一旦ここでxcodeのUI上で作成したipaファイルをiPhone構成ユーティリティを使って実機インストールしてみます。</p>
-<p><a href="http://support.apple.com/kb/DL1465?viewlocale=ja_JP">http://support.apple.com/kb/DL1465?viewlocale=ja_JP</a></p>
+<p>jenkinsでビルドする際は後述のビルドスクリプトを使うのですが、provisioning profileの設定等が正しくされていることを確認するために、一旦ここでxcodeのUI上で作成したipaファイルをiPhone構成ユーティリティを使って実機インストールしてみます。
+xcodeでipaファイルをビルドする方法はすぐにでてくると思うので、適宜調べて下さい。</p>
 <p>ここで正常にインストールできなければ、provisioning profile等の状態を確認してください。</p>
 <h3 id="jenkins">jenkinsのセットアップ</h3>
-<p>jenkinsを用意します。ビルド専用機が用意できない場合でも、開発に用いているmacをJNLP経由でそのままスレーブとして使うことができます。</p>
+<p>jenkinsを用意します。ビルド専用macが用意できない場合でも、開発に用いているmacをJNLP経由でそのままスレーブとして使うことができます。</p>
 <p>jenkins自体の細かいセットアップ方法は割愛しますが、JNLP経由でスレーブを起動する場合は以下のようなスクリプトをバックグランドで起動するようにしておくと便利です。</p>
 <div class="pygments_murphy"><pre><span class="c">#!/bin/sh</span>
 
@@ -180,6 +180,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <li><a href="https://developer.apple.com/jp/programs/ios/enterprise/">https://developer.apple.com/jp/programs/ios/enterprise/</a></li>
 <li><a href="http://www.apple.com/jp/support/iphone/enterprise/">http://www.apple.com/jp/support/iphone/enterprise/</a></li>
 <li><a href="https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf">https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf</a></li>
+<li><a href="http://support.apple.com/kb/DL1465?viewlocale=ja_JP">http://support.apple.com/kb/DL1465?viewlocale=ja_JP</a></li>
 </ul>]]></content:encoded>
     </item>
     <item>
