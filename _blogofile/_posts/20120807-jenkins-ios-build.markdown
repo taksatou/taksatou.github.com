@@ -167,7 +167,7 @@ $$/code
 
 htmlはリンク先さえあっていれば大丈夫なのですが、plistの方はいくつか注意が必要です。
 
-* display-imageは必須。iOSのバージョンによってはなくてもよいようなのですが、iOS 5.1.1だと「Appをダウンロードできません」というエラーになります。
+* display-imageは必須。iOSのバージョンによってはなくてもよいようなのですが、iOS 5.1.1だとdisplay-imageがplistにないと「Appをダウンロードできません」というエラーになります。
 * bundle-identifierはxcodeのBundle Identifierと一致させる。
 
 

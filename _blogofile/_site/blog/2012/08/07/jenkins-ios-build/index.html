@@ -223,7 +223,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 
 <p>htmlはリンク先さえあっていれば大丈夫なのですが、plistの方はいくつか注意が必要です。</p>
 <ul>
-<li>display-imageは必須。iOSのバージョンによってはなくてもよいようなのですが、iOS 5.1.1だと「Appをダウンロードできません」というエラーになります。</li>
+<li>display-imageは必須。iOSのバージョンによってはなくてもよいようなのですが、iOS 5.1.1だとdisplay-imageがplistにないと「Appをダウンロードできません」というエラーになります。</li>
 <li>bundle-identifierはxcodeのBundle Identifierと一致させる。</li>
 </ul>
 <p>ここではxcodeデフォルトのsdkバージョンを使用していますが、必要に応じてxcodebuild等のコマンドラインオプションを追加してください。</p>
