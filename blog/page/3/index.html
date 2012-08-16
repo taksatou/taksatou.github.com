@@ -81,6 +81,56 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="sbclでクラスのスロット一覧を取得する方法"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/07/06/common-lisp-list-of-slots" rel="bookmark" title="Permanent Link to sbclでクラスのスロット一覧を取得する方法">sbclでクラスのスロット一覧を取得する方法</a></h2>
+  <small>July 06, 2012 at 06:30 PM | categories: 
+
+<a href='/blog/category/memo'>memo</a>, <a href='/blog/category/sbcl'>sbcl</a>, <a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
+<p>メモメモ</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
+(#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::INO&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::DEV&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::NLINK&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::UID&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::GID&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::SIZE&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::ATIME&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MTIME&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::CTIME&gt;)
+</pre></div>
+</div>
+
+  </div>
+</div>
+
+
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<g:plusone size="medium"></g:plusone>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="debian-lennyのend-of-life対応"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/06/06/debian-lenny-oldstable" rel="bookmark" title="Permanent Link to debian lennyのEnd Of Life対応">debian lennyのEnd Of Life対応</a></h2>
   <small>June 06, 2012 at 10:30 AM | categories: 
@@ -481,69 +531,6 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="blogofileでサムネイル画像を表示する方法"></a>
-  <h2 class="blog_post_title"><a href="/blog/2011/11/06/blofofile-test" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
-  <small>November 06, 2011 at 08:32 PM | categories: 
-
-<a href='/blog/category/python'>python</a>, <a href='/blog/category/memo'>memo</a>, <a href='/blog/category/blogofile'>blogofile</a>
- | <a href="http://mojavy.com/blog/2011/11/06/blofofile-test#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="rena" src="/images/rena.jpg" /></p>
-<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
-<p>例えば、
-<a href="http://mojavy.com">http://mojavy.com</a>
-のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
-<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
-<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
-         self.slug = None
-         self.draft = False
-         self.filters = None
-<span class="gi">+        self.image = None</span>
-         self.__parse()
-         self.__post_process()
-</pre></div>
-
-<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
-<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
-</pre></div>
-
-<p>のようにすれば${post.image}のようにして参照できる。</p>
-<ul>
-<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../2">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -555,6 +542,11 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/08/16/android-maven-eclipse-convert" title="Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応"><p>Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応</a><span style="font-size: 80%;">(August 16, 2012 at 12:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert" alt="はてなブックマーク - Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応" title="はてなブックマーク - Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応">
+</a>
+</li>
       <li><a href="/blog/2012/08/07/jenkins-ios-build" title="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする"><p>jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a><span style="font-size: 80%;">(August 07, 2012 at 03:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/07/jenkins-ios-build">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/08/07/jenkins-ios-build" alt="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする" title="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">
@@ -575,11 +567,6 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/one-line-webserver" alt="はてなブックマーク - ワンライナーでウェブサーバを起動する方法" title="はてなブックマーク - ワンライナーでウェブサーバを起動する方法">
 </a>
 </li>
-      <li><a href="/blog/2012/07/18/objective-c-memo-memory-management" title="objective-cのメモリマネージメントについて"><p>objective-cのメモリマネージメントについて</a><span style="font-size: 80%;">(July 18, 2012 at 11:30 AM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management" alt="はてなブックマーク - objective-cのメモリマネージメントについて" title="はてなブックマーク - objective-cのメモリマネージメントについて">
-</a>
-</li>
     </ul>
   </div>
 
@@ -588,11 +575,12 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
     <h1>Categories</h1>
     <ul>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (3)</li>
@@ -611,7 +599,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>

@@ -81,6 +81,64 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="android-maven-pluginプロジェクトをeclipseにインポートした際にr.javaが生成されなくなる問題の対応"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/08/16/android-maven-eclipse-convert" rel="bookmark" title="Permanent Link to Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応">Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応</a></h2>
+  <small>August 16, 2012 at 12:00 PM | categories: 
+
+<a href='/blog/category/jenkins'>jenkins</a>, <a href='/blog/category/android'>android</a>
+ | <a href="http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="android" src="/images/android-logo-s.png" /></p>
+<p>androidアプリをコマンドラインでビルドするには<a href="http://code.google.com/p/maven-android-plugin/">maven-android-plugin</a>が便利ですが、
+eclipseで開発したい場合もあると思います。
+そういうときは、<strong>mvn eclipse:eclipse</strong> というコマンドでmavenからeclipse用のプロジェクトを生成できるのですが、そのままではR.javaが生成できなくてエラーがでてしまう場合があります。</p>
+<p>mavenコマンドを起動してビルドする分には問題ないのですが、リソースの補完がきかないし精神衛生上もよくないです。
+いろいろ試したところ、以下の内容を <strong>.project</strong> のbuildCommand要素の中に追加すればよいようです。</p>
+<pre><code>&lt;buildCommand&gt;
+  &lt;name&gt;com.android.ide.eclipse.adt.ResourceManagerBuilder&lt;/name&gt;
+&lt;/buildCommand&gt;
+&lt;buildCommand&gt;
+  &lt;name&gt;com.android.ide.eclipse.adt.PreCompilerBuilder&lt;/name&gt;
+&lt;/buildCommand&gt;
+</code></pre>
+<p>.projectを編集する際は一旦eclipseを終了しておいたほうがよいです。</p>
+<h2 id="">参考</h2>
+<ul>
+<li><a href="http://code.google.com/p/maven-android-plugin/">maven-android-plugin</a></li>
+</ul>
+<h2 id="_1">関連記事</h2>
+<ul>
+<li><a href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/">jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<g:plusone size="medium"></g:plusone>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/08/07/jenkins-ios-build" rel="bookmark" title="Permanent Link to jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a></h2>
   <small>August 07, 2012 at 03:30 PM | categories: 
@@ -283,6 +341,11 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/08/16/android-maven-eclipse-convert" title="Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応"><p>Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応</a><span style="font-size: 80%;">(August 16, 2012 at 12:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert" alt="はてなブックマーク - Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応" title="はてなブックマーク - Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応">
+</a>
+</li>
       <li><a href="/blog/2012/08/07/jenkins-ios-build" title="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする"><p>jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a><span style="font-size: 80%;">(August 07, 2012 at 03:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/07/jenkins-ios-build">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/08/07/jenkins-ios-build" alt="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする" title="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">
@@ -303,11 +366,6 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/one-line-webserver" alt="はてなブックマーク - ワンライナーでウェブサーバを起動する方法" title="はてなブックマーク - ワンライナーでウェブサーバを起動する方法">
 </a>
 </li>
-      <li><a href="/blog/2012/07/18/objective-c-memo-memory-management" title="objective-cのメモリマネージメントについて"><p>objective-cのメモリマネージメントについて</a><span style="font-size: 80%;">(July 18, 2012 at 11:30 AM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management" alt="はてなブックマーク - objective-cのメモリマネージメントについて" title="はてなブックマーク - objective-cのメモリマネージメントについて">
-</a>
-</li>
     </ul>
   </div>
 
@@ -316,11 +374,12 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
     <h1>Categories</h1>
     <ul>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (3)</li>
@@ -339,7 +398,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>

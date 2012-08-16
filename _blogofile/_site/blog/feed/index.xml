@@ -10,10 +10,41 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 07 Aug 2012 06:23:00 GMT</pubDate>
+    <pubDate>Thu, 16 Aug 2012 02:54:02 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応</title>
+      <link>http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert</link>
+      <pubDate>Thu, 16 Aug 2012 12:00:00 JST</pubDate>
+      <category><![CDATA[jenkins]]></category>
+      <category><![CDATA[android]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert</guid>
+      <description>Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応</description>
+      <content:encoded><![CDATA[<p><img alt="android" src="/images/android-logo-s.png" /></p>
+<p>androidアプリをコマンドラインでビルドするには<a href="http://code.google.com/p/maven-android-plugin/">maven-android-plugin</a>が便利ですが、
+eclipseで開発したい場合もあると思います。
+そういうときは、<strong>mvn eclipse:eclipse</strong> というコマンドでmavenからeclipse用のプロジェクトを生成できるのですが、そのままではR.javaが生成できなくてエラーがでてしまう場合があります。</p>
+<p>mavenコマンドを起動してビルドする分には問題ないのですが、リソースの補完がきかないし精神衛生上もよくないです。
+いろいろ試したところ、以下の内容を <strong>.project</strong> のbuildCommand要素の中に追加すればよいようです。</p>
+<pre><code>&lt;buildCommand&gt;
+  &lt;name&gt;com.android.ide.eclipse.adt.ResourceManagerBuilder&lt;/name&gt;
+&lt;/buildCommand&gt;
+&lt;buildCommand&gt;
+  &lt;name&gt;com.android.ide.eclipse.adt.PreCompilerBuilder&lt;/name&gt;
+&lt;/buildCommand&gt;
+</code></pre>
+<p>.projectを編集する際は一旦eclipseを終了しておいたほうがよいです。</p>
+<h2 id="">参考</h2>
+<ul>
+<li><a href="http://code.google.com/p/maven-android-plugin/">maven-android-plugin</a></li>
+</ul>
+<h2 id="_1">関連記事</h2>
+<ul>
+<li><a href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/">jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a></li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</title>
       <link>http://mojavy.com/blog/2012/08/07/jenkins-ios-build</link>
@@ -459,30 +490,6 @@ xcodeのkey bindingsの設定に読ませることができると思います。
 <li><a href="http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/">http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/</a></li>
 <li><a href="http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html">http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html</a></li>
 </ul>]]></content:encoded>
-    </item>
-    <item>
-      <title>sbclでクラスのスロット一覧を取得する方法</title>
-      <link>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</link>
-      <pubDate>Fri, 06 Jul 2012 18:30:00 JST</pubDate>
-      <category><![CDATA[memo]]></category>
-      <category><![CDATA[sbcl]]></category>
-      <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</guid>
-      <description>sbclでクラスのスロット一覧を取得する方法</description>
-      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
-<p>メモメモ</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
-(#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::INO&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::DEV&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::NLINK&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::UID&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::GID&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::SIZE&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::ATIME&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MTIME&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::CTIME&gt;)
-</pre></div>]]></content:encoded>
     </item>
   </channel>
 </rss>

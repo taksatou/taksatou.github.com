@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Thu, 16 Aug 2012 02:54:02 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応</title>
+      <link>http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert</link>
+      <pubDate>Thu, 16 Aug 2012 12:00:00 JST</pubDate>
+      <category><![CDATA[jenkins]]></category>
+      <category><![CDATA[android]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert</guid>
+      <description>Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応</description>
+      <content:encoded><![CDATA[<p><img alt="android" src="/images/android-logo-s.png" /></p>
+<p>androidアプリをコマンドラインでビルドするには<a href="http://code.google.com/p/maven-android-plugin/">maven-android-plugin</a>が便利ですが、
+eclipseで開発したい場合もあると思います。
+そういうときは、<strong>mvn eclipse:eclipse</strong> というコマンドでmavenからeclipse用のプロジェクトを生成できるのですが、そのままではR.javaが生成できなくてエラーがでてしまう場合があります。</p>
+<p>mavenコマンドを起動してビルドする分には問題ないのですが、リソースの補完がきかないし精神衛生上もよくないです。
+いろいろ試したところ、以下の内容を <strong>.project</strong> のbuildCommand要素の中に追加すればよいようです。</p>
+<pre><code>&lt;buildCommand&gt;
+  &lt;name&gt;com.android.ide.eclipse.adt.ResourceManagerBuilder&lt;/name&gt;
+&lt;/buildCommand&gt;
+&lt;buildCommand&gt;
+  &lt;name&gt;com.android.ide.eclipse.adt.PreCompilerBuilder&lt;/name&gt;
+&lt;/buildCommand&gt;
+</code></pre>
+<p>.projectを編集する際は一旦eclipseを終了しておいたほうがよいです。</p>
+<h2 id="">参考</h2>
+<ul>
+<li><a href="http://code.google.com/p/maven-android-plugin/">maven-android-plugin</a></li>
+</ul>
+<h2 id="_1">関連記事</h2>
+<ul>
+<li><a href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/">jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a></li>
+</ul>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

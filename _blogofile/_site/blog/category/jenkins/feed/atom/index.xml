@@ -7,12 +7,48 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-08-07T06:23:00Z</updated>
+  <updated>2012-08-16T02:54:02Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert" />
+    <id>http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert</id>
+    <updated>2012-08-16T12:00:00Z</updated>
+    <published>2012-08-16T12:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="jenkins" />
+    <category scheme="http://mojavy.com/blog" term="android" />
+    <summary type="html"><![CDATA[Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert"><![CDATA[<p><img alt="android" src="/images/android-logo-s.png" /></p>
+<p>androidアプリをコマンドラインでビルドするには<a href="http://code.google.com/p/maven-android-plugin/">maven-android-plugin</a>が便利ですが、
+eclipseで開発したい場合もあると思います。
+そういうときは、<strong>mvn eclipse:eclipse</strong> というコマンドでmavenからeclipse用のプロジェクトを生成できるのですが、そのままではR.javaが生成できなくてエラーがでてしまう場合があります。</p>
+<p>mavenコマンドを起動してビルドする分には問題ないのですが、リソースの補完がきかないし精神衛生上もよくないです。
+いろいろ試したところ、以下の内容を <strong>.project</strong> のbuildCommand要素の中に追加すればよいようです。</p>
+<pre><code>&lt;buildCommand&gt;
+  &lt;name&gt;com.android.ide.eclipse.adt.ResourceManagerBuilder&lt;/name&gt;
+&lt;/buildCommand&gt;
+&lt;buildCommand&gt;
+  &lt;name&gt;com.android.ide.eclipse.adt.PreCompilerBuilder&lt;/name&gt;
+&lt;/buildCommand&gt;
+</code></pre>
+<p>.projectを編集する際は一旦eclipseを終了しておいたほうがよいです。</p>
+<h2 id="">参考</h2>
+<ul>
+<li><a href="http://code.google.com/p/maven-android-plugin/">maven-android-plugin</a></li>
+</ul>
+<h2 id="_1">関連記事</h2>
+<ul>
+<li><a href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/">jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a></li>
+</ul>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
