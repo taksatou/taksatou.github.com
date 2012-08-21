@@ -7,12 +7,36 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-08-16T02:54:02Z</updated>
+  <updated>2012-08-21T06:18:13Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[ec2へのログインを簡単にするコマンド]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/08/21/ssh-login-command-for-ec2" />
+    <id>http://mojavy.com/blog/2012/08/21/ssh-login-command-for-ec2</id>
+    <updated>2012-08-21T12:00:00Z</updated>
+    <published>2012-08-21T12:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="python" />
+    <category scheme="http://mojavy.com/blog" term="aws" />
+    <summary type="html"><![CDATA[ec2へのログインを簡単にするコマンド]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/08/21/ssh-login-command-for-ec2"><![CDATA[<p><img alt="aws" src="/images/aws-logo-s.png" /></p>
+<p>ec2にログインする際いちいちpublic DNSをAWS Console上で確認するのは面倒なので、
+AWS SDKを利用してNameからログインできるようにシェルコマンドを書いておくと便利。</p>
+<ul>
+<li>例</li>
+</ul>
+<div class="pygments_murphy"><pre>ssh-aws .ssh/ec2.pem &lt;instance_name&gt; -r &lt;region&gt;
+</pre></div>
+
+<script src="https://gist.github.com/3412524.js?file=.zshrc"></script>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

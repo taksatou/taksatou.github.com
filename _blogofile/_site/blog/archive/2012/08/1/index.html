@@ -81,6 +81,52 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="ec2へのログインを簡単にするコマンド"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/08/21/ssh-login-command-for-ec2" rel="bookmark" title="Permanent Link to ec2へのログインを簡単にするコマンド">ec2へのログインを簡単にするコマンド</a></h2>
+  <small>August 21, 2012 at 12:00 PM | categories: 
+
+<a href='/blog/category/python'>python</a>, <a href='/blog/category/aws'>aws</a>
+ | <a href="http://mojavy.com/blog/2012/08/21/ssh-login-command-for-ec2#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="aws" src="/images/aws-logo-s.png" /></p>
+<p>ec2にログインする際いちいちpublic DNSをAWS Console上で確認するのは面倒なので、
+AWS SDKを利用してNameからログインできるようにシェルコマンドを書いておくと便利。</p>
+<ul>
+<li>例</li>
+</ul>
+<div class="pygments_murphy"><pre>ssh-aws .ssh/ec2.pem &lt;instance_name&gt; -r &lt;region&gt;
+</pre></div>
+
+<script src="https://gist.github.com/3412524.js?file=.zshrc"></script>
+</div>
+
+  </div>
+</div>
+
+
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<g:plusone size="medium"></g:plusone>
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="android-maven-pluginプロジェクトをeclipseにインポートした際にr.javaが生成されなくなる問題の対応"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/08/16/android-maven-eclipse-convert" rel="bookmark" title="Permanent Link to Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応">Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応</a></h2>
   <small>August 16, 2012 at 12:00 PM | categories: 
@@ -341,6 +387,11 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/08/21/ssh-login-command-for-ec2" title="ec2へのログインを簡単にするコマンド"><p>ec2へのログインを簡単にするコマンド</a><span style="font-size: 80%;">(August 21, 2012 at 12:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/21/ssh-login-command-for-ec2">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/08/21/ssh-login-command-for-ec2" alt="はてなブックマーク - ec2へのログインを簡単にするコマンド" title="はてなブックマーク - ec2へのログインを簡単にするコマンド">
+</a>
+</li>
       <li><a href="/blog/2012/08/16/android-maven-eclipse-convert" title="Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応"><p>Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応</a><span style="font-size: 80%;">(August 16, 2012 at 12:00 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/08/16/android-maven-eclipse-convert" alt="はてなブックマーク - Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応" title="はてなブックマーク - Android Maven Pluginプロジェクトをeclipseにインポートした際にR.javaが生成されなくなる問題の対応">
@@ -361,11 +412,6 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/24/redmine-mail" alt="はてなブックマーク - redmineのメールを効率良くフィルタリングする" title="はてなブックマーク - redmineのメールを効率良くフィルタリングする">
 </a>
 </li>
-      <li><a href="/blog/2012/07/18/one-line-webserver" title="ワンライナーでウェブサーバを起動する方法"><p>ワンライナーでウェブサーバを起動する方法</a><span style="font-size: 80%;">(July 18, 2012 at 12:30 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/one-line-webserver">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/one-line-webserver" alt="はてなブックマーク - ワンライナーでウェブサーバを起動する方法" title="はてなブックマーク - ワンライナーでウェブサーバを起動する方法">
-</a>
-</li>
     </ul>
   </div>
 
@@ -375,6 +421,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
     <ul>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (1)</li>
@@ -383,7 +430,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (3)</li>
-     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (1)</li>
@@ -398,7 +445,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>

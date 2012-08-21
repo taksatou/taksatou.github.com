@@ -7,12 +7,36 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-08-16T02:54:02Z</updated>
+  <updated>2012-08-21T06:18:13Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[ec2へのログインを簡単にするコマンド]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/08/21/ssh-login-command-for-ec2" />
+    <id>http://mojavy.com/blog/2012/08/21/ssh-login-command-for-ec2</id>
+    <updated>2012-08-21T12:00:00Z</updated>
+    <published>2012-08-21T12:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="python" />
+    <category scheme="http://mojavy.com/blog" term="aws" />
+    <summary type="html"><![CDATA[ec2へのログインを簡単にするコマンド]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/08/21/ssh-login-command-for-ec2"><![CDATA[<p><img alt="aws" src="/images/aws-logo-s.png" /></p>
+<p>ec2にログインする際いちいちpublic DNSをAWS Console上で確認するのは面倒なので、
+AWS SDKを利用してNameからログインできるようにシェルコマンドを書いておくと便利。</p>
+<ul>
+<li>例</li>
+</ul>
+<div class="pygments_murphy"><pre>ssh-aws .ssh/ec2.pem &lt;instance_name&gt; -r &lt;region&gt;
+</pre></div>
+
+<script src="https://gist.github.com/3412524.js?file=.zshrc"></script>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -497,47 +521,5 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <p>これを$HOME/Library/Developer/Xcode/UserData/KeyBindings あたりに保存すれば、
 xcodeのkey bindingsの設定に読ませることができると思います。</p>
 <p>もっと良い設定があれば教えてほしいです。</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[rubyのワンライナーで便利な変数まとめ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables" />
-    <id>http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables</id>
-    <updated>2012-07-08T18:30:00Z</updated>
-    <published>2012-07-08T18:30:00Z</published>
-    <category scheme="http://mojavy.com/blog" term="ruby" />
-    <summary type="html"><![CDATA[rubyのワンライナーで便利な変数まとめ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
-<h1 id="">$.</h1>
-<p>現在の行番号を表します。awkでいうNRと同じです。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
-</pre></div>
-
-<h1 id="-i">$-i</h1>
-<p>この値を文字列で上書きするとin-place置換を行うようになります。オリジナルのファイルはここで指定した文字が拡張子についたファイルとして保存されます。オリジナルファイルが不要なら空文字を設定すればOKです。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
-</pre></div>
-
-<h1 id="_1">$/</h1>
-<p>入力の区切り文字を表わす文字です。デフォルトは改行です。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
-</pre></div>
-
-<h1 id="_2">$, 、$;</h1>
-<p>$, はjoinのデフォルト区切り文字で、$; はsplitのデフォルト区切り文字です。
-ワンライナーではjoinとsplitをよく使うと思うので、BEGINで上書きしておけばワンライナーを多少短く書けます。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
-</pre></div>
-
-<h1 id="_3">まとめ</h1>
-<p>まだ他にも知らないテクニックがたくさんありそうですが、新しく見つけたら追記していきます。</p>
-<h1 id="_4">参考</h1>
-<ul>
-<li><a href="http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/">http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/</a></li>
-<li><a href="http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html">http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html</a></li>
-</ul>]]></content>
   </entry>
 </feed>
