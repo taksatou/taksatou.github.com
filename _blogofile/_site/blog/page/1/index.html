@@ -94,12 +94,12 @@ href="/blog/feed/atom" />
 <div class="blogbody">
   <p><img alt="jenkins" src="/images/jenkins-logo.png" /></p>
 <p>はまりどころが多くて大変だったので今後同じことをやろうとする人のために一連の作業をメモしておきます。</p>
-<h2 id="">目的</h2>
+<h2 id="_1">目的</h2>
 <ul>
 <li>jenkinsでiOSアプリをビルドする</li>
 <li>ビルドしたアプリは、UDIDの登録なしに実機インストールして確認してもらいたい</li>
 </ul>
-<h2 id="_1">手順</h2>
+<h2 id="_2">手順</h2>
 <h3 id="ios-developer-enterprise-program">iOS Developer Enterprise Program への参加</h3>
 <p>実機インストールするだけなら通常のデベロッパーアカウントでも大丈夫ですが、UDIDの登録なしにwifiから配布するためにはエンタープライズプログラムに参加する必要があります。</p>
 <p>エンタープライズプログラムに参加すればapp storeを経由せずに自由にインストールできるようになりますが、アクセスできるのが特定の組織内に限定されるように適切に制限をかけなければ規約違反になります。</p>
@@ -108,7 +108,7 @@ href="/blog/feed/atom" />
 <p><a href="http://golog.plus.vc/iphone/3355/">http://golog.plus.vc/iphone/3355/</a> などを参考に、xcodeからprovisioning profileを設定します。</p>
 <p>また、最近のxcodeではデフォルトではarmv7用バイナリしかビルドしないので、armv6用もビルドするように設定しておきます。
 Build SettingsのArchitectures に 'armv6' を手動で追記すれば大丈夫です。</p>
-<h3 id="_2">実機確認</h3>
+<h3 id="_3">実機確認</h3>
 <p>jenkinsでビルドする際は後述のビルドスクリプトを使うのですが、provisioning profileの設定等が正しくされていることを確認するために、一旦ここでxcodeのUI上で作成したipaファイルをiPhone構成ユーティリティを使って実機インストールしてみます。
 xcodeでipaファイルをビルドする方法はすぐにでてくると思うので、適宜調べて下さい。</p>
 <p>ここで正常にインストールできなければ、provisioning profile等の状態を確認してください。</p>
@@ -127,7 +127,7 @@ java -jar slave.jar -jnlpUrl http://jenkins.example.com/computer/mac1/slave-agen
 <li>gitやsvnにssh経由でアクセスする場合は、パスワード無しでチェックアウトできるように適切に設定しておく必要がある。(上記の場合はssh-agentをあらかじめ起動するようにして、パスワード入力は起動時のみになるようにしています。)</li>
 <li>keychainに配布に使用するデベロッパーアカウントの証明書を登録しておく。</li>
 </ul>
-<h3 id="_3">ビルドスクリプトの作成</h3>
+<h3 id="_4">ビルドスクリプトの作成</h3>
 <p>以下のようなmakefileをxcodeプロジェクトのトップディレクトリに配置します。
 (お好みのビルドツールを利用してください)</p>
 <p>ソースコードのコンパイルはxcodebuild, ipaファイルの生成はxcrunというコマンドを使います。</p>
@@ -235,7 +235,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 
 <p>ビルドに成功するとipa, html, plistファイルが生成されるので、これらを成果物として保存します。
 成果物のhtmlページにiPhoneでアクセスしてみて、アプリがインストールできれば成功です。</p>
-<h2 id="_4">その他</h2>
+<h2 id="_5">その他</h2>
 <p>今回は触れませんでしたが、以下についても考慮しておいたほうがよいと思います。</p>
 <ul>
 <li>iOSのSDKバージョン</li>
@@ -243,9 +243,9 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <li>プロビジョニングプロファイルの管理</li>
 </ul>
 <p>また、<a href="https://testflightapp.com/">TestFlight</a> というサービスもあるのでそちらの利用も検討してみてもいいと思います。</p>
-<h2 id="_5">まとめ</h2>
+<h2 id="_6">まとめ</h2>
 <p>iOSアプリをコマンドラインからビルドするスクリプトを作成して、jenkins上でビルドから配布までを行なうための手順を紹介しました。</p>
-<h2 id="_6">参考</h2>
+<h2 id="_7">参考</h2>
 <ul>
 <li><a href="https://developer.apple.com/jp/programs/ios/enterprise/">https://developer.apple.com/jp/programs/ios/enterprise/</a></li>
 <li><a href="http://www.apple.com/jp/support/iphone/enterprise/">http://www.apple.com/jp/support/iphone/enterprise/</a></li>
@@ -260,18 +260,10 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 
 <hr class="intersocial">
 
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" class="hatena-bookmark-button" data-hatena-bookmark-title="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/08/07/jenkins-ios-build" data-text="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build"></div>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
@@ -304,18 +296,10 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 
 <hr class="intersocial">
 
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/25/ios-simulator-log" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/25/ios-simulator-log/" class="hatena-bookmark-button" data-hatena-bookmark-title="xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/25/ios-simulator-log" data-text="xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/25/ios-simulator-log"></div>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
@@ -344,18 +328,10 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 
 <hr class="intersocial">
 
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/24/redmine-mail" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/24/redmine-mail/" class="hatena-bookmark-button" data-hatena-bookmark-title="redmineのメールを効率良くフィルタリングする" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/24/redmine-mail" data-text="redmineのメールを効率良くフィルタリングする">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/24/redmine-mail"></div>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
@@ -391,7 +367,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
-<h2 id="">参考</h2>
+<h2 id="_1">参考</h2>
 <ul>
 <li><a href="http://d.hatena.ne.jp/rx7/20090812/p1">コマンド1つで今すぐWebサーバを起動させるためのワンライナー(Ruby or Python)</a></li>
 </ul>
@@ -403,18 +379,10 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 
 <hr class="intersocial">
 
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/18/one-line-webserver" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/one-line-webserver/" class="hatena-bookmark-button" data-hatena-bookmark-title="ワンライナーでウェブサーバを起動する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/18/one-line-webserver" data-text="ワンライナーでウェブサーバを起動する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/18/one-line-webserver"></div>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
@@ -451,7 +419,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <li>システムが自動的に参照カウントをしてくれる。</li>
 <li>強い変数と弱い変数がある</li>
 </ul>
-<h4 id="">強い変数</h4>
+<h4 id="_1">強い変数</h4>
 <ul>
 <li>デフォルトでは、オブジェクトのポインタは強い変数。そのようなポインタにアサインした参照は自動的にretainされる。</li>
 <li>新しい参照をアサインする前に古い参照はreleaseされる</li>
@@ -459,7 +427,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <li>プロパティはデフォルトではstrongではない</li>
 <li>C++のshared_ptrのようなもの？</li>
 </ul>
-<h4 id="_1">弱い変数</h4>
+<h4 id="_2">弱い変数</h4>
 <ul>
 <li>循環参照している場合や、しても開放されるようにするときに使える。</li>
 <li>親が子の強い参照を持っており、子が親の弱い参照を持っている場合、retainのサイクルが形成されなくなるのでオブジェクトを開放できる。</li>
@@ -472,7 +440,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <li>init, alloc, copy, new, mutableCopyをprefixにもつメソッドはそのオブジェクトの所有権を返す、というネーミングコンベンションに従っている場合は自動的にARCが適用される。</li>
 <li>名前のコンベンションとは関係なしに、明示的にオブジェクトの所有権を返すメソッドをコンパイラに伝える方法もある。</li>
 </ul>
-<h2 id="_2">参考</h2>
+<h2 id="_3">参考</h2>
 <p><br>
 <iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
 </div>
@@ -483,18 +451,10 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 
 <hr class="intersocial">
 
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="0" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
-<g:plusone size="medium"></g:plusone>
-<!-- Place this render call where appropriate -->
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" class="hatena-bookmark-button" data-hatena-bookmark-title="objective-cのメモリマネージメントについて" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management" data-text="objective-cのメモリマネージメントについて">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management"></div>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
@@ -587,6 +547,14 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
       <div id="footer">
         
   <div id="footerwrap">
+  <script type="text/javascript">
+    (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+
   <footer id="mainfooter" class="bodywidth">
     <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>.</p>
   </footer>

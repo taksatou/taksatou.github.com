@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Mon, 10 Sep 2012 04:47:23 GMT</pubDate>
+    <pubDate>Fri, 12 Oct 2012 04:35:53 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -42,7 +42,7 @@
 <div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
-<h2 id="">参考</h2>
+<h2 id="_1">参考</h2>
 <ul>
 <li><a href="http://d.hatena.ne.jp/rx7/20090812/p1">コマンド1つで今すぐWebサーバを起動させるためのワンライナー(Ruby or Python)</a></li>
 </ul>]]></content:encoded>

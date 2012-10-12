@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-09-10T04:47:23Z</updated>
+  <updated>2012-10-12T04:35:53Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -45,7 +45,7 @@
 <li>システムが自動的に参照カウントをしてくれる。</li>
 <li>強い変数と弱い変数がある</li>
 </ul>
-<h4 id="">強い変数</h4>
+<h4 id="_1">強い変数</h4>
 <ul>
 <li>デフォルトでは、オブジェクトのポインタは強い変数。そのようなポインタにアサインした参照は自動的にretainされる。</li>
 <li>新しい参照をアサインする前に古い参照はreleaseされる</li>
@@ -53,7 +53,7 @@
 <li>プロパティはデフォルトではstrongではない</li>
 <li>C++のshared_ptrのようなもの？</li>
 </ul>
-<h4 id="_1">弱い変数</h4>
+<h4 id="_2">弱い変数</h4>
 <ul>
 <li>循環参照している場合や、しても開放されるようにするときに使える。</li>
 <li>親が子の強い参照を持っており、子が親の弱い参照を持っている場合、retainのサイクルが形成されなくなるのでオブジェクトを開放できる。</li>
@@ -66,7 +66,7 @@
 <li>init, alloc, copy, new, mutableCopyをprefixにもつメソッドはそのオブジェクトの所有権を返す、というネーミングコンベンションに従っている場合は自動的にARCが適用される。</li>
 <li>名前のコンベンションとは関係なしに、明示的にオブジェクトの所有権を返すメソッドをコンパイラに伝える方法もある。</li>
 </ul>
-<h2 id="_2">参考</h2>
+<h2 id="_3">参考</h2>
 <p><br>
 <iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>]]></content>
   </entry>
@@ -100,7 +100,7 @@
 <li>informal protocolというものもあるが、これは単に実装がないカテゴリのこと。abstract protocolともいう。ドキュメンテーションやモジュラリティのために用いる。コンパイル時チェックはなし。プロトコルの@optionalディレクトリはObjective-C 2.0で追加されたので、こちらをつかえばよい。</li>
 <li>eclipseでいうデリゲートは、Composite Objectとよばれる</li>
 </ul>
-<h2 id="">例</h2>
+<h2 id="_1">例</h2>
 <h3 id="myprotocolh">myProtocol.h</h3>
 <div class="pygments_murphy"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 
@@ -142,7 +142,7 @@
 <span class="k">@end</span>
 </pre></div>
 
-<h2 id="_1">参考</h2>
+<h2 id="_2">参考</h2>
 <p><br>
 <iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>]]></content>
   </entry>
@@ -168,7 +168,7 @@
 <li>別のカテゴリとの間にメソッド名でコンフリクトが発生した場合、どちらが呼ばれるかは未定義。</li>
 <li>カテゴリ名自体にソースコード上での可読性以上の実質的な意味は無いらしい。</li>
 </ul>
-<h2 id="">例</h2>
+<h2 id="_1">例</h2>
 <div class="pygments_murphy"><pre><span class="k">@interface</span> <span class="nc">NSObject</span> <span class="nl">(MyExt)</span>
 <span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">doit:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span><span class="p">;</span>
 <span class="k">@end</span>
@@ -181,7 +181,7 @@
 <span class="k">@end</span>
 </pre></div>
 
-<h2 id="_1">参考</h2>
+<h2 id="_2">参考</h2>
 <ul>
 <li><a href="http://stackoverflow.com/questions/5689088/do-objective-c-category-names-do-anything">http://stackoverflow.com/questions/5689088/do-objective-c-category-names-do-anything</a></li>
 </ul>

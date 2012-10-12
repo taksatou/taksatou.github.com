@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-09-10T04:47:23Z</updated>
+  <updated>2012-10-12T04:35:53Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -46,7 +46,7 @@
 <div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
-<h2 id="">参考</h2>
+<h2 id="_1">参考</h2>
 <ul>
 <li><a href="http://d.hatena.ne.jp/rx7/20090812/p1">コマンド1つで今すぐWebサーバを起動させるためのワンライナー(Ruby or Python)</a></li>
 </ul>]]></content>
@@ -64,7 +64,7 @@
     <category scheme="http://mojavy.com/blog" term="ruby" />
     <summary type="html"><![CDATA[rubyのワンライナーで便利な変数まとめ]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
-<h1 id="">$.</h1>
+<h1 id="_1">$.</h1>
 <p>現在の行番号を表します。awkでいうNRと同じです。</p>
 <div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
 </pre></div>
@@ -74,20 +74,20 @@
 <div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
 </pre></div>
 
-<h1 id="_1">$/</h1>
+<h1 id="_2">$/</h1>
 <p>入力の区切り文字を表わす文字です。デフォルトは改行です。</p>
 <div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
 </pre></div>
 
-<h1 id="_2">$, 、$;</h1>
+<h1 id="_3">$, 、$;</h1>
 <p>$, はjoinのデフォルト区切り文字で、$; はsplitのデフォルト区切り文字です。
 ワンライナーではjoinとsplitをよく使うと思うので、BEGINで上書きしておけばワンライナーを多少短く書けます。</p>
 <div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
 </pre></div>
 
-<h1 id="_3">まとめ</h1>
+<h1 id="_4">まとめ</h1>
 <p>まだ他にも知らないテクニックがたくさんありそうですが、新しく見つけたら追記していきます。</p>
-<h1 id="_4">参考</h1>
+<h1 id="_5">参考</h1>
 <ul>
 <li><a href="http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/">http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/</a></li>
 <li><a href="http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html">http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html</a></li>

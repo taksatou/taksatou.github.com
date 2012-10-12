@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-09-10T04:47:23Z</updated>
+  <updated>2012-10-12T04:35:53Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -45,7 +45,7 @@ macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/t
 <p>なお、shiftを押しながらターミナルをクリックすれば、本来のマウスの動作になります。</p>
 <p>macのiTerm, windowsのputty, ubuntuのgnome-terminalで動作確認できました。
 たまに画面が乱れることがありますが、再描画すると直ります。</p>
-<h1 id="">まとめ</h1>
+<h1 id="_1">まとめ</h1>
 <p>以下を.tmux.confにコピペするとtmuxでマウスがつかえます。</p>
 <div class="pygments_murphy"><pre><span class="nb">set</span> -g mode-mouse on
 <span class="nb">set</span> -g mouse-resize-pane on
@@ -73,7 +73,7 @@ macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/t
 <p>5日目はyoshikawさんの<a href="http://yskwkzhr.blogspot.com/2011/12/lets-use-development-version-gnu-screen.html">開発版GNU Screenを使ってみよう</a>でした。</p>
 <p>6日目はnetmark.jpさんの<a href="http://netmark.jp/2011/12/gnu-screen-plusone.html">GNU screenをもうちょっとだけ便利に使おう！</a>でした。</p>
 <p>この記事ではtmuxのいじり方を簡単に紹介してみます。</p>
-<h1 id="">はじめに</h1>
+<h1 id="_1">はじめに</h1>
 <p>tmuxは比較的若いプロジェクトなこともあってか、かゆいところに手が届かないシチュエーションがたまにあります。
 個人的に不満だったのはバッファの挙動です。</p>
 <p>tmuxでバッファに文字列をコピーした場合、list-buffersに新しいものほど前方になるように格納されていきます。
@@ -81,39 +81,39 @@ choose-bufferコマンドを使えばある程度簡単に過去のものもさ�
 tmuxのバッファにはホスト名とかよくつかうコマンドとかをいれておいて番号を指定して最速でとりだしたいのに、
 場所が固定されていないといちいち探さなくてはならず不便に感じていました。
 なんとかできないかと思ってソースをいじってみたら、意外と簡単だったので簡単な解説をまじえつつ手順を紹介してみます。</p>
-<h1 id="_1">目次</h1>
+<h1 id="_2">目次</h1>
 <div class="toc">
 <ul>
-<li><a href="#">はじめに</a></li>
-<li><a href="#_1">目次</a></li>
-<li><a href="#_2">準備</a><ul>
-<li><a href="#_3">ソースをとってくる</a></li>
-<li><a href="#_4">依存パッケージを入れる</a></li>
-<li><a href="#_5">ビルド</a></li>
+<li><a href="#_1">はじめに</a></li>
+<li><a href="#_2">目次</a></li>
+<li><a href="#_3">準備</a><ul>
+<li><a href="#_4">ソースをとってくる</a></li>
+<li><a href="#_5">依存パッケージを入れる</a></li>
+<li><a href="#_6">ビルド</a></li>
 </ul>
 </li>
-<li><a href="#_6">ソース構成</a></li>
-<li><a href="#_7">いじってみる</a></li>
-<li><a href="#_8">まとめ</a></li>
+<li><a href="#_7">ソース構成</a></li>
+<li><a href="#_8">いじってみる</a></li>
+<li><a href="#_9">まとめ</a></li>
 </ul>
 </div>
-<h1 id="_2">準備</h1>
-<h2 id="_3">ソースをとってくる</h2>
+<h1 id="_3">準備</h1>
+<h2 id="_4">ソースをとってくる</h2>
 <p>本家サイトからソースをおとします。とりあえず現在の最新版(1.5)でいいと思います。</p>
 <p><a href="http://tmux.sourceforge.net/">http://tmux.sourceforge.net/</a></p>
-<h2 id="_4">依存パッケージを入れる</h2>
+<h2 id="_5">依存パッケージを入れる</h2>
 <p><a href="http://d.hatena.ne.jp/tmatsuu/20111130/1322677832">tmatsuuさんの記事</a>にもちょっとありましたが、
 tmuxはlibeventとnlcursesに依存しているのでビルドするにはライブラリのヘッダも必要です。
 ubuntuだと以下パッケージを入れとけばたぶん大丈夫です。</p>
 <div class="pygments_murphy"><pre>sudo apt-get install libevent-dev libncurses5-dev
 </pre></div>
 
-<h2 id="_5">ビルド</h2>
+<h2 id="_6">ビルド</h2>
 <div class="pygments_murphy"><pre>./configure <span class="o">&amp;&amp;</span> make
 </pre></div>
 
 <p>ここまでできたら準備OKです。</p>
-<h1 id="_6">ソース構成</h1>
+<h1 id="_7">ソース構成</h1>
 <p>結構たくさんファイルがありますが、ファイル名を見れば大体雰囲気がつかめると思います。</p>
 <p>何か機能を追加したいだけなら、いじる必要のあるファイルはごく一部です。</p>
 <dl>
@@ -129,7 +129,7 @@ ubuntuだと以下パッケージを入れとけばたぶん大丈夫です。</
 <p>いじる必要はないですがarray.hはいろんなところでつかわれてるので目を通しとくとよいと思います。
 Cでリストが使いたい場合は他のとこでも流用できそうな便利なヘッダです。</p>
 <p>あとは必要に応じて関係しそうなところをみていけばよいです。</p>
-<h1 id="_7">いじってみる</h1>
+<h1 id="_8">いじってみる</h1>
 <p>バッファまわりを改造したいので、paste.cというファイルが主な対象になります。</p>
 <p>細かい解説は省略しますが、paste_stackという構造体がグローバルで共有しているリストの本体で、array.hで宣言されているマクロで値がとりだせるようになっています。
 本来の動作であるpaste_addを参考にしつつpaste_add_tailなんて関数を追加します。
@@ -228,7 +228,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 
 <p>バッファにコピーした文字列がlist-buffersの後ろに追加されていけば成功です。
 簡単ですよね？</p>
-<h1 id="_8">まとめ</h1>
+<h1 id="_9">まとめ</h1>
 <p>以上、tmuxにreverse-bufferというオプションを追加して、バッファの挙動を変更できるようにしてみました。</p>
 <p>端末制御のプログラムは普段あまり触れる機会がないし複雑そうなイメージがあって敬遠しがちですが、ちょっとした機能を追加するだけだったら意外と簡単だったりするのでどんどんいじってみるといいと思います。</p>]]></content>
   </entry>
