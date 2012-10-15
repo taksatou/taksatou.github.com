@@ -66,7 +66,7 @@ a.findoutmore:hover						{ background-color: #2f2f2f; background-image: none; te
 .blogbody							{ font-size: 115%; }
 .blogbody hr  { border: solid; border-color: #b0b0b0; border-width: 1px 0 0 0 ; margin: 5px 15px 7px 15px; height: 1px; clear:both; }
 #blogleft								{ float: left; width: 620px; }
-#blogleft h1,h2,h3,h4,h5,h6					{ padding: 8px 0px 4px 0px; margin: 0px; font-weight: bold; }
+#blogleft h1,h2,h3,h4,h5,h6					{ padding: 12px 0px 4px 0px; margin: 0px; font-weight: bold; }
 #blogleft h1							{ font-size: 1.5em ; }
 #blogleft h2							{ font-size: 1.35em; }
 #blogleft h3							{ font-size: 1.215em; }
@@ -77,7 +77,7 @@ a.findoutmore:hover						{ background-color: #2f2f2f; background-image: none; te
 #blogleft hr                                            { margin-top: 5px; margin-bottom: 5px; }
 #blogleft .topic-title                          	{ display: none; }
 #blogleft #toc                                            { font-size: 1em; font-family: "Ubuntu", arial; font-weight: bold; }
-#blogleft ul                                            { font-size: 95%; padding-left: 15px;  list-style-type: disc; }
+#blogleft ul                                            { font-size: 95%; padding-left: 30px; margin: 5px 15px 10px 0;  list-style-type: disc; }
 #blogleft dl                                            {padding: 3px; }
 #blogleft dt                                            {padding-top: 4px; font-weight: bold;}
 #blogleft dd                                            {padding-left: 15px; }

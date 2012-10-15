@@ -81,6 +81,61 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="blogofileでサムネイル画像を表示する方法"></a>
+  <h2 class="blog_post_title"><a href="/blog/2011/11/06/blofofile-test" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
+  <small>November 06, 2011 at 08:32 PM | categories: 
+
+<a href='/blog/category/python'>python</a>, <a href='/blog/category/memo'>memo</a>, <a href='/blog/category/blogofile'>blogofile</a>
+ | <a href="http://mojavy.com/blog/2011/11/06/blofofile-test#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="rena" src="/images/rena.jpg" /></p>
+<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
+<p>例えば、
+<a href="http://mojavy.com">http://mojavy.com</a>
+のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
+<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
+<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
+         self.slug = None
+         self.draft = False
+         self.filters = None
+<span class="gi">+        self.image = None</span>
+         self.__parse()
+         self.__post_process()
+</pre></div>
+
+<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
+<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
+</pre></div>
+
+<p>のようにすれば${post.image}のようにして参照できる。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/blofofile-test/" class="hatena-bookmark-button" data-hatena-bookmark-title="blogofileでサムネイル画像を表示する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/11/06/blofofile-test" data-text="blogofileでサムネイル画像を表示する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ブログ引越しました"></a>
   <h2 class="blog_post_title"><a href="/blog/2011/11/06/new_blog" rel="bookmark" title="Permanent Link to ブログ引越しました">ブログ引越しました</a></h2>
   <small>November 06, 2011 at 07:44 PM | categories: 
@@ -129,6 +184,11 @@ href="/blog/feed/atom" />
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/10/16/quick-links" title="Quick links"><p>Quick links</a><span style="font-size: 80%;">(October 16, 2012 at 02:30 AM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/16/quick-links">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/16/quick-links" alt="はてなブックマーク - Quick links" title="はてなブックマーク - Quick links">
+</a>
+</li>
       <li><a href="/blog/2012/08/07/jenkins-ios-build" title="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする"><p>jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a><span style="font-size: 80%;">(August 07, 2012 at 03:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/07/jenkins-ios-build">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/08/07/jenkins-ios-build" alt="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする" title="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">
@@ -149,11 +209,6 @@ href="/blog/feed/atom" />
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/one-line-webserver" alt="はてなブックマーク - ワンライナーでウェブサーバを起動する方法" title="はてなブックマーク - ワンライナーでウェブサーバを起動する方法">
 </a>
 </li>
-      <li><a href="/blog/2012/07/18/objective-c-memo-memory-management" title="objective-cのメモリマネージメントについて"><p>objective-cのメモリマネージメントについて</a><span style="font-size: 80%;">(July 18, 2012 at 11:30 AM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management" alt="はてなブックマーク - objective-cのメモリマネージメントについて" title="はてなブックマーク - objective-cのメモリマネージメントについて">
-</a>
-</li>
     </ul>
   </div>
 
@@ -171,6 +226,7 @@ href="/blog/feed/atom" />
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (1)</li>
@@ -185,6 +241,7 @@ href="/blog/feed/atom" />
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
