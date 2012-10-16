@@ -1,0 +1,29 @@
+---
+categories: linux, paco
+date: 2012/10/16 18:30:00
+title: pacoを導入
+image: /images/paco-logo.png
+---
+
+今さらだけどpacoを導入した。
+
+以下でインストール。gpacoは使わないと思うので--disable-gpacoした。
+
+$$code(lang=bash)
+./configure --disable-gpaco
+make && sudo make install
+sudo make logme
+$$/code
+
+何かをインストールする際は以下のようにする。
+
+$$code(lang=bash)
+sudo paco -D make install
+$$/code
+
+make install の部分は、bash install.shとかなんでもいい。
+
+# 参考
+
+* [http://d.hatena.ne.jp/rx7/20081011/p2](http://d.hatena.ne.jp/rx7/20081011/p2)
+* [http://paco.sourceforge.net/index.html](http://paco.sourceforge.net/index.html)
