@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 16 Oct 2012 10:24:34 GMT</pubDate>
+    <pubDate>Tue, 16 Oct 2012 13:10:23 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -23,7 +23,7 @@
       <guid isPermaLink="true">http://mojavy.com/blog/2012/10/16/paco</guid>
       <description>pacoを導入</description>
       <content:encoded><![CDATA[<p>今さらだけどpacoを導入した。</p>
-<p>以下でインストール。gpacoは使わないと思うので--disable-gpacoした。</p>
+<p><a href="http://sourceforge.net/projects/paco/files/paco/2.0.9/">http://sourceforge.net/projects/paco/files/paco/2.0.9/</a> から最新のパッケージをダウンロード、展開して以下コマンドでインストール。gpacoは使わないと思うので--disable-gpacoした。</p>
 <div class="pygments_murphy"><pre>./configure --disable-gpaco
 make <span class="o">&amp;&amp;</span> sudo make install
 sudo make logme

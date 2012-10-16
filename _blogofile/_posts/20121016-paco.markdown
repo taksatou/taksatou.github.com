@@ -7,7 +7,7 @@ image: /images/paco-logo.png
 
 今さらだけどpacoを導入した。
 
-以下でインストール。gpacoは使わないと思うので--disable-gpacoした。
+[http://sourceforge.net/projects/paco/files/paco/2.0.9/](http://sourceforge.net/projects/paco/files/paco/2.0.9/) から最新のパッケージをダウンロード、展開して以下コマンドでインストール。gpacoは使わないと思うので--disable-gpacoした。
 
 $$code(lang=bash)
 ./configure --disable-gpaco
