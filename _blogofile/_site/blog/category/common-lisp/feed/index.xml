@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 16 Oct 2012 13:10:23 GMT</pubDate>
+    <pubDate>Tue, 16 Oct 2012 13:49:29 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -99,7 +99,7 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
 </pre></div>
 
 <h1 id="4">4. クライアント側起動</h1>
-<p>こちらも同様に、client.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からエコーが返ってくる。</p>
+<p>こちらも同様に、client.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。</p>
 <div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 

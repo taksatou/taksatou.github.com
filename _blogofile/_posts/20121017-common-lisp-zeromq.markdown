@@ -100,7 +100,7 @@ $$/code
 
 # 4. クライアント側起動
 
-こちらも同様に、client.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からエコーが返ってくる。
+こちらも同様に、client.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。
 
 $$code(lang=lisp)
 (load "~/.sbclrc")
