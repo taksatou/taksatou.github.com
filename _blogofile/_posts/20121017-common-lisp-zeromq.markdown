@@ -76,48 +76,45 @@ $$/code
 
 # 3. サーバ側起動
 
-[cl-zmq](http://www.cliki.net/cl-zmq) のサンプルコード参考に以下のソースをserver.lispに保存して、 sbcl --script server.lisp で実行。ちなみに、127.0.0.1:5555 の部分をlocalhost:5555のように書くとNo such deviceといわれる。 (参考 [Why doesn't zeromq work on localhost?](http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost) )
+[cl-zmq](http://www.cliki.net/cl-zmq) のサンプルコード参考に以下のようなエコーサーバを書いた。これをserver.lispに保存して、 sbcl --script server.lisp で実行。ちなみに、127.0.0.1:5555 の部分をlocalhost:5555のように書くとNo such deviceといわれる。 (参考 [Why doesn't zeromq work on localhost?](http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost) )
 
 $$code(lang=lisp)
 (load "~/.sbclrc")
 (ql:quickload :zeromq)
 
 (defun server ()
-  "Bind to socket and wait to receive a message.  After receipt,
-  return the message \"OK\"."
   (zmq:with-context (ctx 1)
     (zmq:with-socket (socket ctx zmq:rep)
       (zmq:bind socket "tcp://127.0.0.1:5555")
       (loop
          (let ((query (make-instance 'zmq:msg)))
            (zmq:recv socket query)
-           (format t "Recieved query: '~A'~%"
-                   (zmq:msg-data-as-string query) ))
-         (zmq:send socket (make-instance 'zmq:msg :data "OK")) ))))
+           (let ((req-string (zmq:msg-data-as-string query)))
+             (format t "Recieved message: '~A'~%" req-string)
+             (zmq:send socket (make-instance 'zmq:msg :data req-string)) ))))))
 
 (server)
 $$/code
 
 # 4. クライアント側起動
 
-こちらも同様に、client.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。
+こちらも同様に以下をclient.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。
 
 $$code(lang=lisp)
 (load "~/.sbclrc")
 (ql:quickload :zeromq)
 
 (defun client ()
-  "Connects to a socket and passes a message and waits to receive the
-  \"OK\" from the server."
   (zmq:with-context (ctx 1)
     (zmq:with-socket (socket ctx zmq:req)
       (zmq:connect socket "tcp://127.0.0.1:5555")
+      (loop
       (zmq:send socket (make-instance 'zmq:msg
-                                      :data "SELECT * FROM mytable" ))
+                                      :data (read-line)))
       (let ((result (make-instance 'zmq:msg)))
         (zmq:recv socket result)
-        (format t "Recieved string: '~A'~%"
-                (zmq:msg-data-as-string result) )))))
+        (format t "Recieved message: '~A'~%"
+                (zmq:msg-data-as-string result) ))))))
 
 (client)
 $$/code
