@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 16 Oct 2012 13:56:35 GMT</pubDate>
+    <pubDate>Tue, 16 Oct 2012 13:57:40 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -82,18 +82,19 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
 <div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
-(defun server ()
+(defun client ()
   (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:rep)
-      (zmq:bind socket &quot;tcp://127.0.0.1:5555&quot;)
+    (zmq:with-socket (socket ctx zmq:req)
+      (zmq:connect socket &quot;tcp://127.0.0.1:5555&quot;)
       (loop
-         (let ((query (make-instance &#39;zmq:msg)))
-           (zmq:recv socket query)
-           (let ((req-string (zmq:msg-data-as-string query)))
-             (format t &quot;Recieved message: &#39;~A&#39;~%&quot; req-string)
-             (zmq:send socket (make-instance &#39;zmq:msg :data req-string)) ))))))
+         (zmq:send socket (make-instance &#39;zmq:msg
+                                         :data (read-line)))
+         (let ((result (make-instance &#39;zmq:msg)))
+           (zmq:recv socket result)
+           (format t &quot;Recieved message: &#39;~A&#39;~%&quot;
+                   (zmq:msg-data-as-string result) ))))))
 
-(server)
+(client)
 </pre></div>
 
 <h1 id="4">4. クライアント側起動</h1>

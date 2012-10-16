@@ -82,18 +82,19 @@ $$code(lang=lisp)
 (load "~/.sbclrc")
 (ql:quickload :zeromq)
 
-(defun server ()
+(defun client ()
   (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:rep)
-      (zmq:bind socket "tcp://127.0.0.1:5555")
+    (zmq:with-socket (socket ctx zmq:req)
+      (zmq:connect socket "tcp://127.0.0.1:5555")
       (loop
-         (let ((query (make-instance 'zmq:msg)))
-           (zmq:recv socket query)
-           (let ((req-string (zmq:msg-data-as-string query)))
-             (format t "Recieved message: '~A'~%" req-string)
-             (zmq:send socket (make-instance 'zmq:msg :data req-string)) ))))))
+         (zmq:send socket (make-instance 'zmq:msg
+                                         :data (read-line)))
+         (let ((result (make-instance 'zmq:msg)))
+           (zmq:recv socket result)
+           (format t "Recieved message: '~A'~%"
+                   (zmq:msg-data-as-string result) ))))))
 
-(server)
+(client)
 $$/code
 
 # 4. クライアント側起動
