@@ -36,7 +36,7 @@ $$code(lang=lisp)
 (ql:quickload :zeromq)
 $$/code
 
-ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。zeromqをインストールして sudo ldconfig すればちゃんとロードされるはず。
+ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。ld.so.confにzeromqをインストールしたディレクトリがはいってることを確認して、sudo ldconfig すればちゃんとロードされるはず。
 
 $$code(lang=bash)
 debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread

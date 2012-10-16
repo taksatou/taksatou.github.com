@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-10-16T13:57:40Z</updated>
+  <updated>2012-10-16T14:04:46Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -50,7 +50,7 @@
 <div class="pygments_murphy"><pre>(ql:quickload :zeromq)
 </pre></div>
 
-<p>ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。zeromqをインストールして sudo ldconfig すればちゃんとロードされるはず。</p>
+<p>ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。ld.so.confにzeromqをインストールしたディレクトリがはいってることを確認して、sudo ldconfig すればちゃんとロードされるはず。</p>
 <div class="pygments_murphy"><pre>debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread
 <span class="c">#&lt;THREAD &quot;initial thread&quot; RUNNING {10029990A3}&gt;:</span>
   Unable to load any of the alternatives:
