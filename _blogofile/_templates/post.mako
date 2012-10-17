@@ -23,7 +23,7 @@ ${", ".join(category_links)}
   </div>
 </div>
 
-<div class="linkwithin_div"></div>
+<div class="shr_rd"></div>
 
 <%def name="post_prose(post)">
 <div class="blogbody">
@@ -32,13 +32,13 @@ ${", ".join(category_links)}
 </%def>
 <div id="prev_next_link">
   % if post.prev_post:
-  <a href="${post.prev_post.permalink}"> previous </a>
+  <a href="${post.prev_post.permalink}"> previous post </a>
   %endif
   % if post.prev_post and post.next_post:
     |
   %endif
   % if post.next_post:
-  <a href="${post.next_post.permalink}"> next </a>
+  <a href="${post.next_post.permalink}"> next post </a>
   %endif
 </div>
 <hr class="intersocial">
