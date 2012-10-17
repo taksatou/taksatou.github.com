@@ -1,5 +1,5 @@
 <%inherit file="base.mako" />
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
@@ -27,6 +27,13 @@
         ${self.footer()}
       </div> <!-- End Footer -->
     </div> <!-- End Content -->
+
+    <script>
+      var linkwithin_site_id = 1502091;
+    </script>
+    <script src="http://www.linkwithin.com/widget.js"></script>
+    <a href="http://www.linkwithin.com/"><img src="http://www.linkwithin.com/pixel.png" alt="Related Posts Plugin for WordPress, Blogger..." style="border: 0" /></a>
+
   </body>
 </html>
 <%def name="head()">
