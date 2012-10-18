@@ -24,11 +24,16 @@ Common LispでZeroMQを試してみた。
 * [Quicklisp](http://www.quicklisp.org/beta/)
 * [第2回 Quicklispによるライブラリ環境](http://modern-cl.blogspot.jp/2011/03/quicklisp.html)
 
-$$code(lang=lisp)
+$$code(lang=bash)
+$ curl -O http://beta.quicklisp.org/quicklisp.lisp
+$ sbcl
 (load "quicklisp.lisp")
-(quicklisp-quickstart:install :path "/home/takayuki/.quicklisp/")
+(quicklisp-quickstart:install :path ".quicklisp/")
 (ql:add-to-init-file)
 $$/code
+
+※ (quicklisp-quickstart:install :path ".quicklisp/") のパスで最後のスラッシュは省略不可
+
 
 # 2. cl-zmqのインストール
 
@@ -123,10 +128,6 @@ $$/code
 # まとめ
 
 Common Lisp(sbcl)でZeroMQを利用して、簡単なエコーサーバ/クライアントを実装した。
-
-# 備考
-
-* cl-zmq自体はasdfでインストールできるようにはなっているみたいだけど、asdfではiolibがうまくはいらなかった
 
 # 参考
 

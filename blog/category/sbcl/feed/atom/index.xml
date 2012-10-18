@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-10-17T05:37:26Z</updated>
+  <updated>2012-10-18T01:10:10Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -41,11 +41,14 @@
 <li><a href="http://www.quicklisp.org/beta/">Quicklisp</a></li>
 <li><a href="http://modern-cl.blogspot.jp/2011/03/quicklisp.html">第2回 Quicklispによるライブラリ環境</a></li>
 </ul>
-<div class="pygments_murphy"><pre>(load &quot;quicklisp.lisp&quot;)
-(quicklisp-quickstart:install :path &quot;/home/takayuki/.quicklisp/&quot;)
-(ql:add-to-init-file)
+<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
+<span class="nv">$ </span>sbcl
+<span class="o">(</span>load <span class="s2">&quot;quicklisp.lisp&quot;</span><span class="o">)</span>
+<span class="o">(</span>quicklisp-quickstart:install :path <span class="s2">&quot;.quicklisp/&quot;</span><span class="o">)</span>
+<span class="o">(</span>ql:add-to-init-file<span class="o">)</span>
 </pre></div>
 
+<p>※ (quicklisp-quickstart:install :path ".quicklisp/") のパスで最後のスラッシュは省略不可</p>
 <h1 id="2-cl-zmq">2. cl-zmqのインストール</h1>
 <div class="pygments_murphy"><pre>(ql:quickload :zeromq)
 </pre></div>
@@ -122,11 +125,7 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
 
 <h1 id="_1">まとめ</h1>
 <p>Common Lisp(sbcl)でZeroMQを利用して、簡単なエコーサーバ/クライアントを実装した。</p>
-<h1 id="_2">備考</h1>
-<ul>
-<li>cl-zmq自体はasdfでインストールできるようにはなっているみたいだけど、asdfではiolibがうまくはいらなかった</li>
-</ul>
-<h1 id="_3">参考</h1>
+<h1 id="_2">参考</h1>
 <ul>
 <li><a href="http://www.cliki.net/cl-zmq">cl-zmq</a></li>
 <li><a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a></li>
