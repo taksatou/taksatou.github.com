@@ -41,19 +41,6 @@ href="/blog/feed/atom" />
 </script>
 
 
-
-<script type="text/javascript">
-  var SHRRD_Settings = {"shr_rd":{"style":"text", "titleText":"You may also like:", "number":3, "link":document.location.href}};
-</script>
-
-<script type="text/javascript">
-  (function() {
-  var sb = document.createElement("script"); sb.type = "text/javascript";sb.async = true;
-  sb.src = ("https:" == document.location.protocol ? "https://dtym7iokkjlif.cloudfront.net" : "http://cdn.shareaholic.com") + "/media/js/jquery.shareaholic-publishers-rd.min.js";
-  var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(sb, s);
-  })();
-</script>
-
   </head>
   <body>
 <div id="fb-root"></div>
@@ -92,6 +79,255 @@ href="/blog/feed/atom" />
           
 <div id="maincontent2" class="bodywidth">
 <div id="blogleft">
+  
+<div class="blog_post">
+  <a name="iosでzeromqを試す"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/10/17/objective-c-zeromq" rel="bookmark" title="Permanent Link to iOSでZeroMQを試す">iOSでZeroMQを試す</a></h2>
+  <small>October 17, 2012 at 06:00 PM | categories:
+
+<a href='/blog/category/objective-c'>objective-c</a>, <a href='/blog/category/ios'>ios</a>, <a href='/blog/category/zeromq'>zeromq</a>, <a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2012/10/17/objective-c-zeromq#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
+<p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
+<h1 id="zeromqiphone">ZeroMQをiPhone用にビルド</h1>
+<p>ZeroMQはautotoolsで作成されておりconfigure &amp;&amp; make でビルドできるようになっているが、iPhone用にクロスコンパイルをするためには適切なオプションを与えてやる必要がある。</p>
+<p>一応、<a href="http://www.zeromq.org/build:iphone">本家サイト上にもドキュメント</a>はあるが最新のXcodeではうごかない。また、シミュレータ用でもうごかせるようにしておきたい。というわけで、以下のようなビルドスクリプトを書いた。</p>
+<script src="https://gist.github.com/3899653.js"> </script>
+
+<p>これをZeroMQのtarを展開してできたディレクトリにbuild.shとかで保存して実行すると、armv7とi386に対応したlibzmq.aができる。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>zeromq-2.2.0
+<span class="nv">$ </span>./build.sh
+<span class="nv">$ </span>file libzmq.a
+libzmq.a: Mach-O universal binary with 2 architectures
+libzmq.a <span class="o">(</span><span class="k">for </span>architecture armv7<span class="o">)</span>:      current ar archive random library
+libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<span class="o">)</span>:       current ar archive random library
+</pre></div>
+
+<p>このlibzmq.aと、includeディレクトリの中身をXcodeにインポートしてやればよい。
+このときに、XcodeでOther Linker Flags に -lstdc++ を追加してやるのを忘れないように。</p>
+<h1 id="zeromq">ZeroMQを用いた簡易チャットアプリ</h1>
+<p>サンプルとしてチャットアプリを実装してみる。
+チャットでの発言はREQ/REPを用いてアプリ→サーバに渡し、PUB/SUBを用いてサーバ→アプリにブロードキャストする。</p>
+<h2 id="_1">サーバ側</h2>
+<p>サーバ側はCommon Lispで実装した。単に、rep-sockから発言を受け取ってpub-sockにそのまま流すだけ。</p>
+<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+(ql:quickload :zeromq)
+
+(defun pull-and-publish ()
+  (zmq:with-context (ctx 1)
+    (zmq:with-socket (rep-sock ctx zmq:rep)
+      (zmq:bind rep-sock &quot;tcp://127.0.0.1:5555&quot;)
+
+      (zmq:with-context (ctx2 1)
+        (zmq:with-socket (pub-sock ctx2 zmq:pub)
+          (zmq:bind pub-sock &quot;tcp://127.0.0.1:5556&quot;)
+
+          (loop
+             (let ((msg (make-instance &#39;zmq:msg)))
+               (zmq:recv rep-sock msg)
+               (zmq:send rep-sock (make-instance &#39;zmq:msg :data &quot;ok&quot;))
+               (zmq:send pub-sock msg))))))))
+
+(pull-and-publish)
+</pre></div>
+
+<p>REQ/REPではなくPULL/PUSHでもできるはずだが、なぜかcl-zmqではpullがつかえなかったのでREQ/REPをつかった。</p>
+<h2 id="_2">アプリ側</h2>
+<p><a href="https://github.com/jeremy-w/objc-zmq">objective-c版ZeroMQ</a>もあるけど、今回はそのままCのAPIを利用した。
+以下はソースの抜粋。</p>
+<div class="pygments_murphy"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
+<span class="cp">#import &quot;include/zmq.h&quot;</span>
+
+<span class="k">@interface</span> <span class="nc">ChatViewController</span> <span class="p">()</span> <span class="p">{</span>
+
+    <span class="kt">void</span> <span class="o">*</span><span class="n">ctx1</span><span class="p">,</span> <span class="o">*</span><span class="n">ctx2</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">subsock</span><span class="p">,</span> <span class="o">*</span><span class="n">reqsock</span><span class="p">;</span>
+
+    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">messageList</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+
+<span class="err">@</span><span class="n">implementation</span> <span class="n">ChatViewController</span>
+
+<span class="k">@synthesize</span> <span class="n">nickname</span><span class="p">;</span>
+<span class="k">@synthesize</span> <span class="n">timer</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+
+    <span class="n">ctx1</span> <span class="o">=</span> <span class="n">zmq_init</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">subsock</span> <span class="o">=</span> <span class="n">zmq_socket</span><span class="p">(</span><span class="n">ctx1</span><span class="p">,</span> <span class="n">ZMQ_SUB</span><span class="p">);</span>
+    <span class="n">zmq_setsockopt</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="n">ZMQ_SUBSCRIBE</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_connect</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="s">&quot;tcp://127.0.0.1:5556&quot;</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">ctx2</span> <span class="o">=</span> <span class="n">zmq_init</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">reqsock</span> <span class="o">=</span> <span class="n">zmq_socket</span><span class="p">(</span><span class="n">ctx1</span><span class="p">,</span> <span class="n">ZMQ_REQ</span><span class="p">);</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_connect</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="s">&quot;tcp://127.0.0.1:5555&quot;</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSTimer</span> <span class="nl">scheduledTimerWithTimeInterval:</span><span class="mi">1</span> <span class="nl">target:</span><span class="n">self</span> <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="n">observeSocket</span><span class="p">)</span> <span class="nl">userInfo:</span><span class="nb">nil</span> <span class="nl">repeats:</span><span class="n">YES</span><span class="p">];</span>
+    <span class="n">messageList</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="n">invalidate</span><span class="p">];</span>
+    <span class="n">zmq_close</span><span class="p">(</span><span class="n">subsock</span><span class="p">);</span>
+    <span class="n">zmq_close</span><span class="p">(</span><span class="n">reqsock</span><span class="p">);</span>
+    <span class="n">zmq_term</span><span class="p">(</span><span class="n">ctx1</span><span class="p">);</span>
+    <span class="n">zmq_term</span><span class="p">(</span><span class="n">ctx2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">observeSocket</span>
+<span class="p">{</span>
+    <span class="n">zmq_msg_t</span> <span class="n">msg</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_msg_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_recv</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="n">ZMQ_NOBLOCK</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EAGAIN</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;no data available&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ENOTSUP</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ENOTSUP&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EFSM</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EFSM&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ETERM</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ETERM&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ENOTSOCK</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ENOTSOCK&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EINTR&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EFAULT</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EFAULT&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">size_t</span> <span class="n">siz</span> <span class="o">=</span> <span class="n">zmq_msg_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+            <span class="kt">void</span> <span class="o">*</span><span class="n">dat</span> <span class="o">=</span> <span class="n">zmq_msg_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+            <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithData:</span><span class="p">[</span><span class="n">NSData</span> <span class="nl">dataWithBytes:</span><span class="n">dat</span> <span class="nl">length:</span><span class="n">siz</span><span class="p">]</span> <span class="nl">encoding:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
+            <span class="p">[</span><span class="n">messageList</span> <span class="nl">insertObject:</span><span class="n">str</span> <span class="nl">atIndex:</span><span class="mi">0</span><span class="p">];</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;unknown&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">zmq_msg_close</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span> <span class="nf">saySomething:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
+<span class="p">{</span>
+    <span class="n">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="s">@&quot;text input&quot;</span>
+                                <span class="nl">message:</span><span class="s">@&quot;&quot;</span>
+                               <span class="nl">delegate:</span><span class="n">self</span>
+                      <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;cancel&quot;</span>
+                      <span class="nl">otherButtonTitles:</span><span class="s">@&quot;ok&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+    <span class="n">alert</span><span class="p">.</span><span class="n">alertViewStyle</span> <span class="o">=</span> <span class="n">UIAlertViewStylePlainTextInput</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">alert</span> <span class="n">show</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alertView:</span><span class="p">(</span><span class="n">UIAlertView</span><span class="o">*</span><span class="p">)</span><span class="nv">alertView</span> <span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span>
+<span class="p">{</span>
+    <span class="n">zmq_msg_t</span> <span class="n">msg</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="n">buttonIndex</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+            <span class="n">str</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithFormat:</span><span class="s">@&quot;%@: %@&quot;</span><span class="p">,</span> <span class="n">nickname</span><span class="p">,</span> <span class="p">[</span><span class="n">alertView</span> <span class="nl">textFieldAtIndex:</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span><span class="p">];</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">str</span> <span class="nl">dataUsingEncoding:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_msg_init_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="p">[</span><span class="n">data</span> <span class="n">length</span><span class="p">]);</span>
+            <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="n">memcpy</span><span class="p">(</span><span class="n">zmq_msg_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">),</span> <span class="p">[</span><span class="n">data</span> <span class="n">bytes</span><span class="p">],</span> <span class="p">[</span><span class="n">data</span> <span class="n">length</span><span class="p">]);</span>
+
+            <span class="n">zmq_send</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="n">zmq_recv</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="n">zmq_msg_close</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<p>以下補足</p>
+<ul>
+<li>簡単のためタイマーで1秒ごとにソケットにメッセージがあるかどうかobserveSocketでチェックしているが、別スレッドにしたほうがスマート</li>
+<li><a href="http://api.zeromq.org/2-2:zmq-recv">zmq_recvのマニュアル</a>によると、zmq_recvをZMQ_NOBLOCKで呼んだときにメッセージがなかった場合はEAGAINが返るとなっているが、-1がかえってきていた。</li>
+<li>上記ソースはUITableViewControllerで発言を表示する想定になっているが、UIまわりのコードは省略</li>
+</ul>
+<h2 id="common-lisp">オマケ(Common Lisp版コマンドライン用チャットクライアント)</h2>
+<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+(ql:quickload :zeromq)
+(ql:quickload :bordeaux-threads)
+
+(defun sub ()
+  (zmq:with-context (ctx 1)
+    (zmq:with-socket (socket ctx zmq:sub)
+      (zmq:setsockopt socket zmq:subscribe &quot;&quot;)
+      (zmq:connect socket &quot;tcp://127.0.0.1:5556&quot;)
+      (loop
+         (let ((query (make-instance &#39;zmq:msg)))
+           (zmq:recv socket query)
+           (format t &quot;received message: ~a~%&quot; (zmq:msg-data-as-string query)))))))
+
+(defun client ()
+  (zmq:with-context (ctx 1)
+    (zmq:with-socket (socket ctx zmq:req)
+      (zmq:connect socket &quot;tcp://127.0.0.1:5555&quot;)
+      (loop
+         (zmq:send socket (make-instance &#39;zmq:msg
+                                         :data (read-line)))
+         (let ((result (make-instance &#39;zmq:msg)))
+           (zmq:recv socket result))))))
+
+(bordeaux-threads:make-thread #&#39;sub)
+(client)
+</pre></div>
+
+<h1 id="_3">まとめ</h1>
+<ul>
+<li>iPhoneでZeroMQを動かしてみた</li>
+<li>ZeroMQのREQ/REPとPUB/SUBを使用してチャットをつくってみた</li>
+<li>appleの審査を通過するかどうかは知らない(一応実績はあるらしい)</li>
+</ul>
+<h1 id="_4">参考</h1>
+<ul>
+<li><a href="http://api.zeromq.org/2-2:_start">http://api.zeromq.org/2-2:_start</a></li>
+<li><a href="http://www.zeromq.org/area:licensing">http://www.zeromq.org/area:licensing</a></li>
+<li><a href="http://www.zeromq.org/intro:commercial-support">http://www.zeromq.org/intro:commercial-support</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class="linkwithin_div"></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/10/17/objective-c-zeromq" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/17/objective-c-zeromq/" class="hatena-bookmark-button" data-hatena-bookmark-title="iOSでZeroMQを試す" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/10/17/objective-c-zeromq" data-text="iOSでZeroMQを試す">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/10/17/objective-c-zeromq"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
   
 <div class="blog_post">
   <a name="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする"></a>
@@ -270,7 +506,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
   </div>
 </div>
 
-<div class="shr_rd"></div>
+<div class="linkwithin_div"></div>
 
 
 <div id="prev_next_link">
@@ -313,7 +549,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
   </div>
 </div>
 
-<div class="shr_rd"></div>
+<div class="linkwithin_div"></div>
 
 
 <div id="prev_next_link">
@@ -338,6 +574,11 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/10/17/objective-c-zeromq" title="iOSでZeroMQを試す"><p>iOSでZeroMQを試す</a><span style="font-size: 80%;">(October 17, 2012 at 06:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/17/objective-c-zeromq">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/17/objective-c-zeromq" alt="はてなブックマーク - iOSでZeroMQを試す" title="はてなブックマーク - iOSでZeroMQを試す">
+</a>
+</li>
       <li><a href="/blog/2012/10/17/common-lisp-zeromq" title="Common LispでZeroMQを試す"><p>Common LispでZeroMQを試す</a><span style="font-size: 80%;">(October 17, 2012 at 12:00 AM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/17/common-lisp-zeromq">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/17/common-lisp-zeromq" alt="はてなブックマーク - Common LispでZeroMQを試す" title="はてなブックマーク - Common LispでZeroMQを試す">
@@ -358,11 +599,6 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/08/07/jenkins-ios-build" alt="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする" title="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">
 </a>
 </li>
-      <li><a href="/blog/2012/07/25/ios-simulator-log" title="xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる"><p>xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる</a><span style="font-size: 80%;">(July 25, 2012 at 08:30 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/25/ios-simulator-log">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/07/25/ios-simulator-log" alt="はてなブックマーク - xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる" title="はてなブックマーク - xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる">
-</a>
-</li>
     </ul>
   </div>
 
@@ -373,13 +609,13 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (1)</li>
@@ -390,7 +626,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
   </div> 
 
@@ -398,7 +634,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
@@ -453,6 +689,12 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 
       </div> <!-- End Footer -->
     </div> <!-- End Content -->
+
+    <script>
+      var linkwithin_site_id = 1502091;
+    </script>
+    <script src="http://www.linkwithin.com/widget.js"></script>
+    <a href="http://www.linkwithin.com/"><img src="http://www.linkwithin.com/pixel.png" alt="Related Posts Plugin for WordPress, Blogger..." style="border: 0" /></a>
 
   </body>
 </html>

@@ -23,7 +23,7 @@ ${", ".join(category_links)}
   </div>
 </div>
 
-<div class="shr_rd"></div>
+<div class="linkwithin_div"></div>
 
 <%def name="post_prose(post)">
 <div class="blogbody">
