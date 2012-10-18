@@ -1,6 +1,6 @@
 ---
 categories: objective-c, ios, common lisp, zeromq
-date: 2012/10/17 18:00:00
+date: 2012/10/18 18:00:00
 title: iOSでZeroMQを試す
 image: /images/zeromq-logo.png
 ---

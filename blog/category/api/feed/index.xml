@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Thu, 18 Oct 2012 12:28:49 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</title>
+      <link>http://mojavy.com/blog/2012/10/18/twitter-api-error</link>
+      <pubDate>Thu, 18 Oct 2012 22:00:00 JST</pubDate>
+      <category><![CDATA[web]]></category>
+      <category><![CDATA[twitter]]></category>
+      <category><![CDATA[api]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/twitter-api-error</guid>
+      <description>twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</description>
+      <content:encoded><![CDATA[<p><img alt="twitter" src="/images/twitter-logo.png" /></p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

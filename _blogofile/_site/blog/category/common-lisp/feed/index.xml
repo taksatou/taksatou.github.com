@@ -10,19 +10,19 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Thu, 18 Oct 2012 08:53:43 GMT</pubDate>
+    <pubDate>Thu, 18 Oct 2012 12:44:12 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>iOSでZeroMQを試す</title>
-      <link>http://mojavy.com/blog/2012/10/17/objective-c-zeromq</link>
-      <pubDate>Wed, 17 Oct 2012 18:00:00 JST</pubDate>
+      <link>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</link>
+      <pubDate>Thu, 18 Oct 2012 18:00:00 JST</pubDate>
       <category><![CDATA[objective-c]]></category>
       <category><![CDATA[ios]]></category>
       <category><![CDATA[zeromq]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/17/objective-c-zeromq</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/objective-c-zeromq</guid>
       <description>iOSでZeroMQを試す</description>
       <content:encoded><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>

@@ -81,6 +81,53 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="twitter-apiで404:-{"errors":[{"message":"sorry,-that-page-does-not-exist","code":34}]}"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/10/18/twitter-api-error" rel="bookmark" title="Permanent Link to twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}">twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</a></h2>
+  <small>October 18, 2012 at 10:00 PM | categories:
+
+<a href='/blog/category/web'>web</a>, <a href='/blog/category/twitter'>twitter</a>
+ | <a href="http://mojavy.com/blog/2012/10/18/twitter-api-error#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="twitter" src="/images/twitter-logo.png" /></p>
+<p>最近twitter apiをつかっているサービスで以下のようなエラーがでた。</p>
+<div class="pygments_murphy"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
+</pre></div>
+
+<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。
+つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
+<p>ログイン直後にverify_credentialsをつかってるアプリは多いと思われるが、その場合ログインに失敗したように見えるので認証まわりをライブラリ任せにしてると原因がわかりにくいかも。</p>
+<p>とりあえず<a href="https://dev.twitter.com/blog">twitterの開発ブログ</a>まめにチェックしたほうがよさそう。</p>
+<h1 id="_1">参考</h1>
+<ul>
+<li><a href="https://dev.twitter.com/blog">https://dev.twitter.com/blog</a></li>
+<li><a href="https://dev.twitter.com/discussions/11595">https://dev.twitter.com/discussions/11595</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class="linkwithin_div"></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/10/18/twitter-api-error" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/18/twitter-api-error/" class="hatena-bookmark-button" data-hatena-bookmark-title="twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/10/18/twitter-api-error" data-text="twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/10/18/twitter-api-error"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ワンライナーでウェブサーバを起動する方法"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/07/18/one-line-webserver" rel="bookmark" title="Permanent Link to ワンライナーでウェブサーバを起動する方法">ワンライナーでウェブサーバを起動する方法</a></h2>
   <small>July 18, 2012 at 12:30 PM | categories:
@@ -145,9 +192,14 @@ href="/blog/feed/atom" />
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
-      <li><a href="/blog/2012/10/17/objective-c-zeromq" title="iOSでZeroMQを試す"><p>iOSでZeroMQを試す</a><span style="font-size: 80%;">(October 17, 2012 at 06:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/17/objective-c-zeromq">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/17/objective-c-zeromq" alt="はてなブックマーク - iOSでZeroMQを試す" title="はてなブックマーク - iOSでZeroMQを試す">
+      <li><a href="/blog/2012/10/18/twitter-api-error" title="twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}"><p>twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</a><span style="font-size: 80%;">(October 18, 2012 at 10:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/18/twitter-api-error">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/18/twitter-api-error" alt="はてなブックマーク - twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}" title="はてなブックマーク - twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}">
+</a>
+</li>
+      <li><a href="/blog/2012/10/18/objective-c-zeromq" title="iOSでZeroMQを試す"><p>iOSでZeroMQを試す</a><span style="font-size: 80%;">(October 18, 2012 at 06:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/18/objective-c-zeromq">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/18/objective-c-zeromq" alt="はてなブックマーク - iOSでZeroMQを試す" title="はてなブックマーク - iOSでZeroMQを試す">
 </a>
 </li>
       <li><a href="/blog/2012/10/17/common-lisp-zeromq" title="Common LispでZeroMQを試す"><p>Common LispでZeroMQを試す</a><span style="font-size: 80%;">(October 17, 2012 at 12:00 AM)</span>
@@ -163,11 +215,6 @@ href="/blog/feed/atom" />
       <li><a href="/blog/2012/10/16/quick-links" title="Quick links"><p>Quick links</a><span style="font-size: 80%;">(October 16, 2012 at 02:30 AM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/16/quick-links">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/16/quick-links" alt="はてなブックマーク - Quick links" title="はてなブックマーク - Quick links">
-</a>
-</li>
-      <li><a href="/blog/2012/08/07/jenkins-ios-build" title="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする"><p>jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a><span style="font-size: 80%;">(August 07, 2012 at 03:30 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/07/jenkins-ios-build">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/08/07/jenkins-ios-build" alt="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする" title="はてなブックマーク - jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">
 </a>
 </li>
     </ul>
@@ -195,7 +242,8 @@ href="/blog/feed/atom" />
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -205,7 +253,7 @@ href="/blog/feed/atom" />
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>

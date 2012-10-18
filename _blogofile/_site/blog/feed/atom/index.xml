@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-10-18T08:53:43Z</updated>
+  <updated>2012-10-18T12:44:12Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -18,17 +18,45 @@
       <name></name>
       <uri>http://mojavy.com/blog</uri>
     </author>
+    <title type="html"><![CDATA[twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/twitter-api-error" />
+    <id>http://mojavy.com/blog/2012/10/18/twitter-api-error</id>
+    <updated>2012-10-18T22:00:00Z</updated>
+    <published>2012-10-18T22:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="web" />
+    <category scheme="http://mojavy.com/blog" term="twitter" />
+    <summary type="html"><![CDATA[twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/twitter-api-error"><![CDATA[<p><img alt="twitter" src="/images/twitter-logo.png" /></p>
+<p>最近twitter apiをつかっているサービスで以下のようなエラーがでた。</p>
+<div class="pygments_murphy"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
+</pre></div>
+
+<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。
+つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
+<p>ログイン直後にverify_credentialsをつかってるアプリは多いと思われるが、その場合ログインに失敗したように見えるので認証まわりをライブラリ任せにしてると原因がわかりにくいかも。</p>
+<p>とりあえず<a href="https://dev.twitter.com/blog">twitterの開発ブログ</a>まめにチェックしたほうがよさそう。</p>
+<h1 id="_1">参考</h1>
+<ul>
+<li><a href="https://dev.twitter.com/blog">https://dev.twitter.com/blog</a></li>
+<li><a href="https://dev.twitter.com/discussions/11595">https://dev.twitter.com/discussions/11595</a></li>
+</ul>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
     <title type="html"><![CDATA[iOSでZeroMQを試す]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/17/objective-c-zeromq" />
-    <id>http://mojavy.com/blog/2012/10/17/objective-c-zeromq</id>
-    <updated>2012-10-17T18:00:00Z</updated>
-    <published>2012-10-17T18:00:00Z</published>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq" />
+    <id>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</id>
+    <updated>2012-10-18T18:00:00Z</updated>
+    <published>2012-10-18T18:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="objective-c" />
     <category scheme="http://mojavy.com/blog" term="ios" />
     <category scheme="http://mojavy.com/blog" term="zeromq" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[iOSでZeroMQを試す]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/17/objective-c-zeromq"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/objective-c-zeromq"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
 <h1 id="zeromqiphone">ZeroMQをiPhone用にビルド</h1>
 <p>ZeroMQはautotoolsで作成されておりconfigure &amp;&amp; make でビルドできるようになっているが、iPhone用にクロスコンパイルをするためには適切なオプションを与えてやる必要がある。</p>
@@ -757,82 +785,6 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <li>名前のコンベンションとは関係なしに、明示的にオブジェクトの所有権を返すメソッドをコンパイラに伝える方法もある。</li>
 </ul>
 <h2 id="_3">参考</h2>
-<p><br>
-<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[objective-cのプロトコルとデリゲーションについてのメモ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol" />
-    <id>http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol</id>
-    <updated>2012-07-17T18:30:00Z</updated>
-    <published>2012-07-17T18:30:00Z</published>
-    <category scheme="http://mojavy.com/blog" term="objective-c" />
-    <summary type="html"><![CDATA[objective-cのプロトコルとデリゲーションについてのメモ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol"><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
-<ul>
-<li>プロトコルとはクラス間で共有するメソッドのリスト。</li>
-<li>javaでいうinterfaceのようなもの。</li>
-<li>@optionalディレクティブ以降のメソッドは実装が任意。</li>
-<li>@requiredディレクティブで必須。</li>
-<li>プロトコルに必要なメソッドは直接そのクラスで実装してもいいし、継承元の親クラスで実装してもよい。</li>
-<li>requiredがすべて実装されていなかった場合、コンパイラーはワーニングを出す。(エラーではない)</li>
-<li>すべてのrequiredメソッドを実装したクラスはそのプロトコルにconform(もしくはadopt)したという。</li>
-<li>そのオブジェクトがconformしているかどうかチェックするには、conformsToProtocolメソッドを使う。</li>
-<li>そのオブジェクトがoptionalなメソッドを実装しているかどうかをチェックするには、respondsToSelectorを使う。</li>
-<li>コンパイル時に型チェックが行われる。型宣言に<protocol名>を含めるとよい。</li>
-<li>カテゴリもプロトコルにadoptできる。</li>
-<li>プロトコルの名前はユニークでなければならない。</li>
-<li>delegationとはプロトコルで定義されたメソッドを実装したクラスを定義すること。</li>
-<li>informal protocolというものもあるが、これは単に実装がないカテゴリのこと。abstract protocolともいう。ドキュメンテーションやモジュラリティのために用いる。コンパイル時チェックはなし。プロトコルの@optionalディレクトリはObjective-C 2.0で追加されたので、こちらをつかえばよい。</li>
-<li>eclipseでいうデリゲートは、Composite Objectとよばれる</li>
-</ul>
-<h2 id="_1">例</h2>
-<h3 id="myprotocolh">myProtocol.h</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
-
-<span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-<h3 id="myprotocolimplh">myProtocolImpl.h</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
-<span class="cp">#import &quot;myProtocol.h&quot;</span>
-
-<span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
-
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-<h3 id="myprotocolimplm">myProtocolImpl.m</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
-
-<span class="k">@implementation</span> <span class="nc">myProtocolImpl</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f1</span>
-<span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;called f0&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span>
-<span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;called f2&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-<h2 id="_2">参考</h2>
 <p><br>
 <iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>]]></content>
   </entry>
