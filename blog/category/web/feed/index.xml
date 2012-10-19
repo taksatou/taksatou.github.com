@@ -10,7 +10,7 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Thu, 18 Oct 2012 12:44:12 GMT</pubDate>
+    <pubDate>Fri, 19 Oct 2012 17:41:54 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
@@ -27,8 +27,8 @@
 <div class="pygments_murphy"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
 </pre></div>
 
-<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。
-つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
+<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。</p>
+<p>つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
 <p>ログイン直後にverify_credentialsをつかってるアプリは多いと思われるが、その場合ログインに失敗したように見えるので認証まわりをライブラリ任せにしてると原因がわかりにくいかも。</p>
 <p>とりあえず<a href="https://dev.twitter.com/blog">twitterの開発ブログ</a>まめにチェックしたほうがよさそう。</p>
 <h1 id="_1">参考</h1>

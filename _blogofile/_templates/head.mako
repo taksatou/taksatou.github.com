@@ -1,4 +1,10 @@
-<title>${bf.config.blog.name}</title>
+<title>
+% if post:
+${post.title} - ${bf.config.blog.name} -
+% else:
+${bf.config.blog.name}
+% endif
+</title>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="${bf.util.site_path_helper(bf.config.blog.path,'/feed')}" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="${bf.util.site_path_helper(bf.config.blog.path,'/feed/atom')}" />
@@ -18,7 +24,7 @@ href="${bf.util.site_path_helper(bf.config.blog.path,'/feed/atom')}" />
   google.load("jquery", "1.6.4");
   google.load("jqueryui", "1.8.16");
 
-  
+
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-26834066-1']);
   _gaq.push(['_trackPageview']);

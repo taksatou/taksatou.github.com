@@ -7,7 +7,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     
-  <title>mojavy.com</title>
+  <title>
+mojavy.com
+</title>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
@@ -27,7 +29,7 @@ href="/blog/feed/atom" />
   google.load("jquery", "1.6.4");
   google.load("jqueryui", "1.8.16");
 
-  
+
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-26834066-1']);
   _gaq.push(['_trackPageview']);
@@ -97,8 +99,8 @@ href="/blog/feed/atom" />
 <div class="pygments_murphy"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
 </pre></div>
 
-<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。
-つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
+<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。</p>
+<p>つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
 <p>ログイン直後にverify_credentialsをつかってるアプリは多いと思われるが、その場合ログインに失敗したように見えるので認証まわりをライブラリ任せにしてると原因がわかりにくいかも。</p>
 <p>とりあえず<a href="https://dev.twitter.com/blog">twitterの開発ブログ</a>まめにチェックしたほうがよさそう。</p>
 <h1 id="_1">参考</h1>
