@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-10-19T17:41:54Z</updated>
+  <updated>2012-10-19T18:02:30Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -21,8 +21,8 @@
     <title type="html"><![CDATA[iOSでZeroMQを試す]]></title>
     <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq" />
     <id>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</id>
-    <updated>2012-10-18T18:00:00Z</updated>
-    <published>2012-10-18T18:00:00Z</published>
+    <updated>2012-10-18T18:00:01Z</updated>
+    <published>2012-10-18T18:00:01Z</published>
     <category scheme="http://mojavy.com/blog" term="objective-c" />
     <category scheme="http://mojavy.com/blog" term="ios" />
     <category scheme="http://mojavy.com/blog" term="zeromq" />
