@@ -10,10 +10,107 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Fri, 19 Oct 2012 18:02:30 GMT</pubDate>
+    <pubDate>Wed, 24 Oct 2012 11:58:57 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Common Lisp練習 - CodeChef : TSORT</title>
+      <link>http://mojavy.com/blog/2012/10/24/cl-practice</link>
+      <pubDate>Wed, 24 Oct 2012 18:00:00 JST</pubDate>
+      <category><![CDATA[programming]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/24/cl-practice</guid>
+      <description>Common Lisp練習 - CodeChef : TSORT</description>
+      <content:encoded><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
+<p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>
+<p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
+<p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
+<p>最初は以下のように書いて、</p>
+<div class="pygments_murphy"><pre>(let ((_n (parse-integer (read-line)))
+      (lis ()))
+  (dotimes (i _n)
+    (push (parse-integer (read-line)) lis))
+  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
+  (dolist (x lis) (format t &quot;~a~%&quot; x)))
+</pre></div>
+
+<p>以下の用にして時間を測ったところ</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.19s user 0.01s system 91% cpu 1.311 total
+sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938 total
+</pre></div>
+
+<p>ローカルだと3.42s程度だった。codechef上での制限は5secなのでセーフかと思ったけどTime Limit Exceededだった。</p>
+<p>そこで、vectorを使うように改良</p>
+<div class="pygments_murphy"><pre>(let* ((_n (parse-integer (read-line)))
+       (lis (make-array _n :fill-pointer 0)))
+  (dotimes (i _n)
+    (vector-push (parse-integer (read-line)) lis))
+  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
+  (loop for i across lis do (format t &quot;~a~%&quot; i)))
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.21s user 0.01s system 94% cpu 1.289 total
+sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137 total
+</pre></div>
+
+<p>若干改善されたが、まだTime Limit Exceededだった。</p>
+<p>read-sequenceで読み込んだほうが早いかと思って以下のように書いてみた。</p>
+<div class="pygments_murphy"><pre>(defun parse-input (str)
+  (loop
+     for i = 0 then (+ 1 j)
+     as j = (position #\Newline str :start i)
+     as k = (parse-integer (subseq str i j) :junk-allowed t)
+     if (not (null k))
+     collect k
+     while j))
+
+(let* ((_n (parse-integer (read-line)))
+       (lis (make-array (* _n 20) :element-type &#39;character))
+       (nums ())
+       )
+  (read-sequence lis *standard-input*)
+  (setf nums (sort (parse-input lis) #&#39;(lambda (x y) (&lt; x y))))
+  (loop for i in nums do (format t &quot;~a~%&quot; i)))
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.13s user 0.01s system 97% cpu 1.159 total
+sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297 total
+</pre></div>
+
+<p>残念ながら逆に遅くなってしまった。parse-inputの部分で60%くらい時間がかかっていた。
+あと、<code>#'(lambda (x y) (&lt; x y))</code>の部分を <code>#'&lt;</code>にするとなぜか遅くなる。</p>
+<p><a href="http://www.codechef.com/status/TSORT?language=31&amp;status=All&amp;handle=&amp;sort_by=All&amp;sorting_order=asc&amp;Submit=GO">まだ誰もlispではパスしてない模様。</a>こういうのをもっと高速に書く方法あるのだろうか。</p>
+<p>ちなみにCだと余裕。ローカルだと0.2秒くらいだけどリモートでは3秒くらいかかってた。そもそもCodeChefの実行環境がしょぼすぎる疑惑が。。</p>
+<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">j</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
+
+    <span class="kt">int</span> <span class="n">lis</span><span class="p">[</span><span class="n">num</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">qsort</span><span class="p">(</span><span class="n">lis</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span> <span class="n">f</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  0.99s user 0.01s system 99% cpu 1.006 total
+./a.out &gt; /dev/null  0.18s user 0.01s system 17% cpu 1.116 total
+</pre></div>]]></content:encoded>
+    </item>
     <item>
       <title>twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</title>
       <link>http://mojavy.com/blog/2012/10/18/twitter-api-error</link>
@@ -686,58 +783,6 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <ul>
 <li><a href="http://d.hatena.ne.jp/rx7/20090812/p1">コマンド1つで今すぐWebサーバを起動させるためのワンライナー(Ruby or Python)</a></li>
 </ul>]]></content:encoded>
-    </item>
-    <item>
-      <title>objective-cのメモリマネージメントについて</title>
-      <link>http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management</link>
-      <pubDate>Wed, 18 Jul 2012 11:30:00 JST</pubDate>
-      <category><![CDATA[objective-c]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management</guid>
-      <description>objective-cのメモリマネージメントについて</description>
-      <content:encoded><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
-<p>現在のところ3つの方法がある</p>
-<h2 id="1-gabage-collection">1. Gabage Collection</h2>
-<ul>
-<li>Objective-C 2.0から導入された。</li>
-<li>ただし、iOSの実行環境には含まれない。</li>
-<li>Max OS Xでなら使えるらしい。</li>
-</ul>
-<h2 id="2-manual-reference-counting">2. Manual Reference Counting</h2>
-<ul>
-<li>retainは参照カウントを1あげる。releaseは1さげる</li>
-<li>参照カウントが0でdeallocするとすぐに削除される</li>
-<li>NSMutableArrayのaddObjectやremoveObjectAtIndexなどはオブジェクトの参照カウントを増減させる。</li>
-<li>余分にreleaseしたりするとcrashする</li>
-</ul>
-<h2 id="3-automatic-reference-counting-arc">3. Automatic Reference Counting (ARC)</h2>
-<ul>
-<li>システムが自動的に参照カウントをしてくれる。</li>
-<li>強い変数と弱い変数がある</li>
-</ul>
-<h4 id="_1">強い変数</h4>
-<ul>
-<li>デフォルトでは、オブジェクトのポインタは強い変数。そのようなポインタにアサインした参照は自動的にretainされる。</li>
-<li>新しい参照をアサインする前に古い参照はreleaseされる</li>
-<li>_ _strong キーワードをつかって明示的に強い変数を宣言できる。</li>
-<li>プロパティはデフォルトではstrongではない</li>
-<li>C++のshared_ptrのようなもの？</li>
-</ul>
-<h4 id="_2">弱い変数</h4>
-<ul>
-<li>循環参照している場合や、しても開放されるようにするときに使える。</li>
-<li>親が子の強い参照を持っており、子が親の弱い参照を持っている場合、retainのサイクルが形成されなくなるのでオブジェクトを開放できる。</li>
-<li>_ _weakキーワードを使う。</li>
-<li>iOS4ではサポートされていない</li>
-<li>C++のweak_ptrのようなもの？</li>
-</ul>
-<h4 id="non-arc">Non-ARCのコード</h4>
-<ul>
-<li>init, alloc, copy, new, mutableCopyをprefixにもつメソッドはそのオブジェクトの所有権を返す、というネーミングコンベンションに従っている場合は自動的にARCが適用される。</li>
-<li>名前のコンベンションとは関係なしに、明示的にオブジェクトの所有権を返すメソッドをコンパイラに伝える方法もある。</li>
-</ul>
-<h2 id="_3">参考</h2>
-<p><br>
-<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>]]></content:encoded>
     </item>
   </channel>
 </rss>
