@@ -10,10 +10,43 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 24 Oct 2012 11:58:57 GMT</pubDate>
+    <pubDate>Thu, 01 Nov 2012 02:32:13 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Quick links</title>
+      <link>http://mojavy.com/blog/2012/10/31/quick-links</link>
+      <pubDate>Wed, 31 Oct 2012 23:30:00 JST</pubDate>
+      <category><![CDATA[quicklinks]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/31/quick-links</guid>
+      <description>Quick links</description>
+      <content:encoded><![CDATA[<p><img alt="jack" src="/images/jack-lantern.png" /></p>
+<p>もう11月ですね。<a href="http://mojavy.com/blog/2012/10/16/quick-links/">前回</a>に引き続き今後のネタのメモとか。</p>
+<h3 id="impara"><a href="https://github.com/cloudera/impala">Impara</a></h3>
+<p><a href="http://research.google.com/pubs/pub36632.html">GoogleのDremel</a>に触発されてつくったものとのこと。MapReduce以外の選択肢が増えてくると、<a href="http://pig.apache.org/">pig</a>みたいな高級言語の重要度があがってくるかもしれないですね。</p>
+<ul>
+<li><a href="http://www.publickey1.jp/blog/12/hadoopsqlcloudera_impalacloudera.html">http://www.publickey1.jp/blog/12/hadoopsqlcloudera_impalacloudera.html</a></li>
+<li><a href="https://ccp.cloudera.com/display/IMPALA10BETADOC/Cloudera+Impala+1.0+Beta+Documentation">https://ccp.cloudera.com/display/IMPALA10BETADOC/Cloudera+Impala+1.0+Beta+Documentation</a></li>
+</ul>
+<h3 id="yahooie10do-not-track"><a href="http://it.slashdot.jp/story/12/10/29/0948240/%E7%B1%B3Yahoo%21%E3%80%81IE10%E3%81%AEDo-Not-Track%E3%82%92%E7%84%A1%E8%A6%96">米Yahoo!、IE10のDo Not Trackを無視</a></h3>
+<p>ちょっと前に、<a href="http://www.atmarkit.co.jp/news/201209/12/apache.html">ApacheがIE10のDNTを無視するパッチ</a>をだしてましたが、これも影響してるのだろうか。
+ちなみにこのパッチをコミットしたのは<a href="http://roy.gbiv.com/">この人</a>らしい。</p>
+<ul>
+<li><a href="http://www.ypolicyblog.com/policyblog/2012/10/26/dnt/">In Support of a Personalized User Experience</a></li>
+</ul>
+<h3 id="supersonic"><a href="https://code.google.com/p/supersonic/">supersonic</a></h3>
+<p>名前からしてすごそうですね。これをうまく使えれば、下手にhadoop使うより大量にメモリ積んだマシン1台でがんばれるシチュエーションが増えそう。</p>
+<ul>
+<li><a href="http://sourceforge.jp/magazine/12/10/16/2327214">http://sourceforge.jp/magazine/12/10/16/2327214</a></li>
+<li><a href="http://www.infoq.com/jp/news/2012/10/Google-Supersonic">http://www.infoq.com/jp/news/2012/10/Google-Supersonic</a></li>
+<li><a href="http://google-opensource.blogspot.ro/2012/10/introducing-supersonic-query-engine.html">http://google-opensource.blogspot.ro/2012/10/introducing-supersonic-query-engine.html</a></li>
+</ul>
+<h3 id="listfrontcode"><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">List::FrontCode</a></h3>
+<p>積読状態だったWEB+DB PRESS総集編のバックナンバーをまじめに消化してたら、Vol.42のアルゴリズム&amp;データ構造の記事がおもしろかった。naoya氏を見習って自分で実装してみたいと思います。</p>
+<h3 id="ipad-minikindlewindows-surface"><a href="http://www.amazon.co.jp/dp/B007OZO03M?tag=googhydr-22&amp;hvadid=16344445847&amp;hvpos=1t1&amp;hvexid=&amp;hvnetw=g&amp;hvrand=4412511441746174378&amp;hvpone=&amp;hvptwo=&amp;hvqmt=e&amp;ref=pd_sl_976d9edx_e">ipad mini</a>とか<a href="http://www.amazon.co.jp/gp/product/B007OZO03M/ref=amb_link_64549709_6?pf_rd_m=AN1VRQENFRJN5&amp;pf_rd_s=center-5&amp;pf_rd_r=0GZBN8S52CGASY82ZADV&amp;pf_rd_t=1401&amp;pf_rd_p=120015049&amp;pf_rd_i=3077662956">kindle</a>とか<a href="http://www.microsoft.com/Surface/en-US">windows surface</a>とか</h3>
+<p>kindleのpaperwhite予約しました。</p>]]></content:encoded>
+    </item>
     <item>
       <title>Common Lisp練習 - CodeChef : TSORT</title>
       <link>http://mojavy.com/blog/2012/10/24/cl-practice</link>
@@ -750,39 +783,6 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。</p>
 <p>いままでgmailでフィルタリングしてたので気付かなかった。。</p>
 <p>メールクライアントはgmailのウェブアプリで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>ワンライナーでウェブサーバを起動する方法</title>
-      <link>http://mojavy.com/blog/2012/07/18/one-line-webserver</link>
-      <pubDate>Wed, 18 Jul 2012 12:30:00 JST</pubDate>
-      <category><![CDATA[python]]></category>
-      <category><![CDATA[web]]></category>
-      <category><![CDATA[ruby]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/18/one-line-webserver</guid>
-      <description>ワンライナーでウェブサーバを起動する方法</description>
-      <content:encoded><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
-<p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
-起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
-</pre></div>
-
-<p>デフォルトポートは8000ですが、引数で指定することもできます。
-<br>
-ちなみにrubyでもwebrickを使って同様のことができますが、<a href="http://d.hatena.ne.jp/rx7/20090812/p1">こちら</a> で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。
-<br>
-<br>
-でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
-</pre></div>
-
-<p>ポートを変更する場合は以下のようにします</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
-</pre></div>
-
-<h2 id="_1">参考</h2>
-<ul>
-<li><a href="http://d.hatena.ne.jp/rx7/20090812/p1">コマンド1つで今すぐWebサーバを起動させるためのワンライナー(Ruby or Python)</a></li>
-</ul>]]></content:encoded>
     </item>
   </channel>
 </rss>
