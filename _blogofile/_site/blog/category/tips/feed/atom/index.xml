@@ -7,12 +7,54 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-11-01T02:32:13Z</updated>
+  <updated>2012-11-02T14:09:38Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[UbuntuでPDFの日本語フォントが表示できないときの対処メモ]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf" />
+    <id>http://mojavy.com/blog/2012/11/02/ubuntu-pdf</id>
+    <updated>2012-11-02T12:00:00Z</updated>
+    <published>2012-11-02T12:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="pdf" />
+    <category scheme="http://mojavy.com/blog" term="tips" />
+    <category scheme="http://mojavy.com/blog" term="ubuntu" />
+    <summary type="html"><![CDATA[UbuntuでPDFの日本語フォントが表示できないときの対処メモ]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/02/ubuntu-pdf"><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
+<p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>
+<div class="pygments_murphy"><pre>Error <span class="o">(</span>13373<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13412<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13497<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13515<span class="o">)</span>: No font in show
+Error <span class="o">(</span>13555<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13572<span class="o">)</span>: No font in show
+Error <span class="o">(</span>13607<span class="o">)</span>: No font in show/space
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Unknown font tag <span class="s1">&#39;C0_0&#39;</span>
+Error <span class="o">(</span>231<span class="o">)</span>: No font in show
+Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
+</pre></div>
+
+<p>pdfビューワはDocument Viewerでもokularでも同様だった。</p>
+<p>そこで、<a href="https://forums.ubuntulinux.jp/viewtopic.php?id=8281">このあたり</a>を参考に、</p>
+<div class="pygments_murphy"><pre>sudo apt-get install poppler-data
+</pre></div>
+
+<p>としたらちゃんと表示されるようになった。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

@@ -10,10 +10,47 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Thu, 01 Nov 2012 02:32:13 GMT</pubDate>
+    <pubDate>Fri, 02 Nov 2012 14:09:38 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</title>
+      <link>http://mojavy.com/blog/2012/11/02/ubuntu-pdf</link>
+      <pubDate>Fri, 02 Nov 2012 12:00:00 JST</pubDate>
+      <category><![CDATA[pdf]]></category>
+      <category><![CDATA[tips]]></category>
+      <category><![CDATA[ubuntu]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/02/ubuntu-pdf</guid>
+      <description>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</description>
+      <content:encoded><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
+<p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>
+<div class="pygments_murphy"><pre>Error <span class="o">(</span>13373<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13412<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13497<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13515<span class="o">)</span>: No font in show
+Error <span class="o">(</span>13555<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13572<span class="o">)</span>: No font in show
+Error <span class="o">(</span>13607<span class="o">)</span>: No font in show/space
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Unknown font tag <span class="s1">&#39;C0_0&#39;</span>
+Error <span class="o">(</span>231<span class="o">)</span>: No font in show
+Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
+</pre></div>
+
+<p>pdfビューワはDocument Viewerでもokularでも同様だった。</p>
+<p>そこで、<a href="https://forums.ubuntulinux.jp/viewtopic.php?id=8281">このあたり</a>を参考に、</p>
+<div class="pygments_murphy"><pre>sudo apt-get install poppler-data
+</pre></div>
+
+<p>としたらちゃんと表示されるようになった。</p>]]></content:encoded>
+    </item>
     <item>
       <title>Quick links</title>
       <link>http://mojavy.com/blog/2012/10/31/quick-links</link>
@@ -770,19 +807,6 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 </pre></div>
 
 <p>参考：　<a href="http://sakito.jp/emacs/emacsobjectivec.html">http://sakito.jp/emacs/emacsobjectivec.html</a></p>]]></content:encoded>
-    </item>
-    <item>
-      <title>redmineのメールを効率良くフィルタリングする</title>
-      <link>http://mojavy.com/blog/2012/07/24/redmine-mail</link>
-      <pubDate>Tue, 24 Jul 2012 23:30:00 JST</pubDate>
-      <category><![CDATA[tips]]></category>
-      <category><![CDATA[redmine]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/24/redmine-mail</guid>
-      <description>redmineのメールを効率良くフィルタリングする</description>
-      <content:encoded><![CDATA[<p><img alt="redmine" src="/images/redmine-logo.png" /></p>
-<p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。</p>
-<p>いままでgmailでフィルタリングしてたので気付かなかった。。</p>
-<p>メールクライアントはgmailのウェブアプリで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
