@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-11-07T03:27:32Z</updated>
+  <updated>2012-11-07T04:41:30Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -18,14 +18,14 @@
       <name></name>
       <uri>http://mojavy.com/blog</uri>
     </author>
-    <title type="html"><![CDATA[細かすぎて伝わらないAndroidのはまりどころ その1]]></title>
+    <title type="html"><![CDATA[細かすぎて伝わらないAndroid開発のはまりどころまとめ その1]]></title>
     <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/07/android-pitfalls" />
     <id>http://mojavy.com/blog/2012/11/07/android-pitfalls</id>
     <updated>2012-11-07T12:00:00Z</updated>
     <published>2012-11-07T12:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="android" />
     <category scheme="http://mojavy.com/blog" term="tips" />
-    <summary type="html"><![CDATA[細かすぎて伝わらないAndroidのはまりどころ その1]]></summary>
+    <summary type="html"><![CDATA[細かすぎて伝わらないAndroid開発のはまりどころまとめ その1]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2012/11/07/android-pitfalls"><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
 <p>その2があるかどうかは知りませんが、これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。</p>
 <h2 id="_1">目次</h2>
@@ -177,6 +177,6 @@ iOSならBundleという仕組みがあります。</p>
 </pre></div>
 
 <p>まあ、なんというか、Androidはいろいろ残念ですね。</p>
-<p>iOSはこういう仕様なのかバグなのかよくわからないようなものが少ないし、OSバージョンの入れ換わりが早くて対応バージョンも少なくて済む分、個人的な体感ではandroidアプリの工数はiOSの5割増しという感じ。</p>]]></content>
+<p>iOSはこういう仕様なのかバグなのかよくわからないようなものが少ないし、OSバージョンの入れ換わりが早くて対応バージョンも少なくて済む分、個人的な体感ではandroidアプリの工数はiOSの3割増しという感じ。</p>]]></content>
   </entry>
 </feed>

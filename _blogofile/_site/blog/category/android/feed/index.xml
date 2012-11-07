@@ -10,18 +10,18 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 07 Nov 2012 03:27:32 GMT</pubDate>
+    <pubDate>Wed, 07 Nov 2012 04:41:30 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
-      <title>細かすぎて伝わらないAndroidのはまりどころ その1</title>
+      <title>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</title>
       <link>http://mojavy.com/blog/2012/11/07/android-pitfalls</link>
       <pubDate>Wed, 07 Nov 2012 12:00:00 JST</pubDate>
       <category><![CDATA[android]]></category>
       <category><![CDATA[tips]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2012/11/07/android-pitfalls</guid>
-      <description>細かすぎて伝わらないAndroidのはまりどころ その1</description>
+      <description>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</description>
       <content:encoded><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
 <p>その2があるかどうかは知りませんが、これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。</p>
 <h2 id="_1">目次</h2>
@@ -173,7 +173,7 @@ iOSならBundleという仕組みがあります。</p>
 </pre></div>
 
 <p>まあ、なんというか、Androidはいろいろ残念ですね。</p>
-<p>iOSはこういう仕様なのかバグなのかよくわからないようなものが少ないし、OSバージョンの入れ換わりが早くて対応バージョンも少なくて済む分、個人的な体感ではandroidアプリの工数はiOSの5割増しという感じ。</p>]]></content:encoded>
+<p>iOSはこういう仕様なのかバグなのかよくわからないようなものが少ないし、OSバージョンの入れ換わりが早くて対応バージョンも少なくて済む分、個人的な体感ではandroidアプリの工数はiOSの3割増しという感じ。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
