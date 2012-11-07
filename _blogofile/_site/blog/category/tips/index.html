@@ -98,6 +98,191 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="細かすぎて伝わらないandroidのはまりどころ-その1"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/11/07/android-pitfalls" rel="bookmark" title="Permanent Link to 細かすぎて伝わらないAndroidのはまりどころ その1">細かすぎて伝わらないAndroidのはまりどころ その1</a></h2>
+  <small>November 07, 2012 at 12:00 PM | categories:
+
+<a href='/blog/category/android'>android</a>, <a href='/blog/category/tips'>tips</a>
+ | <a href="http://mojavy.com/blog/2012/11/07/android-pitfalls#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="android" src="/images/android-logo.png" /></p>
+<p>その2があるかどうかは知りませんが、これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#onanimationendviewnullpointerexception">onAnimationEndでviewの階層を操作するとNullPointerExceptionでおちる</a></li>
+<li><a href="#animation">Animationが動かない</a></li>
+<li><a href="#windowmanageraddview">WindowManagerにaddViewしたときの挙動</a></li>
+<li><a href="#activity">Activityが横向きでスタートした場合と縦向きでスタートしたときで表示倍率が違う</a></li>
+<li><a href="#oncreate">onCreateが何回もよばれる</a></li>
+<li><a href="#popupwindow">popupWindowのサイズが変わらない</a></li>
+<li><a href="#httpurlconnection-0byteresponse">HttpURLConnectionが 0byteのresponseを返す</a></li>
+<li><a href="#orgapachehttpimplclientdefaulthttpclient">org.apache.http.impl.client.DefaultHttpClientがすごく遅い</a></li>
+<li><a href="#eclipseandroid-plugin">eclipseのAndroid pluginが動かなくなった</a></li>
+<li><a href="#webview">WebViewで表示されるコンテンツが小さすぎる</a></li>
+<li><a href="#javalangruntimeexception-stub">java.lang.RuntimeException: Stub!</a></li>
+<li><a href="#jarandroid">jarとして配布するandroidライブラリ内にリソースを埋め込むことはできない</a></li>
+<li><a href="#android-maven-plugin-mvn-eclipseeclipse-eclipse">android-maven-plugin から mvn eclipse:eclipse でeclipse用にエクスポートすることはできない</a></li>
+</ul>
+</div>
+<h2 id="onanimationendviewnullpointerexception">onAnimationEndでviewの階層を操作するとNullPointerExceptionでおちる</h2>
+<p>Viewをフェードアウトして親Viewからremoveする、というような動作をしたい場合に、普通にonAnimationEndの中でremoveViewとかするとNullPointerExceptionでおちます。onAnimationEndの中でViewの階層構造を操作するような処理をしてはだめらしいです。回避するには、Handlerをつかってタイミングをずらしてやるとよいです。</p>
+<ul>
+<li>参考: <a href="http://stackoverflow.com/questions/5569267/nullpointerexception-that-doesnt-point-to-any-line-in-my-code">http://stackoverflow.com/questions/5569267/nullpointerexception-that-doesnt-point-to-any-line-in-my-code</a></li>
+</ul>
+<h2 id="animation">Animationが動かない</h2>
+<p>AnimationさせるViewには親Viewが存在している必要があります。WindowManagerはViewではないので、WindowManagerにaddViewしたViewをアニメーションさせたい場合は空のRelativeLayoutとかにaddViewしてから、RelativeLayoutのほうをWindowManagerにaddViewしてやる必要があります。</p>
+<h2 id="windowmanageraddview">WindowManagerにaddViewしたときの挙動</h2>
+<p>WindowManagerにもaddViewできますが、通常のViewとは挙動が違います。</p>
+<ul>
+<li>背景透過はWindowManager.LayoutParam.format に TRANSLUCENT をセットすればよいです。</li>
+<li>dimでフェードインできますが、その際のdurationを変更する方法は分かりませんでした。</li>
+<li>BACKボタンはきかなくなります。自分でKeyEventを処理してやる必要があります。android.widget.PopupWindowのdispathKeyEventのソースが参考になります。</li>
+</ul>
+<h2 id="activity">Activityが横向きでスタートした場合と縦向きでスタートしたときで表示倍率が違う</h2>
+<ul>
+<li>参考：<a href="http://d.hatena.ne.jp/acidgraphix/20110126/1296018143">http://d.hatena.ne.jp/acidgraphix/20110126/1296018143</a></li>
+</ul>
+<h2 id="oncreate">onCreateが何回もよばれる</h2>
+<p>回転やキーボード表示のタイミングでもonCreateがよばれます。AndroidManifest.xmlでconfigChangesを設定することで回避できます。</p>
+<ul>
+<li>参考: <a href="http://stackoverflow.com/questions/2606470/unexpected-resume-of-package-name-while-already-resumed-in-package-name-err">http://stackoverflow.com/questions/2606470/unexpected-resume-of-package-name-while-already-resumed-in-package-name-err</a></li>
+</ul>
+<h2 id="popupwindow">popupWindowのサイズが変わらない</h2>
+<p>popupWindowのsetWidth, setHeightは次回以降の表示サイズしか変えられません。既に表示しているポップアップウィンドウのサイズはそのままです。invalidateしても無駄です。</p>
+<h2 id="httpurlconnection-0byteresponse">HttpURLConnectionが 0byteのresponseを返す</h2>
+<p>コネクションプールとkeepaliveがらみで問題が発生する場合があるみたいです。SDKのバージョンとウェブサーバ側の設定も影響します。
+<code>System.setProperty("http.keepAlive", "false")</code> で回避はできるようです。これに遭遇したときは、org.apache.http.impl.client.DefaultHttpClientの方を使うことにしたので詳細は追ってません。</p>
+<ul>
+<li>参考: <a href="http://stackoverflow.com/questions/1440957/httpurlconnection-getresponsecode-returns-1-on-second-invocation">http://stackoverflow.com/questions/1440957/httpurlconnection-getresponsecode-returns-1-on-second-invocation</a></li>
+</ul>
+<h2 id="orgapachehttpimplclientdefaulthttpclient">org.apache.http.impl.client.DefaultHttpClientがすごく遅い</h2>
+<p>httpsでリクエストを投げると、ウェブサーバ側の負荷が高いわけでもネットワークが細いわけでもないのに、返ってくるまでなぜか数秒かかる場合があります。こちらもkeepaliveがらみの問題っぽいです。これもウェブサーバ側の設定が影響します。
+試した限りでは以下のような状況でした。</p>
+<ul>
+<li>setHeader("Connection", "close") しても効果なし</li>
+<li>setKeepAliveStrategyでdurationを 0とか1にしても効果なし</li>
+<li>Connection closeしないウェブサーバならすぐレスポンスが返ってくる</li>
+<li>httpならすぐレスポンスが返ってくる</li>
+</ul>
+<p><a href="http://hc.apache.org/httpclient-3.x/sslguide.html">ここ( http://hc.apache.org/httpclient-3.x/sslguide.html )</a> のKnown limitations and problemsをみるとそれっぽい既知の問題があるようですが、根が深そうだったので詳細は追ってません。</p>
+<h2 id="eclipseandroid-plugin">eclipseのAndroid pluginが動かなくなった</h2>
+<p>なぜかeclipseでAndroid pluginが動かなくなるときがありました。詳細をメモるのを忘れてしまいましたが、以下の手順で直ったような気がします。</p>
+<ol>
+<li>Android Support Libraryをアンインストール</li>
+<li>eclipse再起動</li>
+<li>新しいAndroidプロジェクトを作るとダイアログでライブラリのインストールを促されるのでそれに従う</li>
+<li>android プラグインをアップデート</li>
+</ol>
+<h2 id="webview">WebViewで表示されるコンテンツが小さすぎる</h2>
+<p>通常ビューのスケールとWebViewのスケールは別です。setScaleで調整する必要があります。
+これはたぶんiOSでも同様かと。</p>
+<h2 id="javalangruntimeexception-stub">java.lang.RuntimeException: Stub!</h2>
+<p>android.jar内のコードはdalvikvmの外で実行することはできません。問答無用でタイトルの例外が飛びます。
+エラーメッセージはもうちょいなんとかならなかったのか。</p>
+<p>参考</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/7247502/using-android-jar-in-java-project-runtimeexception-stub">http://stackoverflow.com/questions/7247502/using-android-jar-in-java-project-runtimeexception-stub</a></li>
+<li><a href="http://www.slideshare.net/miyatay/abc2011w">http://www.slideshare.net/miyatay/abc2011w</a></li>
+</ul>
+<h2 id="jarandroid">jarとして配布するandroidライブラリ内にリソースを埋め込むことはできない</h2>
+<p>リソースIDを列挙しているRパッケージはjarにそのまま入れることはできますが、そのリソースIDは不正なものとなります。
+ライブラリにリソースを含めたい場合は、ソースも含めたプロジェクトをまるごと配布するしかないようです。</p>
+<p>ごく小さなアイコン画像だけとかであればバイナリデータをソース中に埋め込んでしまう、というのも手です。
+iOSならBundleという仕組みがあります。</p>
+<h2 id="android-maven-plugin-mvn-eclipseeclipse-eclipse">android-maven-plugin から mvn eclipse:eclipse でeclipse用にエクスポートすることはできない</h2>
+<p>androidでもmavenは使えますが、androidのmavenプロジェクトは通常の方法(mvn eclipse:eclipse)ではeclipseにインポートできません。
+以下のファイルを手動でつくってみたらとりあえずいけました。</p>
+<ul>
+<li>.classpath</li>
+</ul>
+<div class="pygments_murphy"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;classpath&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;src/main/java&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;gen&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;con&quot;</span> <span class="na">path=</span><span class="s">&quot;com.android.ide.eclipse.adt.ANDROID_FRAMEWORK&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;con&quot;</span> <span class="na">path=</span><span class="s">&quot;com.android.ide.eclipse.adt.LIBRARIES&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;output&quot;</span> <span class="na">path=</span><span class="s">&quot;bin/classes&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/classpath&gt;</span>
+</pre></div>
+
+<ul>
+<li>.project</li>
+</ul>
+<div class="pygments_murphy"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;projectDescription&gt;</span>
+        <span class="nt">&lt;name&gt;</span>project-name<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;comment&gt;&lt;/comment&gt;</span>
+        <span class="nt">&lt;projects&gt;</span>
+        <span class="nt">&lt;/projects&gt;</span>
+        <span class="nt">&lt;buildSpec&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.ResourceManagerBuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.PreCompilerBuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>org.eclipse.jdt.core.javabuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.ApkBuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+        <span class="nt">&lt;/buildSpec&gt;</span>
+        <span class="nt">&lt;natures&gt;</span>
+                <span class="nt">&lt;nature&gt;</span>com.android.ide.eclipse.adt.AndroidNature<span class="nt">&lt;/nature&gt;</span>
+                <span class="nt">&lt;nature&gt;</span>org.eclipse.jdt.core.javanature<span class="nt">&lt;/nature&gt;</span>
+        <span class="nt">&lt;/natures&gt;</span>
+<span class="nt">&lt;/projectDescription&gt;</span>
+</pre></div>
+
+<ul>
+<li>project.properties</li>
+</ul>
+<div class="pygments_murphy"><pre><span class="c"># Project target.</span>
+<span class="na">target</span><span class="o">=</span><span class="s">android-10</span>
+
+<span class="c"># if it is a library</span>
+<span class="c"># android.library=true</span>
+</pre></div>
+
+<p>まあ、なんというか、Androidはいろいろ残念ですね。</p>
+<p>iOSはこういう仕様なのかバグなのかよくわからないようなものが少ないし、OSバージョンの入れ換わりが早くて対応バージョンも少なくて済む分、個人的な体感ではandroidアプリの工数はiOSの5割増しという感じ。</p>
+</div>
+
+  </div>
+</div>
+
+<div class="linkwithin_div"></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/11/07/android-pitfalls" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/07/android-pitfalls/" class="hatena-bookmark-button" data-hatena-bookmark-title="細かすぎて伝わらないAndroidのはまりどころ その1" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/11/07/android-pitfalls" data-text="細かすぎて伝わらないAndroidのはまりどころ その1">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/11/07/android-pitfalls"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ubuntuでpdfの日本語フォントが表示できないときの対処メモ"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/11/02/ubuntu-pdf" rel="bookmark" title="Permanent Link to UbuntuでPDFの日本語フォントが表示できないときの対処メモ">UbuntuでPDFの日本語フォントが表示できないときの対処メモ</a></h2>
   <small>November 02, 2012 at 12:00 PM | categories:
@@ -146,6 +331,8 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2012/10/31/quick-links"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/11/07/android-pitfalls"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -203,6 +390,11 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/11/07/android-pitfalls" title="細かすぎて伝わらないAndroidのはまりどころ その1"><p>細かすぎて伝わらないAndroidのはまりどころ その1</a><span style="font-size: 80%;">(November 07, 2012 at 12:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/07/android-pitfalls">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/07/android-pitfalls" alt="はてなブックマーク - 細かすぎて伝わらないAndroidのはまりどころ その1" title="はてなブックマーク - 細かすぎて伝わらないAndroidのはまりどころ その1">
+</a>
+</li>
       <li><a href="/blog/2012/11/02/ubuntu-pdf" title="UbuntuでPDFの日本語フォントが表示できないときの対処メモ"><p>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</a><span style="font-size: 80%;">(November 02, 2012 at 12:00 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/02/ubuntu-pdf">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/02/ubuntu-pdf" alt="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ" title="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ">
@@ -223,11 +415,6 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/18/twitter-api-error" alt="はてなブックマーク - twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}" title="はてなブックマーク - twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}">
 </a>
 </li>
-      <li><a href="/blog/2012/10/18/objective-c-zeromq" title="iOSでZeroMQを試す"><p>iOSでZeroMQを試す</a><span style="font-size: 80%;">(October 18, 2012 at 06:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/18/objective-c-zeromq">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/18/objective-c-zeromq" alt="はてなブックマーク - iOSでZeroMQを試す" title="はてなブックマーク - iOSでZeroMQを試す">
-</a>
-</li>
     </ul>
   </div>
 
@@ -236,6 +423,7 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
     <h1>Categories</h1>
     <ul>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (4)</li>
@@ -253,7 +441,7 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
@@ -267,7 +455,7 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
       <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>

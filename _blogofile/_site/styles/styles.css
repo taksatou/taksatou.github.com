@@ -84,6 +84,7 @@ a.findoutmore:hover						{ background-color: #2f2f2f; background-image: none; te
 #blogleft hr                                            { margin-top: 5px; margin-bottom: 5px; }
 #blogleft .topic-title                          	{ display: none; }
 #blogleft #toc                                            { font-size: 1em; font-family: "Ubuntu", arial; font-weight: bold; }
+#blogleft ol                                            { font-size: 95%; padding-left: 30px; margin: 5px 15px 10px 0;  list-style-type: dicimal; }
 #blogleft ul                                            { font-size: 95%; padding-left: 30px; margin: 5px 15px 10px 0;  list-style-type: disc; }
 #blogleft dl                                            {padding: 3px; }
 #blogleft dt                                            {padding-top: 4px; font-weight: bold;}

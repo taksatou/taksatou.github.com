@@ -98,6 +98,88 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="1分でpython環境を整える方法"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/04/22/virtualenv-burrito" rel="bookmark" title="Permanent Link to 1分でpython環境を整える方法">1分でpython環境を整える方法</a></h2>
+  <small>April 22, 2012 at 05:30 PM | categories:
+
+<a href='/blog/category/python'>python</a>
+ | <a href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="python" src="/images/python-logo.gif" /></p>
+<p>pythonではvirtualenvというユーティリティを使って複数の環境を切り替えることができます。しかしvirtualenvはセットアップがちょっとわかりにくかったりバージョンによってはこけたりしていまいち使いこなせていませんでした。久し振りにブログを書くついでにpython環境を再構築しようと思って調べたところ、<a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a> というのが使いやすかったので紹介します。これを使えば非常に簡単にpython環境を整えることができます。</p>
+<h1 id="_1">インストール</h1>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
+</pre></div>
+
+<p>として再ログインするだけです。勝手にパスやシェルの補完設定もしてくれます。</p>
+<h1 id="_2">使い方</h1>
+<p>新しい環境の構築は、</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>mkvirtualenv newname
+</pre></div>
+
+<p><br></p>
+<p>環境の切り替えは、</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>workon newname
+<span class="nv">$ </span><span class="c"># or</span>
+<span class="nv">$ </span>workon 2.7
+</pre></div>
+
+<p><br></p>
+<p>不要な環境の削除は、</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>rmvirtualenv newname
+</pre></div>
+
+<p><br></p>
+<p>以上が基本的な使い方です。さらに詳しい使い方は<a href="http://www.doughellmann.com/docs/virtualenvwrapper/command_ref.html">virtualenvwrapperのコマンドリファレンス</a>等をみてください。</p>
+<h1 id="_3">解説</h1>
+<p>virtualenv-burrito自体はvirtualenv+virtualenvwrapperの環境を構築するだけなので、本格的に使いたい場合はvirtualenvについての理解が必要です。ただ、ほとんどの場合は単にバージョンとパッケージが切り替えられればいいと思うので、mkvirtualenvとworkonさえ覚えておけば十分です。
+いくつか注意点もあります。</p>
+<ul>
+<li>pythonのバイナリはあらかじめインストールされている必要があります。</li>
+<li>python3だとうごきません。python3環境が作れないという意味ではなく、デフォルトパスのpythonバージョンが3だとvirtualenv-burritoのセットアップ途中でこけます。その場合はpython2系をつかってください。</li>
+<li>pipのインストールでこける場合があります。その場合は以下のようなコマンドで回避できます。 <a href="https://github.com/brainsik/virtualenv-burrito/issues/16">(参考)</a></li>
+</ul>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
+<span class="nv">$ </span>mkvirtualenv -p <span class="k">$(</span>which python3.2<span class="k">)</span> --distribute py32
+</pre></div>
+
+<h1 id="_4">まとめ</h1>
+<p>いまからpython環境を構築するならvirtualenv-burritoつかっとくと、virtualenvとvirtualenvwrapperをセットアップするまでの手間が省けていいと思います</p>
+<h1 id="_5">関連リンク</h1>
+<ul>
+<li><a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a></li>
+<li><a href="http://pypi.python.org/pypi/virtualenv">virtualenv</a></li>
+<li><a href="http://www.doughellmann.com/docs/virtualenvwrapper/">virtualenvwrapper</a>
+<br></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class="linkwithin_div"></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/04/22/virtualenv-burrito/" class="hatena-bookmark-button" data-hatena-bookmark-title="1分でpython環境を整える方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/04/22/virtualenv-burrito" data-text="1分でpython環境を整える方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="tmuxでマウスを使う"></a>
   <h2 class="blog_post_title"><a href="/blog/2011/12/13/tmux_advent_calendar_2_2011" rel="bookmark" title="Permanent Link to tmuxでマウスを使う">tmuxでマウスを使う</a></h2>
   <small>December 13, 2011 at 12:58 AM | categories:
@@ -474,6 +556,11 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/11/07/android-pitfalls" title="細かすぎて伝わらないAndroidのはまりどころ その1"><p>細かすぎて伝わらないAndroidのはまりどころ その1</a><span style="font-size: 80%;">(November 07, 2012 at 12:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/07/android-pitfalls">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/07/android-pitfalls" alt="はてなブックマーク - 細かすぎて伝わらないAndroidのはまりどころ その1" title="はてなブックマーク - 細かすぎて伝わらないAndroidのはまりどころ その1">
+</a>
+</li>
       <li><a href="/blog/2012/11/02/ubuntu-pdf" title="UbuntuでPDFの日本語フォントが表示できないときの対処メモ"><p>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</a><span style="font-size: 80%;">(November 02, 2012 at 12:00 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/02/ubuntu-pdf">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/02/ubuntu-pdf" alt="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ" title="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ">
@@ -494,11 +581,6 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/18/twitter-api-error" alt="はてなブックマーク - twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}" title="はてなブックマーク - twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}">
 </a>
 </li>
-      <li><a href="/blog/2012/10/18/objective-c-zeromq" title="iOSでZeroMQを試す"><p>iOSでZeroMQを試す</a><span style="font-size: 80%;">(October 18, 2012 at 06:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/18/objective-c-zeromq">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/18/objective-c-zeromq" alt="はてなブックマーク - iOSでZeroMQを試す" title="はてなブックマーク - iOSでZeroMQを試す">
-</a>
-</li>
     </ul>
   </div>
 
@@ -507,6 +589,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
     <h1>Categories</h1>
     <ul>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (4)</li>
@@ -524,7 +607,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
@@ -538,7 +621,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
       <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
