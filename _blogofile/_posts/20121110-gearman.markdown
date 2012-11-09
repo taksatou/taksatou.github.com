@@ -1,0 +1,119 @@
+---
+categories: gearman, web
+date: 2012/11/10 20:00:00
+title: gearman
+image: /images/isp-alien-logo.png
+draft: True
+---
+
+![lisp](/images/lisp-alien-logo.png)
+
+gearmanは高速だけどデータは永続化しないものだとずっと思ってましたが、最近ジョブキューを使いたい場面があったので久しぶりに調べてみたらもはやそんなことはなかったです。いい機会なのでgearmanについてまとめておこうと思います。
+
+[TOC]
+
+## Gearmanとは
+
+Gearmanとは、時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。
+Gearmanを利用するアプリケーションには、client, job server, workerという3つの要素が存在します。
+それぞれの役割は以下の通りです。
+
+* job server: clientから受けとったジョブを適切なworkerに渡す
+* client: ジョブを生成してjob serverに送信する
+* worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す
+
+clientとworkerはgearmanが提供しているAPIを通じてjob serverとやりとりします。gearman APIを実装したライブラリが多くのプログラミング言語で用意されています。また、gearmanというコマンドもあるのでシェルスクリプトからの利用も簡単です。 job serverには通常gearmandというデーモンを利用します。gearmandの実装には現在3種類あります。([C言語](https://launchpad.net/gearmand), [Java](http://code.google.com/p/java-gearman-service/), [Perl](http://search.cpan.org/dist/Gearman-Server/))  また、libgearman-serverというライブラリも提供されており、これを利用して他のアプリケーションにjob serverを埋め込むことも簡単にできます。
+
+以下ではCのgearmandを使用します。
+
+## インストール
+
+aptやrpmでもインストールできると思いますが、ここではソースからインストールします。
+
+$$code(lang=bash)
+wget https://launchpad.net/gearmand/1.2/1.1.3/+download/gearmand-1.1.3.tar.gz
+tar xzf gearmand-1.1.3.tar.gz
+cd gearmand-1.1.3
+./configure
+make
+sudo make install
+$$/code
+
+
+後述のジョブ永続化を利用したいのであれば、configureの前に永続化するストレージに応じたライブラリをインストールしておきます。
+Debian系ならlibsqlite3-dev、libmysql++-dev、等です。必要なものが標準のパスにインストールされていればconfigureオプションは不要です。うまく認識されとconfigureの後に以下のようなログがでるの確認しておきます。
+
+$$code
+#  :
+#  :
+   * Building with libsqlite3   yes
+   * Building with libdrizzle   no
+   * Building with libmemcached not found
+   * Building with libpq        no
+   * Building with tokyocabinet no
+   * Building with libmysql     yes
+$$/code
+
+その他の必要な依存ライブラリが足りなかった場合は適宜いれてください。
+
+## 動作確認
+
+[本家サイトのチュートリアル](http://gearman.org/index.php\?id=getting_started)の内容そのままですが、以下のようにして動作を確認できます。
+
+１．job serverの起動
+
+$$code
+$ gearmand
+$$/code
+
+
+２．workerの起動
+
+gearmanに-wオプションをつけるとworkerとして起動できます。-fには関数名を指定します。関数名といっても、ルーティング先を決定するための単なる識別子なので分かりやすい名前をつければよいです。
+
+$$code
+$ gearman -w -f wc -- wc -l
+$$/code
+
+```--```以降のパラメータがこのworkerで実行するコマンドになります
+
+３．jobの投入
+
+以下のようにしてclientを起動してjobを投入すると、結果が出力されます。
+
+$$code
+$ gearman -f wc < /etc/passwd
+41
+$$/code
+
+
+これは、```wc -l < /etc/passwd``` を実行したのと同じことです。(workerとclientを同一マシンで実行した場合)
+
+他にも色々なサンプルがgearmanのソースに含まれているのでそちらも参考にしてください。
+
+## ジョブの永続化
+
+上記のデモではジョブが完了するまでclient側は待たされますが、バックグランドで処理させることでジョブの完了を待たずに即座に次の処理を行うこともできます。そうするとジョブが完了する前にjob serverがクラッシュしてしまった場合などに未処理のジョブが失われてしまいます。ジョブの永続化を利用することでそれを避けることができます。
+
+* mysql
+* dizzle
+* sqlite3
+* postgresql
+* tokyocabinet
+* memcached
+
+redisとmongodbも開発中
+
+## スレッドモデル
+
+Cで実装されたgearmandはデフォルトではシングルスレッドですが、起動オプション
+
+## その他のtips
+
+* gearmanという名前はmanagerのアナグラムからつけられたそうです
+* gearmandとの通信にHTTPを利用することもできます
+
+## リンク
+
+* http://gearman.org/
+* http://gearman.info/index.html
