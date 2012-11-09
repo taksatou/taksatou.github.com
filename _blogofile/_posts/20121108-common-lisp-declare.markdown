@@ -2,7 +2,7 @@
 categories: common lisp
 date: 2012/11/09 23:00:00
 title: Common Lispのdeclareについて
-image: /images/isp-alien-logo.png
+image: /images/lisp-alien-logo.png
 ---
 
 ![lisp](/images/lisp-alien-logo.png)
