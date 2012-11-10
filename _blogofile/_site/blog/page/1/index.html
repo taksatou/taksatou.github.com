@@ -98,6 +98,46 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="cl-frontcodeをつくってみた"></a>
+  <h2 class="blog_post_title"><a href="/blog/2012/11/10/cl-frontcoding" rel="bookmark" title="Permanent Link to cl-frontcodeをつくってみた">cl-frontcodeをつくってみた</a></h2>
+  <small>November 10, 2012 at 08:30 PM | categories:
+
+<a href='/blog/category/algorithms'>algorithms</a>, <a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2012/11/10/cl-frontcoding#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
+<p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
+<p><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">http://d.hatena.ne.jp/naoya/20080914/1221382329</a> のパクりです。</p>
+<p>ソースは<a href="https://github.com/taksatou/cl-frontcoding">https://github.com/taksatou/cl-frontcoding</a>です。</p>
+<p>学習目的でつくったので実用的なライブラリではないですが、CLOSやマクロを使いつつパッケージ作成〜テストまで一通りやりました。</p>
+<p>CLOSもマクロも基本的な使い方をするだけなら意外と簡単でした。</p>
+<p>CLOSとかマクロは本を読んでもいまいちよくわからない上に、深淵なイメージが膨らんで心理的ハードルがあがってしまうだけなので、よくわからないなりになにか作ってみると理解が進んでいいと思います。</p>
+</div>
+
+  </div>
+</div>
+
+<div class="linkwithin_div"></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/11/09/common-lisp-declare"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/11/10/cl-frontcoding" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/10/cl-frontcoding/" class="hatena-bookmark-button" data-hatena-bookmark-title="cl-frontcodeをつくってみた" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/11/10/cl-frontcoding" data-text="cl-frontcodeをつくってみた">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/11/10/cl-frontcoding"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="common-lispのdeclareについて"></a>
   <h2 class="blog_post_title"><a href="/blog/2012/11/09/common-lisp-declare" rel="bookmark" title="Permanent Link to Common Lispのdeclareについて">Common Lispのdeclareについて</a></h2>
   <small>November 09, 2012 at 11:00 PM | categories:
@@ -260,6 +300,8 @@ Disassembly of section .text:
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2012/11/07/android-pitfalls"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/11/10/cl-frontcoding"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -580,129 +622,6 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="common-lisp練習---codechef-:-tsort"></a>
-  <h2 class="blog_post_title"><a href="/blog/2012/10/24/cl-practice" rel="bookmark" title="Permanent Link to Common Lisp練習 - CodeChef : TSORT">Common Lisp練習 - CodeChef : TSORT</a></h2>
-  <small>October 24, 2012 at 06:00 PM | categories:
-
-<a href='/blog/category/programming'>programming</a>, <a href='/blog/category/common-lisp'>common lisp</a>
- | <a href="http://mojavy.com/blog/2012/10/24/cl-practice#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="codechef" src="/images/codechef-logo.png" /></p>
-<p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>
-<p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
-<p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
-<p>最初は以下のように書いて、</p>
-<div class="pygments_murphy"><pre>(let ((_n (parse-integer (read-line)))
-      (lis ()))
-  (dotimes (i _n)
-    (push (parse-integer (read-line)) lis))
-  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
-  (dolist (x lis) (format t &quot;~a~%&quot; x)))
-</pre></div>
-
-<p>以下の用にして時間を測ったところ</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
-ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.19s user 0.01s system 91% cpu 1.311 total
-sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938 total
-</pre></div>
-
-<p>ローカルだと3.42s程度だった。codechef上での制限は5secなのでセーフかと思ったけどTime Limit Exceededだった。</p>
-<p>そこで、vectorを使うように改良</p>
-<div class="pygments_murphy"><pre>(let* ((_n (parse-integer (read-line)))
-       (lis (make-array _n :fill-pointer 0)))
-  (dotimes (i _n)
-    (vector-push (parse-integer (read-line)) lis))
-  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
-  (loop for i across lis do (format t &quot;~a~%&quot; i)))
-</pre></div>
-
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
-ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.21s user 0.01s system 94% cpu 1.289 total
-sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137 total
-</pre></div>
-
-<p>若干改善されたが、まだTime Limit Exceededだった。</p>
-<p>read-sequenceで読み込んだほうが早いかと思って以下のように書いてみた。</p>
-<div class="pygments_murphy"><pre>(defun parse-input (str)
-  (loop
-     for i = 0 then (+ 1 j)
-     as j = (position #\Newline str :start i)
-     as k = (parse-integer (subseq str i j) :junk-allowed t)
-     if (not (null k))
-     collect k
-     while j))
-
-(let* ((_n (parse-integer (read-line)))
-       (lis (make-array (* _n 20) :element-type &#39;character))
-       (nums ())
-       )
-  (read-sequence lis *standard-input*)
-  (setf nums (sort (parse-input lis) #&#39;(lambda (x y) (&lt; x y))))
-  (loop for i in nums do (format t &quot;~a~%&quot; i)))
-</pre></div>
-
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
-ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.13s user 0.01s system 97% cpu 1.159 total
-sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297 total
-</pre></div>
-
-<p>残念ながら逆に遅くなってしまった。parse-inputの部分で60%くらい時間がかかっていた。
-あと、<code>#'(lambda (x y) (&lt; x y))</code>の部分を <code>#'&lt;</code>にするとなぜか遅くなる。</p>
-<p><a href="http://www.codechef.com/status/TSORT?language=31&amp;status=All&amp;handle=&amp;sort_by=All&amp;sorting_order=asc&amp;Submit=GO">まだ誰もlispではパスしてない模様。</a>こういうのをもっと高速に書く方法あるのだろうか。</p>
-<p>ちなみにCだと余裕。ローカルだと0.2秒くらいだけどリモートでは3秒くらいかかってた。そもそもCodeChefの実行環境がしょぼすぎる疑惑が。。</p>
-<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
-<span class="cp">#include &lt;stdlib.h&gt;</span>
-
-<span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">j</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
-    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
-
-    <span class="kt">int</span> <span class="n">lis</span><span class="p">[</span><span class="n">num</span><span class="p">];</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
-    <span class="p">}</span>
-    <span class="n">qsort</span><span class="p">(</span><span class="n">lis</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span> <span class="n">f</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="p">}</span>
-</pre></div>
-
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
-ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  0.99s user 0.01s system 99% cpu 1.006 total
-./a.out &gt; /dev/null  0.18s user 0.01s system 17% cpu 1.116 total
-</pre></div>
-</div>
-
-  </div>
-</div>
-
-<div class="linkwithin_div"></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/10/18/twitter-api-error"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/10/31/quick-links"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/10/24/cl-practice" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/24/cl-practice/" class="hatena-bookmark-button" data-hatena-bookmark-title="Common Lisp練習 - CodeChef : TSORT" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/10/24/cl-practice" data-text="Common Lisp練習 - CodeChef : TSORT">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/10/24/cl-practice"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../2">Next »</a>
 </div>
@@ -712,6 +631,11 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/11/10/cl-frontcoding" title="cl-frontcodeをつくってみた"><p>cl-frontcodeをつくってみた</a><span style="font-size: 80%;">(November 10, 2012 at 08:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/10/cl-frontcoding">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/10/cl-frontcoding" alt="はてなブックマーク - cl-frontcodeをつくってみた" title="はてなブックマーク - cl-frontcodeをつくってみた">
+</a>
+</li>
       <li><a href="/blog/2012/11/09/common-lisp-declare" title="Common Lispのdeclareについて"><p>Common Lispのdeclareについて</a><span style="font-size: 80%;">(November 09, 2012 at 11:00 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/09/common-lisp-declare">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/09/common-lisp-declare" alt="はてなブックマーク - Common Lispのdeclareについて" title="はてなブックマーク - Common Lispのdeclareについて">
@@ -732,11 +656,6 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/31/quick-links" alt="はてなブックマーク - Quick links" title="はてなブックマーク - Quick links">
 </a>
 </li>
-      <li><a href="/blog/2012/10/24/cl-practice" title="Common Lisp練習 - CodeChef : TSORT"><p>Common Lisp練習 - CodeChef : TSORT</a><span style="font-size: 80%;">(October 24, 2012 at 06:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/24/cl-practice">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/24/cl-practice" alt="はてなブックマーク - Common Lisp練習 - CodeChef : TSORT" title="はてなブックマーク - Common Lisp練習 - CodeChef : TSORT">
-</a>
-</li>
     </ul>
   </div>
 
@@ -745,10 +664,11 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
     <h1>Categories</h1>
     <ul>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (1)</li>
@@ -777,7 +697,7 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
       <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>

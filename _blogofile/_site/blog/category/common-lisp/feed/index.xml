@@ -10,10 +10,26 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Fri, 09 Nov 2012 14:32:22 GMT</pubDate>
+    <pubDate>Sat, 10 Nov 2012 11:30:03 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>cl-frontcodeをつくってみた</title>
+      <link>http://mojavy.com/blog/2012/11/10/cl-frontcoding</link>
+      <pubDate>Sat, 10 Nov 2012 20:30:00 JST</pubDate>
+      <category><![CDATA[algorithms]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/10/cl-frontcoding</guid>
+      <description>cl-frontcodeをつくってみた</description>
+      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
+<p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
+<p><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">http://d.hatena.ne.jp/naoya/20080914/1221382329</a> のパクりです。</p>
+<p>ソースは<a href="https://github.com/taksatou/cl-frontcoding">https://github.com/taksatou/cl-frontcoding</a>です。</p>
+<p>学習目的でつくったので実用的なライブラリではないですが、CLOSやマクロを使いつつパッケージ作成〜テストまで一通りやりました。</p>
+<p>CLOSもマクロも基本的な使い方をするだけなら意外と簡単でした。</p>
+<p>CLOSとかマクロは本を読んでもいまいちよくわからない上に、深淵なイメージが膨らんで心理的ハードルがあがってしまうだけなので、よくわからないなりになにか作ってみると理解が進んでいいと思います。</p>]]></content:encoded>
+    </item>
     <item>
       <title>Common Lispのdeclareについて</title>
       <link>http://mojavy.com/blog/2012/11/09/common-lisp-declare</link>
