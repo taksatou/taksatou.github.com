@@ -1,7 +1,7 @@
 ---
 categories: common lisp, algorithms
 date: 2012/11/10 20:30:00
-title: cl-frontcodeをつくってみた
+title: cl-frontcodingをつくってみた
 image: /images/lisplogo_flag2_256.png
 ---
 

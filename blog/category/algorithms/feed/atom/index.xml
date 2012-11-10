@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-11-10T11:30:03Z</updated>
+  <updated>2012-11-10T11:32:32Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -18,14 +18,14 @@
       <name></name>
       <uri>http://mojavy.com/blog</uri>
     </author>
-    <title type="html"><![CDATA[cl-frontcodeをつくってみた]]></title>
+    <title type="html"><![CDATA[cl-frontcodingをつくってみた]]></title>
     <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/10/cl-frontcoding" />
     <id>http://mojavy.com/blog/2012/11/10/cl-frontcoding</id>
     <updated>2012-11-10T20:30:00Z</updated>
     <published>2012-11-10T20:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="algorithms" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
-    <summary type="html"><![CDATA[cl-frontcodeをつくってみた]]></summary>
+    <summary type="html"><![CDATA[cl-frontcodingをつくってみた]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2012/11/10/cl-frontcoding"><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
 <p><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">http://d.hatena.ne.jp/naoya/20080914/1221382329</a> のパクりです。</p>
