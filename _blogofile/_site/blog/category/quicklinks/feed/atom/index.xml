@@ -7,12 +7,42 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-11-10T11:32:32Z</updated>
+  <updated>2012-11-14T13:11:28Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Quicklinks 3]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/14/quicklinks3" />
+    <id>http://mojavy.com/blog/2012/11/14/quicklinks3</id>
+    <updated>2012-11-14T23:30:00Z</updated>
+    <published>2012-11-14T23:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="quicklinks" />
+    <summary type="html"><![CDATA[Quicklinks 3]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/14/quicklinks3"><![CDATA[<p><img alt="shader" src="/images/shader-200.png" /></p>
+<p>最近はUnityを使う機会を得たのでゲーム関連技術についていろいろ調べてました。</p>
+<h3 id="shadow-algorithms-for-real-time-rendering"><a href="http://www.mpi-inf.mpg.de/~mschwarz/papers/shadowcourse-eg10.pdf">Shadow Algorithms for Real-time Rendering</a></h3>
+<p>シェーダーを扱った講義資料らしい。この講義を元にした本がでていて<a href="http://www.amazon.co.jp/%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%A3%E3%83%89%E3%82%A6-Elmar-Eisemann/dp/4862461670/ref=pd_sim_fb_1">日本語翻訳</a>もあるみたいです。
+モデリングは絵心がないとちょっと難しそうだけど、こういうのであれば自分で書いてみたいです。</p>
+<h3 id="black-tie"><a href="https://github.com/aerique/black-tie">black-tie</a></h3>
+<p>ノイズ生成アルゴリズムというものに興味がわきました。残念ながらこのライブラリはあまりメンテはされてない。</p>
+<h3 id="_1">物理演算系ライブラリ</h3>
+<p>2次元剛体のシュミレーションならChipmunkとかBox2Dあたりで気軽にできそうですが、3次元のやわらかいもの表現するにはちょっとハードルがあがるようです。</p>
+<ul>
+<li><a href="http://bulletphysics.org/wordpress/">BULLET</a></li>
+<li><a href="http://www.sofa-framework.org/">SOFA</a></li>
+<li><a href="http://code.google.com/p/opencloth/">opencloth</a></li>
+</ul>
+<p>物理演算を駆使した3次元リアルぷよぷよがやってみたいです。</p>
+<h3 id="mixamo"><a href="http://www.mixamo.com/">mixamo</a></h3>
+<p>こういう素材がもっと増えるといいですね。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

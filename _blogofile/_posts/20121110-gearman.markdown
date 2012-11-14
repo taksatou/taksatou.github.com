@@ -15,14 +15,14 @@ gearmanは高速だけどデータは永続化しないものだとずっと思�
 ## Gearmanとは
 
 Gearmanとは、時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。
-Gearmanを利用するアプリケーションには、client, job server, workerという3つの要素が存在します。
+Gearmanを利用するアプリケーションでは、client, job server, workerという3つの要素が存在します。
 それぞれの役割は以下の通りです。
 
 * job server: clientから受けとったジョブを適切なworkerに渡す
 * client: ジョブを生成してjob serverに送信する
 * worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す
 
-clientとworkerはgearmanが提供しているAPIを通じてjob serverとやりとりします。gearman APIを実装したライブラリが多くのプログラミング言語で用意されています。また、gearmanというコマンドもあるのでシェルスクリプトからの利用も簡単です。 job serverには通常gearmandというデーモンを利用します。gearmandの実装には現在3種類あります。([C言語](https://launchpad.net/gearmand), [Java](http://code.google.com/p/java-gearman-service/), [Perl](http://search.cpan.org/dist/Gearman-Server/))  また、libgearman-serverというライブラリも提供されており、これを利用して他のアプリケーションにjob serverを埋め込むことも簡単にできます。
+clientとworkerはgearmanが提供しているAPIを通じてjob serverとやりとりします。多くのプログラミング言語でgearman APIを実装したライブラリが提供されています。また、gearmanコマンドを利用すればシェルスクリプト等からもjob serverとやりとりできます。 job serverには通常gearmandというデーモンを利用します。gearmandは現在3種類の実装があります。([C言語](https://launchpad.net/gearmand), [Java](http://code.google.com/p/java-gearman-service/), [Perl](http://search.cpan.org/dist/Gearman-Server/))  また、libgearman-serverというライブラリも提供されており、これを利用して他のアプリケーションにjob serverを埋め込むことも簡単にできます。
 
 以下ではCのgearmandを使用します。
 
