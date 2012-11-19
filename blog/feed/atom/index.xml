@@ -7,12 +7,123 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2012-11-14T13:11:28Z</updated>
+  <updated>2012-11-19T18:12:51Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[ウェブエンジニアのためのオンラインツールまとめ]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox" />
+    <id>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</id>
+    <updated>2012-11-20T02:30:00Z</updated>
+    <published>2012-11-20T02:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="web" />
+    <category scheme="http://mojavy.com/blog" term="tips" />
+    <summary type="html"><![CDATA[ウェブエンジニアのためのオンラインツールまとめ]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox"><![CDATA[<p><img alt="tool" src="/images/tool-logo.png" /></p>
+<p><a href="http://ivanzuzak.info/2012/11/18/the-web-engineers-online-toolbox.html">The Web engineer's online toolbox</a>というまとめ記事が便利そうだったので、実際に試しつつ抄訳してみました。(一部のコメントと体裁は変えています。)</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#_2">一覧</a><ul>
+<li><a href="#requestbin">RequestBin</a></li>
+<li><a href="#hurl">Hurl</a></li>
+<li><a href="#httpbin">httpbin</a></li>
+<li><a href="#redbot">REDbot</a></li>
+<li><a href="#webgun">WebGun</a></li>
+<li><a href="#apify">Apify</a></li>
+<li><a href="#unicorn">Unicorn</a></li>
+<li><a href="#feed-validator">Feed validator</a></li>
+<li><a href="#link-checker">Link checker</a></li>
+<li><a href="#host-tracker">Host tracker</a></li>
+<li><a href="#pingdom-full-page-test">Pingdom Full page test</a></li>
+<li><a href="#har-viewer">HAR viewer</a></li>
+<li><a href="#cors-proxy">CORS proxy</a></li>
+<li><a href="#browserling">Browserling</a></li>
+<li><a href="#websocket-echo-test">WebSocket Echo Test</a></li>
+<li><a href="#yql">YQL</a></li>
+<li><a href="#yahoo-pipes">Yahoo Pipes</a></li>
+<li><a href="#apiary">Apiary</a></li>
+</ul>
+</li>
+<li><a href="#_3">おわりに</a></li>
+</ul>
+</div>
+<h2 id="_2">一覧</h2>
+<h3 id="requestbin"><a href="http://requestb.in/">RequestBin</a></h3>
+<p>httpリクエストを保存するエンドポイントを作ってくれる。</p>
+<p>Create a RequestBin のボタンをクリックするとURLが表示されるので、そこをHTTPクライアントからたたくとRequestBin側にリクエスト内容が記録される。
+ソースも公開されてるのでローカルで立ちあげることもできる。</p>
+<p>githubの<a href="https://help.github.com/articles/testing-webhooks">webhookのhelp</a>も参考にどうぞ。</p>
+<h3 id="hurl"><a href="http://hurl.it">Hurl</a></h3>
+<p>httpリクエストを実行してくれる。パーマリンクも作ってくれるので、POSTリクエストもコピペで他の人と共有できる。</p>
+<ul>
+<li>類似サービス: <a href="http://resttesttest.com/">REST test test</a> ,  <a href="https://apigee.com/console/others">Apigee console</a> </li>
+</ul>
+<h3 id="httpbin"><a href="http://httpbin.org/">httpbin</a></h3>
+<p>HTTPリクエスト側でレスポンスのHTTP status codeやレスポンスやリダイレクト、cookieなどを制御できる。HTTPクライアントのテストに便利。</p>
+<ul>
+<li>類似サービス: <a href="http://ivanzuzak.info/urlecho/">UrlEcho</a></li>
+</ul>
+<h3 id="redbot"><a href="http://redbot.org/">REDbot</a></h3>
+<p>HTTPのリソースをチェックしてくれる。問題を検出したら改善案のサジェストもしてくれる。</p>
+<ul>
+<li>類似サービス: <a href="http://zamez.org/httplint">HTTP lint</a></li>
+</ul>
+<h3 id="webgun"><a href="http://webgun.io/">WebGun</a></h3>
+<p>webhookを簡単に作るためのAPIを提供している。現在はまだベータっぽい。</p>
+<h3 id="apify"><a href="http://apify.heroku.com">Apify</a></h3>
+<p>ウェブページをスクレイピングしてJSON API化してくれる。
+CSSセレクタかxpathに名前をつけて設定するだけでよしなにやってくれる。</p>
+<p><a href="http://apify.heroku.com/resources/50a99278a7301c000200005a">試しに元記事をAPI化してみた</a></p>
+<h3 id="unicorn"><a href="http://validator.w3.org/unicorn/">Unicorn</a></h3>
+<p>前述の<a href="http://redbot.org/">REDbot</a>はHTTPをチェックしてくれるけど、こちらはHTMLドキュメントがW3Cに準拠してるかをバリデートしてくれる。</p>
+<ul>
+<li>類似サービス: <a href="http://lint.brihten.com/html/">HTML lint</a></li>
+</ul>
+<h3 id="feed-validator"><a href="http://validator.w3.org/feed/">Feed validator</a></h3>
+<p>こちらはRSSとATOMフィードをバリデートしてくれる。</p>
+<h3 id="link-checker"><a href="http://validator.w3.org/checklink">Link checker</a></h3>
+<p>リンクを再帰的にたどって、重複やリンク切れをチェックしてくれる。</p>
+<h3 id="host-tracker"><a href="http://www.host-tracker.com/">Host tracker</a></h3>
+<p>ウェブサイトのモニタリングサービス。定期的にpingして、問題があった場合はメール通知してくれる。</p>
+<ul>
+<li>類似サービス: <a href="http://www.downforeveryoneorjustme.com/">Down for everyone or just me</a>, <a href="http://tools.pingdom.com/ping/">Pimgdom ping service</a></li>
+</ul>
+<h3 id="pingdom-full-page-test"><a href="http://tools.pingdom.com/fpt/">Pingdom Full page test</a></h3>
+<p>ウェブページのロード時間を計測、解析してくれる。リクエストを実行するサーバは米国しかないので国内だとちょっと使いづらい。
+類似サービスの<a href="http://www.webpagetest.org/">Web page test</a>ならTokyoが選べる。</p>
+<h3 id="har-viewer"><a href="http://www.softwareishard.com/har/viewer/">HAR viewer</a></h3>
+<p>HTTP tracking toolsで生成されたHTTP Archive (HAR)形式のログをビジュアライズしてくれる。</p>
+<h3 id="cors-proxy"><a href="http://www.corsproxy.com/">CORS proxy</a></h3>
+<p>クロスドメインでjsを実行できるようにヘッダを追加してレスポンスしてくれるプロキシ。</p>
+<h3 id="browserling"><a href="https://browserling.com/">Browserling</a></h3>
+<p>ブラウザ上で動くインタラクティブなクロスブラウザ。メジャーなブラウザは大体サポートされている。
+動作は重いけど表示確認くらいになら無料のままでも使えそう。</p>
+<h3 id="websocket-echo-test"><a href="http://www.websocket.org/echo.html">WebSocket Echo Test</a></h3>
+<p>WebSocketをテストできるエコーサーバ。</p>
+<h3 id="yql"><a href="http://developer.yahoo.com/yql/">YQL</a></h3>
+<p>ウェブサービスからとってきたデータをSQLっぽい言語で整形できる。</p>
+<h3 id="yahoo-pipes"><a href="http://pipes.yahoo.com/pipes/">Yahoo Pipes</a></h3>
+<p>ウェブサービスをGUIでマッシュアップできる。</p>
+<h3 id="apiary"><a href="http://apiary.io/">Apiary</a></h3>
+<p>良い感じのREST APIドキュメントをインタラクティブなインスペクタをつかってジェネレートできる。まだベータ。</p>
+<ul>
+<li>類似サービス: <a href="http://swagger.wordnik.com/">Swagger</a></li>
+</ul>
+<h2 id="_3">おわりに</h2>
+<ul>
+<li>いくつかのツールはサーバに負荷をかけてしまう可能性があるので注意してつかってください。</li>
+<li>他にもなにかあれば教えてもらえるとうれしいです。</li>
+</ul>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -825,124 +936,6 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <li><a href="http://api.zeromq.org/2-2:_start">http://api.zeromq.org/2-2:_start</a></li>
 <li><a href="http://www.zeromq.org/area:licensing">http://www.zeromq.org/area:licensing</a></li>
 <li><a href="http://www.zeromq.org/intro:commercial-support">http://www.zeromq.org/intro:commercial-support</a></li>
-</ul>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[Common LispでZeroMQを試す]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq" />
-    <id>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq</id>
-    <updated>2012-10-17T00:00:00Z</updated>
-    <published>2012-10-17T00:00:00Z</published>
-    <category scheme="http://mojavy.com/blog" term="zeromq" />
-    <category scheme="http://mojavy.com/blog" term="sbcl" />
-    <category scheme="http://mojavy.com/blog" term="common lisp" />
-    <summary type="html"><![CDATA[Common LispでZeroMQを試す]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
-<p>Common LispでZeroMQを試してみた。</p>
-<p>使用環境は以下のとおり</p>
-<ul>
-<li>OS: Ubuntu 12.04 LTS</li>
-<li>Common Lisp 処理系：<a href="http://www.sbcl.org/">sbcl (1.0.55.0.debian)</a></li>
-<li><a href="http://download.zeromq.org/zeromq-2.2.0.tar.gz">ZeroMQ 2.2.0</a></li>
-</ul>
-<h1 id="1-quicklisp">1. quicklispのインストール</h1>
-<p>以下を参考にquicklispをインストールする。</p>
-<ul>
-<li><a href="http://www.quicklisp.org/beta/">Quicklisp</a></li>
-<li><a href="http://modern-cl.blogspot.jp/2011/03/quicklisp.html">第2回 Quicklispによるライブラリ環境</a></li>
-</ul>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
-<span class="nv">$ </span>sbcl
-<span class="o">(</span>load <span class="s2">&quot;quicklisp.lisp&quot;</span><span class="o">)</span>
-<span class="o">(</span>quicklisp-quickstart:install :path <span class="s2">&quot;.quicklisp/&quot;</span><span class="o">)</span>
-<span class="o">(</span>ql:add-to-init-file<span class="o">)</span>
-</pre></div>
-
-<p>※ (quicklisp-quickstart:install :path ".quicklisp/") のパスで最後のスラッシュは省略不可</p>
-<h1 id="2-cl-zmq">2. cl-zmqのインストール</h1>
-<div class="pygments_murphy"><pre>(ql:quickload :zeromq)
-</pre></div>
-
-<p>ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。ld.so.confにzeromqをインストールしたディレクトリがはいってることを確認して、sudo ldconfig すればちゃんとロードされるはず。</p>
-<div class="pygments_murphy"><pre>debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread
-<span class="c">#&lt;THREAD &quot;initial thread&quot; RUNNING {10029990A3}&gt;:</span>
-  Unable to load any of the alternatives:
-   <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">)</span>
-
-Type HELP <span class="k">for </span>debugger <span class="nb">help</span>, or <span class="o">(</span>SB-EXT:QUIT<span class="o">)</span> to <span class="nb">exit </span>from SBCL.
-
-restarts <span class="o">(</span>invokable by number or by possibly-abbreviated name<span class="o">)</span>:
-  0: <span class="o">[</span>RETRY          <span class="o">]</span> Try loading the foreign library again.
-  1: <span class="o">[</span>USE-VALUE      <span class="o">]</span> Use another library instead.
-  2: <span class="o">[</span>TRY-RECOMPILING<span class="o">]</span> Recompile package and try loading it again
-  3: <span class="o">[</span>RETRY          <span class="o">]</span> Retry
-                       loading FASL <span class="k">for</span> <span class="c">#&lt;CL-SOURCE-FILE &quot;zeromq&quot; &quot;package&quot;&gt;.</span>
-  4: <span class="o">[</span>ACCEPT         <span class="o">]</span> Continue, treating
-                       loading FASL <span class="k">for</span> <span class="c">#&lt;CL-SOURCE-FILE &quot;zeromq&quot; &quot;package&quot;&gt; as</span>
-                       having been successful.
-  5: <span class="o">[</span>ABORT          <span class="o">]</span> Give up on <span class="s2">&quot;zeromq&quot;</span>
-  6:                   Exit debugger, returning to top level.
-
-<span class="o">(</span>CFFI::FL-ERROR
- <span class="s2">&quot;Unable to load any of the alternatives:~%   ~S&quot;</span>
- <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">))</span>
-0<span class="o">]</span> 2
-</pre></div>
-
-<p>以下のようにしてライブラリのパスを設定してやっても回避はできるがおすすめしない。</p>
-<div class="pygments_murphy"><pre>(pushnew &quot;/path/to/lib/&quot; *foreign-library-directories*)
-</pre></div>
-
-<p><a href="http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html">http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html</a></p>
-<h1 id="3">3. サーバ側起動</h1>
-<p><a href="http://www.cliki.net/cl-zmq">cl-zmq</a> のサンプルコード参考に以下のようなエコーサーバを書いた。これをserver.lispに保存して、 sbcl --script server.lisp で実行。ちなみに、127.0.0.1:5555 の部分をlocalhost:5555のように書くとNo such deviceといわれる。 (参考 <a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a> )</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-
-(defun server ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:rep)
-      (zmq:bind socket &quot;tcp://127.0.0.1:5555&quot;)
-      (loop
-         (let ((query (make-instance &#39;zmq:msg)))
-           (zmq:recv socket query)
-           (let ((req-string (zmq:msg-data-as-string query)))
-             (format t &quot;Recieved message: &#39;~A&#39;~%&quot; req-string)
-             (zmq:send socket (make-instance &#39;zmq:msg :data req-string)) ))))))
-
-(server)
-</pre></div>
-
-<h1 id="4">4. クライアント側起動</h1>
-<p>こちらも同様に以下をclient.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-
-(defun client ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:req)
-      (zmq:connect socket &quot;tcp://127.0.0.1:5555&quot;)
-      (loop
-      (zmq:send socket (make-instance &#39;zmq:msg
-                                      :data (read-line)))
-      (let ((result (make-instance &#39;zmq:msg)))
-        (zmq:recv socket result)
-        (format t &quot;Recieved message: &#39;~A&#39;~%&quot;
-                (zmq:msg-data-as-string result) ))))))
-
-(client)
-</pre></div>
-
-<h1 id="_1">まとめ</h1>
-<p>Common Lisp(sbcl)でZeroMQを利用して、簡単なエコーサーバ/クライアントを実装した。</p>
-<h1 id="_2">参考</h1>
-<ul>
-<li><a href="http://www.cliki.net/cl-zmq">cl-zmq</a></li>
-<li><a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a></li>
 </ul>]]></content>
   </entry>
 </feed>
