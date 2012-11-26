@@ -19,8 +19,7 @@
 <hr />
 <%include file="archives.mako" />
 <hr />
-<div class="fb-like-box" data-href="${post.permalink}" data-width="292" data-show-faces="true" data-border-color="#FFFFFF" data-stream="true" data-header="false"></div>
-<hr />
 <%include file="feed.mako" />
+<div class="fb-recommendations-bar" data-href="${post.permalink}" data-site="mojavy.com"></div>
 </section>
 </div>
