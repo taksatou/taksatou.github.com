@@ -1,7 +1,7 @@
 <%page args="post"/>
 <div class="blog_post">
   <a name="${post.slug}"></a>
-  <h2 class="blog_post_title"><a href="${post.permapath()}" rel="bookmark" title="Permanent Link to ${post.title}">${post.title}</a></h2>
+  <h2 class="blog_post_title"><a href="${post.permalink}" rel="bookmark" title="Permanent Link to ${post.title}">${post.title}</a></h2>
   <small>${post.date.strftime("%B %d, %Y at %I:%M %p")} | categories:
 <%
    category_links = []
@@ -23,7 +23,8 @@ ${", ".join(category_links)}
   </div>
 </div>
 
-<div class="linkwithin_div"></div>
+<div class="shr_rd"></div>
+<!-- <div class="linkwithin_div"></div> -->
 
 <%def name="post_prose(post)">
 <div class="blogbody">

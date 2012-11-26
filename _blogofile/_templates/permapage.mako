@@ -19,6 +19,8 @@
 <hr />
 <%include file="archives.mako" />
 <hr />
+<div class="fb-like-box" data-href="${post.permalink}" data-width="292" data-show-faces="true" data-border-color="#FFFFFF" data-stream="true" data-header="false"></div>
+<hr />
 <%include file="feed.mako" />
 </section>
 </div>
