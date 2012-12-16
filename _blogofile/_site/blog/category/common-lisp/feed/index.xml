@@ -126,7 +126,7 @@ abort-jobはclientに失敗を通知します。retry-jobは名前の通りハ�
 <ul>
 <li>sbcl 1.0.55.0.debian </li>
 <li>clisp 2.49</li>
-<li>clozure cl  1.8-r15286M  (LinuxX8632)!</li>
+<li>clozure cl 1.8-r15286M</li>
 </ul>
 <p>ffi系のライブラリには依存してないので比較的動かしやすいとは思いますが、動かなければ教えて下さい。</p>
 <h2 id="future-work">future work</h2>
