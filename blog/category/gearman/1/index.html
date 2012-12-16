@@ -63,9 +63,9 @@ href="/blog/feed/atom" />
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
+  if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=169540733170142";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
@@ -98,118 +98,152 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
-  <a name="gearman"></a>
-  <h2 class="blog_post_title"><a href="/blog/2012/11/10/gearman" rel="bookmark" title="Permanent Link to gearman">gearman</a></h2>
-  <small>November 10, 2012 at 08:00 PM | categories:
+  <a name="gearmanクライアントライブラリ-cl-gearman"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" rel="bookmark" title="Permanent Link to gearmanクライアントライブラリ cl-gearman">gearmanクライアントライブラリ cl-gearman</a></h2>
+  <small>December 16, 2012 at 05:30 PM | categories:
 
-<a href='/blog/category/gearman'>gearman</a>, <a href='/blog/category/web'>web</a>
- | <a href="http://mojavy.com/blog/2012/11/10/gearman#disqus_thread"></a>
+<a href='/blog/category/gearman'>gearman</a>, <a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16#disqus_thread"></a>
 </small>
 <p/>
   <div class="post_prose">
     
 <div class="blogbody">
-  <p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
-<p>gearmanは高速だけどデータは永続化しないものだとずっと思ってましたが、最近ジョブキューを使いたい場面があったので久しぶりに調べてみたらもはやそんなことはなかったです。いい機会なのでgearmanについてまとめておこうと思います。</p>
-<div class="toc">
-<ul>
-<li><a href="#gearman">Gearmanとは</a></li>
-<li><a href="#_1">インストール</a></li>
-<li><a href="#_2">動作確認</a><ul>
-<li><a href="#job-server">job serverの起動</a></li>
-<li><a href="#hoge">hogeあ</a></li>
-</ul>
-</li>
-<li><a href="#_3">ジョブの永続化</a></li>
-<li><a href="#_4">スレッドモデル</a></li>
-<li><a href="#tips">その他のtips</a></li>
-<li><a href="#_5">リンク</a></li>
-</ul>
-</div>
+  <p><img alt="tool" src="/images/gearman-logo.png" /></p>
+<p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
+<p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
 <h2 id="gearman">Gearmanとは</h2>
-<p>Gearmanとは、時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。
-Gearmanを利用するアプリケーションには、client, job server, workerという3つの要素が存在します。
+<p>今更感はありますが、Gearman自体について簡単に説明しておきます。</p>
+<p><a href="http://gearman.org/">http://gearman.org/</a></p>
+<p>Gearmanとは時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。Gearmanを利用するアプリケーションでは、client, job server, workerという3つの要素が存在します。
 それぞれの役割は以下の通りです。</p>
 <ul>
 <li>job server: clientから受けとったジョブを適切なworkerに渡す</li>
 <li>client: ジョブを生成してjob serverに送信する</li>
 <li>worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す</li>
 </ul>
-<p>clientとworkerはgearmanが提供しているAPIを通じてjob serverとやりとりします。gearman APIを実装したライブラリが多くのプログラミング言語で用意されています。また、gearmanというコマンドもあるのでシェルスクリプトからの利用も簡単です。 job serverには通常gearmandというデーモンを利用します。gearmandの実装には現在3種類あります。(<a href="https://launchpad.net/gearmand">C言語</a>, <a href="http://code.google.com/p/java-gearman-service/">Java</a>, <a href="http://search.cpan.org/dist/Gearman-Server/">Perl</a>)  また、libgearman-serverというライブラリも提供されており、これを利用して他のアプリケーションにjob serverを埋め込むことも簡単にできます。</p>
-<p>以下ではCのgearmandを使用します。</p>
+<p>cl-gearmanは、clientとjob server間、及びworkerとjob server間のプロトコルを抽象化したライブラリです。</p>
+<p>余談ですが、Gearmanはデータ永続化をしないものだとずっと思っていたのですがmysqlやsqliteに永続化できます。
+ジョブキューを使うなら以前はTheSchwartzという選択肢もありましたが、今はGearmanでほとんどの場合に対応できるのではないでしょうか。</p>
 <h2 id="_1">インストール</h2>
-<p>aptやrpmでもインストールできると思いますが、ここではソースからインストールします。</p>
-<div class="pygments_murphy"><pre>wget https://launchpad.net/gearmand/1.2/1.1.3/+download/gearmand-1.1.3.tar.gz
-tar xzf gearmand-1.1.3.tar.gz
-<span class="nb">cd </span>gearmand-1.1.3
-./configure
-make
-sudo make install
+<p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
+<p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
+<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
+git clone https://github.com/taksatou/cl-gearman.git
 </pre></div>
 
-<p>後述のジョブ永続化を利用したいのであれば、configureの前に永続化するストレージに応じたライブラリをインストールしておきます。
-Debian系ならlibsqlite3-dev、libmysql++-dev、等です。必要なものが標準のパスにインストールされていればconfigureオプションは不要です。うまく認識されとconfigureの後に以下のようなログがでるの確認しておきます。</p>
-<div class="pygments_murphy"><pre>#  :
-#  :
-   * Building with libsqlite3   yes
-   * Building with libdrizzle   no
-   * Building with libmemcached not found
-   * Building with libpq        no
-   * Building with tokyocabinet no
-   * Building with libmysql     yes
+<h2 id="_2">使い方</h2>
+<p>以下サンプルコードです</p>
+<h3 id="client">client</h3>
+<p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
+hello
+foo
+NIL
 </pre></div>
 
-<p>その他の必要な依存ライブラリが足りなかった場合は適宜いれてください。</p>
-<h2 id="_2">動作確認</h2>
-<p><a href="http://gearman.org/index.php\?id=getting_started">本家サイトのチュートリアル</a>の内容そのままですが、以下のようにして動作を確認できます。</p>
-<h3 id="job-server">job serverの起動</h3>
-<p>ほげ</p>
-<div class="pygments_murphy"><pre>$ gearmand
+<p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
+そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
+                  (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
+                  (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
+                  (jobs `(:medium ,job1 :low ,job2 :high ,job3)))
+
+             (dotimes (i 5)
+               (loop for (k v) on jobs by #&#39;cddr
+                  do (format t &quot;~a: ~a~%&quot; k (cl-gearman:get-job-status client v)))
+               (sleep 1))))
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+NIL
 </pre></div>
 
-<h3 id="hoge">hogeあ</h3>
-<p>げあ
-sddd</p>
-<p>他にも色々なサンプルがgearmanのソースに含まれているのでそちらも参考にしてください。</p>
-<h2 id="_3">ジョブの永続化</h2>
+<h3 id="worker">worker</h3>
+<p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
+ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
+り値はprincでフォーマットした文字列としてclientに渡されます。workはジョブが割り当てられるまで待機し、1つのジョブの実行が完了すると戻ります。</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
+  (cl-gearman:add-ability worker &quot;hello&quot;
+                          #&#39;(lambda (arg job) &quot;hello&quot;))
+
+  (cl-gearman:add-ability worker &quot;echo&quot;
+                          #&#39;(lambda (arg job) arg))
+
+  (cl-gearman:add-ability worker &quot;sleep&quot;
+                          #&#39;(lambda (arg job)
+                              (sleep (parse-integer arg))
+                              (format nil &quot;job:~A finished~%&quot; job)))
+
+  (loop do (cl-gearman:work worker)))
+</pre></div>
+
+<h3 id="_3">エラーハンドリング</h3>
+<p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
+workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
+<p>例えば、</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
+  (cl-gearman:add-ability worker &quot;error&quot;
+                          #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
+
+  (loop do (handler-bind ((error #&#39;(lambda (c) (invoke-restart &#39;cl-gearman:skip-job))))
+             (cl-gearman:work worker))))
+</pre></div>
+
+<p>のようにしておけば、エラーが発生したjobを無視することができます。
+abort-jobはclientに失敗を通知します。retry-jobは名前の通りハンドラを再度実行します。</p>
+<h2 id="_4">対応する処理系</h2>
+<p>メインに開発を行った環境は ubuntu 12.04, sbcl 1.0.55.0.debian です。
+一応以下の処理系で動作確認しました</p>
 <ul>
-<li>mysql</li>
-<li>dizzle</li>
-<li>sqlite3</li>
-<li>postgresql</li>
-<li>tokyocabinet</li>
-<li>memcached</li>
+<li>sbcl 1.0.55.0.debian </li>
+<li>clisp 2.49</li>
+<li>clozure cl  1.8-r15286M  (LinuxX8632)!</li>
 </ul>
-<p>redisとmongodbも開発中</p>
-<h2 id="_4">スレッドモデル</h2>
-<p>Cで実装されたgearmandはデフォルトではシングルスレッドですが、起動オプション</p>
-<h2 id="tips">その他のtips</h2>
-<ul>
-<li>gearmanという名前はmanagerのアナグラムからつけられたそうです</li>
-<li>gearmandとの通信にHTTPを利用することもできます</li>
-</ul>
-<h2 id="_5">リンク</h2>
-<ul>
-<li>http://gearman.org/</li>
-<li>http://gearman.info/index.html</li>
-</ul>
+<p>ffi系のライブラリには依存してないので比較的動かしやすいとは思いますが、動かなければ教えて下さい。</p>
+<h2 id="future-work">future work</h2>
+<p>まだいくつかやり残していることがあります。</p>
+<h4 id="job-server">複数job server</h4>
+<p>複数のコネクションをはれるようにしてアプリケーション側でスレッドたてなくてよいように</p>
+<h4 id="_5">タイムアウト</h4>
+<p>ポータブルに実装するのがめんどくさそうだったのであとまわしにしてます</p>
+<h4 id="_6">テスト</h4>
+<p>ごめんなさいごめんなさい</p>
+<h2 id="_7">まとめ</h2>
+<p>以上、拙作のcl-gearmanを紹介しました。Common Lispを始めてまだ半年足らずなのでおかしいところがあるかと思いますが、フィードバックを頂けるとうれしいです。</p>
 </div>
 
   </div>
 </div>
 
-<div class="linkwithin_div"></div>
+<div class="shr_rd"></div>
+<!-- <div class="linkwithin_div"></div> -->
 
 
 <div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/11/08/common-lisp-declare"> previous post </a>
+  <a href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox"> previous post </a>
 </div>
 <hr class="intersocial">
 
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/11/10/gearman" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/10/gearman/" class="hatena-bookmark-button" data-hatena-bookmark-title="gearman" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/11/10/gearman" data-text="gearman">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/11/10/gearman"></div>
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" class="hatena-bookmark-button" data-hatena-bookmark-title="gearmanクライアントライブラリ cl-gearman" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" data-text="gearmanクライアントライブラリ cl-gearman">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16"></div>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
@@ -221,14 +255,29 @@ sddd</p>
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
-      <li><a href="/blog/2012/11/10/gearman" title="gearman"><p>gearman</a><span style="font-size: 80%;">(November 10, 2012 at 08:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/10/gearman">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/10/gearman" alt="はてなブックマーク - gearman" title="はてなブックマーク - gearman">
+      <li><a href="/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" title="gearmanクライアントライブラリ cl-gearman"><p>gearmanクライアントライブラリ cl-gearman</a><span style="font-size: 80%;">(December 16, 2012 at 05:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" alt="はてなブックマーク - gearmanクライアントライブラリ cl-gearman" title="はてなブックマーク - gearmanクライアントライブラリ cl-gearman">
 </a>
 </li>
-      <li><a href="/blog/2012/11/08/common-lisp-declare" title="Common Lispのdeclareについて"><p>Common Lispのdeclareについて</a><span style="font-size: 80%;">(November 08, 2012 at 08:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/08/common-lisp-declare">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/08/common-lisp-declare" alt="はてなブックマーク - Common Lispのdeclareについて" title="はてなブックマーク - Common Lispのdeclareについて">
+      <li><a href="/blog/2012/11/20/web-engineers-online-toolbox" title="ウェブエンジニアのためのオンラインツールまとめ"><p>ウェブエンジニアのためのオンラインツールまとめ</a><span style="font-size: 80%;">(November 20, 2012 at 02:30 AM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox" alt="はてなブックマーク - ウェブエンジニアのためのオンラインツールまとめ" title="はてなブックマーク - ウェブエンジニアのためのオンラインツールまとめ">
+</a>
+</li>
+      <li><a href="/blog/2012/11/14/quicklinks3" title="Quicklinks 3"><p>Quicklinks 3</a><span style="font-size: 80%;">(November 14, 2012 at 11:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/14/quicklinks3">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/14/quicklinks3" alt="はてなブックマーク - Quicklinks 3" title="はてなブックマーク - Quicklinks 3">
+</a>
+</li>
+      <li><a href="/blog/2012/11/10/cl-frontcoding" title="cl-frontcodingをつくってみた"><p>cl-frontcodingをつくってみた</a><span style="font-size: 80%;">(November 10, 2012 at 08:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/10/cl-frontcoding">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/10/cl-frontcoding" alt="はてなブックマーク - cl-frontcodingをつくってみた" title="はてなブックマーク - cl-frontcodingをつくってみた">
+</a>
+</li>
+      <li><a href="/blog/2012/11/09/common-lisp-declare" title="Common Lispのdeclareについて"><p>Common Lispのdeclareについて</a><span style="font-size: 80%;">(November 09, 2012 at 11:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/09/common-lisp-declare">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/09/common-lisp-declare" alt="はてなブックマーク - Common Lispのdeclareについて" title="はてなブックマーク - Common Lispのdeclareについて">
 </a>
 </li>
       <li><a href="/blog/2012/11/07/android-pitfalls" title="細かすぎて伝わらないAndroid開発のはまりどころまとめ その1"><p>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</a><span style="font-size: 80%;">(November 07, 2012 at 12:00 PM)</span>
@@ -254,10 +303,11 @@ sddd</p>
     <h1>Categories</h1>
     <ul>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
@@ -269,11 +319,11 @@ sddd</p>
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
-     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
@@ -287,7 +337,8 @@ sddd</p>
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
       <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
@@ -344,11 +395,22 @@ sddd</p>
       </div> <!-- End Footer -->
     </div> <!-- End Content -->
 
-    <script>
-      var linkwithin_site_id = 1502091;
+    <script type="text/javascript">
+      var SHRRD_Settings = {"shr_rd":{"titleText":"You may also like:", "number":3, "link":document.location.href}};
     </script>
-    <script src="http://www.linkwithin.com/widget.js"></script>
-    <a href="http://www.linkwithin.com/"><img src="http://www.linkwithin.com/pixel.png" alt="Related Posts Plugin for WordPress, Blogger..." style="border: 0" /></a>
+
+    <script type="text/javascript">
+      (function() {
+      var sb = document.createElement("script"); sb.type = "text/javascript";sb.async = true;
+      sb.src = ("https:" == document.location.protocol ? "https://dtym7iokkjlif.cloudfront.net" : "http://cdn.shareaholic.com") + "/media/js/jquery.shareaholic-publishers-rd.min.js";
+      var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(sb, s);
+      })();
+    </script>
+    <!-- <script> -->
+    <!--   var linkwithin_site_id = 1502091; -->
+    <!-- </script> -->
+    <!-- <script src="http://www.linkwithin.com/widget.js"></script> -->
+    <!-- <a href="http://www.linkwithin.com/"><img src="http://www.linkwithin.com/pixel.png" alt="Related Posts Plugin for WordPress, Blogger..." style="border: 0" /></a> -->
 
   </body>
 </html>

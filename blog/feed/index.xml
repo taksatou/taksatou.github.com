@@ -10,10 +10,136 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 20 Nov 2012 02:30:00 GMT</pubDate>
+    <pubDate>Sun, 16 Dec 2012 17:30:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>gearmanクライアントライブラリ cl-gearman</title>
+      <link>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</link>
+      <pubDate>Sun, 16 Dec 2012 17:30:00 JST</pubDate>
+      <category><![CDATA[gearman]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</guid>
+      <description>gearmanクライアントライブラリ cl-gearman</description>
+      <content:encoded><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
+<p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
+<p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
+<h2 id="gearman">Gearmanとは</h2>
+<p>今更感はありますが、Gearman自体について簡単に説明しておきます。</p>
+<p><a href="http://gearman.org/">http://gearman.org/</a></p>
+<p>Gearmanとは時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。Gearmanを利用するアプリケーションでは、client, job server, workerという3つの要素が存在します。
+それぞれの役割は以下の通りです。</p>
+<ul>
+<li>job server: clientから受けとったジョブを適切なworkerに渡す</li>
+<li>client: ジョブを生成してjob serverに送信する</li>
+<li>worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す</li>
+</ul>
+<p>cl-gearmanは、clientとjob server間、及びworkerとjob server間のプロトコルを抽象化したライブラリです。</p>
+<p>余談ですが、Gearmanはデータ永続化をしないものだとずっと思っていたのですがmysqlやsqliteに永続化できます。
+ジョブキューを使うなら以前はTheSchwartzという選択肢もありましたが、今はGearmanでほとんどの場合に対応できるのではないでしょうか。</p>
+<h2 id="_1">インストール</h2>
+<p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
+<p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
+<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
+git clone https://github.com/taksatou/cl-gearman.git
+</pre></div>
+
+<h2 id="_2">使い方</h2>
+<p>以下サンプルコードです</p>
+<h3 id="client">client</h3>
+<p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
+hello
+foo
+NIL
+</pre></div>
+
+<p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
+そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
+                  (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
+                  (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
+                  (jobs `(:medium ,job1 :low ,job2 :high ,job3)))
+
+             (dotimes (i 5)
+               (loop for (k v) on jobs by #&#39;cddr
+                  do (format t &quot;~a: ~a~%&quot; k (cl-gearman:get-job-status client v)))
+               (sleep 1))))
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+NIL
+</pre></div>
+
+<h3 id="worker">worker</h3>
+<p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
+ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
+り値はprincでフォーマットした文字列としてclientに渡されます。workはジョブが割り当てられるまで待機し、1つのジョブの実行が完了すると戻ります。</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
+  (cl-gearman:add-ability worker &quot;hello&quot;
+                          #&#39;(lambda (arg job) &quot;hello&quot;))
+
+  (cl-gearman:add-ability worker &quot;echo&quot;
+                          #&#39;(lambda (arg job) arg))
+
+  (cl-gearman:add-ability worker &quot;sleep&quot;
+                          #&#39;(lambda (arg job)
+                              (sleep (parse-integer arg))
+                              (format nil &quot;job:~A finished~%&quot; job)))
+
+  (loop do (cl-gearman:work worker)))
+</pre></div>
+
+<h3 id="_3">エラーハンドリング</h3>
+<p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
+workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
+<p>例えば、</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
+  (cl-gearman:add-ability worker &quot;error&quot;
+                          #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
+
+  (loop do (handler-bind ((error #&#39;(lambda (c) (invoke-restart &#39;cl-gearman:skip-job))))
+             (cl-gearman:work worker))))
+</pre></div>
+
+<p>のようにしておけば、エラーが発生したjobを無視することができます。
+abort-jobはclientに失敗を通知します。retry-jobは名前の通りハンドラを再度実行します。</p>
+<h2 id="_4">対応する処理系</h2>
+<p>メインに開発を行った環境は ubuntu 12.04, sbcl 1.0.55.0.debian です。
+一応以下の処理系で動作確認しました</p>
+<ul>
+<li>sbcl 1.0.55.0.debian </li>
+<li>clisp 2.49</li>
+<li>clozure cl  1.8-r15286M  (LinuxX8632)!</li>
+</ul>
+<p>ffi系のライブラリには依存してないので比較的動かしやすいとは思いますが、動かなければ教えて下さい。</p>
+<h2 id="future-work">future work</h2>
+<p>まだいくつかやり残していることがあります。</p>
+<h4 id="job-server">複数job server</h4>
+<p>複数のコネクションをはれるようにしてアプリケーション側でスレッドたてなくてよいように</p>
+<h4 id="_5">タイムアウト</h4>
+<p>ポータブルに実装するのがめんどくさそうだったのであとまわしにしてます</p>
+<h4 id="_6">テスト</h4>
+<p>ごめんなさいごめんなさい</p>
+<h2 id="_7">まとめ</h2>
+<p>以上、拙作のcl-gearmanを紹介しました。Common Lispを始めてまだ半年足らずなのでおかしいところがあるかと思いますが、フィードバックを頂けるとうれしいです。</p>]]></content:encoded>
+    </item>
     <item>
       <title>ウェブエンジニアのためのオンラインツールまとめ</title>
       <link>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</link>
@@ -660,233 +786,6 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
 <ul>
 <li><a href="https://dev.twitter.com/blog">https://dev.twitter.com/blog</a></li>
 <li><a href="https://dev.twitter.com/discussions/11595">https://dev.twitter.com/discussions/11595</a></li>
-</ul>]]></content:encoded>
-    </item>
-    <item>
-      <title>iOSでZeroMQを試す</title>
-      <link>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</link>
-      <pubDate>Thu, 18 Oct 2012 18:00:01 JST</pubDate>
-      <category><![CDATA[objective-c]]></category>
-      <category><![CDATA[ios]]></category>
-      <category><![CDATA[zeromq]]></category>
-      <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/objective-c-zeromq</guid>
-      <description>iOSでZeroMQを試す</description>
-      <content:encoded><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
-<p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
-<h1 id="zeromqiphone">ZeroMQをiPhone用にビルド</h1>
-<p>ZeroMQはautotoolsで作成されておりconfigure &amp;&amp; make でビルドできるようになっているが、iPhone用にクロスコンパイルをするためには適切なオプションを与えてやる必要がある。</p>
-<p>一応、<a href="http://www.zeromq.org/build:iphone">本家サイト上にもドキュメント</a>はあるが最新のXcodeではうごかない。また、シミュレータ用でもうごかせるようにしておきたい。というわけで、以下のようなビルドスクリプトを書いた。</p>
-<script src="https://gist.github.com/3899653.js"> </script>
-
-<p>これをZeroMQのtarを展開してできたディレクトリにbuild.shとかで保存して実行すると、armv7とi386に対応したlibzmq.aができる。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
-<span class="nv">$ </span><span class="nb">cd </span>zeromq-2.2.0
-<span class="nv">$ </span>./build.sh
-<span class="nv">$ </span>file libzmq.a
-libzmq.a: Mach-O universal binary with 2 architectures
-libzmq.a <span class="o">(</span><span class="k">for </span>architecture armv7<span class="o">)</span>:      current ar archive random library
-libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<span class="o">)</span>:       current ar archive random library
-</pre></div>
-
-<p>このlibzmq.aと、includeディレクトリの中身をXcodeにインポートしてやればよい。
-このときに、XcodeでOther Linker Flags に -lstdc++ を追加してやるのを忘れないように。</p>
-<h1 id="zeromq">ZeroMQを用いた簡易チャットアプリ</h1>
-<p>サンプルとしてチャットアプリを実装してみる。
-チャットでの発言はREQ/REPを用いてアプリ→サーバに渡し、PUB/SUBを用いてサーバ→アプリにブロードキャストする。</p>
-<h2 id="_1">サーバ側</h2>
-<p>サーバ側はCommon Lispで実装した。単に、rep-sockから発言を受け取ってpub-sockにそのまま流すだけ。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-
-(defun pull-and-publish ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (rep-sock ctx zmq:rep)
-      (zmq:bind rep-sock &quot;tcp://127.0.0.1:5555&quot;)
-
-      (zmq:with-context (ctx2 1)
-        (zmq:with-socket (pub-sock ctx2 zmq:pub)
-          (zmq:bind pub-sock &quot;tcp://127.0.0.1:5556&quot;)
-
-          (loop
-             (let ((msg (make-instance &#39;zmq:msg)))
-               (zmq:recv rep-sock msg)
-               (zmq:send rep-sock (make-instance &#39;zmq:msg :data &quot;ok&quot;))
-               (zmq:send pub-sock msg))))))))
-
-(pull-and-publish)
-</pre></div>
-
-<p>REQ/REPではなくPULL/PUSHでもできるはずだが、なぜかcl-zmqではpullがつかえなかったのでREQ/REPをつかった。</p>
-<h2 id="_2">アプリ側</h2>
-<p><a href="https://github.com/jeremy-w/objc-zmq">objective-c版ZeroMQ</a>もあるけど、今回はそのままCのAPIを利用した。
-以下はソースの抜粋。</p>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
-<span class="cp">#import &quot;include/zmq.h&quot;</span>
-
-<span class="k">@interface</span> <span class="nc">ChatViewController</span> <span class="p">()</span> <span class="p">{</span>
-
-    <span class="kt">void</span> <span class="o">*</span><span class="n">ctx1</span><span class="p">,</span> <span class="o">*</span><span class="n">ctx2</span><span class="p">;</span>
-    <span class="kt">void</span> <span class="o">*</span><span class="n">subsock</span><span class="p">,</span> <span class="o">*</span><span class="n">reqsock</span><span class="p">;</span>
-
-    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">messageList</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="k">@end</span>
-
-<span class="err">@</span><span class="n">implementation</span> <span class="n">ChatViewController</span>
-
-<span class="k">@synthesize</span> <span class="n">nickname</span><span class="p">;</span>
-<span class="k">@synthesize</span> <span class="n">timer</span><span class="p">;</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
-
-    <span class="n">ctx1</span> <span class="o">=</span> <span class="n">zmq_init</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-    <span class="n">subsock</span> <span class="o">=</span> <span class="n">zmq_socket</span><span class="p">(</span><span class="n">ctx1</span><span class="p">,</span> <span class="n">ZMQ_SUB</span><span class="p">);</span>
-    <span class="n">zmq_setsockopt</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="n">ZMQ_SUBSCRIBE</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_connect</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="s">&quot;tcp://127.0.0.1:5556&quot;</span><span class="p">);</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-
-    <span class="n">ctx2</span> <span class="o">=</span> <span class="n">zmq_init</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-    <span class="n">reqsock</span> <span class="o">=</span> <span class="n">zmq_socket</span><span class="p">(</span><span class="n">ctx1</span><span class="p">,</span> <span class="n">ZMQ_REQ</span><span class="p">);</span>
-    <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_connect</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="s">&quot;tcp://127.0.0.1:5555&quot;</span><span class="p">);</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-
-    <span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSTimer</span> <span class="nl">scheduledTimerWithTimeInterval:</span><span class="mi">1</span> <span class="nl">target:</span><span class="n">self</span> <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="n">observeSocket</span><span class="p">)</span> <span class="nl">userInfo:</span><span class="nb">nil</span> <span class="nl">repeats:</span><span class="n">YES</span><span class="p">];</span>
-    <span class="n">messageList</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="n">invalidate</span><span class="p">];</span>
-    <span class="n">zmq_close</span><span class="p">(</span><span class="n">subsock</span><span class="p">);</span>
-    <span class="n">zmq_close</span><span class="p">(</span><span class="n">reqsock</span><span class="p">);</span>
-    <span class="n">zmq_term</span><span class="p">(</span><span class="n">ctx1</span><span class="p">);</span>
-    <span class="n">zmq_term</span><span class="p">(</span><span class="n">ctx2</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">observeSocket</span>
-<span class="p">{</span>
-    <span class="n">zmq_msg_t</span> <span class="n">msg</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_msg_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-
-    <span class="k">do</span> <span class="p">{</span>
-        <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_recv</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="n">ZMQ_NOBLOCK</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EAGAIN</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;no data available&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ENOTSUP</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ENOTSUP&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EFSM</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EFSM&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ETERM</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ETERM&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ENOTSOCK</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ENOTSOCK&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EINTR&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EFAULT</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EFAULT&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">size_t</span> <span class="n">siz</span> <span class="o">=</span> <span class="n">zmq_msg_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-            <span class="kt">void</span> <span class="o">*</span><span class="n">dat</span> <span class="o">=</span> <span class="n">zmq_msg_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-            <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithData:</span><span class="p">[</span><span class="n">NSData</span> <span class="nl">dataWithBytes:</span><span class="n">dat</span> <span class="nl">length:</span><span class="n">siz</span><span class="p">]</span> <span class="nl">encoding:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
-            <span class="p">[</span><span class="n">messageList</span> <span class="nl">insertObject:</span><span class="n">str</span> <span class="nl">atIndex:</span><span class="mi">0</span><span class="p">];</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;unknown&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="n">zmq_msg_close</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span> <span class="nf">saySomething:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
-<span class="p">{</span>
-    <span class="n">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="s">@&quot;text input&quot;</span>
-                                <span class="nl">message:</span><span class="s">@&quot;&quot;</span>
-                               <span class="nl">delegate:</span><span class="n">self</span>
-                      <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;cancel&quot;</span>
-                      <span class="nl">otherButtonTitles:</span><span class="s">@&quot;ok&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-    <span class="n">alert</span><span class="p">.</span><span class="n">alertViewStyle</span> <span class="o">=</span> <span class="n">UIAlertViewStylePlainTextInput</span><span class="p">;</span>
-    <span class="p">[</span><span class="n">alert</span> <span class="n">show</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alertView:</span><span class="p">(</span><span class="n">UIAlertView</span><span class="o">*</span><span class="p">)</span><span class="nv">alertView</span> <span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span>
-<span class="p">{</span>
-    <span class="n">zmq_msg_t</span> <span class="n">msg</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">rc</span><span class="p">;</span>
-    <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-    <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
-
-    <span class="k">switch</span> <span class="p">(</span><span class="n">buttonIndex</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
-            <span class="n">str</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithFormat:</span><span class="s">@&quot;%@: %@&quot;</span><span class="p">,</span> <span class="n">nickname</span><span class="p">,</span> <span class="p">[</span><span class="n">alertView</span> <span class="nl">textFieldAtIndex:</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span><span class="p">];</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">str</span> <span class="nl">dataUsingEncoding:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
-            <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_msg_init_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="p">[</span><span class="n">data</span> <span class="n">length</span><span class="p">]);</span>
-            <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-            <span class="n">memcpy</span><span class="p">(</span><span class="n">zmq_msg_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">),</span> <span class="p">[</span><span class="n">data</span> <span class="n">bytes</span><span class="p">],</span> <span class="p">[</span><span class="n">data</span> <span class="n">length</span><span class="p">]);</span>
-
-            <span class="n">zmq_send</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-            <span class="n">zmq_recv</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-            <span class="n">zmq_msg_close</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="k">default</span><span class="o">:</span>
-            <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-<p>以下補足</p>
-<ul>
-<li>簡単のためタイマーで1秒ごとにソケットにメッセージがあるかどうかobserveSocketでチェックしているが、別スレッドにしたほうがスマート</li>
-<li><a href="http://api.zeromq.org/2-2:zmq-recv">zmq_recvのマニュアル</a>によると、zmq_recvをZMQ_NOBLOCKで呼んだときにメッセージがなかった場合はEAGAINが返るとなっているが、-1がかえってきていた。</li>
-<li>上記ソースはUITableViewControllerで発言を表示する想定になっているが、UIまわりのコードは省略</li>
-</ul>
-<h2 id="common-lisp">オマケ(Common Lisp版コマンドライン用チャットクライアント)</h2>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-(ql:quickload :bordeaux-threads)
-
-(defun sub ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:sub)
-      (zmq:setsockopt socket zmq:subscribe &quot;&quot;)
-      (zmq:connect socket &quot;tcp://127.0.0.1:5556&quot;)
-      (loop
-         (let ((query (make-instance &#39;zmq:msg)))
-           (zmq:recv socket query)
-           (format t &quot;received message: ~a~%&quot; (zmq:msg-data-as-string query)))))))
-
-(defun client ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:req)
-      (zmq:connect socket &quot;tcp://127.0.0.1:5555&quot;)
-      (loop
-         (zmq:send socket (make-instance &#39;zmq:msg
-                                         :data (read-line)))
-         (let ((result (make-instance &#39;zmq:msg)))
-           (zmq:recv socket result))))))
-
-(bordeaux-threads:make-thread #&#39;sub)
-(client)
-</pre></div>
-
-<h1 id="_3">まとめ</h1>
-<ul>
-<li>iPhoneでZeroMQを動かしてみた</li>
-<li>ZeroMQのREQ/REPとPUB/SUBを使用してチャットをつくってみた</li>
-<li>appleの審査を通過するかどうかは知らない(一応実績はあるらしい)</li>
-</ul>
-<h1 id="_4">参考</h1>
-<ul>
-<li><a href="http://api.zeromq.org/2-2:_start">http://api.zeromq.org/2-2:_start</a></li>
-<li><a href="http://www.zeromq.org/area:licensing">http://www.zeromq.org/area:licensing</a></li>
-<li><a href="http://www.zeromq.org/intro:commercial-support">http://www.zeromq.org/intro:commercial-support</a></li>
 </ul>]]></content:encoded>
     </item>
   </channel>

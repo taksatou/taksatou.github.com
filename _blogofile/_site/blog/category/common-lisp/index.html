@@ -98,6 +98,157 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="gearmanクライアントライブラリ-cl-gearman"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" rel="bookmark" title="Permanent Link to gearmanクライアントライブラリ cl-gearman">gearmanクライアントライブラリ cl-gearman</a></h2>
+  <small>December 16, 2012 at 05:30 PM | categories:
+
+<a href='/blog/category/gearman'>gearman</a>, <a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="tool" src="/images/gearman-logo.png" /></p>
+<p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
+<p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
+<h2 id="gearman">Gearmanとは</h2>
+<p>今更感はありますが、Gearman自体について簡単に説明しておきます。</p>
+<p><a href="http://gearman.org/">http://gearman.org/</a></p>
+<p>Gearmanとは時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。Gearmanを利用するアプリケーションでは、client, job server, workerという3つの要素が存在します。
+それぞれの役割は以下の通りです。</p>
+<ul>
+<li>job server: clientから受けとったジョブを適切なworkerに渡す</li>
+<li>client: ジョブを生成してjob serverに送信する</li>
+<li>worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す</li>
+</ul>
+<p>cl-gearmanは、clientとjob server間、及びworkerとjob server間のプロトコルを抽象化したライブラリです。</p>
+<p>余談ですが、Gearmanはデータ永続化をしないものだとずっと思っていたのですがmysqlやsqliteに永続化できます。
+ジョブキューを使うなら以前はTheSchwartzという選択肢もありましたが、今はGearmanでほとんどの場合に対応できるのではないでしょうか。</p>
+<h2 id="_1">インストール</h2>
+<p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
+<p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
+<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
+git clone https://github.com/taksatou/cl-gearman.git
+</pre></div>
+
+<h2 id="_2">使い方</h2>
+<p>以下サンプルコードです</p>
+<h3 id="client">client</h3>
+<p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
+hello
+foo
+NIL
+</pre></div>
+
+<p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
+そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
+                  (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
+                  (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
+                  (jobs `(:medium ,job1 :low ,job2 :high ,job3)))
+
+             (dotimes (i 5)
+               (loop for (k v) on jobs by #&#39;cddr
+                  do (format t &quot;~a: ~a~%&quot; k (cl-gearman:get-job-status client v)))
+               (sleep 1))))
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:snapper:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:snapper:110 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:snapper:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+NIL
+</pre></div>
+
+<h3 id="worker">worker</h3>
+<p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
+ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
+り値はprincでフォーマットした文字列としてclientに渡されます。workはジョブが割り当てられるまで待機し、1つのジョブの実行が完了すると戻ります。</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
+  (cl-gearman:add-ability worker &quot;hello&quot;
+                          #&#39;(lambda (arg job) &quot;hello&quot;))
+
+  (cl-gearman:add-ability worker &quot;echo&quot;
+                          #&#39;(lambda (arg job) arg))
+
+  (cl-gearman:add-ability worker &quot;sleep&quot;
+                          #&#39;(lambda (arg job)
+                              (sleep (parse-integer arg))
+                              (format nil &quot;job:~A finished~%&quot; job)))
+
+  (loop do (cl-gearman:work worker)))
+</pre></div>
+
+<h3 id="_3">エラーハンドリング</h3>
+<p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
+workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
+<p>例えば、</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
+  (cl-gearman:add-ability worker &quot;error&quot;
+                          #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
+
+  (loop do (handler-bind ((error #&#39;(lambda (c) (invoke-restart &#39;cl-gearman:skip-job))))
+             (cl-gearman:work worker))))
+</pre></div>
+
+<p>のようにしておけば、エラーが発生したjobを無視することができます。
+abort-jobはclientに失敗を通知します。retry-jobは名前の通りハンドラを再度実行します。</p>
+<h2 id="_4">対応する処理系</h2>
+<p>メインに開発を行った環境は ubuntu 12.04, sbcl 1.0.55.0.debian です。
+一応以下の処理系で動作確認しました</p>
+<ul>
+<li>sbcl 1.0.55.0.debian </li>
+<li>clisp 2.49</li>
+<li>clozure cl  1.8-r15286M  (LinuxX8632)!</li>
+</ul>
+<p>ffi系のライブラリには依存してないので比較的動かしやすいとは思いますが、動かなければ教えて下さい。</p>
+<h2 id="future-work">future work</h2>
+<p>まだいくつかやり残していることがあります。</p>
+<h4 id="job-server">複数job server</h4>
+<p>複数のコネクションをはれるようにしてアプリケーション側でスレッドたてなくてよいように</p>
+<h4 id="_5">タイムアウト</h4>
+<p>ポータブルに実装するのがめんどくさそうだったのであとまわしにしてます</p>
+<h4 id="_6">テスト</h4>
+<p>ごめんなさいごめんなさい</p>
+<h2 id="_7">まとめ</h2>
+<p>以上、拙作のcl-gearmanを紹介しました。Common Lispを始めてまだ半年足らずなのでおかしいところがあるかと思いますが、フィードバックを頂けるとうれしいです。</p>
+</div>
+
+  </div>
+</div>
+
+<div class="shr_rd"></div>
+<!-- <div class="linkwithin_div"></div> -->
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" class="hatena-bookmark-button" data-hatena-bookmark-title="gearmanクライアントライブラリ cl-gearman" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" data-text="gearmanクライアントライブラリ cl-gearman">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="cl-frontcodingをつくってみた"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/11/10/cl-frontcoding" rel="bookmark" title="Permanent Link to cl-frontcodingをつくってみた">cl-frontcodingをつくってみた</a></h2>
   <small>November 10, 2012 at 08:30 PM | categories:
@@ -692,145 +843,6 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="common-lispでzeromqを試す"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq" rel="bookmark" title="Permanent Link to Common LispでZeroMQを試す">Common LispでZeroMQを試す</a></h2>
-  <small>October 17, 2012 at 12:00 AM | categories:
-
-<a href='/blog/category/zeromq'>zeromq</a>, <a href='/blog/category/sbcl'>sbcl</a>, <a href='/blog/category/common-lisp'>common lisp</a>
- | <a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
-<p>Common LispでZeroMQを試してみた。</p>
-<p>使用環境は以下のとおり</p>
-<ul>
-<li>OS: Ubuntu 12.04 LTS</li>
-<li>Common Lisp 処理系：<a href="http://www.sbcl.org/">sbcl (1.0.55.0.debian)</a></li>
-<li><a href="http://download.zeromq.org/zeromq-2.2.0.tar.gz">ZeroMQ 2.2.0</a></li>
-</ul>
-<h1 id="1-quicklisp">1. quicklispのインストール</h1>
-<p>以下を参考にquicklispをインストールする。</p>
-<ul>
-<li><a href="http://www.quicklisp.org/beta/">Quicklisp</a></li>
-<li><a href="http://modern-cl.blogspot.jp/2011/03/quicklisp.html">第2回 Quicklispによるライブラリ環境</a></li>
-</ul>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
-<span class="nv">$ </span>sbcl
-<span class="o">(</span>load <span class="s2">&quot;quicklisp.lisp&quot;</span><span class="o">)</span>
-<span class="o">(</span>quicklisp-quickstart:install :path <span class="s2">&quot;.quicklisp/&quot;</span><span class="o">)</span>
-<span class="o">(</span>ql:add-to-init-file<span class="o">)</span>
-</pre></div>
-
-<p>※ (quicklisp-quickstart:install :path ".quicklisp/") のパスで最後のスラッシュは省略不可</p>
-<h1 id="2-cl-zmq">2. cl-zmqのインストール</h1>
-<div class="pygments_murphy"><pre>(ql:quickload :zeromq)
-</pre></div>
-
-<p>ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。ld.so.confにzeromqをインストールしたディレクトリがはいってることを確認して、sudo ldconfig すればちゃんとロードされるはず。</p>
-<div class="pygments_murphy"><pre>debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread
-<span class="c">#&lt;THREAD &quot;initial thread&quot; RUNNING {10029990A3}&gt;:</span>
-  Unable to load any of the alternatives:
-   <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">)</span>
-
-Type HELP <span class="k">for </span>debugger <span class="nb">help</span>, or <span class="o">(</span>SB-EXT:QUIT<span class="o">)</span> to <span class="nb">exit </span>from SBCL.
-
-restarts <span class="o">(</span>invokable by number or by possibly-abbreviated name<span class="o">)</span>:
-  0: <span class="o">[</span>RETRY          <span class="o">]</span> Try loading the foreign library again.
-  1: <span class="o">[</span>USE-VALUE      <span class="o">]</span> Use another library instead.
-  2: <span class="o">[</span>TRY-RECOMPILING<span class="o">]</span> Recompile package and try loading it again
-  3: <span class="o">[</span>RETRY          <span class="o">]</span> Retry
-                       loading FASL <span class="k">for</span> <span class="c">#&lt;CL-SOURCE-FILE &quot;zeromq&quot; &quot;package&quot;&gt;.</span>
-  4: <span class="o">[</span>ACCEPT         <span class="o">]</span> Continue, treating
-                       loading FASL <span class="k">for</span> <span class="c">#&lt;CL-SOURCE-FILE &quot;zeromq&quot; &quot;package&quot;&gt; as</span>
-                       having been successful.
-  5: <span class="o">[</span>ABORT          <span class="o">]</span> Give up on <span class="s2">&quot;zeromq&quot;</span>
-  6:                   Exit debugger, returning to top level.
-
-<span class="o">(</span>CFFI::FL-ERROR
- <span class="s2">&quot;Unable to load any of the alternatives:~%   ~S&quot;</span>
- <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">))</span>
-0<span class="o">]</span> 2
-</pre></div>
-
-<p>以下のようにしてライブラリのパスを設定してやっても回避はできるがおすすめしない。</p>
-<div class="pygments_murphy"><pre>(pushnew &quot;/path/to/lib/&quot; *foreign-library-directories*)
-</pre></div>
-
-<p><a href="http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html">http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html</a></p>
-<h1 id="3">3. サーバ側起動</h1>
-<p><a href="http://www.cliki.net/cl-zmq">cl-zmq</a> のサンプルコード参考に以下のようなエコーサーバを書いた。これをserver.lispに保存して、 sbcl --script server.lisp で実行。ちなみに、127.0.0.1:5555 の部分をlocalhost:5555のように書くとNo such deviceといわれる。 (参考 <a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a> )</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-
-(defun server ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:rep)
-      (zmq:bind socket &quot;tcp://127.0.0.1:5555&quot;)
-      (loop
-         (let ((query (make-instance &#39;zmq:msg)))
-           (zmq:recv socket query)
-           (let ((req-string (zmq:msg-data-as-string query)))
-             (format t &quot;Recieved message: &#39;~A&#39;~%&quot; req-string)
-             (zmq:send socket (make-instance &#39;zmq:msg :data req-string)) ))))))
-
-(server)
-</pre></div>
-
-<h1 id="4">4. クライアント側起動</h1>
-<p>こちらも同様に以下をclient.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-
-(defun client ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:req)
-      (zmq:connect socket &quot;tcp://127.0.0.1:5555&quot;)
-      (loop
-      (zmq:send socket (make-instance &#39;zmq:msg
-                                      :data (read-line)))
-      (let ((result (make-instance &#39;zmq:msg)))
-        (zmq:recv socket result)
-        (format t &quot;Recieved message: &#39;~A&#39;~%&quot;
-                (zmq:msg-data-as-string result) ))))))
-
-(client)
-</pre></div>
-
-<h1 id="_1">まとめ</h1>
-<p>Common Lisp(sbcl)でZeroMQを利用して、簡単なエコーサーバ/クライアントを実装した。</p>
-<h1 id="_2">参考</h1>
-<ul>
-<li><a href="http://www.cliki.net/cl-zmq">cl-zmq</a></li>
-<li><a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class="shr_rd"></div>
-<!-- <div class="linkwithin_div"></div> -->
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/10/16/paco"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/" class="hatena-bookmark-button" data-hatena-bookmark-title="Common LispでZeroMQを試す" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq" data-text="Common LispでZeroMQを試す">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/category/common-lisp/2">Next »</a>
 </div>
@@ -840,6 +852,11 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" title="gearmanクライアントライブラリ cl-gearman"><p>gearmanクライアントライブラリ cl-gearman</a><span style="font-size: 80%;">(December 16, 2012 at 05:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" alt="はてなブックマーク - gearmanクライアントライブラリ cl-gearman" title="はてなブックマーク - gearmanクライアントライブラリ cl-gearman">
+</a>
+</li>
       <li><a href="/blog/2012/11/20/web-engineers-online-toolbox" title="ウェブエンジニアのためのオンラインツールまとめ"><p>ウェブエンジニアのためのオンラインツールまとめ</a><span style="font-size: 80%;">(November 20, 2012 at 02:30 AM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox" alt="はてなブックマーク - ウェブエンジニアのためのオンラインツールまとめ" title="はてなブックマーク - ウェブエンジニアのためのオンラインツールまとめ">
@@ -875,11 +892,6 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/31/quick-links" alt="はてなブックマーク - Quick links" title="はてなブックマーク - Quick links">
 </a>
 </li>
-      <li><a href="/blog/2012/10/24/cl-practice" title="Common Lisp練習 - CodeChef : TSORT"><p>Common Lisp練習 - CodeChef : TSORT</a><span style="font-size: 80%;">(October 24, 2012 at 06:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/24/cl-practice">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/24/cl-practice" alt="はてなブックマーク - Common Lisp練習 - CodeChef : TSORT" title="はてなブックマーク - Common Lisp練習 - CodeChef : TSORT">
-</a>
-</li>
     </ul>
   </div>
 
@@ -892,7 +904,8 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (1)</li>
@@ -921,6 +934,7 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
       <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
