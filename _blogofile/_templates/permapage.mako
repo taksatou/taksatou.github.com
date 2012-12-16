@@ -20,6 +20,5 @@
 <%include file="archives.mako" />
 <hr />
 <%include file="feed.mako" />
-<div class="fb-recommendations-bar" data-href="${post.permalink}" data-site="mojavy.com"></div>
 </section>
 </div>
