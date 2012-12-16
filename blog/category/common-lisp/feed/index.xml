@@ -90,7 +90,7 @@ NIL
 <h3 id="worker">worker</h3>
 <p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
 ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
-り値はprincでフォーマットした文字列としてclientに渡されます。workはジョブが割り当てられるまで待機し、1つのジョブの実行が完了すると戻ります。</p>
+返り値はprincでフォーマットした文字列としてclientに渡されます。workを実行するとジョブが割り当てられるまでブロックし、1つのジョブの実行が完了すると戻ります。</p>
 <div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
   (cl-gearman:add-ability worker &quot;hello&quot;
                           #&#39;(lambda (arg job) &quot;hello&quot;))
