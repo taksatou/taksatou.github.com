@@ -114,6 +114,7 @@ a.readmore:hover						{ background-color: #2f2f2f; background-image: none; text-
 #mainfooter a,#mainfooter a:visited		{ color: #fff; }
 .copyright								{ float: right; color: #b8b8b8; }
 
+#feedicon { float: right; margin: 10pt 10pt 0 0;  } 
 /* MEDIA QUERIES */
 
 /* Under 960px */

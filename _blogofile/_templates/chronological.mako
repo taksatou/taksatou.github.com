@@ -19,12 +19,14 @@
 
 </div>
 <section id="blogright">
+<%include file="aboutme.mako" />
+<hr />
 <%include file="recent_posts.mako" />
 <hr />
 <%include file="categories.mako" />
 <hr />
 <%include file="archives.mako" />
 <hr />
-<%include file="feed.mako" />
+<%include file="coderwall.mako" />
 </section>
 </div>

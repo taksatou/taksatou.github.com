@@ -42,6 +42,10 @@ href="/blog/feed/atom" />
 
 </script>
 
+<!-- coderwall -->
+<link href="http://coderwall.com/stylesheets/jquery.coderwall.css" media="all" rel="stylesheet" type="text/css">
+<script src="http://coderwall.com/javascripts/jquery.coderwall.js"></script>
+
 <rdf:RDF
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -227,6 +231,12 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
 
 </div>
 <section id="blogright">
+  <div id="aboutme">
+    <h1>About Me</h1>
+    <img src="http://www.gravatar.com/avatar/69238498491bce19f67cf79d528f08ee.png?s=150" alt="pic" />
+  </div>
+
+<hr />
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
@@ -325,11 +335,10 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
   </div>
 
 <hr />
-  <div id="archives">
-    <ul>
-    <li><a href="/blog/feed"><img src="/images/rss_icon.png" alt="rss" /></a></li>
-    </ul>
-  </div>
+  <div id="coderwall">
+    <h1>Badges</h1>
+    <section class="coderwall" data-coderwall-username="taksatou" data-coderwall-orientation="vertical"></section>
+  </div><br>
 
 </section>
 </div>
@@ -338,7 +347,11 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
       </div><!-- End Main Block -->
       <div id="footer">
         
-  <div id="footerwrap">
+  <div id="feedicon">
+  <a href="/blog/feed"><img src="/images/rss_icon.png" alt="rss" /></a>
+  </div>
+
+<div id="footerwrap">
   <script type="text/javascript">
     (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -348,7 +361,10 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
   </script>
 
   <footer id="mainfooter" class="bodywidth">
-    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>.</p>
+    
+    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>. </p>
+    
+
   </footer>
 </div>
 <script type="text/javascript">

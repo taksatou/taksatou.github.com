@@ -1,3 +1,4 @@
+<%include file="feed.mako" />
 <div id="footerwrap">
   <script type="text/javascript">
     (function() {
@@ -8,7 +9,10 @@
   </script>
 
   <footer id="mainfooter" class="bodywidth">
-    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>.</p>
+    
+    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>. </p>
+    
+
   </footer>
 </div>
 % if bf.config.blog.disqus.enabled:
