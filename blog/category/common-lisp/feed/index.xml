@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Sun, 16 Dec 2012 17:30:00 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>gearmanクライアントライブラリ cl-gearman</title>
+      <link>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</link>
+      <pubDate>Sun, 16 Dec 2012 17:30:00 JST</pubDate>
+      <category><![CDATA[gearman]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</guid>
+      <description>gearmanクライアントライブラリ cl-gearman</description>
+      <content:encoded><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
+<p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
+<p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
+<h2 id="gearman">Gearmanとは</h2>
+<p>今更感はありますが、Gearman自体について簡単に説明しておきます。</p>
+<p><a href="http://gearman.org/">http://gearman.org/</a></p>
+<p>Gearmanとは時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。Gearmanを利用するアプリケーションでは、client, job server, workerという3つの要素が存在します。
+それぞれの役割は以下の通りです。</p>
+<ul>
+<li>job server: clientから受けとったジョブを適切なworkerに渡す</li>
+<li>client: ジョブを生成してjob serverに送信する</li>
+<li>worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す</li>
+</ul>
+<p>cl-gearmanは、clientとjob server間、及びworkerとjob server間のプロトコルを抽象化したライブラリです。</p>
+<p>余談ですが、Gearmanはデータ永続化をしないものだとずっと思っていたのですがmysqlやsqliteに永続化できます。
+ジョブキューを使うなら以前はTheSchwartzという選択肢もありましたが、今はGearmanでほとんどの場合に対応できるのではないでしょうか。</p>
+<h2 id="_1">インストール</h2>
+<p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
+<p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
+<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
+git clone https://github.com/taksatou/cl-gearman.git
+</pre></div>
+
+<h2 id="_2">使い方</h2>
+<p>以下サンプルコードです</p>
+<h3 id="client">client</h3>
+<p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
+hello
+foo
+NIL
+</pre></div>
+
+<p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
+そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
+                  (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
+                  (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
+                  (jobs `(:medium ,job1 :low ,job2 :high ,job3)))
+
+             (dotimes (i 5)
+               (loop for (k v) on jobs by #&#39;cddr
+                  do (format t &quot;~a: ~a~%&quot; k (cl-gearman:get-job-status client v)))
+               (sleep 1))))
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+NIL
+</pre></div>
+
+<h3 id="worker">worker</h3>
+<p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
+ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
+返り値はprincでフォーマットした文字列としてclientに渡されます。workを実行するとジョブが割り当てられるまでブロックし、1つのジョブの実行が完了すると戻ります。</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
+  (cl-gearman:add-ability worker &quot;hello&quot;
+                          #&#39;(lambda (arg job) &quot;hello&quot;))
+
+  (cl-gearman:add-ability worker &quot;echo&quot;
+                          #&#39;(lambda (arg job) arg))
+
+  (cl-gearman:add-ability worker &quot;sleep&quot;
+                          #&#39;(lambda (arg job)
+                              (sleep (parse-integer arg))
+                              (format nil &quot;job:~A finished~%&quot; job)))
+
+  (loop do (cl-gearman:work worker)))
+</pre></div>
+
+<h3 id="_3">エラーハンドリング</h3>
+<p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
+workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
+<p>例えば、</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
+  (cl-gearman:add-ability worker &quot;error&quot;
+                          #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
+
+  (loop do (handler-bind ((error #&#39;(lambda (c) (invoke-restart &#39;cl-gearman:skip-job))))
+             (cl-gearman:work worker))))
+</pre></div>
+
+<p>のようにしておけば、エラーが発生したjobを無視することができます。
+abort-jobはclientに失敗を通知します。retry-jobは名前の通りハンドラを再度実行します。</p>
+<h2 id="_4">対応する処理系</h2>
+<p>メインに開発を行った環境は ubuntu 12.04, sbcl 1.0.55.0.debian です。
+一応以下の処理系で動作確認しました</p>
+<ul>
+<li>sbcl 1.0.55.0.debian </li>
+<li>clisp 2.49</li>
+<li>clozure cl 1.8-r15286M</li>
+</ul>
+<p>ffi系のライブラリには依存してないので比較的動かしやすいとは思いますが、動かなければ教えて下さい。</p>
+<h2 id="_5">まとめ</h2>
+<p>以上、拙作のcl-gearmanを紹介しました。Common Lispを始めてまだ半年足らずなのでおかしいところがあるかと思いますが、フィードバックを頂けるとうれしいです。</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>cl-frontcodingをつくってみた</title>
+      <link>http://mojavy.com/blog/2012/11/10/cl-frontcoding</link>
+      <pubDate>Sat, 10 Nov 2012 20:30:00 JST</pubDate>
+      <category><![CDATA[algorithms]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/10/cl-frontcoding</guid>
+      <description>cl-frontcodingをつくってみた</description>
+      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
+<p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
+<p><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">http://d.hatena.ne.jp/naoya/20080914/1221382329</a> のパクりです。</p>
+<p>ソースは<a href="https://github.com/taksatou/cl-frontcoding">https://github.com/taksatou/cl-frontcoding</a>です。</p>
+<p>学習目的でつくったので実用的なライブラリではないですが、CLOSやマクロを使いつつパッケージ作成〜テストまで一通りやりました。</p>
+<p>CLOSもマクロも基本的な使い方をするだけなら意外と簡単でした。</p>
+<p>CLOSとかマクロは本を読んでもいまいちよくわからない上に、深淵なイメージが膨らんで心理的ハードルがあがってしまうだけなので、よくわからないなりになにか作ってみると理解が進んでいいと思います。</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Common Lispのdeclareについて</title>
+      <link>http://mojavy.com/blog/2012/11/09/common-lisp-declare</link>
+      <pubDate>Fri, 09 Nov 2012 23:00:00 JST</pubDate>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/09/common-lisp-declare</guid>
+      <description>Common Lispのdeclareについて</description>
+      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
+<p>Common Lispのdeclareについて調べた。
+変数の型や式に関することをコンパイラに伝えてやるために使うものらしい。</p>
+<p>例えば、</p>
+<div class="pygments_murphy"><pre>(defun add (x y) (+ x y))
+</pre></div>
+
+<p>は</p>
+<div class="pygments_murphy"><pre>(defun add (x y)
+  (declare (fixnum x y))
+  (the fixnum (+ x y)))
+</pre></div>
+
+<p>とすれば、引数と戻り値の型を指定できる。</p>
+<p>さらに、</p>
+<div class="pygments_murphy"><pre>(defun add (x y)
+  (declare (optimize (speed 3) (safety 0)))
+  (declare (fixnum x y))
+  (the fixnum (+ x y)))
+</pre></div>
+
+<p>とすればさらに最適化される。ここまですると、Cで実装した場合と遜色ないくらいになるらしい。</p>
+<p>ためしにdisassembleしてみた。処理系はsbcl 1.0.55.0。</p>
+<p>最初のバージョンは以下のようになった。すでにある程度最適化されてる？
+LEA(load effective address)命令は、srcオペランドのアドレスを計算し、そのアドレスをdestオペランドにロードするというものらしい。<a href="http://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/%E3%83%87%E3%83%BC%E3%82%BF%E8%BB%A2%E9%80%81%E5%91%BD%E4%BB%A4">(参考)</a></p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y) (+ x y))
+
+CL-USER&gt; (disassemble #&#39;add)
+; disassembly for ADD
+; 03C43D5D:       488B55F8         MOV RDX, [RBP-8]           ; no-arg-parsing entry point
+;       61:       488B7DF0         MOV RDI, [RBP-16]
+;       65:       4C8D1C25E0010020 LEA R11, [#x200001E0]      ; GENERIC-+
+;       6D:       41FFD3           CALL R11
+;       70:       480F42E3         CMOVB RSP, RBX
+;       74:       488BE5           MOV RSP, RBP
+;       77:       F8               CLC
+;       78:       5D               POP RBP
+;       79:       C3               RET
+;       7A:       CC0A             BREAK 10                   ; error trap
+;       7C:       02               BYTE #X02
+;       7D:       18               BYTE #X18                  ; INVALID-ARG-COUNT-ERROR
+;       7E:       54               BYTE #X54                  ; RCX
+</pre></div>
+
+<p>2番目の、型だけを宣言したものは以下のようになった。うーむ、確かに型チェックっぽいコードは増えてるが速くなってるわけではなさそうな感じ。あとで調べる。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
+           (declare (fixnum x y))
+           (the fixnum (+ x y)))
+
+CL-USER&gt; (disassemble #&#39;add)
+; disassembly for ADD
+; 039D3B73:       488BD1           MOV RDX, RCX               ; no-arg-parsing entry point
+;       76:       48D1FA           SAR RDX, 1
+;       79:       488BC7           MOV RAX, RDI
+;       7C:       48D1F8           SAR RAX, 1
+;       7F:       4801C2           ADD RDX, RAX
+;       82:       48B80000000000000040 MOV RAX, 4611686018427387904
+;       8C:       4801D0           ADD RAX, RDX
+;       8F:       48C1E83F         SHR RAX, 63
+;       93:       7509             JNE L0
+;       95:       48D1E2           SHL RDX, 1
+;       98:       488BE5           MOV RSP, RBP
+;       9B:       F8               CLC
+;       9C:       5D               POP RBP
+;       9D:       C3               RET
+;       9E: L0:   486BC202         IMUL RAX, RDX, 2
+;       A2:       710E             JNO L1
+;       A4:       488BC2           MOV RAX, RDX
+;       A7:       4C8D1C25B0050020 LEA R11, [#x200005B0]      ; ALLOC-SIGNED-BIGNUM-IN-RAX
+;       AF:       41FFD3           CALL R11
+;       B2: L1:   488B1557FFFFFF   MOV RDX, [RIP-169]         ; &#39;FIXNUM
+;       B9:       CC0A             BREAK 10                   ; error trap
+;       BB:       03               BYTE #X03
+;       BC:       1F               BYTE #X1F                  ; OBJECT-NOT-TYPE-ERROR
+;       BD:       15               BYTE #X15                  ; RAX
+;       BE:       95               BYTE #X95                  ; RDX
+;       BF:       CC0A             BREAK 10                   ; error trap
+;       C1:       02               BYTE #X02
+;       C2:       18               BYTE #X18                  ; INVALID-ARG-COUNT-ERROR
+;       C3:       54               BYTE #X54                  ; RCX
+;       C4:       CC0A             BREAK 10                   ; error trap
+;       C6:       02               BYTE #X02
+;       C7:       08               BYTE #X08                  ; OBJECT-NOT-FIXNUM-ERROR
+;       C8:       95               BYTE #X95                  ; RDX
+;       C9:       CC0A             BREAK 10                   ; error trap
+;       CB:       04               BYTE #X04
+;       CC:       08               BYTE #X08                  ; OBJECT-NOT-FIXNUM-ERROR
+;       CD:       FED501           BYTE #XFE, #XD5, #X01      ; RDI
+</pre></div>
+
+<p>最後の最適化の宣言をつけたものは以下のようになった。たしかに速そうにはなった。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
+           (declare (optimize (speed 3) (safety 0)))
+           (declare (fixnum x y))
+           (the fixnum (+ x y)))
+
+CL-USER&gt; (disassemble #&#39;add)
+; disassembly for ADD
+; 034DD10F:       4801FA           ADD RDX, RDI               ; no-arg-parsing entry point
+;       12:       488BE5           MOV RSP, RBP
+;       15:       F8               CLC
+;       16:       5D               POP RBP
+;       17:       C3               RET
+</pre></div>
+
+<p>ついでにCで書いた以下の関数もdisassebleしてみた。</p>
+<div class="pygments_murphy"><pre><span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><code>cc -c a.c &amp;&amp; objdump -d a.o</code> とすると、</p>
+<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 &lt;add&gt;:
+   0:   55                      push   %rbp
+   1:   48 89 e5                mov    %rsp,%rbp
+   4:   89 7d fc                mov    %edi,-0x4(%rbp)
+   7:   89 75 f8                mov    %esi,-0x8(%rbp)
+   a:   8b 45 f8                mov    -0x8(%rbp),%eax
+   d:   8b 55 fc                mov    -0x4(%rbp),%edx
+  10:   01 d0                   add    %edx,%eax
+  12:   5d                      pop    %rbp
+  13:   c3                      retq
+</pre></div>
+
+<p><code>cc -O3 -c a.c &amp;&amp; objdump -d a.o</code> なら、</p>
+<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 &lt;add&gt;:
+   0:   8d 04 37                lea    (%rdi,%rsi,1),%eax
+   3:   c3                      retq
+</pre></div>
+
+<p>まあとりあえず単純に命令数だけでいうと、
+素のSBCL &gt; 素のGCC &gt; 最適化したSBCL &gt; 最適化したGCC
+という感じにはなったので、CよりLispのほうが速い(場合もある)というふれこみは嘘ではなさそうですね。</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Common Lisp練習 - CodeChef : TSORT</title>
+      <link>http://mojavy.com/blog/2012/10/24/cl-practice</link>
+      <pubDate>Wed, 24 Oct 2012 18:00:00 JST</pubDate>
+      <category><![CDATA[programming]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/24/cl-practice</guid>
+      <description>Common Lisp練習 - CodeChef : TSORT</description>
+      <content:encoded><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
+<p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>
+<p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
+<p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
+<p>最初は以下のように書いて、</p>
+<div class="pygments_murphy"><pre>(let ((_n (parse-integer (read-line)))
+      (lis ()))
+  (dotimes (i _n)
+    (push (parse-integer (read-line)) lis))
+  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
+  (dolist (x lis) (format t &quot;~a~%&quot; x)))
+</pre></div>
+
+<p>以下の用にして時間を測ったところ</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.19s user 0.01s system 91% cpu 1.311 total
+sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938 total
+</pre></div>
+
+<p>ローカルだと3.42s程度だった。codechef上での制限は5secなのでセーフかと思ったけどTime Limit Exceededだった。</p>
+<p>そこで、vectorを使うように改良</p>
+<div class="pygments_murphy"><pre>(let* ((_n (parse-integer (read-line)))
+       (lis (make-array _n :fill-pointer 0)))
+  (dotimes (i _n)
+    (vector-push (parse-integer (read-line)) lis))
+  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
+  (loop for i across lis do (format t &quot;~a~%&quot; i)))
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.21s user 0.01s system 94% cpu 1.289 total
+sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137 total
+</pre></div>
+
+<p>若干改善されたが、まだTime Limit Exceededだった。</p>
+<p>read-sequenceで読み込んだほうが早いかと思って以下のように書いてみた。</p>
+<div class="pygments_murphy"><pre>(defun parse-input (str)
+  (loop
+     for i = 0 then (+ 1 j)
+     as j = (position #\Newline str :start i)
+     as k = (parse-integer (subseq str i j) :junk-allowed t)
+     if (not (null k))
+     collect k
+     while j))
+
+(let* ((_n (parse-integer (read-line)))
+       (lis (make-array (* _n 20) :element-type &#39;character))
+       (nums ())
+       )
+  (read-sequence lis *standard-input*)
+  (setf nums (sort (parse-input lis) #&#39;(lambda (x y) (&lt; x y))))
+  (loop for i in nums do (format t &quot;~a~%&quot; i)))
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.13s user 0.01s system 97% cpu 1.159 total
+sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297 total
+</pre></div>
+
+<p>残念ながら逆に遅くなってしまった。parse-inputの部分で60%くらい時間がかかっていた。
+あと、<code>#'(lambda (x y) (&lt; x y))</code>の部分を <code>#'&lt;</code>にするとなぜか遅くなる。</p>
+<p><a href="http://www.codechef.com/status/TSORT?language=31&amp;status=All&amp;handle=&amp;sort_by=All&amp;sorting_order=asc&amp;Submit=GO">まだ誰もlispではパスしてない模様。</a>こういうのをもっと高速に書く方法あるのだろうか。</p>
+<p>ちなみにCだと余裕。ローカルだと0.2秒くらいだけどリモートでは3秒くらいかかってた。そもそもCodeChefの実行環境がしょぼすぎる疑惑が。。</p>
+<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">j</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
+
+    <span class="kt">int</span> <span class="n">lis</span><span class="p">[</span><span class="n">num</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">qsort</span><span class="p">(</span><span class="n">lis</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span> <span class="n">f</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  0.99s user 0.01s system 99% cpu 1.006 total
+./a.out &gt; /dev/null  0.18s user 0.01s system 17% cpu 1.116 total
+</pre></div>]]></content:encoded>
+    </item>
+    <item>
+      <title>iOSでZeroMQを試す</title>
+      <link>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</link>
+      <pubDate>Thu, 18 Oct 2012 18:00:01 JST</pubDate>
+      <category><![CDATA[objective-c]]></category>
+      <category><![CDATA[ios]]></category>
+      <category><![CDATA[zeromq]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/objective-c-zeromq</guid>
+      <description>iOSでZeroMQを試す</description>
+      <content:encoded><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
+<p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
+<h1 id="zeromqiphone">ZeroMQをiPhone用にビルド</h1>
+<p>ZeroMQはautotoolsで作成されておりconfigure &amp;&amp; make でビルドできるようになっているが、iPhone用にクロスコンパイルをするためには適切なオプションを与えてやる必要がある。</p>
+<p>一応、<a href="http://www.zeromq.org/build:iphone">本家サイト上にもドキュメント</a>はあるが最新のXcodeではうごかない。また、シミュレータ用でもうごかせるようにしておきたい。というわけで、以下のようなビルドスクリプトを書いた。</p>
+<script src="https://gist.github.com/3899653.js"> </script>
+
+<p>これをZeroMQのtarを展開してできたディレクトリにbuild.shとかで保存して実行すると、armv7とi386に対応したlibzmq.aができる。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>zeromq-2.2.0
+<span class="nv">$ </span>./build.sh
+<span class="nv">$ </span>file libzmq.a
+libzmq.a: Mach-O universal binary with 2 architectures
+libzmq.a <span class="o">(</span><span class="k">for </span>architecture armv7<span class="o">)</span>:      current ar archive random library
+libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<span class="o">)</span>:       current ar archive random library
+</pre></div>
+
+<p>このlibzmq.aと、includeディレクトリの中身をXcodeにインポートしてやればよい。
+このときに、XcodeでOther Linker Flags に -lstdc++ を追加してやるのを忘れないように。</p>
+<h1 id="zeromq">ZeroMQを用いた簡易チャットアプリ</h1>
+<p>サンプルとしてチャットアプリを実装してみる。
+チャットでの発言はREQ/REPを用いてアプリ→サーバに渡し、PUB/SUBを用いてサーバ→アプリにブロードキャストする。</p>
+<h2 id="_1">サーバ側</h2>
+<p>サーバ側はCommon Lispで実装した。単に、rep-sockから発言を受け取ってpub-sockにそのまま流すだけ。</p>
+<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+(ql:quickload :zeromq)
+
+(defun pull-and-publish ()
+  (zmq:with-context (ctx 1)
+    (zmq:with-socket (rep-sock ctx zmq:rep)
+      (zmq:bind rep-sock &quot;tcp://127.0.0.1:5555&quot;)
+
+      (zmq:with-context (ctx2 1)
+        (zmq:with-socket (pub-sock ctx2 zmq:pub)
+          (zmq:bind pub-sock &quot;tcp://127.0.0.1:5556&quot;)
+
+          (loop
+             (let ((msg (make-instance &#39;zmq:msg)))
+               (zmq:recv rep-sock msg)
+               (zmq:send rep-sock (make-instance &#39;zmq:msg :data &quot;ok&quot;))
+               (zmq:send pub-sock msg))))))))
+
+(pull-and-publish)
+</pre></div>
+
+<p>REQ/REPではなくPULL/PUSHでもできるはずだが、なぜかcl-zmqではpullがつかえなかったのでREQ/REPをつかった。</p>
+<h2 id="_2">アプリ側</h2>
+<p><a href="https://github.com/jeremy-w/objc-zmq">objective-c版ZeroMQ</a>もあるけど、今回はそのままCのAPIを利用した。
+以下はソースの抜粋。</p>
+<div class="pygments_murphy"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
+<span class="cp">#import &quot;include/zmq.h&quot;</span>
+
+<span class="k">@interface</span> <span class="nc">ChatViewController</span> <span class="p">()</span> <span class="p">{</span>
+
+    <span class="kt">void</span> <span class="o">*</span><span class="n">ctx1</span><span class="p">,</span> <span class="o">*</span><span class="n">ctx2</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">subsock</span><span class="p">,</span> <span class="o">*</span><span class="n">reqsock</span><span class="p">;</span>
+
+    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">messageList</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+
+<span class="err">@</span><span class="n">implementation</span> <span class="n">ChatViewController</span>
+
+<span class="k">@synthesize</span> <span class="n">nickname</span><span class="p">;</span>
+<span class="k">@synthesize</span> <span class="n">timer</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+
+    <span class="n">ctx1</span> <span class="o">=</span> <span class="n">zmq_init</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">subsock</span> <span class="o">=</span> <span class="n">zmq_socket</span><span class="p">(</span><span class="n">ctx1</span><span class="p">,</span> <span class="n">ZMQ_SUB</span><span class="p">);</span>
+    <span class="n">zmq_setsockopt</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="n">ZMQ_SUBSCRIBE</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_connect</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="s">&quot;tcp://127.0.0.1:5556&quot;</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">ctx2</span> <span class="o">=</span> <span class="n">zmq_init</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">reqsock</span> <span class="o">=</span> <span class="n">zmq_socket</span><span class="p">(</span><span class="n">ctx1</span><span class="p">,</span> <span class="n">ZMQ_REQ</span><span class="p">);</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_connect</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="s">&quot;tcp://127.0.0.1:5555&quot;</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSTimer</span> <span class="nl">scheduledTimerWithTimeInterval:</span><span class="mi">1</span> <span class="nl">target:</span><span class="n">self</span> <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="n">observeSocket</span><span class="p">)</span> <span class="nl">userInfo:</span><span class="nb">nil</span> <span class="nl">repeats:</span><span class="n">YES</span><span class="p">];</span>
+    <span class="n">messageList</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="n">invalidate</span><span class="p">];</span>
+    <span class="n">zmq_close</span><span class="p">(</span><span class="n">subsock</span><span class="p">);</span>
+    <span class="n">zmq_close</span><span class="p">(</span><span class="n">reqsock</span><span class="p">);</span>
+    <span class="n">zmq_term</span><span class="p">(</span><span class="n">ctx1</span><span class="p">);</span>
+    <span class="n">zmq_term</span><span class="p">(</span><span class="n">ctx2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">observeSocket</span>
+<span class="p">{</span>
+    <span class="n">zmq_msg_t</span> <span class="n">msg</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_msg_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_recv</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="n">ZMQ_NOBLOCK</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EAGAIN</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;no data available&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ENOTSUP</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ENOTSUP&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EFSM</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EFSM&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ETERM</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ETERM&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ENOTSOCK</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ENOTSOCK&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EINTR&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EFAULT</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EFAULT&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">size_t</span> <span class="n">siz</span> <span class="o">=</span> <span class="n">zmq_msg_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+            <span class="kt">void</span> <span class="o">*</span><span class="n">dat</span> <span class="o">=</span> <span class="n">zmq_msg_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+            <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithData:</span><span class="p">[</span><span class="n">NSData</span> <span class="nl">dataWithBytes:</span><span class="n">dat</span> <span class="nl">length:</span><span class="n">siz</span><span class="p">]</span> <span class="nl">encoding:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
+            <span class="p">[</span><span class="n">messageList</span> <span class="nl">insertObject:</span><span class="n">str</span> <span class="nl">atIndex:</span><span class="mi">0</span><span class="p">];</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;unknown&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">zmq_msg_close</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span> <span class="nf">saySomething:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
+<span class="p">{</span>
+    <span class="n">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="s">@&quot;text input&quot;</span>
+                                <span class="nl">message:</span><span class="s">@&quot;&quot;</span>
+                               <span class="nl">delegate:</span><span class="n">self</span>
+                      <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;cancel&quot;</span>
+                      <span class="nl">otherButtonTitles:</span><span class="s">@&quot;ok&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+    <span class="n">alert</span><span class="p">.</span><span class="n">alertViewStyle</span> <span class="o">=</span> <span class="n">UIAlertViewStylePlainTextInput</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">alert</span> <span class="n">show</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alertView:</span><span class="p">(</span><span class="n">UIAlertView</span><span class="o">*</span><span class="p">)</span><span class="nv">alertView</span> <span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span>
+<span class="p">{</span>
+    <span class="n">zmq_msg_t</span> <span class="n">msg</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">rc</span><span class="p">;</span>
+    <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
+
+    <span class="k">switch</span> <span class="p">(</span><span class="n">buttonIndex</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+            <span class="n">str</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithFormat:</span><span class="s">@&quot;%@: %@&quot;</span><span class="p">,</span> <span class="n">nickname</span><span class="p">,</span> <span class="p">[</span><span class="n">alertView</span> <span class="nl">textFieldAtIndex:</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span><span class="p">];</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">str</span> <span class="nl">dataUsingEncoding:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_msg_init_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="p">[</span><span class="n">data</span> <span class="n">length</span><span class="p">]);</span>
+            <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="n">memcpy</span><span class="p">(</span><span class="n">zmq_msg_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">),</span> <span class="p">[</span><span class="n">data</span> <span class="n">bytes</span><span class="p">],</span> <span class="p">[</span><span class="n">data</span> <span class="n">length</span><span class="p">]);</span>
+
+            <span class="n">zmq_send</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="n">zmq_recv</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="n">zmq_msg_close</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<p>以下補足</p>
+<ul>
+<li>簡単のためタイマーで1秒ごとにソケットにメッセージがあるかどうかobserveSocketでチェックしているが、別スレッドにしたほうがスマート</li>
+<li><a href="http://api.zeromq.org/2-2:zmq-recv">zmq_recvのマニュアル</a>によると、zmq_recvをZMQ_NOBLOCKで呼んだときにメッセージがなかった場合はEAGAINが返るとなっているが、-1がかえってきていた。</li>
+<li>上記ソースはUITableViewControllerで発言を表示する想定になっているが、UIまわりのコードは省略</li>
+</ul>
+<h2 id="common-lisp">オマケ(Common Lisp版コマンドライン用チャットクライアント)</h2>
+<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+(ql:quickload :zeromq)
+(ql:quickload :bordeaux-threads)
+
+(defun sub ()
+  (zmq:with-context (ctx 1)
+    (zmq:with-socket (socket ctx zmq:sub)
+      (zmq:setsockopt socket zmq:subscribe &quot;&quot;)
+      (zmq:connect socket &quot;tcp://127.0.0.1:5556&quot;)
+      (loop
+         (let ((query (make-instance &#39;zmq:msg)))
+           (zmq:recv socket query)
+           (format t &quot;received message: ~a~%&quot; (zmq:msg-data-as-string query)))))))
+
+(defun client ()
+  (zmq:with-context (ctx 1)
+    (zmq:with-socket (socket ctx zmq:req)
+      (zmq:connect socket &quot;tcp://127.0.0.1:5555&quot;)
+      (loop
+         (zmq:send socket (make-instance &#39;zmq:msg
+                                         :data (read-line)))
+         (let ((result (make-instance &#39;zmq:msg)))
+           (zmq:recv socket result))))))
+
+(bordeaux-threads:make-thread #&#39;sub)
+(client)
+</pre></div>
+
+<h1 id="_3">まとめ</h1>
+<ul>
+<li>iPhoneでZeroMQを動かしてみた</li>
+<li>ZeroMQのREQ/REPとPUB/SUBを使用してチャットをつくってみた</li>
+<li>appleの審査を通過するかどうかは知らない(一応実績はあるらしい)</li>
+</ul>
+<h1 id="_4">参考</h1>
+<ul>
+<li><a href="http://api.zeromq.org/2-2:_start">http://api.zeromq.org/2-2:_start</a></li>
+<li><a href="http://www.zeromq.org/area:licensing">http://www.zeromq.org/area:licensing</a></li>
+<li><a href="http://www.zeromq.org/intro:commercial-support">http://www.zeromq.org/intro:commercial-support</a></li>
+</ul>]]></content:encoded>
+    </item>
+    <item>
+      <title>Common LispでZeroMQを試す</title>
+      <link>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq</link>
+      <pubDate>Wed, 17 Oct 2012 00:00:00 JST</pubDate>
+      <category><![CDATA[zeromq]]></category>
+      <category><![CDATA[sbcl]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/17/common-lisp-zeromq</guid>
+      <description>Common LispでZeroMQを試す</description>
+      <content:encoded><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
+<p>Common LispでZeroMQを試してみた。</p>
+<p>使用環境は以下のとおり</p>
+<ul>
+<li>OS: Ubuntu 12.04 LTS</li>
+<li>Common Lisp 処理系：<a href="http://www.sbcl.org/">sbcl (1.0.55.0.debian)</a></li>
+<li><a href="http://download.zeromq.org/zeromq-2.2.0.tar.gz">ZeroMQ 2.2.0</a></li>
+</ul>
+<h1 id="1-quicklisp">1. quicklispのインストール</h1>
+<p>以下を参考にquicklispをインストールする。</p>
+<ul>
+<li><a href="http://www.quicklisp.org/beta/">Quicklisp</a></li>
+<li><a href="http://modern-cl.blogspot.jp/2011/03/quicklisp.html">第2回 Quicklispによるライブラリ環境</a></li>
+</ul>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
+<span class="nv">$ </span>sbcl
+<span class="o">(</span>load <span class="s2">&quot;quicklisp.lisp&quot;</span><span class="o">)</span>
+<span class="o">(</span>quicklisp-quickstart:install :path <span class="s2">&quot;.quicklisp/&quot;</span><span class="o">)</span>
+<span class="o">(</span>ql:add-to-init-file<span class="o">)</span>
+</pre></div>
+
+<p>※ (quicklisp-quickstart:install :path ".quicklisp/") のパスで最後のスラッシュは省略不可</p>
+<h1 id="2-cl-zmq">2. cl-zmqのインストール</h1>
+<div class="pygments_murphy"><pre>(ql:quickload :zeromq)
+</pre></div>
+
+<p>ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。ld.so.confにzeromqをインストールしたディレクトリがはいってることを確認して、sudo ldconfig すればちゃんとロードされるはず。</p>
+<div class="pygments_murphy"><pre>debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread
+<span class="c">#&lt;THREAD &quot;initial thread&quot; RUNNING {10029990A3}&gt;:</span>
+  Unable to load any of the alternatives:
+   <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">)</span>
+
+Type HELP <span class="k">for </span>debugger <span class="nb">help</span>, or <span class="o">(</span>SB-EXT:QUIT<span class="o">)</span> to <span class="nb">exit </span>from SBCL.
+
+restarts <span class="o">(</span>invokable by number or by possibly-abbreviated name<span class="o">)</span>:
+  0: <span class="o">[</span>RETRY          <span class="o">]</span> Try loading the foreign library again.
+  1: <span class="o">[</span>USE-VALUE      <span class="o">]</span> Use another library instead.
+  2: <span class="o">[</span>TRY-RECOMPILING<span class="o">]</span> Recompile package and try loading it again
+  3: <span class="o">[</span>RETRY          <span class="o">]</span> Retry
+                       loading FASL <span class="k">for</span> <span class="c">#&lt;CL-SOURCE-FILE &quot;zeromq&quot; &quot;package&quot;&gt;.</span>
+  4: <span class="o">[</span>ACCEPT         <span class="o">]</span> Continue, treating
+                       loading FASL <span class="k">for</span> <span class="c">#&lt;CL-SOURCE-FILE &quot;zeromq&quot; &quot;package&quot;&gt; as</span>
+                       having been successful.
+  5: <span class="o">[</span>ABORT          <span class="o">]</span> Give up on <span class="s2">&quot;zeromq&quot;</span>
+  6:                   Exit debugger, returning to top level.
+
+<span class="o">(</span>CFFI::FL-ERROR
+ <span class="s2">&quot;Unable to load any of the alternatives:~%   ~S&quot;</span>
+ <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">))</span>
+0<span class="o">]</span> 2
+</pre></div>
+
+<p>以下のようにしてライブラリのパスを設定してやっても回避はできるがおすすめしない。</p>
+<div class="pygments_murphy"><pre>(pushnew &quot;/path/to/lib/&quot; *foreign-library-directories*)
+</pre></div>
+
+<p><a href="http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html">http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html</a></p>
+<h1 id="3">3. サーバ側起動</h1>
+<p><a href="http://www.cliki.net/cl-zmq">cl-zmq</a> のサンプルコード参考に以下のようなエコーサーバを書いた。これをserver.lispに保存して、 sbcl --script server.lisp で実行。ちなみに、127.0.0.1:5555 の部分をlocalhost:5555のように書くとNo such deviceといわれる。 (参考 <a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a> )</p>
+<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+(ql:quickload :zeromq)
+
+(defun server ()
+  (zmq:with-context (ctx 1)
+    (zmq:with-socket (socket ctx zmq:rep)
+      (zmq:bind socket &quot;tcp://127.0.0.1:5555&quot;)
+      (loop
+         (let ((query (make-instance &#39;zmq:msg)))
+           (zmq:recv socket query)
+           (let ((req-string (zmq:msg-data-as-string query)))
+             (format t &quot;Recieved message: &#39;~A&#39;~%&quot; req-string)
+             (zmq:send socket (make-instance &#39;zmq:msg :data req-string)) ))))))
+
+(server)
+</pre></div>
+
+<h1 id="4">4. クライアント側起動</h1>
+<p>こちらも同様に以下をclient.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。</p>
+<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+(ql:quickload :zeromq)
+
+(defun client ()
+  (zmq:with-context (ctx 1)
+    (zmq:with-socket (socket ctx zmq:req)
+      (zmq:connect socket &quot;tcp://127.0.0.1:5555&quot;)
+      (loop
+      (zmq:send socket (make-instance &#39;zmq:msg
+                                      :data (read-line)))
+      (let ((result (make-instance &#39;zmq:msg)))
+        (zmq:recv socket result)
+        (format t &quot;Recieved message: &#39;~A&#39;~%&quot;
+                (zmq:msg-data-as-string result) ))))))
+
+(client)
+</pre></div>
+
+<h1 id="_1">まとめ</h1>
+<p>Common Lisp(sbcl)でZeroMQを利用して、簡単なエコーサーバ/クライアントを実装した。</p>
+<h1 id="_2">参考</h1>
+<ul>
+<li><a href="http://www.cliki.net/cl-zmq">cl-zmq</a></li>
+<li><a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a></li>
+</ul>]]></content:encoded>
+    </item>
+    <item>
+      <title>sbclでクラスのスロット一覧を取得する方法</title>
+      <link>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</link>
+      <pubDate>Fri, 06 Jul 2012 18:30:00 JST</pubDate>
+      <category><![CDATA[memo]]></category>
+      <category><![CDATA[sbcl]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</guid>
+      <description>sbclでクラスのスロット一覧を取得する方法</description>
+      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
+<p>メモメモ</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
+(#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::INO&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::DEV&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::NLINK&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::UID&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::GID&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::SIZE&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::ATIME&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MTIME&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::CTIME&gt;)
+</pre></div>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

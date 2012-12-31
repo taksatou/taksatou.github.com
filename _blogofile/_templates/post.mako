@@ -1,9 +1,9 @@
 <%page args="post"/>
 <div class="blog_post">
   <a name="${post.slug}"></a>
-  <h2 class="blog_post_title"><a href="${post.permapath()}" rel="bookmark" title="Permanent Link to ${post.title}">${post.title}</a></h2>
-  <small>${post.date.strftime("%B %d, %Y at %I:%M %p")} | categories: 
-<% 
+  <h2 class="blog_post_title"><a href="${post.permalink}" rel="bookmark" title="Permanent Link to ${post.title}">${post.title}</a></h2>
+  <small>${post.date.strftime("%B %d, %Y at %I:%M %p")} | categories:
+<%
    category_links = []
    for category in post.categories:
        if post.draft:
@@ -23,10 +23,23 @@ ${", ".join(category_links)}
   </div>
 </div>
 
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
 <%def name="post_prose(post)">
 <div class="blogbody">
   ${post.content}
 </div>
 </%def>
+<div id="prev_next_link">
+  % if post.prev_post:
+  <a href="${post.prev_post.permalink}"> previous post </a>
+  %endif
+  % if post.prev_post and post.next_post:
+    |
+  %endif
+  % if post.next_post:
+  <a href="${post.next_post.permalink}"> next post </a>
+  %endif
+</div>
 <hr class="intersocial">
 <%include file="social_buttons.mako" args="post=post" />

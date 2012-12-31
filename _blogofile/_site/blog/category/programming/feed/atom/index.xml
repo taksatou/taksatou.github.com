@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2012-10-24T18:00:00Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/24/cl-practice" />
+    <id>http://mojavy.com/blog/2012/10/24/cl-practice</id>
+    <updated>2012-10-24T18:00:00Z</updated>
+    <published>2012-10-24T18:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <category scheme="http://mojavy.com/blog" term="common lisp" />
+    <summary type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/24/cl-practice"><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
+<p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>
+<p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
+<p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
+<p>最初は以下のように書いて、</p>
+<div class="pygments_murphy"><pre>(let ((_n (parse-integer (read-line)))
+      (lis ()))
+  (dotimes (i _n)
+    (push (parse-integer (read-line)) lis))
+  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
+  (dolist (x lis) (format t &quot;~a~%&quot; x)))
+</pre></div>
+
+<p>以下の用にして時間を測ったところ</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.19s user 0.01s system 91% cpu 1.311 total
+sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938 total
+</pre></div>
+
+<p>ローカルだと3.42s程度だった。codechef上での制限は5secなのでセーフかと思ったけどTime Limit Exceededだった。</p>
+<p>そこで、vectorを使うように改良</p>
+<div class="pygments_murphy"><pre>(let* ((_n (parse-integer (read-line)))
+       (lis (make-array _n :fill-pointer 0)))
+  (dotimes (i _n)
+    (vector-push (parse-integer (read-line)) lis))
+  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
+  (loop for i across lis do (format t &quot;~a~%&quot; i)))
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.21s user 0.01s system 94% cpu 1.289 total
+sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137 total
+</pre></div>
+
+<p>若干改善されたが、まだTime Limit Exceededだった。</p>
+<p>read-sequenceで読み込んだほうが早いかと思って以下のように書いてみた。</p>
+<div class="pygments_murphy"><pre>(defun parse-input (str)
+  (loop
+     for i = 0 then (+ 1 j)
+     as j = (position #\Newline str :start i)
+     as k = (parse-integer (subseq str i j) :junk-allowed t)
+     if (not (null k))
+     collect k
+     while j))
+
+(let* ((_n (parse-integer (read-line)))
+       (lis (make-array (* _n 20) :element-type &#39;character))
+       (nums ())
+       )
+  (read-sequence lis *standard-input*)
+  (setf nums (sort (parse-input lis) #&#39;(lambda (x y) (&lt; x y))))
+  (loop for i in nums do (format t &quot;~a~%&quot; i)))
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.13s user 0.01s system 97% cpu 1.159 total
+sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297 total
+</pre></div>
+
+<p>残念ながら逆に遅くなってしまった。parse-inputの部分で60%くらい時間がかかっていた。
+あと、<code>#'(lambda (x y) (&lt; x y))</code>の部分を <code>#'&lt;</code>にするとなぜか遅くなる。</p>
+<p><a href="http://www.codechef.com/status/TSORT?language=31&amp;status=All&amp;handle=&amp;sort_by=All&amp;sorting_order=asc&amp;Submit=GO">まだ誰もlispではパスしてない模様。</a>こういうのをもっと高速に書く方法あるのだろうか。</p>
+<p>ちなみにCだと余裕。ローカルだと0.2秒くらいだけどリモートでは3秒くらいかかってた。そもそもCodeChefの実行環境がしょぼすぎる疑惑が。。</p>
+<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">j</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
+
+    <span class="kt">int</span> <span class="n">lis</span><span class="p">[</span><span class="n">num</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">qsort</span><span class="p">(</span><span class="n">lis</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span> <span class="n">f</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  0.99s user 0.01s system 99% cpu 1.006 total
+./a.out &gt; /dev/null  0.18s user 0.01s system 17% cpu 1.116 total
+</pre></div>]]></content>
+  </entry>
+</feed>

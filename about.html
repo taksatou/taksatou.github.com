@@ -1,13 +1,15 @@
 
 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     
-  <title>mojavy.com</title>
+  <title>
+mojavy.com
+</title>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
@@ -27,7 +29,7 @@ href="/blog/feed/atom" />
   google.load("jquery", "1.6.4");
   google.load("jqueryui", "1.8.16");
 
-  
+
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-26834066-1']);
   _gaq.push(['_trackPageview']);
@@ -40,9 +42,37 @@ href="/blog/feed/atom" />
 
 </script>
 
+<!-- coderwall -->
+<link href="http://coderwall.com/stylesheets/jquery.coderwall.css" media="all" rel="stylesheet" type="text/css">
+<script src="http://coderwall.com/javascripts/jquery.coderwall.js"></script>
+
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <rdf:Description rdf:about="http://mojavy.com/">
+    <foaf:maker rdf:parseType="Resource">
+      <foaf:holdsAccount>
+        <foaf:OnlineAccount foaf:accountName="armyofpigs">
+          <foaf:accountServiceHomepage rdf:resource="http://www.hatena.ne.jp/" />
+        </foaf:OnlineAccount>
+      </foaf:holdsAccount>
+    </foaf:maker>
+  </rdf:Description>
+</rdf:RDF>
+
 
   </head>
   <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=169540733170142";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
     <div id="content">
       
   <div id="headerwrap">
@@ -103,9 +133,24 @@ href="/blog/feed/atom" />
       </div><!-- End Main Block -->
       <div id="footer">
         
-  <div id="footerwrap">
+  <div id="feedicon">
+  <a href="/blog/feed"><img src="/images/rss_icon.png" alt="rss" /></a>
+  </div>
+
+<div id="footerwrap">
+  <script type="text/javascript">
+    (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+
   <footer id="mainfooter" class="bodywidth">
-    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>.</p>
+    
+    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>. </p>
+    
+
   </footer>
 </div>
 <script type="text/javascript">
@@ -126,6 +171,26 @@ href="/blog/feed/atom" />
 
       </div> <!-- End Footer -->
     </div> <!-- End Content -->
+
+    <!-- shareaholic -->
+    <script type="text/javascript">
+      //<![CDATA[
+  (function() {
+    var shr = document.createElement('script');
+    shr.src = '//dtym7iokkjlif.cloudfront.net/assets/pub/shareaholic.js';
+    shr.type = 'text/javascript';
+    shr.async = 'true';
+    shr.onload = shr.onreadystatechange = function() {
+      var rs = this.readyState;
+      if (rs && rs != 'complete' && rs != 'loaded') return;
+      var apikey = 'd9fb965c81d656a30f7629e4e251e405'
+      try { Shareaholic.init(apikey); } catch (e) {}
+    };
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(shr, s);
+  })();
+//]]>
+    </script>
   </body>
 </html>
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Thu, 18 Oct 2012 22:00:00 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</title>
+      <link>http://mojavy.com/blog/2012/10/18/twitter-api-error</link>
+      <pubDate>Thu, 18 Oct 2012 22:00:00 JST</pubDate>
+      <category><![CDATA[web]]></category>
+      <category><![CDATA[twitter]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/twitter-api-error</guid>
+      <description>twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</description>
+      <content:encoded><![CDATA[<p><img alt="twitter" src="/images/twitter-logo.png" /></p>
+<p>最近twitter apiをつかっているサービスで以下のようなエラーがでた。</p>
+<div class="pygments_murphy"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
+</pre></div>
+
+<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。</p>
+<p>つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
+<p>ログイン直後にverify_credentialsをつかってるアプリは多いと思われるが、その場合ログインに失敗したように見えるので認証まわりをライブラリ任せにしてると原因がわかりにくいかも。</p>
+<p>とりあえず<a href="https://dev.twitter.com/blog">twitterの開発ブログ</a>まめにチェックしたほうがよさそう。</p>
+<h1 id="_1">参考</h1>
+<ul>
+<li><a href="https://dev.twitter.com/blog">https://dev.twitter.com/blog</a></li>
+<li><a href="https://dev.twitter.com/discussions/11595">https://dev.twitter.com/discussions/11595</a></li>
+</ul>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

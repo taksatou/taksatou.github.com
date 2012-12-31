@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Wed, 14 Nov 2012 23:30:00 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Quicklinks 3</title>
+      <link>http://mojavy.com/blog/2012/11/14/quicklinks3</link>
+      <pubDate>Wed, 14 Nov 2012 23:30:00 JST</pubDate>
+      <category><![CDATA[quicklinks]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/14/quicklinks3</guid>
+      <description>Quicklinks 3</description>
+      <content:encoded><![CDATA[<p><img alt="shader" src="/images/shader-200.png" /></p>
+<p>最近はUnityを使う機会を得たのでゲーム関連技術についていろいろ調べてました。</p>
+<h3 id="shadow-algorithms-for-real-time-rendering"><a href="http://www.mpi-inf.mpg.de/~mschwarz/papers/shadowcourse-eg10.pdf">Shadow Algorithms for Real-time Rendering</a></h3>
+<p>シェーダーを扱った講義資料らしい。この講義を元にした本がでていて<a href="http://www.amazon.co.jp/%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%A3%E3%83%89%E3%82%A6-Elmar-Eisemann/dp/4862461670/ref=pd_sim_fb_1">日本語翻訳</a>もあるみたいです。
+モデリングは絵心がないとちょっと難しそうだけど、こういうのであれば自分で書いてみたいです。</p>
+<h3 id="black-tie"><a href="https://github.com/aerique/black-tie">black-tie</a></h3>
+<p>ノイズ生成アルゴリズムというものに興味がわきました。残念ながらこのライブラリはあまりメンテはされてない。</p>
+<h3 id="_1">物理演算系ライブラリ</h3>
+<p>2次元剛体のシュミレーションならChipmunkとかBox2Dあたりで気軽にできそうですが、3次元のやわらかいもの表現するにはちょっとハードルがあがるようです。</p>
+<ul>
+<li><a href="http://bulletphysics.org/wordpress/">BULLET</a></li>
+<li><a href="http://www.sofa-framework.org/">SOFA</a></li>
+<li><a href="http://code.google.com/p/opencloth/">opencloth</a></li>
+</ul>
+<p>物理演算を駆使した3次元リアルぷよぷよがやってみたいです。</p>
+<h3 id="mixamo"><a href="http://www.mixamo.com/">mixamo</a></h3>
+<p>こういう素材がもっと増えるといいですね。</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Quick links</title>
+      <link>http://mojavy.com/blog/2012/10/31/quick-links</link>
+      <pubDate>Wed, 31 Oct 2012 23:30:00 JST</pubDate>
+      <category><![CDATA[quicklinks]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/31/quick-links</guid>
+      <description>Quick links</description>
+      <content:encoded><![CDATA[<p><img alt="jack" src="/images/jack-lantern.png" /></p>
+<p>もう11月ですね。<a href="http://mojavy.com/blog/2012/10/16/quick-links/">前回</a>に引き続き今後のネタのメモとか。</p>
+<h3 id="impara"><a href="https://github.com/cloudera/impala">Impara</a></h3>
+<p><a href="http://research.google.com/pubs/pub36632.html">GoogleのDremel</a>に触発されてつくったものとのこと。MapReduce以外の選択肢が増えてくると、<a href="http://pig.apache.org/">pig</a>みたいな高級言語の重要度があがってくるかもしれないですね。</p>
+<ul>
+<li><a href="http://www.publickey1.jp/blog/12/hadoopsqlcloudera_impalacloudera.html">http://www.publickey1.jp/blog/12/hadoopsqlcloudera_impalacloudera.html</a></li>
+<li><a href="https://ccp.cloudera.com/display/IMPALA10BETADOC/Cloudera+Impala+1.0+Beta+Documentation">https://ccp.cloudera.com/display/IMPALA10BETADOC/Cloudera+Impala+1.0+Beta+Documentation</a></li>
+</ul>
+<h3 id="yahooie10do-not-track"><a href="http://it.slashdot.jp/story/12/10/29/0948240/%E7%B1%B3Yahoo%21%E3%80%81IE10%E3%81%AEDo-Not-Track%E3%82%92%E7%84%A1%E8%A6%96">米Yahoo!、IE10のDo Not Trackを無視</a></h3>
+<p>ちょっと前に、<a href="http://www.atmarkit.co.jp/news/201209/12/apache.html">ApacheがIE10のDNTを無視するパッチ</a>をだしてましたが、これも影響してるのだろうか。
+ちなみにこのパッチをコミットしたのは<a href="http://roy.gbiv.com/">この人</a>らしい。</p>
+<ul>
+<li><a href="http://www.ypolicyblog.com/policyblog/2012/10/26/dnt/">In Support of a Personalized User Experience</a></li>
+</ul>
+<h3 id="supersonic"><a href="https://code.google.com/p/supersonic/">supersonic</a></h3>
+<p>名前からしてすごそうですね。これをうまく使えれば、下手にhadoop使うより大量にメモリ積んだマシン1台でがんばれるシチュエーションが増えそう。</p>
+<ul>
+<li><a href="http://sourceforge.jp/magazine/12/10/16/2327214">http://sourceforge.jp/magazine/12/10/16/2327214</a></li>
+<li><a href="http://www.infoq.com/jp/news/2012/10/Google-Supersonic">http://www.infoq.com/jp/news/2012/10/Google-Supersonic</a></li>
+<li><a href="http://google-opensource.blogspot.ro/2012/10/introducing-supersonic-query-engine.html">http://google-opensource.blogspot.ro/2012/10/introducing-supersonic-query-engine.html</a></li>
+</ul>
+<h3 id="listfrontcode"><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">List::FrontCode</a></h3>
+<p>積読状態だったWEB+DB PRESS総集編のバックナンバーをまじめに消化してたら、Vol.42のアルゴリズム&amp;データ構造の記事がおもしろかった。naoya氏を見習って自分で実装してみたいと思います。</p>
+<h3 id="ipad-minikindlewindows-surface"><a href="http://www.amazon.co.jp/dp/B007OZO03M?tag=googhydr-22&amp;hvadid=16344445847&amp;hvpos=1t1&amp;hvexid=&amp;hvnetw=g&amp;hvrand=4412511441746174378&amp;hvpone=&amp;hvptwo=&amp;hvqmt=e&amp;ref=pd_sl_976d9edx_e">ipad mini</a>とか<a href="http://www.amazon.co.jp/gp/product/B007OZO03M/ref=amb_link_64549709_6?pf_rd_m=AN1VRQENFRJN5&amp;pf_rd_s=center-5&amp;pf_rd_r=0GZBN8S52CGASY82ZADV&amp;pf_rd_t=1401&amp;pf_rd_p=120015049&amp;pf_rd_i=3077662956">kindle</a>とか<a href="http://www.microsoft.com/Surface/en-US">windows surface</a>とか</h3>
+<p>kindleのpaperwhite予約しました。</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Quick links</title>
+      <link>http://mojavy.com/blog/2012/10/16/quick-links</link>
+      <pubDate>Tue, 16 Oct 2012 02:30:00 JST</pubDate>
+      <category><![CDATA[quicklinks]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/16/quick-links</guid>
+      <description>Quick links</description>
+      <content:encoded><![CDATA[<p><img alt="link" src="/images/link-icon.png" /></p>
+<p><a href="http://glinden.blogspot.jp/2012/06/quick-links.html">http://glinden.blogspot.jp/2012/06/quick-links.html</a> のまねをして、ネタのメモがてら最近興味を引いたものなどを列挙してみる。</p>
+<h4 id="mq"><a href="http://www.zeromq.org/">ØMQ</a></h4>
+<p><a href="http://www.zeromq.org/">http://www.zeromq.org/</a></p>
+<p>久しぶりにチェックしてみたらドキュメントやライブラリが充実してきてた。エラーハンドリングがちょっとやりづらいという噂もあるけど柔軟に使えて便利らしい。</p>
+<h4 id="arangodb"><a href="http://www.arangodb.org/">ArangoDB</a></h4>
+<p><a href="http://www.arangodb.org/">http://www.arangodb.org/</a></p>
+<p>MongoDBと似たような方向性のNoSQL。パフォーマンスはMongoDBと大差ないみたい。ただ、MongoDBのようにデータサイズが肥大化することはないらしい。</p>
+<ul>
+<li><a href="http://www.arangodb.org/2012/09/04/bulk-inserts-mongodb-couchdb-arangodb">http://www.arangodb.org/2012/09/04/bulk-inserts-mongodb-couchdb-arangodb</a></li>
+<li><a href="http://www.arangodb.org/2012/07/08/collection-disk-usage-arangodb">http://www.arangodb.org/2012/07/08/collection-disk-usage-arangodb</a></li>
+</ul>
+<h4 id="apache-hama"><a href="http://hama.apache.org/">Apache Hama</a></h4>
+<p><a href="http://hama.apache.org/">http://hama.apache.org/</a></p>
+<p>後日詳細調査</p>
+<ul>
+<li><a href="http://googleresearch.blogspot.jp/2009/06/large-scale-graph-computing-at-google.html">Large-scale graph computing at Google</a></li>
+<li><a href="http://incubator.apache.org/giraph/">Apache Giraph</a></li>
+<li><a href="http://goldenorbos.org/">Golden Orb</a></li>
+<li><a href="http://code.google.com/p/signal-collect/">Signal Collect</a></li>
+<li><a href="http://www.spark-project.org/">Spark</a></li>
+<li><a href="http://research.preferred.jp/2011/06/bsp_piccolo_spark_introduction/">MapReduce以外の分散処理基盤BSP, Piccolo, Sparkの紹介</a></li>
+</ul>
+<h4 id="google-common-lisp-style-guide"><a href="https://google-styleguide.googlecode.com/svn/trunk/lispguide.xml">Google Common Lisp Style Guide</a></h4>
+<p><a href="https://google-styleguide.googlecode.com/svn/trunk/lispguide.xml">https://google-styleguide.googlecode.com/svn/trunk/lispguide.xml</a></p>
+<p>Googleのコーディング規約は厳しいという話はよくきくが、Common Lispの規約も結構細かく書かれてる。GoogleでCommon Lispはどのくらいつかわれているのだろうか。</p>
+<h4 id="kube"><a href="http://imperavi.com/kube/">Kube</a></h4>
+<p><a href="http://imperavi.com/kube/">http://imperavi.com/kube/</a></p>
+<p>シンプルなCSSフレームワーク。<a href="http://twitter.github.com/bootstrap/">bootstrap</a>とか<a href="http://foundation.zurb.com/">Zurb</a>とかもあるけど、あんまり凝ったことしないならこれくらいで十分。というかこれ以上は無理。</p>
+<h4 id="trading-systems-coding"><a href="http://www.investopedia.com/university/systemcoding">Trading Systems Coding</a></h4>
+<p><a href="http://www.investopedia.com/university/systemcoding">http://www.investopedia.com/university/systemcoding</a></p>
+<p>このチュートリアル自体はあんまり役に立ちそうもないけどとっかかりとしてはいいかも？</p>
+<h4 id="gvizruby-graphviz-wrapper"><a href="http://melborne.github.com/2012/10/02/draw-metro-map-with-gviz/">東京の地下鉄をGviz（Ruby Graphviz Wrapper）で描く</a></h4>
+<p><a href="http://melborne.github.com/2012/10/02/draw-metro-map-with-gviz/">http://melborne.github.com/2012/10/02/draw-metro-map-with-gviz/</a></p>
+<p>素のdot言語を手でかくとぐちゃぐちゃになりがちなのでGviz使うとよさそうです。とはいえ、こんなにきれいな路線図を書くのはかなり大変だったのではなかろうか。</p>
+<h4 id="ubuntu1204ltsunity"><a href="http://d.hatena.ne.jp/ka8823ge/20120515">Ubuntu12.04LTSのUnityを手なずける</a></h4>
+<p><a href="http://d.hatena.ne.jp/ka8823ge/20120515">http://d.hatena.ne.jp/ka8823ge/20120515</a></p>
+<p>メインでつかってるUbuntuを10.04LTSから12.04LTSにアップデートしたところ、案の定いくつかこわれてしまった。
+Unityまわりの調整は↑を参考にした。以下はその他の問題と実施した対応のメモ。サウンドデバイスは相変わらずまともに動かない。</p>
+<h5 id="virtual-box">virtual boxが起動しなくなった</h5>
+<p>virtual boxを最新版にアップデートしてPCを再起動した。</p>
+<h5 id="vmware-player">vmware playerが起動しなくなった</h5>
+<p>Xのショートカットアイコンからは起動できなくなってしまったが、なぜかコマンドラインからvmplayerを起動すると大丈夫だった。</p>
+<h5 id="okularsamba">okularがsamba上のファイルをコマンドラインから起動できなくなった</h5>
+<p>なぜかnautilusからだと開くことができた。以前は逆にsambaをマウントしたディレクトリ上ではnautilusがつかえなかったがそこは直ったらしい。</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

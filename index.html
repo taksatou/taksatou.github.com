@@ -1,13 +1,15 @@
 
 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     
-  <title>mojavy.com</title>
+  <title>
+mojavy.com
+</title>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
@@ -27,7 +29,7 @@ href="/blog/feed/atom" />
   google.load("jquery", "1.6.4");
   google.load("jqueryui", "1.8.16");
 
-  
+
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-26834066-1']);
   _gaq.push(['_trackPageview']);
@@ -40,9 +42,37 @@ href="/blog/feed/atom" />
 
 </script>
 
+<!-- coderwall -->
+<link href="http://coderwall.com/stylesheets/jquery.coderwall.css" media="all" rel="stylesheet" type="text/css">
+<script src="http://coderwall.com/javascripts/jquery.coderwall.js"></script>
+
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <rdf:Description rdf:about="http://mojavy.com/">
+    <foaf:maker rdf:parseType="Resource">
+      <foaf:holdsAccount>
+        <foaf:OnlineAccount foaf:accountName="armyofpigs">
+          <foaf:accountServiceHomepage rdf:resource="http://www.hatena.ne.jp/" />
+        </foaf:OnlineAccount>
+      </foaf:holdsAccount>
+    </foaf:maker>
+  </rdf:Description>
+</rdf:RDF>
+
 
   </head>
   <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=169540733170142";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
     <div id="content">
       
   <div id="headerwrap">
@@ -111,22 +141,31 @@ href="/blog/feed/atom" />
   <div id="archives">			
     <h1>Recent posts</h1>
     <article>
-      <figure> <img src="/images/rena.jpg" alt="Article Image" style="width: 119px;  " /> </figure>
-      <header><a href="/blog/2011/11/06/blofofile-test" title="blogofileでサムネイル画像を表示する方法"><h5>blogofileでサムネイル画像を表示する方法</h5></a></header>
-      <p style="word-break: break-all; word-wrap: break-word; overflow: hidden;" >こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。例えば、http://mojavy.comのトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。これをするには、postオブジェクトにそういう属性をもたせればよいの ...  
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/blofofile-test">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/11/06/blofofile-test" alt="はてなブックマーク - blogofileでサムネイル画像を表示する方法" title="はてなブックマーク - blogofileでサムネイル画像を表示する方法">
+      <figure> <img src="/images/gearman-logo-80.png" alt="Article Image" style="width: 119px;  " /> </figure>
+      <header><a href="/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" title="gearmanクライアントライブラリ cl-gearman"><h5>gearmanクライアントライブラリ cl-gearman</h5></a></header>
+      <p style="word-break: break-all; word-wrap: break-word; overflow: hidden;" >この投稿はCommon Lisp Libraries Advent Calendar 2012の16日目の記事です。GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、 ...  
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" alt="はてなブックマーク - gearmanクライアントライブラリ cl-gearman" title="はてなブックマーク - gearmanクライアントライブラリ cl-gearman">
 </a>
-<a href="/blog/2011/11/06/blofofile-test" title="Read More" class="readmore">Read more</a> </p>
+<a href="/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" title="Read More" class="readmore">Read more</a> </p>
       </article>
     <article>
-      <figure> <img src="https://a248.e.akamai.net/assets.github.com/images/modules/header/logov6-hover.svg" alt="Article Image" style="width: 119px;  " /> </figure>
-      <header><a href="/blog/2011/11/06/new_blog" title="ブログ引越しました"><h5>ブログ引越しました</h5></a></header>
-      <p style="word-break: break-all; word-wrap: break-word; overflow: hidden;" >いままでblogger使ってましたが、github pagesに引越しました。http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/を参考にしてblogofileで構築しました。デザインはh ...  
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/new_blog">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2011/11/06/new_blog" alt="はてなブックマーク - ブログ引越しました" title="はてなブックマーク - ブログ引越しました">
+      <figure> <img src="/images/tool-logo.png" alt="Article Image" style="width: 119px;  " /> </figure>
+      <header><a href="/blog/2012/11/20/web-engineers-online-toolbox" title="ウェブエンジニアのためのオンラインツールまとめ"><h5>ウェブエンジニアのためのオンラインツールまとめ</h5></a></header>
+      <p style="word-break: break-all; word-wrap: break-word; overflow: hidden;" >The Web engineer's online toolboxというまとめ記事が便利そうだったので、実際に試しつつ抄訳してみました。(一部のコメントと体裁は変えています。)目次一覧RequestBinHurlhttpbinREDbotWebGunApifyUnicornFee ...  
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox" alt="はてなブックマーク - ウェブエンジニアのためのオンラインツールまとめ" title="はてなブックマーク - ウェブエンジニアのためのオンラインツールまとめ">
 </a>
-<a href="/blog/2011/11/06/new_blog" title="Read More" class="readmore">Read more</a> </p>
+<a href="/blog/2012/11/20/web-engineers-online-toolbox" title="Read More" class="readmore">Read more</a> </p>
+      </article>
+    <article>
+      <figure> <img src="/images/shader-200.png" alt="Article Image" style="width: 119px;  " /> </figure>
+      <header><a href="/blog/2012/11/14/quicklinks3" title="Quicklinks 3"><h5>Quicklinks 3</h5></a></header>
+      <p style="word-break: break-all; word-wrap: break-word; overflow: hidden;" >最近はUnityを使う機会を得たのでゲーム関連技術についていろいろ調べてました。シェーダーを扱った講義資料らしい。この講義を元にした本がでていて日本語翻訳もあるみたいです。モデリングは絵心がないとちょっと難しそうだけど、こういうのであれば自分で書いてみたいです。ノイズ生成アルゴリ ...  
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/14/quicklinks3">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/14/quicklinks3" alt="はてなブックマーク - Quicklinks 3" title="はてなブックマーク - Quicklinks 3">
+</a>
+<a href="/blog/2012/11/14/quicklinks3" title="Read More" class="readmore">Read more</a> </p>
       </article>
 </div>
   </section>
@@ -136,9 +175,24 @@ href="/blog/feed/atom" />
       </div><!-- End Main Block -->
       <div id="footer">
         
-  <div id="footerwrap">
+  <div id="feedicon">
+  <a href="/blog/feed"><img src="/images/rss_icon.png" alt="rss" /></a>
+  </div>
+
+<div id="footerwrap">
+  <script type="text/javascript">
+    (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+
   <footer id="mainfooter" class="bodywidth">
-    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>.</p>
+    
+    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>. </p>
+    
+
   </footer>
 </div>
 <script type="text/javascript">
@@ -159,6 +213,26 @@ href="/blog/feed/atom" />
 
       </div> <!-- End Footer -->
     </div> <!-- End Content -->
+
+    <!-- shareaholic -->
+    <script type="text/javascript">
+      //<![CDATA[
+  (function() {
+    var shr = document.createElement('script');
+    shr.src = '//dtym7iokkjlif.cloudfront.net/assets/pub/shareaholic.js';
+    shr.type = 'text/javascript';
+    shr.async = 'true';
+    shr.onload = shr.onreadystatechange = function() {
+      var rs = this.readyState;
+      if (rs && rs != 'complete' && rs != 'loaded') return;
+      var apikey = 'd9fb965c81d656a30f7629e4e251e405'
+      try { Shareaholic.init(apikey); } catch (e) {}
+    };
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(shr, s);
+  })();
+//]]>
+    </script>
   </body>
 </html>
 

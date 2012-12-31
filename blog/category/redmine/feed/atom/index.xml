@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2012-07-24T23:30:00Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[redmineのメールを効率良くフィルタリングする]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/24/redmine-mail" />
+    <id>http://mojavy.com/blog/2012/07/24/redmine-mail</id>
+    <updated>2012-07-24T23:30:00Z</updated>
+    <published>2012-07-24T23:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="tips" />
+    <category scheme="http://mojavy.com/blog" term="redmine" />
+    <summary type="html"><![CDATA[redmineのメールを効率良くフィルタリングする]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/24/redmine-mail"><![CDATA[<p><img alt="redmine" src="/images/redmine-logo.png" /></p>
+<p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。</p>
+<p>いままでgmailでフィルタリングしてたので気付かなかった。。</p>
+<p>メールクライアントはgmailのウェブアプリで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。</p>]]></content>
+  </entry>
+</feed>

@@ -22,11 +22,12 @@ h1,h2,h3,h4,h5,h6						{ color: #2f2f2f; font-family: "Ubuntu", arial; }
 div.interblog-sep { margin: 15px 0 5px 0; }
 hr.interblog  { border: solid; border-color: #888888; border-width: 1px 0 0 0 ; height: 1px; clear:both; }
 hr.intersocial { border: solid; border-color: #e0e0e0; border-width: 1px 0 0 0 ; height: 1px; clear:both; }
-pre { border: solid; border-color: #888888; border-width: 1px; padding: 8px 5px 8px 5px; margin: 3px 0 3px 0; }
+pre { border: solid; border-color: #888888; border-width: 1px; padding: 8px 8px 8px 5px; margin: 0px 3px 12px 0; overflow: auto; }
 
+#prev_next_link { padding:10px 15px 10px 0; float: right; }
 /* Header */
-#headerwrap								{ width: 100%; background: url('../images/headerbg.jpg') repeat-x 0 0; height: 117px;  }
-#mainheader								{ padding: 35px 0 0 0; color: #2f2f2f; text-shadow: 0px 0px 1px #fff; }
+#headerwrap								{ width: 100%; background: url('../images/headerbg.jpg') repeat-x 0 0; height: 45px;  }
+#mainheader								{ padding: 8px 0 0 0; color: #2f2f2f; text-shadow: 0px 0px 1px #fff; }
 .logo									{ float: left; margin: 0 10px 0 0; -webkit-transition: -webkit-transform 0.4s ease-out; -moz-transition: -moz-transform 0.4s ease-out; transition: transform 0.4s ease-out; }
 .logo:hover								{ cursor: pointer; -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); transform: rotate(360deg); }
 #websitetitle							{ float: left; margin: -8px 0 0 0; }
@@ -56,15 +57,23 @@ a.findoutmore:hover						{ background-color: #2f2f2f; background-image: none; te
 #aboutleft p							{ line-height: 135%; margin: 0 0 15px 0; }
 #articlesright							{ float: right; width: 380px; }
 #articlesright article					{ clear: both; margin: 0 0 20px 0; overflow: hidden; }
-#articlesright figure					{ padding: 5px; border: 0px #dbdbdb solid; float: left; width: 119px; height: 119px; margin: 0 15px 0 0; } 
+#articlesright figure					{ padding: 5px; border: 0px #dbdbdb solid; float: left; width: 119px; height: 119px; margin: 0 15px 0 0; }
 #articlesright p						{ line-height: 135%; }
 #articlesright h5						{ font-size: 1.3em; margin: 0 0 6px 0; color: #4086c6; }
 #articlesright h5:hover					{ color: #2f2f2f; }
 
 /* .blog_post_title                                      { font-size: 2.4em; font-family: "Ubuntu", arial; font-weight: bold; } */
+.blog_post_title a                                      { font-size: 140%;  }
 .blogbody							{ font-size: 115%; }
+.blogbody hr  { border: solid; border-color: #b0b0b0; border-width: 1px 0 0 0 ; margin: 5px 15px 7px 15px; height: 1px; clear:both; }
 #blogleft								{ float: left; width: 620px; }
-#blogleft h1,h2,h3,h4,h5,h6					{ padding: 8px 0px 4px 0px; margin: 0px; font-weight: bold; }
+#blogleft h1,h2,h3,h4,h5,h6					{ padding: 12px 0px 4px 0px; margin: 0px; font-weight: bold; }
+/* .blogbody h1					{ text-decoration:underline; } */
+/* .blogbody h2					{ text-decoration:underline; } */
+/* .blogbody h3					{ text-decoration:underline; } */
+/* .blogbody h4					{ text-decoration:underline; } */
+/* .blogbody h5					{ text-decoration:underline; } */
+/* .blogbody h6					{ text-decoration:underline; } */
 #blogleft h1							{ font-size: 1.5em ; }
 #blogleft h2							{ font-size: 1.35em; }
 #blogleft h3							{ font-size: 1.215em; }
@@ -75,10 +84,18 @@ a.findoutmore:hover						{ background-color: #2f2f2f; background-image: none; te
 #blogleft hr                                            { margin-top: 5px; margin-bottom: 5px; }
 #blogleft .topic-title                          	{ display: none; }
 #blogleft #toc                                            { font-size: 1em; font-family: "Ubuntu", arial; font-weight: bold; }
-#blogleft ul                                            { font-size: 95%; padding-left: 15px;  list-style-type: none; }
+#blogleft ol                                            { padding-left: 30px; margin: 5px 15px 10px 0;  list-style-type: dicimal; }
+#blogleft ul                                            { padding-left: 30px; margin: 5px 15px 10px 0;  list-style-type: disc; }
+#blogleft dl                                            {padding: 3px; }
+#blogleft dt                                            {padding-top: 4px; font-weight: bold;}
+#blogleft dd                                            {padding-left: 15px; }
+#blogleft table                                         {border-top: solid 1px #b0b0b0; border-left: solid 1px #b0b0b0; border-collapse:colapse; border-spacing:0; }
+#blogleft table th                                      {border-bottom: solid 1px #b0b0b0; border-right: solid 1px #b0b0b0; background-color: #f0f0f0; padding: 2px; }
+#blogleft table td                                     {border-bottom: solid 1px #b0b0b0; border-right: solid 1px #b0b0b0; padding: 2px; }
+
 #blogright							{ float: right; width: 300px; }
 #blogright article					{ clear: both; margin: 0 0 20px 0; overflow: hidden; }
-#blogright figure					{ padding: 5px; border: 0px #dbdbdb solid; float: left; width: 119px; height: 119px; margin: 0 15px 0 0; } 
+#blogright figure					{ padding: 5px; border: 0px #dbdbdb solid; float: left; width: 119px; height: 119px; margin: 0 15px 0 0; }
 #blogright p						{ line-height: 135%; }
 #blogright h5						{ font-size: 1.3em; margin: 0 0 6px 0; color: #4086c6; }
 #blogright h5:hover					{ color: #2f2f2f; }
@@ -97,6 +114,7 @@ a.readmore:hover						{ background-color: #2f2f2f; background-image: none; text-
 #mainfooter a,#mainfooter a:visited		{ color: #fff; }
 .copyright								{ float: right; color: #b8b8b8; }
 
+#feedicon { float: right; margin: 10pt 10pt 0 0;  } 
 /* MEDIA QUERIES */
 
 /* Under 960px */

@@ -1,0 +1,548 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+  <title>
+mojavy.com
+</title>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
+<link rel="alternate" type="application/atom+xml" title="Atom 1.0"
+href="/blog/feed/atom" />
+<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+
+
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold' rel='stylesheet' type='text/css'>
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script><![endif]-->
+
+<link rel='stylesheet' href="/styles/styles.css" type='text/css' />
+<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/pepper-grinder/jquery-ui.css' type='text/css' />
+<script src="https://www.google.com/jsapi?key=ABQIAAAAcOj4HIzbhVG_glmoxqtIlhSZ8YWc9pfyrPx-qTk3ymJ7vBNWbhSCYgWPuVGOqTugaARvpRrNszeUJQ" type="text/javascript"></script>
+<script language="Javascript" type="text/javascript">
+  google.load("search", "1");
+  google.load("jquery", "1.6.4");
+  google.load("jqueryui", "1.8.16");
+
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26834066-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- coderwall -->
+<link href="http://coderwall.com/stylesheets/jquery.coderwall.css" media="all" rel="stylesheet" type="text/css">
+<script src="http://coderwall.com/javascripts/jquery.coderwall.js"></script>
+
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <rdf:Description rdf:about="http://mojavy.com/">
+    <foaf:maker rdf:parseType="Resource">
+      <foaf:holdsAccount>
+        <foaf:OnlineAccount foaf:accountName="armyofpigs">
+          <foaf:accountServiceHomepage rdf:resource="http://www.hatena.ne.jp/" />
+        </foaf:OnlineAccount>
+      </foaf:holdsAccount>
+    </foaf:maker>
+  </rdf:Description>
+</rdf:RDF>
+
+
+  </head>
+  <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=169540733170142";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <div id="content">
+      
+  <div id="headerwrap">
+  <header id="mainheader" class="bodywidth">
+    <hgroup id="websitetitle">
+      <h1><span class="bold"><a href="/">mojavy.com</a></h1>
+      <h2></h2>
+    </hgroup>
+    <nav>
+      <ul>
+        <li><a href="/" title="Home">Home</a></li>
+        <li><a href="/blog" title="Blog">Blog</a></li>
+        <li><a href="/apps.html" title="Apps">Apps</a></li>
+        <li><a href="http://twitter.com/#!/taksatou" title="Twitter">Twitter</a></li>
+        <li><a href="https://github.com/taksatou" title="github">github</a></li>
+        <li><a href="/about.html" title="About">About</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+
+      <div id="main_block">
+        <div id="prose_block">
+          
+<div id="maincontent2" class="bodywidth">
+<div id="blogleft">
+  
+<div class="blog_post">
+  <a name="tmuxでマウスを使う"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011" rel="bookmark" title="Permanent Link to tmuxでマウスを使う">tmuxでマウスを使う</a></h2>
+  <small>December 13, 2011 at 12:58 AM | categories:
+
+<a href='/blog/category/advent-calendar'>advent calendar</a>, <a href='/blog/category/tmux'>tmux</a>
+ | <a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の13日目です。
+12日目はnetmarkjpさんの<a href="http://netmark.jp/2011/12/gnu-screen-xmodem.html">GNU screen でシリアル通信 + xmodem転送</a>でした。</p>
+<p>今日はtmuxのマウスまわりの設定について紹介してみます。</p>
+<p>tmuxにはマウスで操作するための機能がいくつか提供されています。ChangeLogを見る限りでは結構前からマウスサポートはされているようですが、mac portから入れたtmuxでは動かなかったのでソースから最新版をいれることをおすすめします。
+macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/tmatsuu/20111130/1322677832">matsuuさんが紹介してくれている</a>のでそちらを参考にしてください。</p>
+<p>tmux-1.5の時点で使えるマウス関連の設定項目は以下の通りです。</p>
+<dl>
+<dt>mode-mouse</dt>
+<dd>onにすると、マウスで画面をドラッグしたときにコピーモードに入ります。マウスホイールでスクロールすることもできます。</dd>
+<dt>mouse-select-pane</dt>
+<dd>マウスクリックでpaneを選択できるようになります。</dd>
+<dt>mouse-select-window</dt>
+<dd>statusを有効にしているときに、window名の部分をクリックすることでwindowを切り替えられます。</dd>
+<dt>mouse-utf8</dt>
+<dd>マウスの入力をutf-8として扱うための設定だそうです。効果はよくわかりませんでした。</dd>
+</dl>
+<p>なお、shiftを押しながらターミナルをクリックすれば、本来のマウスの動作になります。</p>
+<p>macのiTerm, windowsのputty, ubuntuのgnome-terminalで動作確認できました。
+たまに画面が乱れることがありますが、再描画すると直ります。</p>
+<h1 id="_1">まとめ</h1>
+<p>以下を.tmux.confにコピペするとtmuxでマウスがつかえます。</p>
+<div class="pygments_murphy"><pre><span class="nb">set</span> -g mode-mouse on
+<span class="nb">set</span> -g mouse-resize-pane on
+<span class="nb">set</span> -g mouse-select-pane on
+<span class="nb">set</span> -g mouse-select-window on
+</pre></div>
+
+<p>本当は、set-clipboardという機能も紹介したかったのですが、ちゃんと動かすことができなかったのでまたの機会にします。
+以上非常に簡単でしたがマウスサポート機能の紹介でした。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" class="hatena-bookmark-button" data-hatena-bookmark-title="tmuxでマウスを使う" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011" data-text="tmuxでマウスを使う">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
+  <a name="tmuxに独自機能を追加する"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011" rel="bookmark" title="Permanent Link to tmuxに独自機能を追加する">tmuxに独自機能を追加する</a></h2>
+  <small>December 06, 2011 at 01:05 AM | categories:
+
+<a href='/blog/category/advent-calendar'>advent calendar</a>, <a href='/blog/category/tmux'>tmux</a>
+ | <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の<s>6日目</s>7日目です。(netmark.jpさん,matsuuさん、すいません、出遅れました。)</p>
+<p>5日目はyoshikawさんの<a href="http://yskwkzhr.blogspot.com/2011/12/lets-use-development-version-gnu-screen.html">開発版GNU Screenを使ってみよう</a>でした。</p>
+<p>6日目はnetmark.jpさんの<a href="http://netmark.jp/2011/12/gnu-screen-plusone.html">GNU screenをもうちょっとだけ便利に使おう！</a>でした。</p>
+<p>この記事ではtmuxのいじり方を簡単に紹介してみます。</p>
+<h1 id="_1">はじめに</h1>
+<p>tmuxは比較的若いプロジェクトなこともあってか、かゆいところに手が届かないシチュエーションがたまにあります。
+個人的に不満だったのはバッファの挙動です。</p>
+<p>tmuxでバッファに文字列をコピーした場合、list-buffersに新しいものほど前方になるように格納されていきます。
+choose-bufferコマンドを使えばある程度簡単に過去のものもさかのぼれますがしばらくすると埋もれてしまいます。
+tmuxのバッファにはホスト名とかよくつかうコマンドとかをいれておいて番号を指定して最速でとりだしたいのに、
+場所が固定されていないといちいち探さなくてはならず不便に感じていました。
+なんとかできないかと思ってソースをいじってみたら、意外と簡単だったので簡単な解説をまじえつつ手順を紹介してみます。</p>
+<h1 id="_2">目次</h1>
+<div class="toc">
+<ul>
+<li><a href="#_1">はじめに</a></li>
+<li><a href="#_2">目次</a></li>
+<li><a href="#_3">準備</a><ul>
+<li><a href="#_4">ソースをとってくる</a></li>
+<li><a href="#_5">依存パッケージを入れる</a></li>
+<li><a href="#_6">ビルド</a></li>
+</ul>
+</li>
+<li><a href="#_7">ソース構成</a></li>
+<li><a href="#_8">いじってみる</a></li>
+<li><a href="#_9">まとめ</a></li>
+</ul>
+</div>
+<h1 id="_3">準備</h1>
+<h2 id="_4">ソースをとってくる</h2>
+<p>本家サイトからソースをおとします。とりあえず現在の最新版(1.5)でいいと思います。</p>
+<p><a href="http://tmux.sourceforge.net/">http://tmux.sourceforge.net/</a></p>
+<h2 id="_5">依存パッケージを入れる</h2>
+<p><a href="http://d.hatena.ne.jp/tmatsuu/20111130/1322677832">tmatsuuさんの記事</a>にもちょっとありましたが、
+tmuxはlibeventとnlcursesに依存しているのでビルドするにはライブラリのヘッダも必要です。
+ubuntuだと以下パッケージを入れとけばたぶん大丈夫です。</p>
+<div class="pygments_murphy"><pre>sudo apt-get install libevent-dev libncurses5-dev
+</pre></div>
+
+<h2 id="_6">ビルド</h2>
+<div class="pygments_murphy"><pre>./configure <span class="o">&amp;&amp;</span> make
+</pre></div>
+
+<p>ここまでできたら準備OKです。</p>
+<h1 id="_7">ソース構成</h1>
+<p>結構たくさんファイルがありますが、ファイル名を見れば大体雰囲気がつかめると思います。</p>
+<p>何か機能を追加したいだけなら、いじる必要のあるファイルはごく一部です。</p>
+<dl>
+<dt>tmux.h</dt>
+<dd>
+<dl>
+<dt>ほとんどのコマンドは全部ここに宣言がまとめられてるのでほぼ必ずいじります。</dt>
+<dt>options-table.c</dt>
+<dd>オプション追加する場合はここに追加します。値の肩などを定義するテーブルが宣言されているので、中身を見れば大体わかると思います。</dd>
+</dl>
+</dd>
+</dl>
+<p>いじる必要はないですがarray.hはいろんなところでつかわれてるので目を通しとくとよいと思います。
+Cでリストが使いたい場合は他のとこでも流用できそうな便利なヘッダです。</p>
+<p>あとは必要に応じて関係しそうなところをみていけばよいです。</p>
+<h1 id="_8">いじってみる</h1>
+<p>バッファまわりを改造したいので、paste.cというファイルが主な対象になります。</p>
+<p>細かい解説は省略しますが、paste_stackという構造体がグローバルで共有しているリストの本体で、array.hで宣言されているマクロで値がとりだせるようになっています。
+本来の動作であるpaste_addを参考にしつつpaste_add_tailなんて関数を追加します。
+後に追加した文字列ほど後ろにいってほしいですが、直前のものだけは先頭にあったほうが便利なのでちょっと変則的な感じになってますが、やっていることはシンプルです。</p>
+<div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/paste.c tmux-1.5-patched/paste.c</span>
+<span class="gd">--- tmux-1.5/paste.c    2011-07-09 18:42:38.000000000 +0900</span>
+<span class="gi">+++ tmux-1.5-patched/paste.c    2011-12-06 23:36:31.921805251 +0900</span>
+<span class="gu">@@ -119,6 +119,38 @@</span>
+        pb-&gt;size = size;
+ }
+
+<span class="gi">+/*</span>
+<span class="gi">+ * Add an item onto the tail of the stack, freeing the bottom if at limit. Note</span>
+<span class="gi">+ * that the caller is responsible for allocating data.</span>
+<span class="gi">+ */</span>
+<span class="gi">+void</span>
+<span class="gi">+paste_add_tail(struct paste_stack *ps, char *data, size_t size, u_int limit)</span>
+<span class="gi">+{</span>
+<span class="gi">+       struct paste_buffer     *pb;</span>
+<span class="gi">+</span>
+<span class="gi">+       if (size == 0)</span>
+<span class="gi">+               return;</span>
+<span class="gi">+</span>
+<span class="gi">+       while (ARRAY_LENGTH(ps) &gt;= limit) {</span>
+<span class="gi">+               pb = ARRAY_LAST(ps);</span>
+<span class="gi">+               xfree(pb-&gt;data);</span>
+<span class="gi">+               xfree(pb);</span>
+<span class="gi">+               ARRAY_TRUNC(ps, 1);</span>
+<span class="gi">+       }</span>
+<span class="gi">+</span>
+<span class="gi">+       pb = xmalloc(sizeof *pb);</span>
+<span class="gi">+</span>
+<span class="gi">+       if (ARRAY_LENGTH(ps) &gt; 0) {</span>
+<span class="gi">+               ARRAY_ADD(ps, ARRAY_FIRST(ps));</span>
+<span class="gi">+               ARRAY_SET(ps, 0, pb);</span>
+<span class="gi">+       } else {</span>
+<span class="gi">+               ARRAY_ADD(ps, pb);</span>
+<span class="gi">+       }</span>
+<span class="gi">+       ARRAY_INSERT(ps, 0, pb);</span>
+<span class="gi">+</span>
+<span class="gi">+       pb-&gt;data = data;</span>
+<span class="gi">+       pb-&gt;size = size;</span>
+<span class="gi">+}</span>
+</pre></div>
+
+<p>ここで追加した関数はtmux.hで宣言しておきます</p>
+<div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/tmux.h tmux-1.5-patched/tmux.h</span>
+<span class="gd">--- tmux-1.5/tmux.h     2011-07-09 18:42:38.000000000 +0900</span>
+<span class="gi">+++ tmux-1.5-patched/tmux.h     2011-12-06 23:36:31.925805201 +0900</span>
+<span class="gu">@@ -1487,6 +1487,7 @@</span>
+ int             paste_free_top(struct paste_stack *);
+ int             paste_free_index(struct paste_stack *, u_int);
+ void            paste_add(struct paste_stack *, char *, size_t, u_int);
+<span class="gi">+void            paste_add_tail(struct paste_stack *, char *, size_t, u_int);</span>
+ int             paste_replace(struct paste_stack *, u_int, char *, size_t);
+ char           *paste_print(struct paste_buffer *, size_t);
+</pre></div>
+
+<p>また、今回の機能は設定ファイルでon/offを切り替えられるようにしておきたいので、options-table.cも編集します。</p>
+<div class="pygments_murphy"><pre><span class="n">diff</span> <span class="o">-</span><span class="n">u</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">-</span><span class="n">patched</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>
+<span class="o">---</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>    <span class="mi">2011</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">09</span> <span class="mi">18</span><span class="o">:</span><span class="mi">42</span><span class="o">:</span><span class="mf">38.000000000</span> <span class="o">+</span><span class="mi">0900</span>
+<span class="o">+++</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">-</span><span class="n">patched</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>    <span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mo">06</span> <span class="mi">23</span><span class="o">:</span><span class="mi">36</span><span class="o">:</span><span class="mf">31.921805251</span> <span class="o">+</span><span class="mi">0900</span>
+<span class="err">@@</span> <span class="o">-</span><span class="mi">57</span><span class="p">,</span><span class="mi">6</span> <span class="o">+</span><span class="mi">57</span><span class="p">,</span><span class="mi">11</span> <span class="err">@@</span>
+          <span class="p">.</span><span class="n">default_num</span> <span class="o">=</span> <span class="mi">20</span>
+        <span class="p">},</span>
+
+<span class="o">+</span>       <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;reverse-buffer&quot;</span><span class="p">,</span>
+<span class="o">+</span>         <span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">OPTIONS_TABLE_FLAG</span><span class="p">,</span>
+<span class="o">+</span>         <span class="p">.</span><span class="n">default_num</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">+</span>       <span class="p">},</span>
+<span class="o">+</span>
+        <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;escape-time&quot;</span><span class="p">,</span>
+          <span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">OPTIONS_TABLE_NUMBER</span><span class="p">,</span>
+          <span class="p">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+</pre></div>
+
+<p>実際にバッファの制御関数を呼び出しているのはwindow-copy.cなので、さっき追加したオプションの値をみて切り替えられるようにします。</p>
+<div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/window-copy.c tmux-1.5-patched/window-copy.c</span>
+<span class="gd">--- tmux-1.5/window-copy.c      2011-07-09 18:42:38.000000000 +0900</span>
+<span class="gi">+++ tmux-1.5-patched/window-copy.c      2011-12-06 23:36:31.921805251 +0900</span>
+<span class="gu">@@ -1348,7 +1348,11 @@</span>
+        /* Add the buffer to the stack. */
+        limit = options_get_number(&amp;global_options, &quot;buffer-limit&quot;);
+<span class="gd">-       paste_add(&amp;global_buffers, buf, off, limit);</span>
+<span class="gi">+       if (options_get_number(&amp;global_options, &quot;reverse-buffer&quot;)) {</span>
+<span class="gi">+               paste_add(&amp;global_buffers, buf, off, limit);</span>
+<span class="gi">+       } else {</span>
+<span class="gi">+               paste_add(&amp;global_buffers, buf, off, limit);</span>
+<span class="gi">+       }</span>
+ }
+</pre></div>
+
+<p>あとは設定ファイルに以下を追加してmakeしたtmuxを起動してみます。</p>
+<div class="pygments_murphy"><pre><span class="nb">set</span> -g reverse-buffer on
+</pre></div>
+
+<p>バッファにコピーした文字列がlist-buffersの後ろに追加されていけば成功です。
+簡単ですよね？</p>
+<h1 id="_9">まとめ</h1>
+<p>以上、tmuxにreverse-bufferというオプションを追加して、バッファの挙動を変更できるようにしてみました。</p>
+<p>端末制御のプログラムは普段あまり触れる機会がないし複雑そうなイメージがあって敬遠しがちですが、ちょっとした機能を追加するだけだったら意外と簡単だったりするのでどんどんいじってみるといいと思います。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2011/11/06/blofofile-test"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/" class="hatena-bookmark-button" data-hatena-bookmark-title="tmuxに独自機能を追加する" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011" data-text="tmuxに独自機能を追加する">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+<div style="text-align: right;">
+</div>
+
+</div>
+<section id="blogright">
+  <div id="aboutme">
+    <h1>About Me</h1>
+    <img src="http://www.gravatar.com/avatar/69238498491bce19f67cf79d528f08ee.png?s=150" alt="pic" />
+  </div>
+
+<hr />
+  <div id="recent_posts">			
+    <h1>Recent posts</h1>
+    <ul>
+      <li><a href="/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" title="gearmanクライアントライブラリ cl-gearman"><p>gearmanクライアントライブラリ cl-gearman</a><span style="font-size: 80%;">(December 16, 2012 at 05:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" alt="はてなブックマーク - gearmanクライアントライブラリ cl-gearman" title="はてなブックマーク - gearmanクライアントライブラリ cl-gearman">
+</a>
+</li>
+      <li><a href="/blog/2012/11/20/web-engineers-online-toolbox" title="ウェブエンジニアのためのオンラインツールまとめ"><p>ウェブエンジニアのためのオンラインツールまとめ</a><span style="font-size: 80%;">(November 20, 2012 at 02:30 AM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox" alt="はてなブックマーク - ウェブエンジニアのためのオンラインツールまとめ" title="はてなブックマーク - ウェブエンジニアのためのオンラインツールまとめ">
+</a>
+</li>
+      <li><a href="/blog/2012/11/14/quicklinks3" title="Quicklinks 3"><p>Quicklinks 3</a><span style="font-size: 80%;">(November 14, 2012 at 11:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/14/quicklinks3">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/14/quicklinks3" alt="はてなブックマーク - Quicklinks 3" title="はてなブックマーク - Quicklinks 3">
+</a>
+</li>
+      <li><a href="/blog/2012/11/10/cl-frontcoding" title="cl-frontcodingをつくってみた"><p>cl-frontcodingをつくってみた</a><span style="font-size: 80%;">(November 10, 2012 at 08:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/10/cl-frontcoding">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/10/cl-frontcoding" alt="はてなブックマーク - cl-frontcodingをつくってみた" title="はてなブックマーク - cl-frontcodingをつくってみた">
+</a>
+</li>
+      <li><a href="/blog/2012/11/09/common-lisp-declare" title="Common Lispのdeclareについて"><p>Common Lispのdeclareについて</a><span style="font-size: 80%;">(November 09, 2012 at 11:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/09/common-lisp-declare">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/09/common-lisp-declare" alt="はてなブックマーク - Common Lispのdeclareについて" title="はてなブックマーク - Common Lispのdeclareについて">
+</a>
+</li>
+      <li><a href="/blog/2012/11/07/android-pitfalls" title="細かすぎて伝わらないAndroid開発のはまりどころまとめ その1"><p>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</a><span style="font-size: 80%;">(November 07, 2012 at 12:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/07/android-pitfalls">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/07/android-pitfalls" alt="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1" title="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1">
+</a>
+</li>
+      <li><a href="/blog/2012/11/02/ubuntu-pdf" title="UbuntuでPDFの日本語フォントが表示できないときの対処メモ"><p>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</a><span style="font-size: 80%;">(November 02, 2012 at 12:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/02/ubuntu-pdf">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/02/ubuntu-pdf" alt="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ" title="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ">
+</a>
+</li>
+      <li><a href="/blog/2012/10/31/quick-links" title="Quick links"><p>Quick links</a><span style="font-size: 80%;">(October 31, 2012 at 11:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/31/quick-links">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/31/quick-links" alt="はてなブックマーク - Quick links" title="はてなブックマーク - Quick links">
+</a>
+</li>
+    </ul>
+  </div>
+
+<hr />
+  <div id="categories">
+    <h1>Categories</h1>
+    <ul>
+     <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
+    </ul>
+  </div> 
+
+<hr />
+  <div id="archives">			
+    <h1>Archives</h1>
+    <ul>
+      <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
+      <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
+      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
+      <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2011/11/1" title="November 2011">November 2011</a>&nbsp;(2)</li>
+    </ul>
+  </div>
+
+<hr />
+  <div id="coderwall">
+    <h1>Badges</h1>
+    <section class="coderwall" data-coderwall-username="taksatou" data-coderwall-orientation="vertical"></section>
+  </div><br>
+
+</section>
+</div>
+
+        </div><!-- End Prose Block -->
+      </div><!-- End Main Block -->
+      <div id="footer">
+        
+  <div id="feedicon">
+  <a href="/blog/feed"><img src="/images/rss_icon.png" alt="rss" /></a>
+  </div>
+
+<div id="footerwrap">
+  <script type="text/javascript">
+    (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+
+  <footer id="mainfooter" class="bodywidth">
+    
+    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>. </p>
+    
+
+  </footer>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+		var links = document.getElementsByTagName('a');
+		var query = '?';
+		for(var i = 0; i < links.length; i++) {
+			if(links[i].href.indexOf('#disqus_thread') >= 0) {
+				query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+			}
+		}
+		document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/mojavy/get_num_replies.js' + query + '"></' + 'script>');
+	})();
+//]]>
+</script>
+
+
+      </div> <!-- End Footer -->
+    </div> <!-- End Content -->
+
+    <!-- shareaholic -->
+    <script type="text/javascript">
+      //<![CDATA[
+  (function() {
+    var shr = document.createElement('script');
+    shr.src = '//dtym7iokkjlif.cloudfront.net/assets/pub/shareaholic.js';
+    shr.type = 'text/javascript';
+    shr.async = 'true';
+    shr.onload = shr.onreadystatechange = function() {
+      var rs = this.readyState;
+      if (rs && rs != 'complete' && rs != 'loaded') return;
+      var apikey = 'd9fb965c81d656a30f7629e4e251e405'
+      try { Shareaholic.init(apikey); } catch (e) {}
+    };
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(shr, s);
+  })();
+//]]>
+    </script>
+  </body>
+</html>
+
+
+
+

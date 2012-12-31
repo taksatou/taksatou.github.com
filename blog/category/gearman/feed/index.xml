@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Sun, 16 Dec 2012 17:30:00 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>gearmanクライアントライブラリ cl-gearman</title>
+      <link>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</link>
+      <pubDate>Sun, 16 Dec 2012 17:30:00 JST</pubDate>
+      <category><![CDATA[gearman]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</guid>
+      <description>gearmanクライアントライブラリ cl-gearman</description>
+      <content:encoded><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
+<p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
+<p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
+<h2 id="gearman">Gearmanとは</h2>
+<p>今更感はありますが、Gearman自体について簡単に説明しておきます。</p>
+<p><a href="http://gearman.org/">http://gearman.org/</a></p>
+<p>Gearmanとは時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。Gearmanを利用するアプリケーションでは、client, job server, workerという3つの要素が存在します。
+それぞれの役割は以下の通りです。</p>
+<ul>
+<li>job server: clientから受けとったジョブを適切なworkerに渡す</li>
+<li>client: ジョブを生成してjob serverに送信する</li>
+<li>worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す</li>
+</ul>
+<p>cl-gearmanは、clientとjob server間、及びworkerとjob server間のプロトコルを抽象化したライブラリです。</p>
+<p>余談ですが、Gearmanはデータ永続化をしないものだとずっと思っていたのですがmysqlやsqliteに永続化できます。
+ジョブキューを使うなら以前はTheSchwartzという選択肢もありましたが、今はGearmanでほとんどの場合に対応できるのではないでしょうか。</p>
+<h2 id="_1">インストール</h2>
+<p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
+<p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
+<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
+git clone https://github.com/taksatou/cl-gearman.git
+</pre></div>
+
+<h2 id="_2">使い方</h2>
+<p>以下サンプルコードです</p>
+<h3 id="client">client</h3>
+<p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
+hello
+foo
+NIL
+</pre></div>
+
+<p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
+そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
+                  (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
+                  (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
+                  (jobs `(:medium ,job1 :low ,job2 :high ,job3)))
+
+             (dotimes (i 5)
+               (loop for (k v) on jobs by #&#39;cddr
+                  do (format t &quot;~a: ~a~%&quot; k (cl-gearman:get-job-status client v)))
+               (sleep 1))))
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+NIL
+</pre></div>
+
+<h3 id="worker">worker</h3>
+<p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
+ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
+返り値はprincでフォーマットした文字列としてclientに渡されます。workを実行するとジョブが割り当てられるまでブロックし、1つのジョブの実行が完了すると戻ります。</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
+  (cl-gearman:add-ability worker &quot;hello&quot;
+                          #&#39;(lambda (arg job) &quot;hello&quot;))
+
+  (cl-gearman:add-ability worker &quot;echo&quot;
+                          #&#39;(lambda (arg job) arg))
+
+  (cl-gearman:add-ability worker &quot;sleep&quot;
+                          #&#39;(lambda (arg job)
+                              (sleep (parse-integer arg))
+                              (format nil &quot;job:~A finished~%&quot; job)))
+
+  (loop do (cl-gearman:work worker)))
+</pre></div>
+
+<h3 id="_3">エラーハンドリング</h3>
+<p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
+workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
+<p>例えば、</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
+  (cl-gearman:add-ability worker &quot;error&quot;
+                          #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
+
+  (loop do (handler-bind ((error #&#39;(lambda (c) (invoke-restart &#39;cl-gearman:skip-job))))
+             (cl-gearman:work worker))))
+</pre></div>
+
+<p>のようにしておけば、エラーが発生したjobを無視することができます。
+abort-jobはclientに失敗を通知します。retry-jobは名前の通りハンドラを再度実行します。</p>
+<h2 id="_4">対応する処理系</h2>
+<p>メインに開発を行った環境は ubuntu 12.04, sbcl 1.0.55.0.debian です。
+一応以下の処理系で動作確認しました</p>
+<ul>
+<li>sbcl 1.0.55.0.debian </li>
+<li>clisp 2.49</li>
+<li>clozure cl 1.8-r15286M</li>
+</ul>
+<p>ffi系のライブラリには依存してないので比較的動かしやすいとは思いますが、動かなければ教えて下さい。</p>
+<h2 id="_5">まとめ</h2>
+<p>以上、拙作のcl-gearmanを紹介しました。Common Lispを始めてまだ半年足らずなのでおかしいところがあるかと思いますが、フィードバックを頂けるとうれしいです。</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

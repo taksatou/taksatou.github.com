@@ -7,7 +7,7 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2011-11-09T16:32:53Z</updated>
+  <updated>2012-12-16T17:30:00Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
@@ -18,40 +18,233 @@
       <name></name>
       <uri>http://mojavy.com/blog</uri>
     </author>
-    <title type="html"><![CDATA[blogofileでサムネイル画像を表示する方法]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/11/06/blofofile-test" />
-    <id>http://mojavy.com/blog/2011/11/06/blofofile-test</id>
-    <updated>2011-11-06T20:32:51Z</updated>
-    <published>2011-11-06T20:32:51Z</published>
-    <category scheme="http://mojavy.com/blog" term="python" />
-    <category scheme="http://mojavy.com/blog" term="blogofile" />
-    <summary type="html"><![CDATA[blogofileでサムネイル画像を表示する方法]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/blofofile-test"><![CDATA[<p><img alt="rena" src="/images/rena.jpg" /></p>
-<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
-<p>例えば、
-<a href="http://mojavy.com">http://mojavy.com</a>
-のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
-<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
-<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
-         self.slug = None
-         self.draft = False
-         self.filters = None
-<span class="gi">+        self.image = None</span>
-         self.__parse()
-         self.__post_process()
-</pre></div>
-
-<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span> 
-<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
-<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span> 
-<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
-</pre></div>
-
-<p>のようにすれば${post.image}のようにして参照できる。</p>
+    <title type="html"><![CDATA[gearmanクライアントライブラリ cl-gearman]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" />
+    <id>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</id>
+    <updated>2012-12-16T17:30:00Z</updated>
+    <published>2012-12-16T17:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="gearman" />
+    <category scheme="http://mojavy.com/blog" term="common lisp" />
+    <summary type="html"><![CDATA[gearmanクライアントライブラリ cl-gearman]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16"><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
+<p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
+<p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
+<h2 id="gearman">Gearmanとは</h2>
+<p>今更感はありますが、Gearman自体について簡単に説明しておきます。</p>
+<p><a href="http://gearman.org/">http://gearman.org/</a></p>
+<p>Gearmanとは時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。Gearmanを利用するアプリケーションでは、client, job server, workerという3つの要素が存在します。
+それぞれの役割は以下の通りです。</p>
 <ul>
-<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a> </li>
+<li>job server: clientから受けとったジョブを適切なworkerに渡す</li>
+<li>client: ジョブを生成してjob serverに送信する</li>
+<li>worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す</li>
+</ul>
+<p>cl-gearmanは、clientとjob server間、及びworkerとjob server間のプロトコルを抽象化したライブラリです。</p>
+<p>余談ですが、Gearmanはデータ永続化をしないものだとずっと思っていたのですがmysqlやsqliteに永続化できます。
+ジョブキューを使うなら以前はTheSchwartzという選択肢もありましたが、今はGearmanでほとんどの場合に対応できるのではないでしょうか。</p>
+<h2 id="_1">インストール</h2>
+<p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
+<p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
+<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
+git clone https://github.com/taksatou/cl-gearman.git
+</pre></div>
+
+<h2 id="_2">使い方</h2>
+<p>以下サンプルコードです</p>
+<h3 id="client">client</h3>
+<p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
+hello
+foo
+NIL
+</pre></div>
+
+<p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
+そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
+                  (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
+                  (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
+                  (jobs `(:medium ,job1 :low ,job2 :high ,job3)))
+
+             (dotimes (i 5)
+               (loop for (k v) on jobs by #&#39;cddr
+                  do (format t &quot;~a: ~a~%&quot; k (cl-gearman:get-job-status client v)))
+               (sleep 1))))
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+NIL
+</pre></div>
+
+<h3 id="worker">worker</h3>
+<p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
+ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
+返り値はprincでフォーマットした文字列としてclientに渡されます。workを実行するとジョブが割り当てられるまでブロックし、1つのジョブの実行が完了すると戻ります。</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
+  (cl-gearman:add-ability worker &quot;hello&quot;
+                          #&#39;(lambda (arg job) &quot;hello&quot;))
+
+  (cl-gearman:add-ability worker &quot;echo&quot;
+                          #&#39;(lambda (arg job) arg))
+
+  (cl-gearman:add-ability worker &quot;sleep&quot;
+                          #&#39;(lambda (arg job)
+                              (sleep (parse-integer arg))
+                              (format nil &quot;job:~A finished~%&quot; job)))
+
+  (loop do (cl-gearman:work worker)))
+</pre></div>
+
+<h3 id="_3">エラーハンドリング</h3>
+<p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
+workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
+<p>例えば、</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
+  (cl-gearman:add-ability worker &quot;error&quot;
+                          #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
+
+  (loop do (handler-bind ((error #&#39;(lambda (c) (invoke-restart &#39;cl-gearman:skip-job))))
+             (cl-gearman:work worker))))
+</pre></div>
+
+<p>のようにしておけば、エラーが発生したjobを無視することができます。
+abort-jobはclientに失敗を通知します。retry-jobは名前の通りハンドラを再度実行します。</p>
+<h2 id="_4">対応する処理系</h2>
+<p>メインに開発を行った環境は ubuntu 12.04, sbcl 1.0.55.0.debian です。
+一応以下の処理系で動作確認しました</p>
+<ul>
+<li>sbcl 1.0.55.0.debian </li>
+<li>clisp 2.49</li>
+<li>clozure cl 1.8-r15286M</li>
+</ul>
+<p>ffi系のライブラリには依存してないので比較的動かしやすいとは思いますが、動かなければ教えて下さい。</p>
+<h2 id="_5">まとめ</h2>
+<p>以上、拙作のcl-gearmanを紹介しました。Common Lispを始めてまだ半年足らずなのでおかしいところがあるかと思いますが、フィードバックを頂けるとうれしいです。</p>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[ウェブエンジニアのためのオンラインツールまとめ]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox" />
+    <id>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</id>
+    <updated>2012-11-20T02:30:00Z</updated>
+    <published>2012-11-20T02:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="web" />
+    <category scheme="http://mojavy.com/blog" term="tips" />
+    <summary type="html"><![CDATA[ウェブエンジニアのためのオンラインツールまとめ]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox"><![CDATA[<p><img alt="tool" src="/images/tool-logo.png" /></p>
+<p><a href="http://ivanzuzak.info/2012/11/18/the-web-engineers-online-toolbox.html">The Web engineer's online toolbox</a>というまとめ記事が便利そうだったので、実際に試しつつ抄訳してみました。(一部のコメントと体裁は変えています。)</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#_2">一覧</a><ul>
+<li><a href="#requestbin">RequestBin</a></li>
+<li><a href="#hurl">Hurl</a></li>
+<li><a href="#httpbin">httpbin</a></li>
+<li><a href="#redbot">REDbot</a></li>
+<li><a href="#webgun">WebGun</a></li>
+<li><a href="#apify">Apify</a></li>
+<li><a href="#unicorn">Unicorn</a></li>
+<li><a href="#feed-validator">Feed validator</a></li>
+<li><a href="#link-checker">Link checker</a></li>
+<li><a href="#host-tracker">Host tracker</a></li>
+<li><a href="#pingdom-full-page-test">Pingdom Full page test</a></li>
+<li><a href="#har-viewer">HAR viewer</a></li>
+<li><a href="#cors-proxy">CORS proxy</a></li>
+<li><a href="#browserling">Browserling</a></li>
+<li><a href="#websocket-echo-test">WebSocket Echo Test</a></li>
+<li><a href="#yql">YQL</a></li>
+<li><a href="#yahoo-pipes">Yahoo Pipes</a></li>
+<li><a href="#apiary">Apiary</a></li>
+</ul>
+</li>
+<li><a href="#_3">おわりに</a></li>
+</ul>
+</div>
+<h2 id="_2">一覧</h2>
+<h3 id="requestbin"><a href="http://requestb.in/">RequestBin</a></h3>
+<p>httpリクエストを保存するエンドポイントを作ってくれる。</p>
+<p>Create a RequestBin のボタンをクリックするとURLが表示されるので、そこをHTTPクライアントからたたくとRequestBin側にリクエスト内容が記録される。
+ソースも公開されてるのでローカルで立ちあげることもできる。</p>
+<p>githubの<a href="https://help.github.com/articles/testing-webhooks">webhookのhelp</a>も参考にどうぞ。</p>
+<h3 id="hurl"><a href="http://hurl.it">Hurl</a></h3>
+<p>httpリクエストを実行してくれる。パーマリンクも作ってくれるので、POSTリクエストもコピペで他の人と共有できる。</p>
+<ul>
+<li>類似サービス: <a href="http://resttesttest.com/">REST test test</a> ,  <a href="https://apigee.com/console/others">Apigee console</a> </li>
+</ul>
+<h3 id="httpbin"><a href="http://httpbin.org/">httpbin</a></h3>
+<p>HTTPリクエスト側でレスポンスのHTTP status codeやレスポンスやリダイレクト、cookieなどを制御できる。HTTPクライアントのテストに便利。</p>
+<ul>
+<li>類似サービス: <a href="http://ivanzuzak.info/urlecho/">UrlEcho</a></li>
+</ul>
+<h3 id="redbot"><a href="http://redbot.org/">REDbot</a></h3>
+<p>HTTPのリソースをチェックしてくれる。問題を検出したら改善案のサジェストもしてくれる。</p>
+<ul>
+<li>類似サービス: <a href="http://zamez.org/httplint">HTTP lint</a></li>
+</ul>
+<h3 id="webgun"><a href="http://webgun.io/">WebGun</a></h3>
+<p>webhookを簡単に作るためのAPIを提供している。現在はまだベータっぽい。</p>
+<h3 id="apify"><a href="http://apify.heroku.com">Apify</a></h3>
+<p>ウェブページをスクレイピングしてJSON API化してくれる。
+CSSセレクタかxpathに名前をつけて設定するだけでよしなにやってくれる。</p>
+<p><a href="http://apify.heroku.com/resources/50a99278a7301c000200005a">試しに元記事をAPI化してみた</a></p>
+<h3 id="unicorn"><a href="http://validator.w3.org/unicorn/">Unicorn</a></h3>
+<p>前述の<a href="http://redbot.org/">REDbot</a>はHTTPをチェックしてくれるけど、こちらはHTMLドキュメントがW3Cに準拠してるかをバリデートしてくれる。</p>
+<ul>
+<li>類似サービス: <a href="http://lint.brihten.com/html/">HTML lint</a></li>
+</ul>
+<h3 id="feed-validator"><a href="http://validator.w3.org/feed/">Feed validator</a></h3>
+<p>こちらはRSSとATOMフィードをバリデートしてくれる。</p>
+<h3 id="link-checker"><a href="http://validator.w3.org/checklink">Link checker</a></h3>
+<p>リンクを再帰的にたどって、重複やリンク切れをチェックしてくれる。</p>
+<h3 id="host-tracker"><a href="http://www.host-tracker.com/">Host tracker</a></h3>
+<p>ウェブサイトのモニタリングサービス。定期的にpingして、問題があった場合はメール通知してくれる。</p>
+<ul>
+<li>類似サービス: <a href="http://www.downforeveryoneorjustme.com/">Down for everyone or just me</a>, <a href="http://tools.pingdom.com/ping/">Pimgdom ping service</a></li>
+</ul>
+<h3 id="pingdom-full-page-test"><a href="http://tools.pingdom.com/fpt/">Pingdom Full page test</a></h3>
+<p>ウェブページのロード時間を計測、解析してくれる。リクエストを実行するサーバは米国しかないので国内だとちょっと使いづらい。
+類似サービスの<a href="http://www.webpagetest.org/">Web page test</a>ならTokyoが選べる。</p>
+<h3 id="har-viewer"><a href="http://www.softwareishard.com/har/viewer/">HAR viewer</a></h3>
+<p>HTTP tracking toolsで生成されたHTTP Archive (HAR)形式のログをビジュアライズしてくれる。</p>
+<h3 id="cors-proxy"><a href="http://www.corsproxy.com/">CORS proxy</a></h3>
+<p>クロスドメインでjsを実行できるようにヘッダを追加してレスポンスしてくれるプロキシ。</p>
+<h3 id="browserling"><a href="https://browserling.com/">Browserling</a></h3>
+<p>ブラウザ上で動くインタラクティブなクロスブラウザ。メジャーなブラウザは大体サポートされている。
+動作は重いけど表示確認くらいになら無料のままでも使えそう。</p>
+<h3 id="websocket-echo-test"><a href="http://www.websocket.org/echo.html">WebSocket Echo Test</a></h3>
+<p>WebSocketをテストできるエコーサーバ。</p>
+<h3 id="yql"><a href="http://developer.yahoo.com/yql/">YQL</a></h3>
+<p>ウェブサービスからとってきたデータをSQLっぽい言語で整形できる。</p>
+<h3 id="yahoo-pipes"><a href="http://pipes.yahoo.com/pipes/">Yahoo Pipes</a></h3>
+<p>ウェブサービスをGUIでマッシュアップできる。</p>
+<h3 id="apiary"><a href="http://apiary.io/">Apiary</a></h3>
+<p>良い感じのREST APIドキュメントをインタラクティブなインスペクタをつかってジェネレートできる。まだベータ。</p>
+<ul>
+<li>類似サービス: <a href="http://swagger.wordnik.com/">Swagger</a></li>
+</ul>
+<h2 id="_3">おわりに</h2>
+<ul>
+<li>いくつかのツールはサーバに負荷をかけてしまう可能性があるので注意してつかってください。</li>
+<li>他にもなにかあれば教えてもらえるとうれしいです。</li>
 </ul>]]></content>
   </entry>
   <entry>
@@ -59,26 +252,581 @@
       <name></name>
       <uri>http://mojavy.com/blog</uri>
     </author>
-    <title type="html"><![CDATA[ブログ引越しました]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/11/06/new_blog" />
-    <id>http://mojavy.com/blog/2011/11/06/new_blog</id>
-    <updated>2011-11-06T19:44:40Z</updated>
-    <published>2011-11-06T19:44:40Z</published>
-    <category scheme="http://mojavy.com/blog" term="blog" />
-    <category scheme="http://mojavy.com/blog" term="blogofile" />
-    <summary type="html"><![CDATA[ブログ引越しました]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/new_blog"><![CDATA[<div class="document">
-<p>いままでblogger使ってましたが、github pagesに引越しました。</p>
-<p><a class="reference external" href="http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/">http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/</a>
-を参考にしてblogofileで構築しました。</p>
-<p>デザインは
-<a class="reference external" href="http://www.webdesignlondon-tristar.co.uk/website-templates">http://www.webdesignlondon-tristar.co.uk/website-templates</a>
-から拝借しました。</p>
-<p>blogofileのテンプレートは
-<a class="reference external" href="https://github.com/mpirnat/blogofile.com">https://github.com/mpirnat/blogofile.com</a>
-あたりを参考にするとよいと思います。</p>
-<p>よくあるブログサービスをそのまま使う場合と比べると構築までのハードルが若干高いですが、今後ちょっとしたウェブページをつくりたくなったときもソースをそのまま流用できるし、bloggerで色々不満だったことが解消できてよい感じです。</p>
+    <title type="html"><![CDATA[Quicklinks 3]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/14/quicklinks3" />
+    <id>http://mojavy.com/blog/2012/11/14/quicklinks3</id>
+    <updated>2012-11-14T23:30:00Z</updated>
+    <published>2012-11-14T23:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="quicklinks" />
+    <summary type="html"><![CDATA[Quicklinks 3]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/14/quicklinks3"><![CDATA[<p><img alt="shader" src="/images/shader-200.png" /></p>
+<p>最近はUnityを使う機会を得たのでゲーム関連技術についていろいろ調べてました。</p>
+<h3 id="shadow-algorithms-for-real-time-rendering"><a href="http://www.mpi-inf.mpg.de/~mschwarz/papers/shadowcourse-eg10.pdf">Shadow Algorithms for Real-time Rendering</a></h3>
+<p>シェーダーを扱った講義資料らしい。この講義を元にした本がでていて<a href="http://www.amazon.co.jp/%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%A3%E3%83%89%E3%82%A6-Elmar-Eisemann/dp/4862461670/ref=pd_sim_fb_1">日本語翻訳</a>もあるみたいです。
+モデリングは絵心がないとちょっと難しそうだけど、こういうのであれば自分で書いてみたいです。</p>
+<h3 id="black-tie"><a href="https://github.com/aerique/black-tie">black-tie</a></h3>
+<p>ノイズ生成アルゴリズムというものに興味がわきました。残念ながらこのライブラリはあまりメンテはされてない。</p>
+<h3 id="_1">物理演算系ライブラリ</h3>
+<p>2次元剛体のシュミレーションならChipmunkとかBox2Dあたりで気軽にできそうですが、3次元のやわらかいもの表現するにはちょっとハードルがあがるようです。</p>
+<ul>
+<li><a href="http://bulletphysics.org/wordpress/">BULLET</a></li>
+<li><a href="http://www.sofa-framework.org/">SOFA</a></li>
+<li><a href="http://code.google.com/p/opencloth/">opencloth</a></li>
+</ul>
+<p>物理演算を駆使した3次元リアルぷよぷよがやってみたいです。</p>
+<h3 id="mixamo"><a href="http://www.mixamo.com/">mixamo</a></h3>
+<p>こういう素材がもっと増えるといいですね。</p>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[cl-frontcodingをつくってみた]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/10/cl-frontcoding" />
+    <id>http://mojavy.com/blog/2012/11/10/cl-frontcoding</id>
+    <updated>2012-11-10T20:30:00Z</updated>
+    <published>2012-11-10T20:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="algorithms" />
+    <category scheme="http://mojavy.com/blog" term="common lisp" />
+    <summary type="html"><![CDATA[cl-frontcodingをつくってみた]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/10/cl-frontcoding"><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
+<p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
+<p><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">http://d.hatena.ne.jp/naoya/20080914/1221382329</a> のパクりです。</p>
+<p>ソースは<a href="https://github.com/taksatou/cl-frontcoding">https://github.com/taksatou/cl-frontcoding</a>です。</p>
+<p>学習目的でつくったので実用的なライブラリではないですが、CLOSやマクロを使いつつパッケージ作成〜テストまで一通りやりました。</p>
+<p>CLOSもマクロも基本的な使い方をするだけなら意外と簡単でした。</p>
+<p>CLOSとかマクロは本を読んでもいまいちよくわからない上に、深淵なイメージが膨らんで心理的ハードルがあがってしまうだけなので、よくわからないなりになにか作ってみると理解が進んでいいと思います。</p>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Common Lispのdeclareについて]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/09/common-lisp-declare" />
+    <id>http://mojavy.com/blog/2012/11/09/common-lisp-declare</id>
+    <updated>2012-11-09T23:00:00Z</updated>
+    <published>2012-11-09T23:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="common lisp" />
+    <summary type="html"><![CDATA[Common Lispのdeclareについて]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/09/common-lisp-declare"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
+<p>Common Lispのdeclareについて調べた。
+変数の型や式に関することをコンパイラに伝えてやるために使うものらしい。</p>
+<p>例えば、</p>
+<div class="pygments_murphy"><pre>(defun add (x y) (+ x y))
+</pre></div>
+
+<p>は</p>
+<div class="pygments_murphy"><pre>(defun add (x y)
+  (declare (fixnum x y))
+  (the fixnum (+ x y)))
+</pre></div>
+
+<p>とすれば、引数と戻り値の型を指定できる。</p>
+<p>さらに、</p>
+<div class="pygments_murphy"><pre>(defun add (x y)
+  (declare (optimize (speed 3) (safety 0)))
+  (declare (fixnum x y))
+  (the fixnum (+ x y)))
+</pre></div>
+
+<p>とすればさらに最適化される。ここまですると、Cで実装した場合と遜色ないくらいになるらしい。</p>
+<p>ためしにdisassembleしてみた。処理系はsbcl 1.0.55.0。</p>
+<p>最初のバージョンは以下のようになった。すでにある程度最適化されてる？
+LEA(load effective address)命令は、srcオペランドのアドレスを計算し、そのアドレスをdestオペランドにロードするというものらしい。<a href="http://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/%E3%83%87%E3%83%BC%E3%82%BF%E8%BB%A2%E9%80%81%E5%91%BD%E4%BB%A4">(参考)</a></p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y) (+ x y))
+
+CL-USER&gt; (disassemble #&#39;add)
+; disassembly for ADD
+; 03C43D5D:       488B55F8         MOV RDX, [RBP-8]           ; no-arg-parsing entry point
+;       61:       488B7DF0         MOV RDI, [RBP-16]
+;       65:       4C8D1C25E0010020 LEA R11, [#x200001E0]      ; GENERIC-+
+;       6D:       41FFD3           CALL R11
+;       70:       480F42E3         CMOVB RSP, RBX
+;       74:       488BE5           MOV RSP, RBP
+;       77:       F8               CLC
+;       78:       5D               POP RBP
+;       79:       C3               RET
+;       7A:       CC0A             BREAK 10                   ; error trap
+;       7C:       02               BYTE #X02
+;       7D:       18               BYTE #X18                  ; INVALID-ARG-COUNT-ERROR
+;       7E:       54               BYTE #X54                  ; RCX
+</pre></div>
+
+<p>2番目の、型だけを宣言したものは以下のようになった。うーむ、確かに型チェックっぽいコードは増えてるが速くなってるわけではなさそうな感じ。あとで調べる。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
+           (declare (fixnum x y))
+           (the fixnum (+ x y)))
+
+CL-USER&gt; (disassemble #&#39;add)
+; disassembly for ADD
+; 039D3B73:       488BD1           MOV RDX, RCX               ; no-arg-parsing entry point
+;       76:       48D1FA           SAR RDX, 1
+;       79:       488BC7           MOV RAX, RDI
+;       7C:       48D1F8           SAR RAX, 1
+;       7F:       4801C2           ADD RDX, RAX
+;       82:       48B80000000000000040 MOV RAX, 4611686018427387904
+;       8C:       4801D0           ADD RAX, RDX
+;       8F:       48C1E83F         SHR RAX, 63
+;       93:       7509             JNE L0
+;       95:       48D1E2           SHL RDX, 1
+;       98:       488BE5           MOV RSP, RBP
+;       9B:       F8               CLC
+;       9C:       5D               POP RBP
+;       9D:       C3               RET
+;       9E: L0:   486BC202         IMUL RAX, RDX, 2
+;       A2:       710E             JNO L1
+;       A4:       488BC2           MOV RAX, RDX
+;       A7:       4C8D1C25B0050020 LEA R11, [#x200005B0]      ; ALLOC-SIGNED-BIGNUM-IN-RAX
+;       AF:       41FFD3           CALL R11
+;       B2: L1:   488B1557FFFFFF   MOV RDX, [RIP-169]         ; &#39;FIXNUM
+;       B9:       CC0A             BREAK 10                   ; error trap
+;       BB:       03               BYTE #X03
+;       BC:       1F               BYTE #X1F                  ; OBJECT-NOT-TYPE-ERROR
+;       BD:       15               BYTE #X15                  ; RAX
+;       BE:       95               BYTE #X95                  ; RDX
+;       BF:       CC0A             BREAK 10                   ; error trap
+;       C1:       02               BYTE #X02
+;       C2:       18               BYTE #X18                  ; INVALID-ARG-COUNT-ERROR
+;       C3:       54               BYTE #X54                  ; RCX
+;       C4:       CC0A             BREAK 10                   ; error trap
+;       C6:       02               BYTE #X02
+;       C7:       08               BYTE #X08                  ; OBJECT-NOT-FIXNUM-ERROR
+;       C8:       95               BYTE #X95                  ; RDX
+;       C9:       CC0A             BREAK 10                   ; error trap
+;       CB:       04               BYTE #X04
+;       CC:       08               BYTE #X08                  ; OBJECT-NOT-FIXNUM-ERROR
+;       CD:       FED501           BYTE #XFE, #XD5, #X01      ; RDI
+</pre></div>
+
+<p>最後の最適化の宣言をつけたものは以下のようになった。たしかに速そうにはなった。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
+           (declare (optimize (speed 3) (safety 0)))
+           (declare (fixnum x y))
+           (the fixnum (+ x y)))
+
+CL-USER&gt; (disassemble #&#39;add)
+; disassembly for ADD
+; 034DD10F:       4801FA           ADD RDX, RDI               ; no-arg-parsing entry point
+;       12:       488BE5           MOV RSP, RBP
+;       15:       F8               CLC
+;       16:       5D               POP RBP
+;       17:       C3               RET
+</pre></div>
+
+<p>ついでにCで書いた以下の関数もdisassebleしてみた。</p>
+<div class="pygments_murphy"><pre><span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><code>cc -c a.c &amp;&amp; objdump -d a.o</code> とすると、</p>
+<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 &lt;add&gt;:
+   0:   55                      push   %rbp
+   1:   48 89 e5                mov    %rsp,%rbp
+   4:   89 7d fc                mov    %edi,-0x4(%rbp)
+   7:   89 75 f8                mov    %esi,-0x8(%rbp)
+   a:   8b 45 f8                mov    -0x8(%rbp),%eax
+   d:   8b 55 fc                mov    -0x4(%rbp),%edx
+  10:   01 d0                   add    %edx,%eax
+  12:   5d                      pop    %rbp
+  13:   c3                      retq
+</pre></div>
+
+<p><code>cc -O3 -c a.c &amp;&amp; objdump -d a.o</code> なら、</p>
+<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 &lt;add&gt;:
+   0:   8d 04 37                lea    (%rdi,%rsi,1),%eax
+   3:   c3                      retq
+</pre></div>
+
+<p>まあとりあえず単純に命令数だけでいうと、
+素のSBCL &gt; 素のGCC &gt; 最適化したSBCL &gt; 最適化したGCC
+という感じにはなったので、CよりLispのほうが速い(場合もある)というふれこみは嘘ではなさそうですね。</p>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[細かすぎて伝わらないAndroid開発のはまりどころまとめ その1]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/07/android-pitfalls" />
+    <id>http://mojavy.com/blog/2012/11/07/android-pitfalls</id>
+    <updated>2012-11-07T12:00:00Z</updated>
+    <published>2012-11-07T12:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="android" />
+    <category scheme="http://mojavy.com/blog" term="tips" />
+    <summary type="html"><![CDATA[細かすぎて伝わらないAndroid開発のはまりどころまとめ その1]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/07/android-pitfalls"><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
+<p>これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。
+その2はまたねたがたまってきたらたぶんそのうち。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#onanimationendviewnullpointerexception">onAnimationEndでviewの階層を操作するとNullPointerExceptionでおちる</a></li>
+<li><a href="#animation">Animationが動かない</a></li>
+<li><a href="#windowmanageraddview">WindowManagerにaddViewしたときの挙動</a></li>
+<li><a href="#activity">Activityが横向きでスタートした場合と縦向きでスタートしたときで表示倍率が違う</a></li>
+<li><a href="#oncreate">onCreateが何回もよばれる</a></li>
+<li><a href="#popupwindow">popupWindowのサイズが変わらない</a></li>
+<li><a href="#httpurlconnection-0byteresponse">HttpURLConnectionが 0byteのresponseを返す</a></li>
+<li><a href="#orgapachehttpimplclientdefaulthttpclient">org.apache.http.impl.client.DefaultHttpClientがすごく遅い</a></li>
+<li><a href="#eclipseandroid-plugin">eclipseのAndroid pluginが動かなくなった</a></li>
+<li><a href="#webview">WebViewで表示されるコンテンツが小さすぎる</a></li>
+<li><a href="#javalangruntimeexception-stub">java.lang.RuntimeException: Stub!</a></li>
+<li><a href="#jarandroid">jarとして配布するandroidライブラリ内にリソースを埋め込むことはできない</a></li>
+<li><a href="#android-maven-plugin-mvn-eclipseeclipse-eclipse">android-maven-plugin から mvn eclipse:eclipse でeclipse用にエクスポートすることはできない</a></li>
+</ul>
 </div>
-]]></content>
+<h2 id="onanimationendviewnullpointerexception">onAnimationEndでviewの階層を操作するとNullPointerExceptionでおちる</h2>
+<p>Viewをフェードアウトして親Viewからremoveする、というような動作をしたい場合に、普通にonAnimationEndの中でremoveViewとかするとNullPointerExceptionでおちます。onAnimationEndの中でViewの階層構造を操作するような処理をしてはだめらしいです。回避するには、Handlerをつかってタイミングをずらしてやるとよいです。</p>
+<ul>
+<li>参考: <a href="http://stackoverflow.com/questions/5569267/nullpointerexception-that-doesnt-point-to-any-line-in-my-code">http://stackoverflow.com/questions/5569267/nullpointerexception-that-doesnt-point-to-any-line-in-my-code</a></li>
+</ul>
+<h2 id="animation">Animationが動かない</h2>
+<p>AnimationさせるViewには親Viewが存在している必要があります。WindowManagerはViewではないので、WindowManagerにaddViewしたViewをアニメーションさせたい場合は空のRelativeLayoutとかにaddViewしてから、RelativeLayoutのほうをWindowManagerにaddViewしてやる必要があります。</p>
+<h2 id="windowmanageraddview">WindowManagerにaddViewしたときの挙動</h2>
+<p>WindowManagerにもaddViewできますが、通常のViewとは挙動が違います。</p>
+<ul>
+<li>背景透過はWindowManager.LayoutParam.format に TRANSLUCENT をセットすればよいです。</li>
+<li>dimでフェードインできますが、その際のdurationを変更する方法は分かりませんでした。</li>
+<li>BACKボタンはきかなくなります。自分でKeyEventを処理してやる必要があります。android.widget.PopupWindowのdispathKeyEventのソースが参考になります。</li>
+</ul>
+<h2 id="activity">Activityが横向きでスタートした場合と縦向きでスタートしたときで表示倍率が違う</h2>
+<ul>
+<li>参考：<a href="http://d.hatena.ne.jp/acidgraphix/20110126/1296018143">http://d.hatena.ne.jp/acidgraphix/20110126/1296018143</a></li>
+</ul>
+<h2 id="oncreate">onCreateが何回もよばれる</h2>
+<p>回転やキーボード表示のタイミングでもonCreateがよばれます。AndroidManifest.xmlでconfigChangesを設定することで回避できます。</p>
+<ul>
+<li>参考: <a href="http://stackoverflow.com/questions/2606470/unexpected-resume-of-package-name-while-already-resumed-in-package-name-err">http://stackoverflow.com/questions/2606470/unexpected-resume-of-package-name-while-already-resumed-in-package-name-err</a></li>
+</ul>
+<h2 id="popupwindow">popupWindowのサイズが変わらない</h2>
+<p>popupWindowのsetWidth, setHeightは次回以降の表示サイズしか変えられません。既に表示しているポップアップウィンドウのサイズはそのままです。invalidateしても無駄です。</p>
+<h2 id="httpurlconnection-0byteresponse">HttpURLConnectionが 0byteのresponseを返す</h2>
+<p>コネクションプールとkeepaliveがらみで問題が発生する場合があるみたいです。SDKのバージョンとウェブサーバ側の設定も影響します。
+<code>System.setProperty("http.keepAlive", "false")</code> で回避はできるようです。これに遭遇したときは、org.apache.http.impl.client.DefaultHttpClientの方を使うことにしたので詳細は追ってません。</p>
+<ul>
+<li>参考: <a href="http://stackoverflow.com/questions/1440957/httpurlconnection-getresponsecode-returns-1-on-second-invocation">http://stackoverflow.com/questions/1440957/httpurlconnection-getresponsecode-returns-1-on-second-invocation</a></li>
+</ul>
+<h2 id="orgapachehttpimplclientdefaulthttpclient">org.apache.http.impl.client.DefaultHttpClientがすごく遅い</h2>
+<p>httpsでリクエストを投げると、ウェブサーバ側の負荷が高いわけでもネットワークが細いわけでもないのに、返ってくるまでなぜか数秒かかる場合があります。こちらもkeepaliveがらみの問題っぽいです。これもウェブサーバ側の設定が影響します。
+試した限りでは以下のような状況でした。</p>
+<ul>
+<li>setHeader("Connection", "close") しても効果なし</li>
+<li>setKeepAliveStrategyでdurationを 0とか1にしても効果なし</li>
+<li>Connection closeしないウェブサーバならすぐレスポンスが返ってくる</li>
+<li>httpならすぐレスポンスが返ってくる</li>
+</ul>
+<p><a href="http://hc.apache.org/httpclient-3.x/sslguide.html">ここ( http://hc.apache.org/httpclient-3.x/sslguide.html )</a> のKnown limitations and problemsをみるとそれっぽい既知の問題があるようですが、根が深そうだったので詳細は追ってません。</p>
+<h2 id="eclipseandroid-plugin">eclipseのAndroid pluginが動かなくなった</h2>
+<p>なぜかeclipseでAndroid pluginが動かなくなるときがありました。詳細をメモるのを忘れてしまいましたが、以下の手順で直ったような気がします。</p>
+<ol>
+<li>Android Support Libraryをアンインストール</li>
+<li>eclipse再起動</li>
+<li>新しいAndroidプロジェクトを作るとダイアログでライブラリのインストールを促されるのでそれに従う</li>
+<li>android プラグインをアップデート</li>
+</ol>
+<h2 id="webview">WebViewで表示されるコンテンツが小さすぎる</h2>
+<p>通常ビューのスケールとWebViewのスケールは別です。setScaleで調整する必要があります。
+これはたぶんiOSでも同様かと。</p>
+<h2 id="javalangruntimeexception-stub">java.lang.RuntimeException: Stub!</h2>
+<p>android.jar内のコードはdalvikvmの外で実行することはできません。問答無用でタイトルの例外が飛びます。
+エラーメッセージはもうちょいなんとかならなかったのか。</p>
+<p>参考</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/7247502/using-android-jar-in-java-project-runtimeexception-stub">http://stackoverflow.com/questions/7247502/using-android-jar-in-java-project-runtimeexception-stub</a></li>
+<li><a href="http://www.slideshare.net/miyatay/abc2011w">http://www.slideshare.net/miyatay/abc2011w</a></li>
+</ul>
+<h2 id="jarandroid">jarとして配布するandroidライブラリ内にリソースを埋め込むことはできない</h2>
+<p>リソースIDを列挙しているRパッケージはjarにそのまま入れることはできますが、そのリソースIDは不正なものとなります。
+ライブラリにリソースを含めたい場合は、ソースも含めたプロジェクトをまるごと配布するしかないようです。</p>
+<p>ごく小さなアイコン画像だけとかであればバイナリデータをソース中に埋め込んでしまう、というのも手です。
+iOSならBundleという仕組みがあります。</p>
+<h2 id="android-maven-plugin-mvn-eclipseeclipse-eclipse">android-maven-plugin から mvn eclipse:eclipse でeclipse用にエクスポートすることはできない</h2>
+<p>androidでもmavenは使えますが、androidのmavenプロジェクトは通常の方法(mvn eclipse:eclipse)ではeclipseにインポートできません。
+以下のファイルを手動でつくってみたらとりあえずいけました。</p>
+<ul>
+<li>.classpath</li>
+</ul>
+<div class="pygments_murphy"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;classpath&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;src/main/java&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;gen&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;con&quot;</span> <span class="na">path=</span><span class="s">&quot;com.android.ide.eclipse.adt.ANDROID_FRAMEWORK&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;con&quot;</span> <span class="na">path=</span><span class="s">&quot;com.android.ide.eclipse.adt.LIBRARIES&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;output&quot;</span> <span class="na">path=</span><span class="s">&quot;bin/classes&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/classpath&gt;</span>
+</pre></div>
+
+<ul>
+<li>.project</li>
+</ul>
+<div class="pygments_murphy"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;projectDescription&gt;</span>
+        <span class="nt">&lt;name&gt;</span>project-name<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;comment&gt;&lt;/comment&gt;</span>
+        <span class="nt">&lt;projects&gt;</span>
+        <span class="nt">&lt;/projects&gt;</span>
+        <span class="nt">&lt;buildSpec&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.ResourceManagerBuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.PreCompilerBuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>org.eclipse.jdt.core.javabuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.ApkBuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+        <span class="nt">&lt;/buildSpec&gt;</span>
+        <span class="nt">&lt;natures&gt;</span>
+                <span class="nt">&lt;nature&gt;</span>com.android.ide.eclipse.adt.AndroidNature<span class="nt">&lt;/nature&gt;</span>
+                <span class="nt">&lt;nature&gt;</span>org.eclipse.jdt.core.javanature<span class="nt">&lt;/nature&gt;</span>
+        <span class="nt">&lt;/natures&gt;</span>
+<span class="nt">&lt;/projectDescription&gt;</span>
+</pre></div>
+
+<ul>
+<li>project.properties</li>
+</ul>
+<div class="pygments_murphy"><pre><span class="c"># Project target.</span>
+<span class="na">target</span><span class="o">=</span><span class="s">android-10</span>
+
+<span class="c"># if it is a library</span>
+<span class="c"># android.library=true</span>
+</pre></div>
+
+<p>まあ、なんというか、Androidはいろいろ残念ですね。</p>
+<p>iOSはこういう仕様なのかバグなのかよくわからないようなものが少ないし、OSバージョンの入れ換わりが早くて対応バージョンも少なくて済む分、個人的な体感ではandroidアプリの工数はiOSの3割増しという感じ。</p>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[UbuntuでPDFの日本語フォントが表示できないときの対処メモ]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf" />
+    <id>http://mojavy.com/blog/2012/11/02/ubuntu-pdf</id>
+    <updated>2012-11-02T12:00:00Z</updated>
+    <published>2012-11-02T12:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="pdf" />
+    <category scheme="http://mojavy.com/blog" term="tips" />
+    <category scheme="http://mojavy.com/blog" term="ubuntu" />
+    <summary type="html"><![CDATA[UbuntuでPDFの日本語フォントが表示できないときの対処メモ]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/02/ubuntu-pdf"><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
+<p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>
+<div class="pygments_murphy"><pre>Error <span class="o">(</span>13373<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13412<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13497<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13515<span class="o">)</span>: No font in show
+Error <span class="o">(</span>13555<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13572<span class="o">)</span>: No font in show
+Error <span class="o">(</span>13607<span class="o">)</span>: No font in show/space
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Unknown font tag <span class="s1">&#39;C0_0&#39;</span>
+Error <span class="o">(</span>231<span class="o">)</span>: No font in show
+Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
+</pre></div>
+
+<p>pdfビューワはDocument Viewerでもokularでも同様だった。</p>
+<p>そこで、<a href="https://forums.ubuntulinux.jp/viewtopic.php?id=8281">このあたり</a>を参考に、</p>
+<div class="pygments_murphy"><pre>sudo apt-get install poppler-data
+</pre></div>
+
+<p>としたらちゃんと表示されるようになった。</p>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Quick links]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/31/quick-links" />
+    <id>http://mojavy.com/blog/2012/10/31/quick-links</id>
+    <updated>2012-10-31T23:30:00Z</updated>
+    <published>2012-10-31T23:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="quicklinks" />
+    <summary type="html"><![CDATA[Quick links]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/31/quick-links"><![CDATA[<p><img alt="jack" src="/images/jack-lantern.png" /></p>
+<p>もう11月ですね。<a href="http://mojavy.com/blog/2012/10/16/quick-links/">前回</a>に引き続き今後のネタのメモとか。</p>
+<h3 id="impara"><a href="https://github.com/cloudera/impala">Impara</a></h3>
+<p><a href="http://research.google.com/pubs/pub36632.html">GoogleのDremel</a>に触発されてつくったものとのこと。MapReduce以外の選択肢が増えてくると、<a href="http://pig.apache.org/">pig</a>みたいな高級言語の重要度があがってくるかもしれないですね。</p>
+<ul>
+<li><a href="http://www.publickey1.jp/blog/12/hadoopsqlcloudera_impalacloudera.html">http://www.publickey1.jp/blog/12/hadoopsqlcloudera_impalacloudera.html</a></li>
+<li><a href="https://ccp.cloudera.com/display/IMPALA10BETADOC/Cloudera+Impala+1.0+Beta+Documentation">https://ccp.cloudera.com/display/IMPALA10BETADOC/Cloudera+Impala+1.0+Beta+Documentation</a></li>
+</ul>
+<h3 id="yahooie10do-not-track"><a href="http://it.slashdot.jp/story/12/10/29/0948240/%E7%B1%B3Yahoo%21%E3%80%81IE10%E3%81%AEDo-Not-Track%E3%82%92%E7%84%A1%E8%A6%96">米Yahoo!、IE10のDo Not Trackを無視</a></h3>
+<p>ちょっと前に、<a href="http://www.atmarkit.co.jp/news/201209/12/apache.html">ApacheがIE10のDNTを無視するパッチ</a>をだしてましたが、これも影響してるのだろうか。
+ちなみにこのパッチをコミットしたのは<a href="http://roy.gbiv.com/">この人</a>らしい。</p>
+<ul>
+<li><a href="http://www.ypolicyblog.com/policyblog/2012/10/26/dnt/">In Support of a Personalized User Experience</a></li>
+</ul>
+<h3 id="supersonic"><a href="https://code.google.com/p/supersonic/">supersonic</a></h3>
+<p>名前からしてすごそうですね。これをうまく使えれば、下手にhadoop使うより大量にメモリ積んだマシン1台でがんばれるシチュエーションが増えそう。</p>
+<ul>
+<li><a href="http://sourceforge.jp/magazine/12/10/16/2327214">http://sourceforge.jp/magazine/12/10/16/2327214</a></li>
+<li><a href="http://www.infoq.com/jp/news/2012/10/Google-Supersonic">http://www.infoq.com/jp/news/2012/10/Google-Supersonic</a></li>
+<li><a href="http://google-opensource.blogspot.ro/2012/10/introducing-supersonic-query-engine.html">http://google-opensource.blogspot.ro/2012/10/introducing-supersonic-query-engine.html</a></li>
+</ul>
+<h3 id="listfrontcode"><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">List::FrontCode</a></h3>
+<p>積読状態だったWEB+DB PRESS総集編のバックナンバーをまじめに消化してたら、Vol.42のアルゴリズム&amp;データ構造の記事がおもしろかった。naoya氏を見習って自分で実装してみたいと思います。</p>
+<h3 id="ipad-minikindlewindows-surface"><a href="http://www.amazon.co.jp/dp/B007OZO03M?tag=googhydr-22&amp;hvadid=16344445847&amp;hvpos=1t1&amp;hvexid=&amp;hvnetw=g&amp;hvrand=4412511441746174378&amp;hvpone=&amp;hvptwo=&amp;hvqmt=e&amp;ref=pd_sl_976d9edx_e">ipad mini</a>とか<a href="http://www.amazon.co.jp/gp/product/B007OZO03M/ref=amb_link_64549709_6?pf_rd_m=AN1VRQENFRJN5&amp;pf_rd_s=center-5&amp;pf_rd_r=0GZBN8S52CGASY82ZADV&amp;pf_rd_t=1401&amp;pf_rd_p=120015049&amp;pf_rd_i=3077662956">kindle</a>とか<a href="http://www.microsoft.com/Surface/en-US">windows surface</a>とか</h3>
+<p>kindleのpaperwhite予約しました。</p>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/24/cl-practice" />
+    <id>http://mojavy.com/blog/2012/10/24/cl-practice</id>
+    <updated>2012-10-24T18:00:00Z</updated>
+    <published>2012-10-24T18:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <category scheme="http://mojavy.com/blog" term="common lisp" />
+    <summary type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/24/cl-practice"><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
+<p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>
+<p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
+<p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
+<p>最初は以下のように書いて、</p>
+<div class="pygments_murphy"><pre>(let ((_n (parse-integer (read-line)))
+      (lis ()))
+  (dotimes (i _n)
+    (push (parse-integer (read-line)) lis))
+  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
+  (dolist (x lis) (format t &quot;~a~%&quot; x)))
+</pre></div>
+
+<p>以下の用にして時間を測ったところ</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.19s user 0.01s system 91% cpu 1.311 total
+sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938 total
+</pre></div>
+
+<p>ローカルだと3.42s程度だった。codechef上での制限は5secなのでセーフかと思ったけどTime Limit Exceededだった。</p>
+<p>そこで、vectorを使うように改良</p>
+<div class="pygments_murphy"><pre>(let* ((_n (parse-integer (read-line)))
+       (lis (make-array _n :fill-pointer 0)))
+  (dotimes (i _n)
+    (vector-push (parse-integer (read-line)) lis))
+  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
+  (loop for i across lis do (format t &quot;~a~%&quot; i)))
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.21s user 0.01s system 94% cpu 1.289 total
+sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137 total
+</pre></div>
+
+<p>若干改善されたが、まだTime Limit Exceededだった。</p>
+<p>read-sequenceで読み込んだほうが早いかと思って以下のように書いてみた。</p>
+<div class="pygments_murphy"><pre>(defun parse-input (str)
+  (loop
+     for i = 0 then (+ 1 j)
+     as j = (position #\Newline str :start i)
+     as k = (parse-integer (subseq str i j) :junk-allowed t)
+     if (not (null k))
+     collect k
+     while j))
+
+(let* ((_n (parse-integer (read-line)))
+       (lis (make-array (* _n 20) :element-type &#39;character))
+       (nums ())
+       )
+  (read-sequence lis *standard-input*)
+  (setf nums (sort (parse-input lis) #&#39;(lambda (x y) (&lt; x y))))
+  (loop for i in nums do (format t &quot;~a~%&quot; i)))
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.13s user 0.01s system 97% cpu 1.159 total
+sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297 total
+</pre></div>
+
+<p>残念ながら逆に遅くなってしまった。parse-inputの部分で60%くらい時間がかかっていた。
+あと、<code>#'(lambda (x y) (&lt; x y))</code>の部分を <code>#'&lt;</code>にするとなぜか遅くなる。</p>
+<p><a href="http://www.codechef.com/status/TSORT?language=31&amp;status=All&amp;handle=&amp;sort_by=All&amp;sorting_order=asc&amp;Submit=GO">まだ誰もlispではパスしてない模様。</a>こういうのをもっと高速に書く方法あるのだろうか。</p>
+<p>ちなみにCだと余裕。ローカルだと0.2秒くらいだけどリモートでは3秒くらいかかってた。そもそもCodeChefの実行環境がしょぼすぎる疑惑が。。</p>
+<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">j</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
+
+    <span class="kt">int</span> <span class="n">lis</span><span class="p">[</span><span class="n">num</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">qsort</span><span class="p">(</span><span class="n">lis</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span> <span class="n">f</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+</pre></div>
+
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
+ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  0.99s user 0.01s system 99% cpu 1.006 total
+./a.out &gt; /dev/null  0.18s user 0.01s system 17% cpu 1.116 total
+</pre></div>]]></content>
+  </entry>
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/twitter-api-error" />
+    <id>http://mojavy.com/blog/2012/10/18/twitter-api-error</id>
+    <updated>2012-10-18T22:00:00Z</updated>
+    <published>2012-10-18T22:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="web" />
+    <category scheme="http://mojavy.com/blog" term="twitter" />
+    <summary type="html"><![CDATA[twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/twitter-api-error"><![CDATA[<p><img alt="twitter" src="/images/twitter-logo.png" /></p>
+<p>最近twitter apiをつかっているサービスで以下のようなエラーがでた。</p>
+<div class="pygments_murphy"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
+</pre></div>
+
+<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。</p>
+<p>つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
+<p>ログイン直後にverify_credentialsをつかってるアプリは多いと思われるが、その場合ログインに失敗したように見えるので認証まわりをライブラリ任せにしてると原因がわかりにくいかも。</p>
+<p>とりあえず<a href="https://dev.twitter.com/blog">twitterの開発ブログ</a>まめにチェックしたほうがよさそう。</p>
+<h1 id="_1">参考</h1>
+<ul>
+<li><a href="https://dev.twitter.com/blog">https://dev.twitter.com/blog</a></li>
+<li><a href="https://dev.twitter.com/discussions/11595">https://dev.twitter.com/discussions/11595</a></li>
+</ul>]]></content>
   </entry>
 </feed>

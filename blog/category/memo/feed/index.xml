@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Fri, 06 Jul 2012 18:30:00 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>sbclでクラスのスロット一覧を取得する方法</title>
+      <link>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</link>
+      <pubDate>Fri, 06 Jul 2012 18:30:00 JST</pubDate>
+      <category><![CDATA[memo]]></category>
+      <category><![CDATA[sbcl]]></category>
+      <category><![CDATA[common lisp]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</guid>
+      <description>sbclでクラスのスロット一覧を取得する方法</description>
+      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
+<p>メモメモ</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
+(#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::INO&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::DEV&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::NLINK&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::UID&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::GID&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::SIZE&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::ATIME&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MTIME&gt;
+ #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::CTIME&gt;)
+</pre></div>]]></content:encoded>
+    </item>
+    <item>
+      <title>blogofileでサムネイル画像を表示する方法</title>
+      <link>http://mojavy.com/blog/2011/11/06/blofofile-test</link>
+      <pubDate>Sun, 06 Nov 2011 20:32:51 JST</pubDate>
+      <category><![CDATA[python]]></category>
+      <category><![CDATA[memo]]></category>
+      <category><![CDATA[blogofile]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/blofofile-test</guid>
+      <description>blogofileでサムネイル画像を表示する方法</description>
+      <content:encoded><![CDATA[<p><img alt="rena" src="/images/rena.jpg" /></p>
+<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
+<p>例えば、
+<a href="http://mojavy.com">http://mojavy.com</a>
+のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
+<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
+<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
+         self.slug = None
+         self.draft = False
+         self.filters = None
+<span class="gi">+        self.image = None</span>
+         self.__parse()
+         self.__post_process()
+</pre></div>
+
+<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
+<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
+</pre></div>
+
+<p>のようにすれば${post.image}のようにして参照できる。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
+</ul>]]></content:encoded>
+    </item>
+  </channel>
+</rss>
