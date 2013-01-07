@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Tue, 08 Jan 2013 00:30:00 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>2012年の振り返りと2013年の抱負</title>
+      <link>http://mojavy.com/blog/2013/01/08/2012-summary</link>
+      <pubDate>Tue, 08 Jan 2013 00:30:00 JST</pubDate>
+      <category><![CDATA[others]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/2012-summary</guid>
+      <description>2012年の振り返りと2013年の抱負</description>
+      <content:encoded><![CDATA[<p><img alt="tool" src="/images/snake-200.png" /></p>
+<p>早いもので1月も8日に突入してしまいましたが、2012年の振り返りと今年の抱負について書いておこうと思います。</p>
+<p>2012年にやったことのうち思いだせる範囲かつ主観的にみてそれなりにやった感のあるものを列挙してみます。</p>
+<ul>
+<li>Androidアプリ開発</li>
+<li>iOSアプリ開発</li>
+<li>Unityゲーム開発</li>
+<li>Common Lisp</li>
+<li>Phonegap (Cordova)</li>
+<li>Hadoop</li>
+<li>HBase</li>
+<li>Symfony</li>
+<li>FuelPHP</li>
+<li>Jenkins</li>
+<li>Gearman</li>
+</ul>
+<p>こうしてならべてみると色々やった年でした。今年だけでC#, Objective-C, Common Lispの3つの言語を新たに使えるようになったし、新しいものを多くやったという意味ではよかったです。
+ただ、長い目で見て有用なスキルが身に付いたかというとそうでもない気がします。技術的に深く掘り下げたものがあまりなかったのも残念です。</p>
+<p>また、転職や引越しがあったり、自炊をするようになったり、持ってた本をほぼ全部bookscanで電子書籍化したり、とプライベートの生活はそれなりに変化がありました。</p>
+<p>今後やりたいことは色々ありますが、もろもろ短かくまとめて</p>
+<ul>
+<li>心身を鍛える</li>
+<li>たくさん遊ぶ</li>
+</ul>
+<p>というのを2013年の抱負としてやっていこうかと思ってます。</p>
+<p>今年もよろしくお願いします。</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

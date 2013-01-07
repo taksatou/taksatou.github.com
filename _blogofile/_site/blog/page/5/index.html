@@ -102,6 +102,104 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="objective-cのプロトコルとデリゲーションについてのメモ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol" rel="bookmark" title="Permanent Link to objective-cのプロトコルとデリゲーションについてのメモ">objective-cのプロトコルとデリゲーションについてのメモ</a></h2>
+  <small>July 17, 2012 at 06:30 PM | categories:
+
+<a href='/blog/category/objective-c'>objective-c</a>
+ | <a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<ul>
+<li>プロトコルとはクラス間で共有するメソッドのリスト。</li>
+<li>javaでいうinterfaceのようなもの。</li>
+<li>@optionalディレクティブ以降のメソッドは実装が任意。</li>
+<li>@requiredディレクティブで必須。</li>
+<li>プロトコルに必要なメソッドは直接そのクラスで実装してもいいし、継承元の親クラスで実装してもよい。</li>
+<li>requiredがすべて実装されていなかった場合、コンパイラーはワーニングを出す。(エラーではない)</li>
+<li>すべてのrequiredメソッドを実装したクラスはそのプロトコルにconform(もしくはadopt)したという。</li>
+<li>そのオブジェクトがconformしているかどうかチェックするには、conformsToProtocolメソッドを使う。</li>
+<li>そのオブジェクトがoptionalなメソッドを実装しているかどうかをチェックするには、respondsToSelectorを使う。</li>
+<li>コンパイル時に型チェックが行われる。型宣言に<protocol名>を含めるとよい。</li>
+<li>カテゴリもプロトコルにadoptできる。</li>
+<li>プロトコルの名前はユニークでなければならない。</li>
+<li>delegationとはプロトコルで定義されたメソッドを実装したクラスを定義すること。</li>
+<li>informal protocolというものもあるが、これは単に実装がないカテゴリのこと。abstract protocolともいう。ドキュメンテーションやモジュラリティのために用いる。コンパイル時チェックはなし。プロトコルの@optionalディレクトリはObjective-C 2.0で追加されたので、こちらをつかえばよい。</li>
+<li>eclipseでいうデリゲートは、Composite Objectとよばれる</li>
+</ul>
+<h2 id="_1">例</h2>
+<h3 id="myprotocolh">myProtocol.h</h3>
+<div class="pygments_murphy"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplh">myProtocolImpl.h</h3>
+<div class="pygments_murphy"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+<span class="cp">#import &quot;myProtocol.h&quot;</span>
+
+<span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplm">myProtocolImpl.m</h3>
+<div class="pygments_murphy"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
+
+<span class="k">@implementation</span> <span class="nc">myProtocolImpl</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f1</span>
+<span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;called f0&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span>
+<span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;called f2&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h2 id="_2">参考</h2>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/13/objective-c-memo"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" class="hatena-bookmark-button" data-hatena-bookmark-title="objective-cのプロトコルとデリゲーションについてのメモ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol" data-text="objective-cのプロトコルとデリゲーションについてのメモ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="objective-cのカテゴリついてのメモ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/13/objective-c-memo" rel="bookmark" title="Permanent Link to objective-cのカテゴリついてのメモ">objective-cのカテゴリついてのメモ</a></h2>
   <small>July 13, 2012 at 06:30 PM | categories:
@@ -321,61 +419,6 @@ xcodeのkey bindingsの設定に読ませることができると思います。
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="debian-lennyのend-of-life対応"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable" rel="bookmark" title="Permanent Link to debian lennyのEnd Of Life対応">debian lennyのEnd Of Life対応</a></h2>
-  <small>June 06, 2012 at 10:30 AM | categories:
-
-<a href='/blog/category/python'>python</a>
- | <a href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="debian" src="/images/debian_logo.png" /></p>
-<p>debian lennyは2012-02-06にEnd of lifeを迎えました。
-それに伴いlennyのリポジトリもoldstable扱いとなりパスが変わったため、デフォルトのsources.listでは404 Not Foundとなってパッケージがインストールできなくなってしまいました。
-早めにアップデートしたほうが好ましいですが、そのまま引き続きlennyを使いたい場合もあると思います。
-そのような場合は以下のようにsources.listを変更してやれば今までどおりパッケージをとれるようになります。</p>
-<div class="pygments_murphy"><pre>deb http://archive.debian.org/debian-security/ lenny/updates main
-deb-src http://archive.debian.org/debian-security/ lenny/updates main
-
-deb http://archive.debian.org/debian/ lenny main
-deb-src http://archive.debian.org/debian/ lenny main
-</pre></div>
-
-<p>backportsなどもarchiveのほうにあるのでお好みで追加してください。</p>
-<h1 id="_1">参考</h1>
-<ul>
-<li><a href="http://archive.debian.org/">http://archive.debian.org/</a></li>
-<li><a href="http://wiki.debian.org/DebianLenny">http://wiki.debian.org/DebianLenny</a></li>
-<li><a href="http://wiki.debian.org/DebianOldStable">http://wiki.debian.org/DebianOldStable</a></li>
-</ul>
-<p><br></p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/" class="hatena-bookmark-button" data-hatena-bookmark-title="debian lennyのEnd Of Life対応" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable" data-text="debian lennyのEnd Of Life対応">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../4">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -393,6 +436,11 @@ deb-src http://archive.debian.org/debian/ lenny main
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/01/08/2012-summary" title="2012年の振り返りと2013年の抱負"><p>2012年の振り返りと2013年の抱負</a><span style="font-size: 80%;">(January 08, 2013 at 12:30 AM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/2012-summary">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2013/01/08/2012-summary" alt="はてなブックマーク - 2012年の振り返りと2013年の抱負" title="はてなブックマーク - 2012年の振り返りと2013年の抱負">
+</a>
+</li>
       <li><a href="/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" title="gearmanクライアントライブラリ cl-gearman"><p>gearmanクライアントライブラリ cl-gearman</a><span style="font-size: 80%;">(December 16, 2012 at 05:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" alt="はてなブックマーク - gearmanクライアントライブラリ cl-gearman" title="はてなブックマーク - gearmanクライアントライブラリ cl-gearman">
@@ -428,11 +476,6 @@ deb-src http://archive.debian.org/debian/ lenny main
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/02/ubuntu-pdf" alt="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ" title="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ">
 </a>
 </li>
-      <li><a href="/blog/2012/10/31/quick-links" title="Quick links"><p>Quick links</a><span style="font-size: 80%;">(October 31, 2012 at 11:30 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/31/quick-links">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/10/31/quick-links" alt="はてなブックマーク - Quick links" title="はてなブックマーク - Quick links">
-</a>
-</li>
     </ul>
   </div>
 
@@ -453,6 +496,7 @@ deb-src http://archive.debian.org/debian/ lenny main
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/others">others</a> (<a href="/blog/category/others/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (1)</li>
@@ -475,6 +519,7 @@ deb-src http://archive.debian.org/debian/ lenny main
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>

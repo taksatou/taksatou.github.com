@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2013-01-08T00:30:00Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[2012年の振り返りと2013年の抱負]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/08/2012-summary" />
+    <id>http://mojavy.com/blog/2013/01/08/2012-summary</id>
+    <updated>2013-01-08T00:30:00Z</updated>
+    <published>2013-01-08T00:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="others" />
+    <summary type="html"><![CDATA[2012年の振り返りと2013年の抱負]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/01/08/2012-summary"><![CDATA[<p><img alt="tool" src="/images/snake-200.png" /></p>
+<p>早いもので1月も8日に突入してしまいましたが、2012年の振り返りと今年の抱負について書いておこうと思います。</p>
+<p>2012年にやったことのうち思いだせる範囲かつ主観的にみてそれなりにやった感のあるものを列挙してみます。</p>
+<ul>
+<li>Androidアプリ開発</li>
+<li>iOSアプリ開発</li>
+<li>Unityゲーム開発</li>
+<li>Common Lisp</li>
+<li>Phonegap (Cordova)</li>
+<li>Hadoop</li>
+<li>HBase</li>
+<li>Symfony</li>
+<li>FuelPHP</li>
+<li>Jenkins</li>
+<li>Gearman</li>
+</ul>
+<p>こうしてならべてみると色々やった年でした。今年だけでC#, Objective-C, Common Lispの3つの言語を新たに使えるようになったし、新しいものを多くやったという意味ではよかったです。
+ただ、長い目で見て有用なスキルが身に付いたかというとそうでもない気がします。技術的に深く掘り下げたものがあまりなかったのも残念です。</p>
+<p>また、転職や引越しがあったり、自炊をするようになったり、持ってた本をほぼ全部bookscanで電子書籍化したり、とプライベートの生活はそれなりに変化がありました。</p>
+<p>今後やりたいことは色々ありますが、もろもろ短かくまとめて</p>
+<ul>
+<li>心身を鍛える</li>
+<li>たくさん遊ぶ</li>
+</ul>
+<p>というのを2013年の抱負としてやっていこうかと思ってます。</p>
+<p>今年もよろしくお願いします。</p>]]></content>
+  </entry>
+</feed>
