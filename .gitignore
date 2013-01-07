@@ -7,3 +7,4 @@ _documentation/themes/blogofile/layout.html
 *.pyc
 *.draft
 _draft
+.DS_Store
