@@ -102,6 +102,88 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="おやつの時間をお知らせしてくれるunixコマンド：at-teatime-(他...)"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command" rel="bookmark" title="Permanent Link to おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a></h2>
+  <small>January 08, 2013 at 08:30 PM | categories:
+
+<a href='/blog/category/unix'>unix</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/linux'>linux</a>
+ | <a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="banana" src="/images/banana-200.png" /></p>
+<p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
+<h2 id="at">at</h2>
+<p>入力されたコマンドを指定されたタイミングで実行するようにスケジュールする。
+cronに登録するほどでもない単発のコマンドを実行したいときとかにつかう。
+時間の指定には現在の時刻からの経過時間や絶対時間の他にteatimeやmidnightといった文字列もつかえる。
+ちなみにteatimeは午後4時。
+出力先を指定しなければコマンドの出力はcronと同じようにメールにとぶ。$TTYにリダイレクトしてやればコマンドを実行した端末に表示させることもできる。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre>echo &quot;echo おやつの時間です &gt; $TTY&quot;| at teatime
+echo &quot;echo はろー &gt; $TTY&quot; | at now + 3 minute
+</pre></div>
+
+<h2 id="mtr">mtr</h2>
+<p>tracerouteとpingをあわせたようなもの。tracerouteより表示がみやすい。
+ネットワークのどこで時間がかかってるのか一目でわかる。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre>mtr mojavy.com
+</pre></div>
+
+<h2 id="column">column</h2>
+<p>入力テキストをいい感じのカラム表示にフォーマットしてくれる。
+縦に長い出力するコマンドとか、そのままだと出力がみづらいときとかにつかう。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre>gem list | column
+mount | column -t
+grep -v &#39;^#&#39; /etc/apt/sources.list | column -t
+</pre></div>
+
+<h2 id="reset">reset</h2>
+<p>端末をリセットする。
+うっかりバイナリファイルをcatとかしてしまって端末が壊れてしまった場合に端末を閉じずに復帰できる。</p>
+<h2 id="sshfs">sshfs</h2>
+<p>ssh経由でリモートのファイルシステムをマウントできる。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre>sshfs name@server:/path/to/dir /path/to/mount/point
+fusermount -u /path/to/mount/point  # unmount
+</pre></div>
+
+<h2 id="_1">その他</h2>
+<p>以下はコマンド自体の機能ではないけど覚えておくと便利かもしれないもの</p>
+<h3 id="curl-ifconfigme">curl ifconfig.me</h3>
+<p>ifconfig.meというサイトがある。自分のグローバルIPがわかる。</p>
+<h3 id="dig-short-txt-wzxhzdk5wpdgcx">dig +short txt <keyword>.wp.dg.cx</h3>
+<p>dnsクエリでwikipediaのエントリーがみれる。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
+<span class="s2">&quot;Banana is the common name for herbaceous plants of the genus Musa and for the fruit they produce. It is one of the oldest cultivated plants. They are native to tropical South and Southeast Asia, and are likely to have been first domesticated in Papua New &quot;</span> <span class="s2">&quot;Guinea. Today, they are cultivated throughout the tropics. They are grown in at least 107 countries, primarily for their... http://en.wikipedia.org/wiki/Banana&quot;</span>
+</pre></div>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/01/08/2012-summary"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/08/favorite-linux-command" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/favorite-linux-command/" class="hatena-bookmark-button" data-hatena-bookmark-title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/08/favorite-linux-command" data-text="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/08/favorite-linux-command"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="pacoを導入"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/16/paco" rel="bookmark" title="Permanent Link to pacoを導入">pacoを導入</a></h2>
   <small>October 16, 2012 at 06:30 PM | categories:
@@ -166,6 +248,11 @@ sudo make logme
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/01/08/favorite-linux-command" title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)"><p>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a><span style="font-size: 80%;">(January 08, 2013 at 08:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/favorite-linux-command">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2013/01/08/favorite-linux-command" alt="はてなブックマーク - おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)" title="はてなブックマーク - おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">
+</a>
+</li>
       <li><a href="/blog/2013/01/08/2012-summary" title="2012年の振り返りと2013年の抱負"><p>2012年の振り返りと2013年の抱負</a><span style="font-size: 80%;">(January 08, 2013 at 12:30 AM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/2012-summary">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2013/01/08/2012-summary" alt="はてなブックマーク - 2012年の振り返りと2013年の抱負" title="はてなブックマーク - 2012年の振り返りと2013年の抱負">
@@ -201,11 +288,6 @@ sudo make logme
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/07/android-pitfalls" alt="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1" title="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1">
 </a>
 </li>
-      <li><a href="/blog/2012/11/02/ubuntu-pdf" title="UbuntuでPDFの日本語フォントが表示できないときの対処メモ"><p>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</a><span style="font-size: 80%;">(November 02, 2012 at 12:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/02/ubuntu-pdf">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/02/ubuntu-pdf" alt="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ" title="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ">
-</a>
-</li>
     </ul>
   </div>
 
@@ -222,7 +304,7 @@ sudo make logme
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
@@ -235,10 +317,11 @@ sudo make logme
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
@@ -249,7 +332,7 @@ sudo make logme
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>

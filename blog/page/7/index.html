@@ -102,6 +102,68 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="blogofileでサムネイル画像を表示する方法"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/11/06/blofofile-test" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
+  <small>November 06, 2011 at 08:32 PM | categories:
+
+<a href='/blog/category/python'>python</a>, <a href='/blog/category/memo'>memo</a>, <a href='/blog/category/blogofile'>blogofile</a>
+ | <a href="http://mojavy.com/blog/2011/11/06/blofofile-test#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="rena" src="/images/rena.jpg" /></p>
+<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
+<p>例えば、
+<a href="http://mojavy.com">http://mojavy.com</a>
+のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
+<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
+<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
+         self.slug = None
+         self.draft = False
+         self.filters = None
+<span class="gi">+        self.image = None</span>
+         self.__parse()
+         self.__post_process()
+</pre></div>
+
+<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
+<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
+</pre></div>
+
+<p>のようにすれば${post.image}のようにして参照できる。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2011/11/06/new_blog"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/blofofile-test/" class="hatena-bookmark-button" data-hatena-bookmark-title="blogofileでサムネイル画像を表示する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/11/06/blofofile-test" data-text="blogofileでサムネイル画像を表示する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ブログ引越しました"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/11/06/new_blog" rel="bookmark" title="Permanent Link to ブログ引越しました">ブログ引越しました</a></h2>
   <small>November 06, 2011 at 07:44 PM | categories:
@@ -161,6 +223,11 @@ href="/blog/feed/atom" />
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/01/08/favorite-linux-command" title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)"><p>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a><span style="font-size: 80%;">(January 08, 2013 at 08:30 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/favorite-linux-command">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2013/01/08/favorite-linux-command" alt="はてなブックマーク - おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)" title="はてなブックマーク - おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">
+</a>
+</li>
       <li><a href="/blog/2013/01/08/2012-summary" title="2012年の振り返りと2013年の抱負"><p>2012年の振り返りと2013年の抱負</a><span style="font-size: 80%;">(January 08, 2013 at 12:30 AM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/2012-summary">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2013/01/08/2012-summary" alt="はてなブックマーク - 2012年の振り返りと2013年の抱負" title="はてなブックマーク - 2012年の振り返りと2013年の抱負">
@@ -196,11 +263,6 @@ href="/blog/feed/atom" />
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/07/android-pitfalls" alt="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1" title="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1">
 </a>
 </li>
-      <li><a href="/blog/2012/11/02/ubuntu-pdf" title="UbuntuでPDFの日本語フォントが表示できないときの対処メモ"><p>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</a><span style="font-size: 80%;">(November 02, 2012 at 12:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/02/ubuntu-pdf">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/02/ubuntu-pdf" alt="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ" title="はてなブックマーク - UbuntuでPDFの日本語フォントが表示できないときの対処メモ">
-</a>
-</li>
     </ul>
   </div>
 
@@ -217,7 +279,7 @@ href="/blog/feed/atom" />
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
@@ -230,10 +292,11 @@ href="/blog/feed/atom" />
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
@@ -244,7 +307,7 @@ href="/blog/feed/atom" />
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>

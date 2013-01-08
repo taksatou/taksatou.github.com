@@ -10,10 +10,69 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 20 Nov 2012 02:30:00 GMT</pubDate>
+    <pubDate>Tue, 08 Jan 2013 20:30:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</title>
+      <link>http://mojavy.com/blog/2013/01/08/favorite-linux-command</link>
+      <pubDate>Tue, 08 Jan 2013 20:30:00 JST</pubDate>
+      <category><![CDATA[unix]]></category>
+      <category><![CDATA[tips]]></category>
+      <category><![CDATA[linux]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/favorite-linux-command</guid>
+      <description>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</description>
+      <content:encoded><![CDATA[<p><img alt="banana" src="/images/banana-200.png" /></p>
+<p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
+<h2 id="at">at</h2>
+<p>入力されたコマンドを指定されたタイミングで実行するようにスケジュールする。
+cronに登録するほどでもない単発のコマンドを実行したいときとかにつかう。
+時間の指定には現在の時刻からの経過時間や絶対時間の他にteatimeやmidnightといった文字列もつかえる。
+ちなみにteatimeは午後4時。
+出力先を指定しなければコマンドの出力はcronと同じようにメールにとぶ。$TTYにリダイレクトしてやればコマンドを実行した端末に表示させることもできる。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre>echo &quot;echo おやつの時間です &gt; $TTY&quot;| at teatime
+echo &quot;echo はろー &gt; $TTY&quot; | at now + 3 minute
+</pre></div>
+
+<h2 id="mtr">mtr</h2>
+<p>tracerouteとpingをあわせたようなもの。tracerouteより表示がみやすい。
+ネットワークのどこで時間がかかってるのか一目でわかる。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre>mtr mojavy.com
+</pre></div>
+
+<h2 id="column">column</h2>
+<p>入力テキストをいい感じのカラム表示にフォーマットしてくれる。
+縦に長い出力するコマンドとか、そのままだと出力がみづらいときとかにつかう。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre>gem list | column
+mount | column -t
+grep -v &#39;^#&#39; /etc/apt/sources.list | column -t
+</pre></div>
+
+<h2 id="reset">reset</h2>
+<p>端末をリセットする。
+うっかりバイナリファイルをcatとかしてしまって端末が壊れてしまった場合に端末を閉じずに復帰できる。</p>
+<h2 id="sshfs">sshfs</h2>
+<p>ssh経由でリモートのファイルシステムをマウントできる。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre>sshfs name@server:/path/to/dir /path/to/mount/point
+fusermount -u /path/to/mount/point  # unmount
+</pre></div>
+
+<h2 id="_1">その他</h2>
+<p>以下はコマンド自体の機能ではないけど覚えておくと便利かもしれないもの</p>
+<h3 id="curl-ifconfigme">curl ifconfig.me</h3>
+<p>ifconfig.meというサイトがある。自分のグローバルIPがわかる。</p>
+<h3 id="dig-short-txt-wzxhzdk5wpdgcx">dig +short txt <keyword>.wp.dg.cx</h3>
+<p>dnsクエリでwikipediaのエントリーがみれる。</p>
+<p>例</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
+<span class="s2">&quot;Banana is the common name for herbaceous plants of the genus Musa and for the fruit they produce. It is one of the oldest cultivated plants. They are native to tropical South and Southeast Asia, and are likely to have been first domesticated in Papua New &quot;</span> <span class="s2">&quot;Guinea. Today, they are cultivated throughout the tropics. They are grown in at least 107 countries, primarily for their... http://en.wikipedia.org/wiki/Banana&quot;</span>
+</pre></div>]]></content:encoded>
+    </item>
     <item>
       <title>ウェブエンジニアのためのオンラインツールまとめ</title>
       <link>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</link>
