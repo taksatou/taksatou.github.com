@@ -17,6 +17,8 @@
 <hr />
 <%include file="recent_posts.mako" />
 <hr />
+<%include file="hatena_popular.mako" />
+<hr />
 <%include file="categories.mako" />
 <hr />
 <%include file="archives.mako" />
