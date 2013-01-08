@@ -93,9 +93,9 @@ argument_re = re.compile(
 
 def highlight_code(code, language, formatter):
     try:
-        lexer = pygments.lexers.get_lexer_by_name(language)
+        lexer = pygments.lexers.get_lexer_by_name(language, encoding='utf-8')
     except pygments.util.ClassNotFound:
-        lexer = pygments.lexers.get_lexer_by_name("text")
+        lexer = pygments.lexers.get_lexer_by_name("text", encoding='utf-8')
     #Highlight with pygments and surround by blank lines
     #(blank lines required for markdown syntax)
     highlighted = "\n\n{0}\n\n".format(
@@ -164,13 +164,13 @@ def run(src):
         except KeyError:
             css_class = "pygments_{0}".format(style)
         formatter = pygments.formatters.HtmlFormatter(
-            linenos=linenums, cssclass=css_class, style=style)
+            linenos=linenums, cssclass=css_class, style=style, encoding='utf-8')
         write_pygments_css(style, formatter)
         substitutions[m.group()] = highlight_code(
                 m.group('code'), lang, formatter)
     if len(substitutions) > 0:
         p = re.compile('|'.join(map(re.escape, substitutions)))
-        src = p.sub(lambda x: substitutions[x.group(0)], src)
+        src = p.sub(lambda x: substitutions[x.group(0)].decode('utf-8'), src)
         return src
     else:
         return src
