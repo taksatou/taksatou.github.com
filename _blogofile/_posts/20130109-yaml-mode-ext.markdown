@@ -7,7 +7,7 @@ image: /images/carbon-emacs-icon-200.png
 
 ![emacs](/images/carbon-emacs-icon-200.png)
 
-とあるとプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の[yaml-mode](https://github.com/yoshiki/yaml-mode)だけだと非力に感じたので拡張するためのemacs lispを書きました。
+とあるプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の[yaml-mode](https://github.com/yoshiki/yaml-mode)だけだと非力に感じたので拡張するためのemacs lispを書きました。
 
 といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。
 
