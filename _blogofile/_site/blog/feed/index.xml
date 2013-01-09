@@ -10,10 +10,37 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 08 Jan 2013 20:30:00 GMT</pubDate>
+    <pubDate>Wed, 09 Jan 2013 22:00:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>yaml-modeを拡張してyamlを高速に編集する</title>
+      <link>http://mojavy.com/blog/2013/01/09/yaml-mode-ext</link>
+      <pubDate>Wed, 09 Jan 2013 22:00:00 JST</pubDate>
+      <category><![CDATA[elisp]]></category>
+      <category><![CDATA[emacs]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/09/yaml-mode-ext</guid>
+      <description>yaml-modeを拡張してyamlを高速に編集する</description>
+      <content:encoded><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
+<p>とあるとプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の<a href="https://github.com/yoshiki/yaml-mode">yaml-mode</a>だけだと非力に感じたので拡張するためのemacs lispを書きました。</p>
+<p>といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。</p>
+<p>使い方は、<a href="https://github.com/taksatou/yaml-mode-ex">https://github.com/taksatou/yaml-mode-ex</a>からおとしてきてloadするだけです。
+(yaml-modeはあらかじめインストールしておく必要があります)</p>
+<div class="pygments_murphy"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
+</pre></div>
+
+<p>以下のキーバインドが使えます。</p>
+<ul>
+<li>M-C-f  同じ階層の次のブロックへ移動</li>
+<li>M-C-b  同じ階層の前のブロックへ移動</li>
+<li>M-C-u  親ブロックの先頭へ移動</li>
+<li>M-C-e  親ブロックの末尾へ移動</li>
+<li>M-C-d  直下の子ブロックへ移動</li>
+</ul>
+<p>当初はyaml-modeをhideshow.elに対応させようと思ってたのですが、ブロック単位で移動ができるようになったところで満足してしまいました。</p>
+<p>なお、ブロックの境界はインデントレベルしかみてないのでyamlに限定する必要はなかった気はしますが、pythonとかhaskellとかでもつかいたくなってきたら書き直そうと思います。</p>]]></content:encoded>
+    </item>
     <item>
       <title>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</title>
       <link>http://mojavy.com/blog/2013/01/08/favorite-linux-command</link>
@@ -719,39 +746,6 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
 </pre></div>
 
 <p>としたらちゃんと表示されるようになった。</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Quick links</title>
-      <link>http://mojavy.com/blog/2012/10/31/quick-links</link>
-      <pubDate>Wed, 31 Oct 2012 23:30:00 JST</pubDate>
-      <category><![CDATA[quicklinks]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/31/quick-links</guid>
-      <description>Quick links</description>
-      <content:encoded><![CDATA[<p><img alt="jack" src="/images/jack-lantern.png" /></p>
-<p>もう11月ですね。<a href="http://mojavy.com/blog/2012/10/16/quick-links/">前回</a>に引き続き今後のネタのメモとか。</p>
-<h3 id="impara"><a href="https://github.com/cloudera/impala">Impara</a></h3>
-<p><a href="http://research.google.com/pubs/pub36632.html">GoogleのDremel</a>に触発されてつくったものとのこと。MapReduce以外の選択肢が増えてくると、<a href="http://pig.apache.org/">pig</a>みたいな高級言語の重要度があがってくるかもしれないですね。</p>
-<ul>
-<li><a href="http://www.publickey1.jp/blog/12/hadoopsqlcloudera_impalacloudera.html">http://www.publickey1.jp/blog/12/hadoopsqlcloudera_impalacloudera.html</a></li>
-<li><a href="https://ccp.cloudera.com/display/IMPALA10BETADOC/Cloudera+Impala+1.0+Beta+Documentation">https://ccp.cloudera.com/display/IMPALA10BETADOC/Cloudera+Impala+1.0+Beta+Documentation</a></li>
-</ul>
-<h3 id="yahooie10do-not-track"><a href="http://it.slashdot.jp/story/12/10/29/0948240/%E7%B1%B3Yahoo%21%E3%80%81IE10%E3%81%AEDo-Not-Track%E3%82%92%E7%84%A1%E8%A6%96">米Yahoo!、IE10のDo Not Trackを無視</a></h3>
-<p>ちょっと前に、<a href="http://www.atmarkit.co.jp/news/201209/12/apache.html">ApacheがIE10のDNTを無視するパッチ</a>をだしてましたが、これも影響してるのだろうか。
-ちなみにこのパッチをコミットしたのは<a href="http://roy.gbiv.com/">この人</a>らしい。</p>
-<ul>
-<li><a href="http://www.ypolicyblog.com/policyblog/2012/10/26/dnt/">In Support of a Personalized User Experience</a></li>
-</ul>
-<h3 id="supersonic"><a href="https://code.google.com/p/supersonic/">supersonic</a></h3>
-<p>名前からしてすごそうですね。これをうまく使えれば、下手にhadoop使うより大量にメモリ積んだマシン1台でがんばれるシチュエーションが増えそう。</p>
-<ul>
-<li><a href="http://sourceforge.jp/magazine/12/10/16/2327214">http://sourceforge.jp/magazine/12/10/16/2327214</a></li>
-<li><a href="http://www.infoq.com/jp/news/2012/10/Google-Supersonic">http://www.infoq.com/jp/news/2012/10/Google-Supersonic</a></li>
-<li><a href="http://google-opensource.blogspot.ro/2012/10/introducing-supersonic-query-engine.html">http://google-opensource.blogspot.ro/2012/10/introducing-supersonic-query-engine.html</a></li>
-</ul>
-<h3 id="listfrontcode"><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">List::FrontCode</a></h3>
-<p>積読状態だったWEB+DB PRESS総集編のバックナンバーをまじめに消化してたら、Vol.42のアルゴリズム&amp;データ構造の記事がおもしろかった。naoya氏を見習って自分で実装してみたいと思います。</p>
-<h3 id="ipad-minikindlewindows-surface"><a href="http://www.amazon.co.jp/dp/B007OZO03M?tag=googhydr-22&amp;hvadid=16344445847&amp;hvpos=1t1&amp;hvexid=&amp;hvnetw=g&amp;hvrand=4412511441746174378&amp;hvpone=&amp;hvptwo=&amp;hvqmt=e&amp;ref=pd_sl_976d9edx_e">ipad mini</a>とか<a href="http://www.amazon.co.jp/gp/product/B007OZO03M/ref=amb_link_64549709_6?pf_rd_m=AN1VRQENFRJN5&amp;pf_rd_s=center-5&amp;pf_rd_r=0GZBN8S52CGASY82ZADV&amp;pf_rd_t=1401&amp;pf_rd_p=120015049&amp;pf_rd_i=3077662956">kindle</a>とか<a href="http://www.microsoft.com/Surface/en-US">windows surface</a>とか</h3>
-<p>kindleのpaperwhite予約しました。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

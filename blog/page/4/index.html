@@ -102,6 +102,58 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="pacoを導入"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/16/paco" rel="bookmark" title="Permanent Link to pacoを導入">pacoを導入</a></h2>
+  <small>October 16, 2012 at 06:30 PM | categories:
+
+<a href='/blog/category/paco'>paco</a>, <a href='/blog/category/linux'>linux</a>
+ | <a href="http://mojavy.com/blog/2012/10/16/paco#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>今さらだけどpacoを導入した。</p>
+<p><a href="http://sourceforge.net/projects/paco/files/paco/2.0.9/">http://sourceforge.net/projects/paco/files/paco/2.0.9/</a> から最新のパッケージをダウンロード、展開して以下コマンドでインストール。gpacoは使わないと思うので--disable-gpacoした。</p>
+<div class="pygments_murphy"><pre>./configure --disable-gpaco
+make <span class="o">&amp;&amp;</span> sudo make install
+sudo make logme
+</pre></div>
+
+<p>何かをインストールする際は以下のようにする。</p>
+<div class="pygments_murphy"><pre>sudo paco -D make install
+</pre></div>
+
+<p>make install の部分は、bash install.shとかなんでもいい。</p>
+<h1 id="_1">参考</h1>
+<ul>
+<li><a href="http://d.hatena.ne.jp/rx7/20081011/p2">http://d.hatena.ne.jp/rx7/20081011/p2</a></li>
+<li><a href="http://paco.sourceforge.net/index.html">http://paco.sourceforge.net/index.html</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/10/16/quick-links"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/10/16/paco" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/16/paco/" class="hatena-bookmark-button" data-hatena-bookmark-title="pacoを導入" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/10/16/paco" data-text="pacoを導入">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/10/16/paco"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="quick-links"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/16/quick-links" rel="bookmark" title="Permanent Link to Quick links">Quick links</a></h2>
   <small>October 16, 2012 at 02:30 AM | categories:
@@ -457,64 +509,6 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="ワンライナーでウェブサーバを起動する方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/18/one-line-webserver" rel="bookmark" title="Permanent Link to ワンライナーでウェブサーバを起動する方法">ワンライナーでウェブサーバを起動する方法</a></h2>
-  <small>July 18, 2012 at 12:30 PM | categories:
-
-<a href='/blog/category/python'>python</a>, <a href='/blog/category/web'>web</a>, <a href='/blog/category/ruby'>ruby</a>
- | <a href="http://mojavy.com/blog/2012/07/18/one-line-webserver#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
-<p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
-起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
-</pre></div>
-
-<p>デフォルトポートは8000ですが、引数で指定することもできます。
-<br>
-ちなみにrubyでもwebrickを使って同様のことができますが、<a href="http://d.hatena.ne.jp/rx7/20090812/p1">こちら</a> で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。
-<br>
-<br>
-でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
-</pre></div>
-
-<p>ポートを変更する場合は以下のようにします</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
-</pre></div>
-
-<h2 id="_1">参考</h2>
-<ul>
-<li><a href="http://d.hatena.ne.jp/rx7/20090812/p1">コマンド1つで今すぐWebサーバを起動させるためのワンライナー(Ruby or Python)</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/07/24/redmine-mail"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/18/one-line-webserver" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/one-line-webserver/" class="hatena-bookmark-button" data-hatena-bookmark-title="ワンライナーでウェブサーバを起動する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/18/one-line-webserver" data-text="ワンライナーでウェブサーバを起動する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/18/one-line-webserver"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../3">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -544,6 +538,11 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/01/09/yaml-mode-ext" title="yaml-modeを拡張してyamlを高速に編集する"><p>yaml-modeを拡張してyamlを高速に編集する</a><span style="font-size: 80%;">(January 09, 2013 at 10:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/09/yaml-mode-ext">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2013/01/09/yaml-mode-ext" alt="はてなブックマーク - yaml-modeを拡張してyamlを高速に編集する" title="はてなブックマーク - yaml-modeを拡張してyamlを高速に編集する">
+</a>
+</li>
       <li><a href="/blog/2013/01/08/favorite-linux-command" title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)"><p>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a><span style="font-size: 80%;">(January 08, 2013 at 08:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/favorite-linux-command">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2013/01/08/favorite-linux-command" alt="はてなブックマーク - おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)" title="はてなブックマーク - おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">
@@ -579,11 +578,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/09/common-lisp-declare" alt="はてなブックマーク - Common Lispのdeclareについて" title="はてなブックマーク - Common Lispのdeclareについて">
 </a>
 </li>
-      <li><a href="/blog/2012/11/07/android-pitfalls" title="細かすぎて伝わらないAndroid開発のはまりどころまとめ その1"><p>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</a><span style="font-size: 80%;">(November 07, 2012 at 12:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/07/android-pitfalls">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/07/android-pitfalls" alt="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1" title="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1">
-</a>
-</li>
     </ul>
   </div>
 
@@ -612,6 +606,8 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
@@ -643,7 +639,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Wed, 09 Jan 2013 22:00:00 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>yaml-modeを拡張してyamlを高速に編集する</title>
+      <link>http://mojavy.com/blog/2013/01/09/yaml-mode-ext</link>
+      <pubDate>Wed, 09 Jan 2013 22:00:00 JST</pubDate>
+      <category><![CDATA[elisp]]></category>
+      <category><![CDATA[emacs]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/09/yaml-mode-ext</guid>
+      <description>yaml-modeを拡張してyamlを高速に編集する</description>
+      <content:encoded><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
+<p>とあるとプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の<a href="https://github.com/yoshiki/yaml-mode">yaml-mode</a>だけだと非力に感じたので拡張するためのemacs lispを書きました。</p>
+<p>といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。</p>
+<p>使い方は、<a href="https://github.com/taksatou/yaml-mode-ex">https://github.com/taksatou/yaml-mode-ex</a>からおとしてきてloadするだけです。
+(yaml-modeはあらかじめインストールしておく必要があります)</p>
+<div class="pygments_murphy"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
+</pre></div>
+
+<p>以下のキーバインドが使えます。</p>
+<ul>
+<li>M-C-f  同じ階層の次のブロックへ移動</li>
+<li>M-C-b  同じ階層の前のブロックへ移動</li>
+<li>M-C-u  親ブロックの先頭へ移動</li>
+<li>M-C-e  親ブロックの末尾へ移動</li>
+<li>M-C-d  直下の子ブロックへ移動</li>
+</ul>
+<p>当初はyaml-modeをhideshow.elに対応させようと思ってたのですが、ブロック単位で移動ができるようになったところで満足してしまいました。</p>
+<p>なお、ブロックの境界はインデントレベルしかみてないのでyamlに限定する必要はなかった気はしますが、pythonとかhaskellとかでもつかいたくなってきたら書き直そうと思います。</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

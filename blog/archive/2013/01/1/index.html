@@ -102,6 +102,57 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="yaml-modeを拡張してyamlを高速に編集する"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext" rel="bookmark" title="Permanent Link to yaml-modeを拡張してyamlを高速に編集する">yaml-modeを拡張してyamlを高速に編集する</a></h2>
+  <small>January 09, 2013 at 10:00 PM | categories:
+
+<a href='/blog/category/elisp'>elisp</a>, <a href='/blog/category/emacs'>emacs</a>
+ | <a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
+<p>とあるとプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の<a href="https://github.com/yoshiki/yaml-mode">yaml-mode</a>だけだと非力に感じたので拡張するためのemacs lispを書きました。</p>
+<p>といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。</p>
+<p>使い方は、<a href="https://github.com/taksatou/yaml-mode-ex">https://github.com/taksatou/yaml-mode-ex</a>からおとしてきてloadするだけです。
+(yaml-modeはあらかじめインストールしておく必要があります)</p>
+<div class="pygments_murphy"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
+</pre></div>
+
+<p>以下のキーバインドが使えます。</p>
+<ul>
+<li>M-C-f  同じ階層の次のブロックへ移動</li>
+<li>M-C-b  同じ階層の前のブロックへ移動</li>
+<li>M-C-u  親ブロックの先頭へ移動</li>
+<li>M-C-e  親ブロックの末尾へ移動</li>
+<li>M-C-d  直下の子ブロックへ移動</li>
+</ul>
+<p>当初はyaml-modeをhideshow.elに対応させようと思ってたのですが、ブロック単位で移動ができるようになったところで満足してしまいました。</p>
+<p>なお、ブロックの境界はインデントレベルしかみてないのでyamlに限定する必要はなかった気はしますが、pythonとかhaskellとかでもつかいたくなってきたら書き直そうと思います。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/09/yaml-mode-ext/" class="hatena-bookmark-button" data-hatena-bookmark-title="yaml-modeを拡張してyamlを高速に編集する" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/09/yaml-mode-ext" data-text="yaml-modeを拡張してyamlを高速に編集する">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="おやつの時間をお知らせしてくれるunixコマンド：at-teatime-(他...)"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command" rel="bookmark" title="Permanent Link to おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a></h2>
   <small>January 08, 2013 at 08:30 PM | categories:
@@ -172,6 +223,8 @@ fusermount -u /path/to/mount/point  # unmount
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/01/08/2012-summary"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -269,6 +322,11 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/01/09/yaml-mode-ext" title="yaml-modeを拡張してyamlを高速に編集する"><p>yaml-modeを拡張してyamlを高速に編集する</a><span style="font-size: 80%;">(January 09, 2013 at 10:00 PM)</span>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/09/yaml-mode-ext">
+<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2013/01/09/yaml-mode-ext" alt="はてなブックマーク - yaml-modeを拡張してyamlを高速に編集する" title="はてなブックマーク - yaml-modeを拡張してyamlを高速に編集する">
+</a>
+</li>
       <li><a href="/blog/2013/01/08/favorite-linux-command" title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)"><p>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a><span style="font-size: 80%;">(January 08, 2013 at 08:30 PM)</span>
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/favorite-linux-command">
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2013/01/08/favorite-linux-command" alt="はてなブックマーク - おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)" title="はてなブックマーク - おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">
@@ -304,11 +362,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
 <img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/09/common-lisp-declare" alt="はてなブックマーク - Common Lispのdeclareについて" title="はてなブックマーク - Common Lispのdeclareについて">
 </a>
 </li>
-      <li><a href="/blog/2012/11/07/android-pitfalls" title="細かすぎて伝わらないAndroid開発のはまりどころまとめ その1"><p>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</a><span style="font-size: 80%;">(November 07, 2012 at 12:00 PM)</span>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/07/android-pitfalls">
-<img src="http://b.hatena.ne.jp/entry/image/http://mojavy.com/blog/2012/11/07/android-pitfalls" alt="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1" title="はてなブックマーク - 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1">
-</a>
-</li>
     </ul>
   </div>
 
@@ -337,6 +390,8 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
@@ -368,7 +423,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
