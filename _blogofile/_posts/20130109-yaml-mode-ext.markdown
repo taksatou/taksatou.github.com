@@ -11,7 +11,7 @@ image: /images/carbon-emacs-icon-200.png
 
 といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。
 
-使い方は、[https://github.com/taksatou/yaml-mode-ex](https://github.com/taksatou/yaml-mode-ex)からおとしてきてloadするだけです。
+使い方は、[https://github.com/taksatou/yaml-mode-ext](https://github.com/taksatou/yaml-mode-ext)からおとしてきてloadするだけです。
 (yaml-modeはあらかじめインストールしておく必要があります)
 
 $$code(lang=elisp)
