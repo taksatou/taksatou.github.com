@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</title>
-      <link>http://mojavy.com/blog/2012/08/07/jenkins-ios-build</link>
+      <link>http://mojavy.com/blog/2012/08/07/jenkins-ios-build/</link>
       <pubDate>Tue, 07 Aug 2012 15:30:00 JST</pubDate>
       <category><![CDATA[jenkins]]></category>
       <category><![CDATA[ios]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/08/07/jenkins-ios-build</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/08/07/jenkins-ios-build/</guid>
       <description>jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</description>
       <content:encoded><![CDATA[<p><img alt="jenkins" src="/images/jenkins-logo.png" /></p>
 <p>はまりどころが多くて大変だったので今後同じことをやろうとする人のために一連の作業をメモしておきます。</p>

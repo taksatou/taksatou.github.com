@@ -19,15 +19,15 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[UbuntuでPDFの日本語フォントが表示できないときの対処メモ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf" />
-    <id>http://mojavy.com/blog/2012/11/02/ubuntu-pdf</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/" />
+    <id>http://mojavy.com/blog/2012/11/02/ubuntu-pdf/</id>
     <updated>2012-11-02T12:00:00Z</updated>
     <published>2012-11-02T12:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="pdf" />
     <category scheme="http://mojavy.com/blog" term="tips" />
     <category scheme="http://mojavy.com/blog" term="ubuntu" />
     <summary type="html"><![CDATA[UbuntuでPDFの日本語フォントが表示できないときの対処メモ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/02/ubuntu-pdf"><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/"><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
 <p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>
 <div class="pygments_murphy"><pre>Error <span class="o">(</span>13373<span class="o">)</span>: No font in show/space
 Error <span class="o">(</span>13412<span class="o">)</span>: No font in show/space

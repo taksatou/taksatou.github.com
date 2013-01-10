@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/24/cl-practice" />
-    <id>http://mojavy.com/blog/2012/10/24/cl-practice</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/24/cl-practice/" />
+    <id>http://mojavy.com/blog/2012/10/24/cl-practice/</id>
     <updated>2012-10-24T18:00:00Z</updated>
     <published>2012-10-24T18:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="programming" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/24/cl-practice"><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/24/cl-practice/"><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
 <p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>
 <p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
 <p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>

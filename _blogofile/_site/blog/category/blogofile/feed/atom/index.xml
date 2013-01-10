@@ -19,15 +19,15 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[blogofileでサムネイル画像を表示する方法]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/11/06/blofofile-test" />
-    <id>http://mojavy.com/blog/2011/11/06/blofofile-test</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/11/06/blofofile-test/" />
+    <id>http://mojavy.com/blog/2011/11/06/blofofile-test/</id>
     <updated>2011-11-06T20:32:51Z</updated>
     <published>2011-11-06T20:32:51Z</published>
     <category scheme="http://mojavy.com/blog" term="python" />
     <category scheme="http://mojavy.com/blog" term="memo" />
     <category scheme="http://mojavy.com/blog" term="blogofile" />
     <summary type="html"><![CDATA[blogofileでサムネイル画像を表示する方法]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/blofofile-test"><![CDATA[<p><img alt="rena" src="/images/rena.jpg" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/blofofile-test/"><![CDATA[<p><img alt="rena" src="/images/rena.jpg" /></p>
 <p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
 <p>例えば、
 <a href="http://mojavy.com">http://mojavy.com</a>
@@ -61,14 +61,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[ブログ引越しました]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/11/06/new_blog" />
-    <id>http://mojavy.com/blog/2011/11/06/new_blog</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2011/11/06/new_blog/" />
+    <id>http://mojavy.com/blog/2011/11/06/new_blog/</id>
     <updated>2011-11-06T19:44:40Z</updated>
     <published>2011-11-06T19:44:40Z</published>
     <category scheme="http://mojavy.com/blog" term="blog" />
     <category scheme="http://mojavy.com/blog" term="blogofile" />
     <summary type="html"><![CDATA[ブログ引越しました]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/new_blog"><![CDATA[<div class="document">
+    <content type="html" xml:base="http://mojavy.com/blog/2011/11/06/new_blog/"><![CDATA[<div class="document">
 <p>いままでblogger使ってましたが、github pagesに引越しました。</p>
 <p><a class="reference external" href="http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/">http://tanarky.com/blog/2011/10/29/002_github_blogofile_original_domain/</a>
 を参考にしてblogofileで構築しました。</p>

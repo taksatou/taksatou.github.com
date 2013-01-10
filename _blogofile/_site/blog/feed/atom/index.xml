@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[yaml-modeを拡張してyamlを高速に編集する]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext" />
-    <id>http://mojavy.com/blog/2013/01/09/yaml-mode-ext</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/" />
+    <id>http://mojavy.com/blog/2013/01/09/yaml-mode-ext/</id>
     <updated>2013-01-09T22:00:00Z</updated>
     <published>2013-01-09T22:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="elisp" />
     <category scheme="http://mojavy.com/blog" term="emacs" />
     <summary type="html"><![CDATA[yaml-modeを拡張してyamlを高速に編集する]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/01/09/yaml-mode-ext"><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/"><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
 <p>とあるプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の<a href="https://github.com/yoshiki/yaml-mode">yaml-mode</a>だけだと非力に感じたので拡張するためのemacs lispを書きました。</p>
 <p>といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。</p>
 <p>使い方は、<a href="https://github.com/taksatou/yaml-mode-ext">https://github.com/taksatou/yaml-mode-ext</a>からおとしてきてloadするだけです。
@@ -51,15 +51,15 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/08/favorite-linux-command" />
-    <id>http://mojavy.com/blog/2013/01/08/favorite-linux-command</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" />
+    <id>http://mojavy.com/blog/2013/01/08/favorite-linux-command/</id>
     <updated>2013-01-08T20:30:00Z</updated>
     <published>2013-01-08T20:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="unix" />
     <category scheme="http://mojavy.com/blog" term="tips" />
     <category scheme="http://mojavy.com/blog" term="linux" />
     <summary type="html"><![CDATA[おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/01/08/favorite-linux-command"><![CDATA[<p><img alt="banana" src="/images/banana-200.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/01/08/favorite-linux-command/"><![CDATA[<p><img alt="banana" src="/images/banana-200.png" /></p>
 <p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
 <h2 id="at">at</h2>
 <p>入力されたコマンドを指定されたタイミングで実行するようにスケジュールする。
@@ -115,13 +115,13 @@ fusermount -u /path/to/mount/point  # unmount
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[2012年の振り返りと2013年の抱負]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/08/2012-summary" />
-    <id>http://mojavy.com/blog/2013/01/08/2012-summary</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/08/2012-summary/" />
+    <id>http://mojavy.com/blog/2013/01/08/2012-summary/</id>
     <updated>2013-01-08T00:30:00Z</updated>
     <published>2013-01-08T00:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="others" />
     <summary type="html"><![CDATA[2012年の振り返りと2013年の抱負]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/01/08/2012-summary"><![CDATA[<p><img alt="tool" src="/images/snake-200.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/01/08/2012-summary/"><![CDATA[<p><img alt="tool" src="/images/snake-200.png" /></p>
 <p>早いもので1月も8日に突入してしまいましたが、2012年の振り返りと今年の抱負について書いておこうと思います。</p>
 <p>2012年にやったことのうち思いだせる範囲かつ主観的にみてそれなりにやった感のあるものを列挙してみます。</p>
 <ul>
@@ -154,14 +154,14 @@ fusermount -u /path/to/mount/point  # unmount
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[gearmanクライアントライブラリ cl-gearman]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" />
-    <id>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" />
+    <id>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/</id>
     <updated>2012-12-16T17:30:00Z</updated>
     <published>2012-12-16T17:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="gearman" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[gearmanクライアントライブラリ cl-gearman]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16"><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/"><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
 <p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
 <p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
 <h2 id="gearman">Gearmanとは</h2>
@@ -277,14 +277,14 @@ abort-jobはclientに失敗を通知します。retry-jobは名前の通りハ�
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[ウェブエンジニアのためのオンラインツールまとめ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox" />
-    <id>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/" />
+    <id>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/</id>
     <updated>2012-11-20T02:30:00Z</updated>
     <published>2012-11-20T02:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="web" />
     <category scheme="http://mojavy.com/blog" term="tips" />
     <summary type="html"><![CDATA[ウェブエンジニアのためのオンラインツールまとめ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox"><![CDATA[<p><img alt="tool" src="/images/tool-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/"><![CDATA[<p><img alt="tool" src="/images/tool-logo.png" /></p>
 <p><a href="http://ivanzuzak.info/2012/11/18/the-web-engineers-online-toolbox.html">The Web engineer's online toolbox</a>というまとめ記事が便利そうだったので、実際に試しつつ抄訳してみました。(一部のコメントと体裁は変えています。)</p>
 <h2 id="_1">目次</h2>
 <div class="toc">
@@ -388,13 +388,13 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Quicklinks 3]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/14/quicklinks3" />
-    <id>http://mojavy.com/blog/2012/11/14/quicklinks3</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/14/quicklinks3/" />
+    <id>http://mojavy.com/blog/2012/11/14/quicklinks3/</id>
     <updated>2012-11-14T23:30:00Z</updated>
     <published>2012-11-14T23:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="quicklinks" />
     <summary type="html"><![CDATA[Quicklinks 3]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/14/quicklinks3"><![CDATA[<p><img alt="shader" src="/images/shader-200.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/14/quicklinks3/"><![CDATA[<p><img alt="shader" src="/images/shader-200.png" /></p>
 <p>最近はUnityを使う機会を得たのでゲーム関連技術についていろいろ調べてました。</p>
 <h3 id="shadow-algorithms-for-real-time-rendering"><a href="http://www.mpi-inf.mpg.de/~mschwarz/papers/shadowcourse-eg10.pdf">Shadow Algorithms for Real-time Rendering</a></h3>
 <p>シェーダーを扱った講義資料らしい。この講義を元にした本がでていて<a href="http://www.amazon.co.jp/%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%A3%E3%83%89%E3%82%A6-Elmar-Eisemann/dp/4862461670/ref=pd_sim_fb_1">日本語翻訳</a>もあるみたいです。
@@ -418,14 +418,14 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[cl-frontcodingをつくってみた]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/10/cl-frontcoding" />
-    <id>http://mojavy.com/blog/2012/11/10/cl-frontcoding</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/10/cl-frontcoding/" />
+    <id>http://mojavy.com/blog/2012/11/10/cl-frontcoding/</id>
     <updated>2012-11-10T20:30:00Z</updated>
     <published>2012-11-10T20:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="algorithms" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[cl-frontcodingをつくってみた]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/10/cl-frontcoding"><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/10/cl-frontcoding/"><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
 <p><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">http://d.hatena.ne.jp/naoya/20080914/1221382329</a> のパクりです。</p>
 <p>ソースは<a href="https://github.com/taksatou/cl-frontcoding">https://github.com/taksatou/cl-frontcoding</a>です。</p>
@@ -439,13 +439,13 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Common Lispのdeclareについて]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/09/common-lisp-declare" />
-    <id>http://mojavy.com/blog/2012/11/09/common-lisp-declare</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/09/common-lisp-declare/" />
+    <id>http://mojavy.com/blog/2012/11/09/common-lisp-declare/</id>
     <updated>2012-11-09T23:00:00Z</updated>
     <published>2012-11-09T23:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[Common Lispのdeclareについて]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/09/common-lisp-declare"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/09/common-lisp-declare/"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
 <p>Common Lispのdeclareについて調べた。
 変数の型や式に関することをコンパイラに伝えてやるために使うものらしい。</p>
 <p>例えば、</p>
@@ -593,14 +593,14 @@ Disassembly of section .text:
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[細かすぎて伝わらないAndroid開発のはまりどころまとめ その1]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/07/android-pitfalls" />
-    <id>http://mojavy.com/blog/2012/11/07/android-pitfalls</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/07/android-pitfalls/" />
+    <id>http://mojavy.com/blog/2012/11/07/android-pitfalls/</id>
     <updated>2012-11-07T12:00:00Z</updated>
     <published>2012-11-07T12:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="android" />
     <category scheme="http://mojavy.com/blog" term="tips" />
     <summary type="html"><![CDATA[細かすぎて伝わらないAndroid開発のはまりどころまとめ その1]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/07/android-pitfalls"><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/07/android-pitfalls/"><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
 <p>これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。
 その2はまたねたがたまってきたらたぶんそのうち。</p>
 <h2 id="_1">目次</h2>
@@ -760,15 +760,15 @@ iOSならBundleという仕組みがあります。</p>
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[UbuntuでPDFの日本語フォントが表示できないときの対処メモ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf" />
-    <id>http://mojavy.com/blog/2012/11/02/ubuntu-pdf</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/" />
+    <id>http://mojavy.com/blog/2012/11/02/ubuntu-pdf/</id>
     <updated>2012-11-02T12:00:00Z</updated>
     <published>2012-11-02T12:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="pdf" />
     <category scheme="http://mojavy.com/blog" term="tips" />
     <category scheme="http://mojavy.com/blog" term="ubuntu" />
     <summary type="html"><![CDATA[UbuntuでPDFの日本語フォントが表示できないときの対処メモ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/02/ubuntu-pdf"><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/"><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
 <p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>
 <div class="pygments_murphy"><pre>Error <span class="o">(</span>13373<span class="o">)</span>: No font in show/space
 Error <span class="o">(</span>13412<span class="o">)</span>: No font in show/space

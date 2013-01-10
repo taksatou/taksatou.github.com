@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>Common Lisp練習 - CodeChef : TSORT</title>
-      <link>http://mojavy.com/blog/2012/10/24/cl-practice</link>
+      <link>http://mojavy.com/blog/2012/10/24/cl-practice/</link>
       <pubDate>Wed, 24 Oct 2012 18:00:00 JST</pubDate>
       <category><![CDATA[programming]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/24/cl-practice</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/24/cl-practice/</guid>
       <description>Common Lisp練習 - CodeChef : TSORT</description>
       <content:encoded><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
 <p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>

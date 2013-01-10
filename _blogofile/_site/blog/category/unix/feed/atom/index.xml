@@ -19,15 +19,15 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/08/favorite-linux-command" />
-    <id>http://mojavy.com/blog/2013/01/08/favorite-linux-command</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" />
+    <id>http://mojavy.com/blog/2013/01/08/favorite-linux-command/</id>
     <updated>2013-01-08T20:30:00Z</updated>
     <published>2013-01-08T20:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="unix" />
     <category scheme="http://mojavy.com/blog" term="tips" />
     <category scheme="http://mojavy.com/blog" term="linux" />
     <summary type="html"><![CDATA[おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/01/08/favorite-linux-command"><![CDATA[<p><img alt="banana" src="/images/banana-200.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/01/08/favorite-linux-command/"><![CDATA[<p><img alt="banana" src="/images/banana-200.png" /></p>
 <p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
 <h2 id="at">at</h2>
 <p>入力されたコマンドを指定されたタイミングで実行するようにスケジュールする。

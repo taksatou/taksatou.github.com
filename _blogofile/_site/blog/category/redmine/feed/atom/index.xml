@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[redmineのメールを効率良くフィルタリングする]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/24/redmine-mail" />
-    <id>http://mojavy.com/blog/2012/07/24/redmine-mail</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/24/redmine-mail/" />
+    <id>http://mojavy.com/blog/2012/07/24/redmine-mail/</id>
     <updated>2012-07-24T23:30:00Z</updated>
     <published>2012-07-24T23:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="tips" />
     <category scheme="http://mojavy.com/blog" term="redmine" />
     <summary type="html"><![CDATA[redmineのメールを効率良くフィルタリングする]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/24/redmine-mail"><![CDATA[<p><img alt="redmine" src="/images/redmine-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/24/redmine-mail/"><![CDATA[<p><img alt="redmine" src="/images/redmine-logo.png" /></p>
 <p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。</p>
 <p>いままでgmailでフィルタリングしてたので気付かなかった。。</p>
 <p>メールクライアントはgmailのウェブアプリで十分だと思ってましたが、メーラはデスクトップアプリのほうが便利ですね。</p>]]></content>

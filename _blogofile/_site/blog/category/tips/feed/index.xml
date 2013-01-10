@@ -16,12 +16,12 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</title>
-      <link>http://mojavy.com/blog/2013/01/08/favorite-linux-command</link>
+      <link>http://mojavy.com/blog/2013/01/08/favorite-linux-command/</link>
       <pubDate>Tue, 08 Jan 2013 20:30:00 JST</pubDate>
       <category><![CDATA[unix]]></category>
       <category><![CDATA[tips]]></category>
       <category><![CDATA[linux]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/favorite-linux-command</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/favorite-linux-command/</guid>
       <description>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</description>
       <content:encoded><![CDATA[<p><img alt="banana" src="/images/banana-200.png" /></p>
 <p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
@@ -75,11 +75,11 @@ fusermount -u /path/to/mount/point  # unmount
     </item>
     <item>
       <title>ウェブエンジニアのためのオンラインツールまとめ</title>
-      <link>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</link>
+      <link>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/</link>
       <pubDate>Tue, 20 Nov 2012 02:30:00 JST</pubDate>
       <category><![CDATA[web]]></category>
       <category><![CDATA[tips]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/</guid>
       <description>ウェブエンジニアのためのオンラインツールまとめ</description>
       <content:encoded><![CDATA[<p><img alt="tool" src="/images/tool-logo.png" /></p>
 <p><a href="http://ivanzuzak.info/2012/11/18/the-web-engineers-online-toolbox.html">The Web engineer's online toolbox</a>というまとめ記事が便利そうだったので、実際に試しつつ抄訳してみました。(一部のコメントと体裁は変えています。)</p>
@@ -181,11 +181,11 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
     </item>
     <item>
       <title>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</title>
-      <link>http://mojavy.com/blog/2012/11/07/android-pitfalls</link>
+      <link>http://mojavy.com/blog/2012/11/07/android-pitfalls/</link>
       <pubDate>Wed, 07 Nov 2012 12:00:00 JST</pubDate>
       <category><![CDATA[android]]></category>
       <category><![CDATA[tips]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/07/android-pitfalls</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/07/android-pitfalls/</guid>
       <description>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</description>
       <content:encoded><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
 <p>これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。
@@ -343,12 +343,12 @@ iOSならBundleという仕組みがあります。</p>
     </item>
     <item>
       <title>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</title>
-      <link>http://mojavy.com/blog/2012/11/02/ubuntu-pdf</link>
+      <link>http://mojavy.com/blog/2012/11/02/ubuntu-pdf/</link>
       <pubDate>Fri, 02 Nov 2012 12:00:00 JST</pubDate>
       <category><![CDATA[pdf]]></category>
       <category><![CDATA[tips]]></category>
       <category><![CDATA[ubuntu]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/02/ubuntu-pdf</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/02/ubuntu-pdf/</guid>
       <description>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</description>
       <content:encoded><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
 <p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>
@@ -380,11 +380,11 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
     </item>
     <item>
       <title>redmineのメールを効率良くフィルタリングする</title>
-      <link>http://mojavy.com/blog/2012/07/24/redmine-mail</link>
+      <link>http://mojavy.com/blog/2012/07/24/redmine-mail/</link>
       <pubDate>Tue, 24 Jul 2012 23:30:00 JST</pubDate>
       <category><![CDATA[tips]]></category>
       <category><![CDATA[redmine]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/24/redmine-mail</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/24/redmine-mail/</guid>
       <description>redmineのメールを効率良くフィルタリングする</description>
       <content:encoded><![CDATA[<p><img alt="redmine" src="/images/redmine-logo.png" /></p>
 <p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。</p>

@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[jenkinsでiosアプリをビルドしてwifi経由で実機インストールする]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build" />
-    <id>http://mojavy.com/blog/2012/08/07/jenkins-ios-build</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" />
+    <id>http://mojavy.com/blog/2012/08/07/jenkins-ios-build/</id>
     <updated>2012-08-07T15:30:00Z</updated>
     <published>2012-08-07T15:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="jenkins" />
     <category scheme="http://mojavy.com/blog" term="ios" />
     <summary type="html"><![CDATA[jenkinsでiosアプリをビルドしてwifi経由で実機インストールする]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/08/07/jenkins-ios-build"><![CDATA[<p><img alt="jenkins" src="/images/jenkins-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/"><![CDATA[<p><img alt="jenkins" src="/images/jenkins-logo.png" /></p>
 <p>はまりどころが多くて大変だったので今後同じことをやろうとする人のために一連の作業をメモしておきます。</p>
 <h2 id="_1">目的</h2>
 <ul>

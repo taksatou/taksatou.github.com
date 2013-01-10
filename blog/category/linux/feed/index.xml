@@ -16,12 +16,12 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</title>
-      <link>http://mojavy.com/blog/2013/01/08/favorite-linux-command</link>
+      <link>http://mojavy.com/blog/2013/01/08/favorite-linux-command/</link>
       <pubDate>Tue, 08 Jan 2013 20:30:00 JST</pubDate>
       <category><![CDATA[unix]]></category>
       <category><![CDATA[tips]]></category>
       <category><![CDATA[linux]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/favorite-linux-command</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/favorite-linux-command/</guid>
       <description>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</description>
       <content:encoded><![CDATA[<p><img alt="banana" src="/images/banana-200.png" /></p>
 <p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
@@ -75,11 +75,11 @@ fusermount -u /path/to/mount/point  # unmount
     </item>
     <item>
       <title>pacoを導入</title>
-      <link>http://mojavy.com/blog/2012/10/16/paco</link>
+      <link>http://mojavy.com/blog/2012/10/16/paco/</link>
       <pubDate>Tue, 16 Oct 2012 18:30:00 JST</pubDate>
       <category><![CDATA[paco]]></category>
       <category><![CDATA[linux]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/16/paco</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/16/paco/</guid>
       <description>pacoを導入</description>
       <content:encoded><![CDATA[<p>今さらだけどpacoを導入した。</p>
 <p><a href="http://sourceforge.net/projects/paco/files/paco/2.0.9/">http://sourceforge.net/projects/paco/files/paco/2.0.9/</a> から最新のパッケージをダウンロード、展開して以下コマンドでインストール。gpacoは使わないと思うので--disable-gpacoした。</p>

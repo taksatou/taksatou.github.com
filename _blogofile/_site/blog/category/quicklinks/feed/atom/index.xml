@@ -19,13 +19,13 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Quicklinks 3]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/14/quicklinks3" />
-    <id>http://mojavy.com/blog/2012/11/14/quicklinks3</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/14/quicklinks3/" />
+    <id>http://mojavy.com/blog/2012/11/14/quicklinks3/</id>
     <updated>2012-11-14T23:30:00Z</updated>
     <published>2012-11-14T23:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="quicklinks" />
     <summary type="html"><![CDATA[Quicklinks 3]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/14/quicklinks3"><![CDATA[<p><img alt="shader" src="/images/shader-200.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/14/quicklinks3/"><![CDATA[<p><img alt="shader" src="/images/shader-200.png" /></p>
 <p>最近はUnityを使う機会を得たのでゲーム関連技術についていろいろ調べてました。</p>
 <h3 id="shadow-algorithms-for-real-time-rendering"><a href="http://www.mpi-inf.mpg.de/~mschwarz/papers/shadowcourse-eg10.pdf">Shadow Algorithms for Real-time Rendering</a></h3>
 <p>シェーダーを扱った講義資料らしい。この講義を元にした本がでていて<a href="http://www.amazon.co.jp/%E3%83%AA%E3%82%A2%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%A3%E3%83%89%E3%82%A6-Elmar-Eisemann/dp/4862461670/ref=pd_sim_fb_1">日本語翻訳</a>もあるみたいです。
@@ -49,13 +49,13 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Quick links]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/31/quick-links" />
-    <id>http://mojavy.com/blog/2012/10/31/quick-links</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/31/quick-links/" />
+    <id>http://mojavy.com/blog/2012/10/31/quick-links/</id>
     <updated>2012-10-31T23:30:00Z</updated>
     <published>2012-10-31T23:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="quicklinks" />
     <summary type="html"><![CDATA[Quick links]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/31/quick-links"><![CDATA[<p><img alt="jack" src="/images/jack-lantern.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/31/quick-links/"><![CDATA[<p><img alt="jack" src="/images/jack-lantern.png" /></p>
 <p>もう11月ですね。<a href="http://mojavy.com/blog/2012/10/16/quick-links/">前回</a>に引き続き今後のネタのメモとか。</p>
 <h3 id="impara"><a href="https://github.com/cloudera/impala">Impara</a></h3>
 <p><a href="http://research.google.com/pubs/pub36632.html">GoogleのDremel</a>に触発されてつくったものとのこと。MapReduce以外の選択肢が増えてくると、<a href="http://pig.apache.org/">pig</a>みたいな高級言語の重要度があがってくるかもしれないですね。</p>
@@ -87,13 +87,13 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Quick links]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/16/quick-links" />
-    <id>http://mojavy.com/blog/2012/10/16/quick-links</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/16/quick-links/" />
+    <id>http://mojavy.com/blog/2012/10/16/quick-links/</id>
     <updated>2012-10-16T02:30:00Z</updated>
     <published>2012-10-16T02:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="quicklinks" />
     <summary type="html"><![CDATA[Quick links]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/16/quick-links"><![CDATA[<p><img alt="link" src="/images/link-icon.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/16/quick-links/"><![CDATA[<p><img alt="link" src="/images/link-icon.png" /></p>
 <p><a href="http://glinden.blogspot.jp/2012/06/quick-links.html">http://glinden.blogspot.jp/2012/06/quick-links.html</a> のまねをして、ネタのメモがてら最近興味を引いたものなどを列挙してみる。</p>
 <h4 id="mq"><a href="http://www.zeromq.org/">ØMQ</a></h4>
 <p><a href="http://www.zeromq.org/">http://www.zeromq.org/</a></p>

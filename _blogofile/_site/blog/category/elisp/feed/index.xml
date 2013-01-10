@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>yaml-modeを拡張してyamlを高速に編集する</title>
-      <link>http://mojavy.com/blog/2013/01/09/yaml-mode-ext</link>
+      <link>http://mojavy.com/blog/2013/01/09/yaml-mode-ext/</link>
       <pubDate>Wed, 09 Jan 2013 22:00:00 JST</pubDate>
       <category><![CDATA[elisp]]></category>
       <category><![CDATA[emacs]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/09/yaml-mode-ext</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/09/yaml-mode-ext/</guid>
       <description>yaml-modeを拡張してyamlを高速に編集する</description>
       <content:encoded><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
 <p>とあるプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の<a href="https://github.com/yoshiki/yaml-mode">yaml-mode</a>だけだと非力に感じたので拡張するためのemacs lispを書きました。</p>

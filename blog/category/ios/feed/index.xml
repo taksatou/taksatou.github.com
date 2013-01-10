@@ -16,13 +16,13 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>iOSでZeroMQを試す</title>
-      <link>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</link>
+      <link>http://mojavy.com/blog/2012/10/18/objective-c-zeromq/</link>
       <pubDate>Thu, 18 Oct 2012 18:00:01 JST</pubDate>
       <category><![CDATA[objective-c]]></category>
       <category><![CDATA[ios]]></category>
       <category><![CDATA[zeromq]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/objective-c-zeromq</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/objective-c-zeromq/</guid>
       <description>iOSでZeroMQを試す</description>
       <content:encoded><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
@@ -243,11 +243,11 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
     </item>
     <item>
       <title>jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</title>
-      <link>http://mojavy.com/blog/2012/08/07/jenkins-ios-build</link>
+      <link>http://mojavy.com/blog/2012/08/07/jenkins-ios-build/</link>
       <pubDate>Tue, 07 Aug 2012 15:30:00 JST</pubDate>
       <category><![CDATA[jenkins]]></category>
       <category><![CDATA[ios]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/08/07/jenkins-ios-build</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/08/07/jenkins-ios-build/</guid>
       <description>jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</description>
       <content:encoded><![CDATA[<p><img alt="jenkins" src="/images/jenkins-logo.png" /></p>
 <p>はまりどころが多くて大変だったので今後同じことをやろうとする人のために一連の作業をメモしておきます。</p>
@@ -412,10 +412,10 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
     </item>
     <item>
       <title>xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる</title>
-      <link>http://mojavy.com/blog/2012/07/25/ios-simulator-log</link>
+      <link>http://mojavy.com/blog/2012/07/25/ios-simulator-log/</link>
       <pubDate>Wed, 25 Jul 2012 20:30:00 JST</pubDate>
       <category><![CDATA[ios]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/25/ios-simulator-log</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/25/ios-simulator-log/</guid>
       <description>xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる</description>
       <content:encoded><![CDATA[<p><img alt="ios" src="/images/ios-logo.png" /></p>
 <p>タイトルの通りです。</p>

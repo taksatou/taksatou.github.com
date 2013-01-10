@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Xcodeのキーバインディングをもっとemacsっぽくする]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings" />
-    <id>http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/" />
+    <id>http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/</id>
     <updated>2012-07-12T12:30:00Z</updated>
     <published>2012-07-12T12:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="xcode" />
     <category scheme="http://mojavy.com/blog" term="mac" />
     <summary type="html"><![CDATA[Xcodeのキーバインディングをもっとemacsっぽくする]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings"><![CDATA[<p><img alt="xcode" src="/images/xcode-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/"><![CDATA[<p><img alt="xcode" src="/images/xcode-logo.png" /></p>
 <p>xcodeのキーバインディングはデフォルトでemacsっぽいものが使えますが、普段emacsを使ってる身としては中途半端すぎて逆にいらつきます。</p>
 <p>C-xC-sで変な文字が入ったり、escで補完リストのポップアップをトグル表示とかやめてほしかったので、
 このあたりのうざい動きを抑えつつ最低限の設定を追加した設定をつくりました。</p>

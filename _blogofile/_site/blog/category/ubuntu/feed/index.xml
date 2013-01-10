@@ -16,12 +16,12 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</title>
-      <link>http://mojavy.com/blog/2012/11/02/ubuntu-pdf</link>
+      <link>http://mojavy.com/blog/2012/11/02/ubuntu-pdf/</link>
       <pubDate>Fri, 02 Nov 2012 12:00:00 JST</pubDate>
       <category><![CDATA[pdf]]></category>
       <category><![CDATA[tips]]></category>
       <category><![CDATA[ubuntu]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/02/ubuntu-pdf</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/02/ubuntu-pdf/</guid>
       <description>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</description>
       <content:encoded><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
 <p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>

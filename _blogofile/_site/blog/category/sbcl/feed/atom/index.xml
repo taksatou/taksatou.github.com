@@ -19,15 +19,15 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Common LispでZeroMQを試す]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq" />
-    <id>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/" />
+    <id>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/</id>
     <updated>2012-10-17T00:00:00Z</updated>
     <published>2012-10-17T00:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="zeromq" />
     <category scheme="http://mojavy.com/blog" term="sbcl" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[Common LispでZeroMQを試す]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p>Common LispでZeroMQを試してみた。</p>
 <p>使用環境は以下のとおり</p>
 <ul>
@@ -137,15 +137,15 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[sbclでクラスのスロット一覧を取得する方法]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots" />
-    <id>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" />
+    <id>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/</id>
     <updated>2012-07-06T18:30:00Z</updated>
     <published>2012-07-06T18:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="memo" />
     <category scheme="http://mojavy.com/blog" term="sbcl" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[sbclでクラスのスロット一覧を取得する方法]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots"><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/"><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
 <p>メモメモ</p>
 <div class="pygments_murphy"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
 (#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;

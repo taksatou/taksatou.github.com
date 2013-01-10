@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>pacoを導入</title>
-      <link>http://mojavy.com/blog/2012/10/16/paco</link>
+      <link>http://mojavy.com/blog/2012/10/16/paco/</link>
       <pubDate>Tue, 16 Oct 2012 18:30:00 JST</pubDate>
       <category><![CDATA[paco]]></category>
       <category><![CDATA[linux]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/16/paco</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/16/paco/</guid>
       <description>pacoを導入</description>
       <content:encoded><![CDATA[<p>今さらだけどpacoを導入した。</p>
 <p><a href="http://sourceforge.net/projects/paco/files/paco/2.0.9/">http://sourceforge.net/projects/paco/files/paco/2.0.9/</a> から最新のパッケージをダウンロード、展開して以下コマンドでインストール。gpacoは使わないと思うので--disable-gpacoした。</p>

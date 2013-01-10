@@ -16,12 +16,12 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>ワンライナーでウェブサーバを起動する方法</title>
-      <link>http://mojavy.com/blog/2012/07/18/one-line-webserver</link>
+      <link>http://mojavy.com/blog/2012/07/18/one-line-webserver/</link>
       <pubDate>Wed, 18 Jul 2012 12:30:00 JST</pubDate>
       <category><![CDATA[python]]></category>
       <category><![CDATA[web]]></category>
       <category><![CDATA[ruby]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/18/one-line-webserver</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/18/one-line-webserver/</guid>
       <description>ワンライナーでウェブサーバを起動する方法</description>
       <content:encoded><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
@@ -49,10 +49,10 @@
     </item>
     <item>
       <title>rubyのワンライナーで便利な変数まとめ</title>
-      <link>http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables</link>
+      <link>http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/</link>
       <pubDate>Sun, 08 Jul 2012 18:30:00 JST</pubDate>
       <category><![CDATA[ruby]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/</guid>
       <description>rubyのワンライナーで便利な変数まとめ</description>
       <content:encoded><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <h1 id="_1">$.</h1>

@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>ブログ引越しました</title>
-      <link>http://mojavy.com/blog/2011/11/06/new_blog</link>
+      <link>http://mojavy.com/blog/2011/11/06/new_blog/</link>
       <pubDate>Sun, 06 Nov 2011 19:44:40 JST</pubDate>
       <category><![CDATA[blog]]></category>
       <category><![CDATA[blogofile]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/new_blog</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/new_blog/</guid>
       <description>ブログ引越しました</description>
       <content:encoded><![CDATA[<div class="document">
 <p>いままでblogger使ってましたが、github pagesに引越しました。</p>

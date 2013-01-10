@@ -19,8 +19,8 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[iOSでZeroMQを試す]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq" />
-    <id>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/" />
+    <id>http://mojavy.com/blog/2012/10/18/objective-c-zeromq/</id>
     <updated>2012-10-18T18:00:01Z</updated>
     <published>2012-10-18T18:00:01Z</published>
     <category scheme="http://mojavy.com/blog" term="objective-c" />
@@ -28,7 +28,7 @@
     <category scheme="http://mojavy.com/blog" term="zeromq" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[iOSでZeroMQを試す]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/objective-c-zeromq"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
 <h1 id="zeromqiphone">ZeroMQをiPhone用にビルド</h1>
 <p>ZeroMQはautotoolsで作成されておりconfigure &amp;&amp; make でビルドできるようになっているが、iPhone用にクロスコンパイルをするためには適切なオプションを与えてやる必要がある。</p>
@@ -251,13 +251,13 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[objective-cのメモリマネージメントについて]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management" />
-    <id>http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" />
+    <id>http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/</id>
     <updated>2012-07-18T11:30:00Z</updated>
     <published>2012-07-18T11:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="objective-c" />
     <summary type="html"><![CDATA[objective-cのメモリマネージメントについて]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management"><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/"><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
 <p>現在のところ3つの方法がある</p>
 <h2 id="1-gabage-collection">1. Gabage Collection</h2>
 <ul>
@@ -308,13 +308,13 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[objective-cのプロトコルとデリゲーションについてのメモ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol" />
-    <id>http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" />
+    <id>http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/</id>
     <updated>2012-07-17T18:30:00Z</updated>
     <published>2012-07-17T18:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="objective-c" />
     <summary type="html"><![CDATA[objective-cのプロトコルとデリゲーションについてのメモ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol"><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/"><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
 <ul>
 <li>プロトコルとはクラス間で共有するメソッドのリスト。</li>
 <li>javaでいうinterfaceのようなもの。</li>
@@ -384,13 +384,13 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[objective-cのカテゴリついてのメモ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/13/objective-c-memo" />
-    <id>http://mojavy.com/blog/2012/07/13/objective-c-memo</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/13/objective-c-memo/" />
+    <id>http://mojavy.com/blog/2012/07/13/objective-c-memo/</id>
     <updated>2012-07-13T18:30:00Z</updated>
     <published>2012-07-13T18:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="objective-c" />
     <summary type="html"><![CDATA[objective-cのカテゴリついてのメモ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/13/objective-c-memo"><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/13/objective-c-memo/"><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
 <ul>
 <li>objective-cではカテゴリという機能を使ってクラスの拡張ができる。</li>
 <li>javascriptのprototypeのようなもの。</li>

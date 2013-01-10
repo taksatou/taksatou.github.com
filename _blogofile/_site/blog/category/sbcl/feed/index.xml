@@ -16,12 +16,12 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>Common LispでZeroMQを試す</title>
-      <link>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq</link>
+      <link>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/</link>
       <pubDate>Wed, 17 Oct 2012 00:00:00 JST</pubDate>
       <category><![CDATA[zeromq]]></category>
       <category><![CDATA[sbcl]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/17/common-lisp-zeromq</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/</guid>
       <description>Common LispでZeroMQを試す</description>
       <content:encoded><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p>Common LispでZeroMQを試してみた。</p>
@@ -129,12 +129,12 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
     </item>
     <item>
       <title>sbclでクラスのスロット一覧を取得する方法</title>
-      <link>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</link>
+      <link>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/</link>
       <pubDate>Fri, 06 Jul 2012 18:30:00 JST</pubDate>
       <category><![CDATA[memo]]></category>
       <category><![CDATA[sbcl]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/</guid>
       <description>sbclでクラスのスロット一覧を取得する方法</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
 <p>メモメモ</p>

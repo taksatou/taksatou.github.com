@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>gearmanクライアントライブラリ cl-gearman</title>
-      <link>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</link>
+      <link>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/</link>
       <pubDate>Sun, 16 Dec 2012 17:30:00 JST</pubDate>
       <category><![CDATA[gearman]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/</guid>
       <description>gearmanクライアントライブラリ cl-gearman</description>
       <content:encoded><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
 <p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
@@ -134,11 +134,11 @@ abort-jobはclientに失敗を通知します。retry-jobは名前の通りハ�
     </item>
     <item>
       <title>cl-frontcodingをつくってみた</title>
-      <link>http://mojavy.com/blog/2012/11/10/cl-frontcoding</link>
+      <link>http://mojavy.com/blog/2012/11/10/cl-frontcoding/</link>
       <pubDate>Sat, 10 Nov 2012 20:30:00 JST</pubDate>
       <category><![CDATA[algorithms]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/10/cl-frontcoding</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/10/cl-frontcoding/</guid>
       <description>cl-frontcodingをつくってみた</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
@@ -150,10 +150,10 @@ abort-jobはclientに失敗を通知します。retry-jobは名前の通りハ�
     </item>
     <item>
       <title>Common Lispのdeclareについて</title>
-      <link>http://mojavy.com/blog/2012/11/09/common-lisp-declare</link>
+      <link>http://mojavy.com/blog/2012/11/09/common-lisp-declare/</link>
       <pubDate>Fri, 09 Nov 2012 23:00:00 JST</pubDate>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/09/common-lisp-declare</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/09/common-lisp-declare/</guid>
       <description>Common Lispのdeclareについて</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
 <p>Common Lispのdeclareについて調べた。
@@ -299,11 +299,11 @@ Disassembly of section .text:
     </item>
     <item>
       <title>Common Lisp練習 - CodeChef : TSORT</title>
-      <link>http://mojavy.com/blog/2012/10/24/cl-practice</link>
+      <link>http://mojavy.com/blog/2012/10/24/cl-practice/</link>
       <pubDate>Wed, 24 Oct 2012 18:00:00 JST</pubDate>
       <category><![CDATA[programming]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/24/cl-practice</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/24/cl-practice/</guid>
       <description>Common Lisp練習 - CodeChef : TSORT</description>
       <content:encoded><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
 <p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>
@@ -396,13 +396,13 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
     </item>
     <item>
       <title>iOSでZeroMQを試す</title>
-      <link>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</link>
+      <link>http://mojavy.com/blog/2012/10/18/objective-c-zeromq/</link>
       <pubDate>Thu, 18 Oct 2012 18:00:01 JST</pubDate>
       <category><![CDATA[objective-c]]></category>
       <category><![CDATA[ios]]></category>
       <category><![CDATA[zeromq]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/objective-c-zeromq</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/objective-c-zeromq/</guid>
       <description>iOSでZeroMQを試す</description>
       <content:encoded><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
@@ -623,12 +623,12 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
     </item>
     <item>
       <title>Common LispでZeroMQを試す</title>
-      <link>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq</link>
+      <link>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/</link>
       <pubDate>Wed, 17 Oct 2012 00:00:00 JST</pubDate>
       <category><![CDATA[zeromq]]></category>
       <category><![CDATA[sbcl]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/17/common-lisp-zeromq</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/</guid>
       <description>Common LispでZeroMQを試す</description>
       <content:encoded><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p>Common LispでZeroMQを試してみた。</p>
@@ -736,12 +736,12 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
     </item>
     <item>
       <title>sbclでクラスのスロット一覧を取得する方法</title>
-      <link>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</link>
+      <link>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/</link>
       <pubDate>Fri, 06 Jul 2012 18:30:00 JST</pubDate>
       <category><![CDATA[memo]]></category>
       <category><![CDATA[sbcl]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/</guid>
       <description>sbclでクラスのスロット一覧を取得する方法</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
 <p>メモメモ</p>

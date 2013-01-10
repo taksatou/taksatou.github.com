@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>yaml-modeを拡張してyamlを高速に編集する</title>
-      <link>http://mojavy.com/blog/2013/01/09/yaml-mode-ext</link>
+      <link>http://mojavy.com/blog/2013/01/09/yaml-mode-ext/</link>
       <pubDate>Wed, 09 Jan 2013 22:00:00 JST</pubDate>
       <category><![CDATA[elisp]]></category>
       <category><![CDATA[emacs]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/09/yaml-mode-ext</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/09/yaml-mode-ext/</guid>
       <description>yaml-modeを拡張してyamlを高速に編集する</description>
       <content:encoded><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
 <p>とあるプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の<a href="https://github.com/yoshiki/yaml-mode">yaml-mode</a>だけだと非力に感じたので拡張するためのemacs lispを書きました。</p>
@@ -43,12 +43,12 @@
     </item>
     <item>
       <title>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</title>
-      <link>http://mojavy.com/blog/2013/01/08/favorite-linux-command</link>
+      <link>http://mojavy.com/blog/2013/01/08/favorite-linux-command/</link>
       <pubDate>Tue, 08 Jan 2013 20:30:00 JST</pubDate>
       <category><![CDATA[unix]]></category>
       <category><![CDATA[tips]]></category>
       <category><![CDATA[linux]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/favorite-linux-command</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/favorite-linux-command/</guid>
       <description>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</description>
       <content:encoded><![CDATA[<p><img alt="banana" src="/images/banana-200.png" /></p>
 <p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
@@ -102,10 +102,10 @@ fusermount -u /path/to/mount/point  # unmount
     </item>
     <item>
       <title>2012年の振り返りと2013年の抱負</title>
-      <link>http://mojavy.com/blog/2013/01/08/2012-summary</link>
+      <link>http://mojavy.com/blog/2013/01/08/2012-summary/</link>
       <pubDate>Tue, 08 Jan 2013 00:30:00 JST</pubDate>
       <category><![CDATA[others]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/2012-summary</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/2012-summary/</guid>
       <description>2012年の振り返りと2013年の抱負</description>
       <content:encoded><![CDATA[<p><img alt="tool" src="/images/snake-200.png" /></p>
 <p>早いもので1月も8日に突入してしまいましたが、2012年の振り返りと今年の抱負について書いておこうと思います。</p>
@@ -136,11 +136,11 @@ fusermount -u /path/to/mount/point  # unmount
     </item>
     <item>
       <title>gearmanクライアントライブラリ cl-gearman</title>
-      <link>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</link>
+      <link>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/</link>
       <pubDate>Sun, 16 Dec 2012 17:30:00 JST</pubDate>
       <category><![CDATA[gearman]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/</guid>
       <description>gearmanクライアントライブラリ cl-gearman</description>
       <content:encoded><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
 <p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
@@ -254,11 +254,11 @@ abort-jobはclientに失敗を通知します。retry-jobは名前の通りハ�
     </item>
     <item>
       <title>ウェブエンジニアのためのオンラインツールまとめ</title>
-      <link>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</link>
+      <link>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/</link>
       <pubDate>Tue, 20 Nov 2012 02:30:00 JST</pubDate>
       <category><![CDATA[web]]></category>
       <category><![CDATA[tips]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/</guid>
       <description>ウェブエンジニアのためのオンラインツールまとめ</description>
       <content:encoded><![CDATA[<p><img alt="tool" src="/images/tool-logo.png" /></p>
 <p><a href="http://ivanzuzak.info/2012/11/18/the-web-engineers-online-toolbox.html">The Web engineer's online toolbox</a>というまとめ記事が便利そうだったので、実際に試しつつ抄訳してみました。(一部のコメントと体裁は変えています。)</p>
@@ -360,10 +360,10 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
     </item>
     <item>
       <title>Quicklinks 3</title>
-      <link>http://mojavy.com/blog/2012/11/14/quicklinks3</link>
+      <link>http://mojavy.com/blog/2012/11/14/quicklinks3/</link>
       <pubDate>Wed, 14 Nov 2012 23:30:00 JST</pubDate>
       <category><![CDATA[quicklinks]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/14/quicklinks3</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/14/quicklinks3/</guid>
       <description>Quicklinks 3</description>
       <content:encoded><![CDATA[<p><img alt="shader" src="/images/shader-200.png" /></p>
 <p>最近はUnityを使う機会を得たのでゲーム関連技術についていろいろ調べてました。</p>
@@ -385,11 +385,11 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
     </item>
     <item>
       <title>cl-frontcodingをつくってみた</title>
-      <link>http://mojavy.com/blog/2012/11/10/cl-frontcoding</link>
+      <link>http://mojavy.com/blog/2012/11/10/cl-frontcoding/</link>
       <pubDate>Sat, 10 Nov 2012 20:30:00 JST</pubDate>
       <category><![CDATA[algorithms]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/10/cl-frontcoding</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/10/cl-frontcoding/</guid>
       <description>cl-frontcodingをつくってみた</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
@@ -401,10 +401,10 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
     </item>
     <item>
       <title>Common Lispのdeclareについて</title>
-      <link>http://mojavy.com/blog/2012/11/09/common-lisp-declare</link>
+      <link>http://mojavy.com/blog/2012/11/09/common-lisp-declare/</link>
       <pubDate>Fri, 09 Nov 2012 23:00:00 JST</pubDate>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/09/common-lisp-declare</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/09/common-lisp-declare/</guid>
       <description>Common Lispのdeclareについて</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
 <p>Common Lispのdeclareについて調べた。
@@ -550,11 +550,11 @@ Disassembly of section .text:
     </item>
     <item>
       <title>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</title>
-      <link>http://mojavy.com/blog/2012/11/07/android-pitfalls</link>
+      <link>http://mojavy.com/blog/2012/11/07/android-pitfalls/</link>
       <pubDate>Wed, 07 Nov 2012 12:00:00 JST</pubDate>
       <category><![CDATA[android]]></category>
       <category><![CDATA[tips]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/07/android-pitfalls</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/07/android-pitfalls/</guid>
       <description>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</description>
       <content:encoded><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
 <p>これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。
@@ -712,12 +712,12 @@ iOSならBundleという仕組みがあります。</p>
     </item>
     <item>
       <title>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</title>
-      <link>http://mojavy.com/blog/2012/11/02/ubuntu-pdf</link>
+      <link>http://mojavy.com/blog/2012/11/02/ubuntu-pdf/</link>
       <pubDate>Fri, 02 Nov 2012 12:00:00 JST</pubDate>
       <category><![CDATA[pdf]]></category>
       <category><![CDATA[tips]]></category>
       <category><![CDATA[ubuntu]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/02/ubuntu-pdf</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/02/ubuntu-pdf/</guid>
       <description>UbuntuでPDFの日本語フォントが表示できないときの対処メモ</description>
       <content:encoded><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
 <p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>

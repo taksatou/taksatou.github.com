@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>redmineのメールを効率良くフィルタリングする</title>
-      <link>http://mojavy.com/blog/2012/07/24/redmine-mail</link>
+      <link>http://mojavy.com/blog/2012/07/24/redmine-mail/</link>
       <pubDate>Tue, 24 Jul 2012 23:30:00 JST</pubDate>
       <category><![CDATA[tips]]></category>
       <category><![CDATA[redmine]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/24/redmine-mail</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/24/redmine-mail/</guid>
       <description>redmineのメールを効率良くフィルタリングする</description>
       <content:encoded><![CDATA[<p><img alt="redmine" src="/images/redmine-logo.png" /></p>
 <p>redmineからとぶメールのヘッダにはX-Redmine-Issue-AuthorとかX-Redmine-Issue-Assigneeとかついているのでフィルタが簡単にできます。</p>

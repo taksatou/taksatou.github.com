@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</title>
-      <link>http://mojavy.com/blog/2012/11/07/android-pitfalls</link>
+      <link>http://mojavy.com/blog/2012/11/07/android-pitfalls/</link>
       <pubDate>Wed, 07 Nov 2012 12:00:00 JST</pubDate>
       <category><![CDATA[android]]></category>
       <category><![CDATA[tips]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/07/android-pitfalls</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/07/android-pitfalls/</guid>
       <description>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</description>
       <content:encoded><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
 <p>これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。

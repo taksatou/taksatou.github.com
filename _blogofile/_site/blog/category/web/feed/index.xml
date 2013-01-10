@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>ウェブエンジニアのためのオンラインツールまとめ</title>
-      <link>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</link>
+      <link>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/</link>
       <pubDate>Tue, 20 Nov 2012 02:30:00 JST</pubDate>
       <category><![CDATA[web]]></category>
       <category><![CDATA[tips]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/</guid>
       <description>ウェブエンジニアのためのオンラインツールまとめ</description>
       <content:encoded><![CDATA[<p><img alt="tool" src="/images/tool-logo.png" /></p>
 <p><a href="http://ivanzuzak.info/2012/11/18/the-web-engineers-online-toolbox.html">The Web engineer's online toolbox</a>というまとめ記事が便利そうだったので、実際に試しつつ抄訳してみました。(一部のコメントと体裁は変えています。)</p>
@@ -122,11 +122,11 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
     </item>
     <item>
       <title>twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</title>
-      <link>http://mojavy.com/blog/2012/10/18/twitter-api-error</link>
+      <link>http://mojavy.com/blog/2012/10/18/twitter-api-error/</link>
       <pubDate>Thu, 18 Oct 2012 22:00:00 JST</pubDate>
       <category><![CDATA[web]]></category>
       <category><![CDATA[twitter]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/twitter-api-error</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/twitter-api-error/</guid>
       <description>twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</description>
       <content:encoded><![CDATA[<p><img alt="twitter" src="/images/twitter-logo.png" /></p>
 <p>最近twitter apiをつかっているサービスで以下のようなエラーがでた。</p>
@@ -145,12 +145,12 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
     </item>
     <item>
       <title>ワンライナーでウェブサーバを起動する方法</title>
-      <link>http://mojavy.com/blog/2012/07/18/one-line-webserver</link>
+      <link>http://mojavy.com/blog/2012/07/18/one-line-webserver/</link>
       <pubDate>Wed, 18 Jul 2012 12:30:00 JST</pubDate>
       <category><![CDATA[python]]></category>
       <category><![CDATA[web]]></category>
       <category><![CDATA[ruby]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/18/one-line-webserver</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/18/one-line-webserver/</guid>
       <description>ワンライナーでウェブサーバを起動する方法</description>
       <content:encoded><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。

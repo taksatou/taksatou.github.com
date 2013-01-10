@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[ウェブエンジニアのためのオンラインツールまとめ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox" />
-    <id>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/" />
+    <id>http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/</id>
     <updated>2012-11-20T02:30:00Z</updated>
     <published>2012-11-20T02:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="web" />
     <category scheme="http://mojavy.com/blog" term="tips" />
     <summary type="html"><![CDATA[ウェブエンジニアのためのオンラインツールまとめ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox"><![CDATA[<p><img alt="tool" src="/images/tool-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/"><![CDATA[<p><img alt="tool" src="/images/tool-logo.png" /></p>
 <p><a href="http://ivanzuzak.info/2012/11/18/the-web-engineers-online-toolbox.html">The Web engineer's online toolbox</a>というまとめ記事が便利そうだったので、実際に試しつつ抄訳してみました。(一部のコメントと体裁は変えています。)</p>
 <h2 id="_1">目次</h2>
 <div class="toc">
@@ -130,14 +130,14 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/twitter-api-error" />
-    <id>http://mojavy.com/blog/2012/10/18/twitter-api-error</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/twitter-api-error/" />
+    <id>http://mojavy.com/blog/2012/10/18/twitter-api-error/</id>
     <updated>2012-10-18T22:00:00Z</updated>
     <published>2012-10-18T22:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="web" />
     <category scheme="http://mojavy.com/blog" term="twitter" />
     <summary type="html"><![CDATA[twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/twitter-api-error"><![CDATA[<p><img alt="twitter" src="/images/twitter-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/twitter-api-error/"><![CDATA[<p><img alt="twitter" src="/images/twitter-logo.png" /></p>
 <p>最近twitter apiをつかっているサービスで以下のようなエラーがでた。</p>
 <div class="pygments_murphy"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
 </pre></div>
@@ -158,15 +158,15 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[ワンライナーでウェブサーバを起動する方法]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/18/one-line-webserver" />
-    <id>http://mojavy.com/blog/2012/07/18/one-line-webserver</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/18/one-line-webserver/" />
+    <id>http://mojavy.com/blog/2012/07/18/one-line-webserver/</id>
     <updated>2012-07-18T12:30:00Z</updated>
     <published>2012-07-18T12:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="python" />
     <category scheme="http://mojavy.com/blog" term="web" />
     <category scheme="http://mojavy.com/blog" term="ruby" />
     <summary type="html"><![CDATA[ワンライナーでウェブサーバを起動する方法]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/18/one-line-webserver"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/18/one-line-webserver/"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
 起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
 <div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333

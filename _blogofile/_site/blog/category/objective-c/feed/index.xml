@@ -16,13 +16,13 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>iOSでZeroMQを試す</title>
-      <link>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</link>
+      <link>http://mojavy.com/blog/2012/10/18/objective-c-zeromq/</link>
       <pubDate>Thu, 18 Oct 2012 18:00:01 JST</pubDate>
       <category><![CDATA[objective-c]]></category>
       <category><![CDATA[ios]]></category>
       <category><![CDATA[zeromq]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/objective-c-zeromq</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/10/18/objective-c-zeromq/</guid>
       <description>iOSでZeroMQを試す</description>
       <content:encoded><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
@@ -243,10 +243,10 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
     </item>
     <item>
       <title>objective-cのメモリマネージメントについて</title>
-      <link>http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management</link>
+      <link>http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/</link>
       <pubDate>Wed, 18 Jul 2012 11:30:00 JST</pubDate>
       <category><![CDATA[objective-c]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/</guid>
       <description>objective-cのメモリマネージメントについて</description>
       <content:encoded><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
 <p>現在のところ3つの方法がある</p>
@@ -295,10 +295,10 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
     </item>
     <item>
       <title>objective-cのプロトコルとデリゲーションについてのメモ</title>
-      <link>http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol</link>
+      <link>http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/</link>
       <pubDate>Tue, 17 Jul 2012 18:30:00 JST</pubDate>
       <category><![CDATA[objective-c]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/</guid>
       <description>objective-cのプロトコルとデリゲーションについてのメモ</description>
       <content:encoded><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
 <ul>
@@ -366,10 +366,10 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
     </item>
     <item>
       <title>objective-cのカテゴリついてのメモ</title>
-      <link>http://mojavy.com/blog/2012/07/13/objective-c-memo</link>
+      <link>http://mojavy.com/blog/2012/07/13/objective-c-memo/</link>
       <pubDate>Fri, 13 Jul 2012 18:30:00 JST</pubDate>
       <category><![CDATA[objective-c]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/13/objective-c-memo</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/13/objective-c-memo/</guid>
       <description>objective-cのカテゴリついてのメモ</description>
       <content:encoded><![CDATA[<p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
 <ul>

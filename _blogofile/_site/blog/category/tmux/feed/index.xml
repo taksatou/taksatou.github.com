@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>tmuxでマウスを使う</title>
-      <link>http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011</link>
+      <link>http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/</link>
       <pubDate>Tue, 13 Dec 2011 00:58:29 JST</pubDate>
       <category><![CDATA[advent calendar]]></category>
       <category><![CDATA[tmux]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/</guid>
       <description>tmuxでマウスを使う</description>
       <content:encoded><![CDATA[<p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の13日目です。
 12日目はnetmarkjpさんの<a href="http://netmark.jp/2011/12/gnu-screen-xmodem.html">GNU screen でシリアル通信 + xmodem転送</a>でした。</p>
@@ -54,11 +54,11 @@ macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/t
     </item>
     <item>
       <title>tmuxに独自機能を追加する</title>
-      <link>http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011</link>
+      <link>http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/</link>
       <pubDate>Tue, 06 Dec 2011 01:05:10 JST</pubDate>
       <category><![CDATA[advent calendar]]></category>
       <category><![CDATA[tmux]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/</guid>
       <description>tmuxに独自機能を追加する</description>
       <content:encoded><![CDATA[<p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の<s>6日目</s>7日目です。(netmark.jpさん,matsuuさん、すいません、出遅れました。)</p>
 <p>5日目はyoshikawさんの<a href="http://yskwkzhr.blogspot.com/2011/12/lets-use-development-version-gnu-screen.html">開発版GNU Screenを使ってみよう</a>でした。</p>

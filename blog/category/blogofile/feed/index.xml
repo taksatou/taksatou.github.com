@@ -16,12 +16,12 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>blogofileでサムネイル画像を表示する方法</title>
-      <link>http://mojavy.com/blog/2011/11/06/blofofile-test</link>
+      <link>http://mojavy.com/blog/2011/11/06/blofofile-test/</link>
       <pubDate>Sun, 06 Nov 2011 20:32:51 JST</pubDate>
       <category><![CDATA[python]]></category>
       <category><![CDATA[memo]]></category>
       <category><![CDATA[blogofile]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/blofofile-test</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/blofofile-test/</guid>
       <description>blogofileでサムネイル画像を表示する方法</description>
       <content:encoded><![CDATA[<p><img alt="rena" src="/images/rena.jpg" /></p>
 <p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
@@ -53,11 +53,11 @@
     </item>
     <item>
       <title>ブログ引越しました</title>
-      <link>http://mojavy.com/blog/2011/11/06/new_blog</link>
+      <link>http://mojavy.com/blog/2011/11/06/new_blog/</link>
       <pubDate>Sun, 06 Nov 2011 19:44:40 JST</pubDate>
       <category><![CDATA[blog]]></category>
       <category><![CDATA[blogofile]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/new_blog</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2011/11/06/new_blog/</guid>
       <description>ブログ引越しました</description>
       <content:encoded><![CDATA[<div class="document">
 <p>いままでblogger使ってましたが、github pagesに引越しました。</p>

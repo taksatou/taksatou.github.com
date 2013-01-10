@@ -19,15 +19,15 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[ワンライナーでウェブサーバを起動する方法]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/18/one-line-webserver" />
-    <id>http://mojavy.com/blog/2012/07/18/one-line-webserver</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/18/one-line-webserver/" />
+    <id>http://mojavy.com/blog/2012/07/18/one-line-webserver/</id>
     <updated>2012-07-18T12:30:00Z</updated>
     <published>2012-07-18T12:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="python" />
     <category scheme="http://mojavy.com/blog" term="web" />
     <category scheme="http://mojavy.com/blog" term="ruby" />
     <summary type="html"><![CDATA[ワンライナーでウェブサーバを起動する方法]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/18/one-line-webserver"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/18/one-line-webserver/"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
 起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
 <div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
@@ -57,13 +57,13 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[rubyのワンライナーで便利な変数まとめ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables" />
-    <id>http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" />
+    <id>http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/</id>
     <updated>2012-07-08T18:30:00Z</updated>
     <published>2012-07-08T18:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="ruby" />
     <summary type="html"><![CDATA[rubyのワンライナーで便利な変数まとめ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <h1 id="_1">$.</h1>
 <p>現在の行番号を表します。awkでいうNRと同じです。</p>
 <div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>

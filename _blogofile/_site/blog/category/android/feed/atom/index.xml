@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[細かすぎて伝わらないAndroid開発のはまりどころまとめ その1]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/07/android-pitfalls" />
-    <id>http://mojavy.com/blog/2012/11/07/android-pitfalls</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/07/android-pitfalls/" />
+    <id>http://mojavy.com/blog/2012/11/07/android-pitfalls/</id>
     <updated>2012-11-07T12:00:00Z</updated>
     <published>2012-11-07T12:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="android" />
     <category scheme="http://mojavy.com/blog" term="tips" />
     <summary type="html"><![CDATA[細かすぎて伝わらないAndroid開発のはまりどころまとめ その1]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/07/android-pitfalls"><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/07/android-pitfalls/"><![CDATA[<p><img alt="android" src="/images/android-logo.png" /></p>
 <p>これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。
 その2はまたねたがたまってきたらたぶんそのうち。</p>
 <h2 id="_1">目次</h2>

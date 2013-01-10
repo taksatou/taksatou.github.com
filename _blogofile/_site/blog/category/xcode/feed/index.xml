@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>Xcodeのキーバインディングをもっとemacsっぽくする</title>
-      <link>http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings</link>
+      <link>http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/</link>
       <pubDate>Thu, 12 Jul 2012 12:30:00 JST</pubDate>
       <category><![CDATA[xcode]]></category>
       <category><![CDATA[mac]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/</guid>
       <description>Xcodeのキーバインディングをもっとemacsっぽくする</description>
       <content:encoded><![CDATA[<p><img alt="xcode" src="/images/xcode-logo.png" /></p>
 <p>xcodeのキーバインディングはデフォルトでemacsっぽいものが使えますが、普段emacsを使ってる身としては中途半端すぎて逆にいらつきます。</p>

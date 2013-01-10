@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[gearmanクライアントライブラリ cl-gearman]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16" />
-    <id>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" />
+    <id>http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/</id>
     <updated>2012-12-16T17:30:00Z</updated>
     <published>2012-12-16T17:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="gearman" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[gearmanクライアントライブラリ cl-gearman]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16"><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/"><![CDATA[<p><img alt="tool" src="/images/gearman-logo.png" /></p>
 <p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
 <p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
 <h2 id="gearman">Gearmanとは</h2>
@@ -142,14 +142,14 @@ abort-jobはclientに失敗を通知します。retry-jobは名前の通りハ�
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[cl-frontcodingをつくってみた]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/10/cl-frontcoding" />
-    <id>http://mojavy.com/blog/2012/11/10/cl-frontcoding</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/10/cl-frontcoding/" />
+    <id>http://mojavy.com/blog/2012/11/10/cl-frontcoding/</id>
     <updated>2012-11-10T20:30:00Z</updated>
     <published>2012-11-10T20:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="algorithms" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[cl-frontcodingをつくってみた]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/10/cl-frontcoding"><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/10/cl-frontcoding/"><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
 <p><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">http://d.hatena.ne.jp/naoya/20080914/1221382329</a> のパクりです。</p>
 <p>ソースは<a href="https://github.com/taksatou/cl-frontcoding">https://github.com/taksatou/cl-frontcoding</a>です。</p>
@@ -163,13 +163,13 @@ abort-jobはclientに失敗を通知します。retry-jobは名前の通りハ�
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Common Lispのdeclareについて]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/09/common-lisp-declare" />
-    <id>http://mojavy.com/blog/2012/11/09/common-lisp-declare</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/09/common-lisp-declare/" />
+    <id>http://mojavy.com/blog/2012/11/09/common-lisp-declare/</id>
     <updated>2012-11-09T23:00:00Z</updated>
     <published>2012-11-09T23:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[Common Lispのdeclareについて]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/09/common-lisp-declare"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/11/09/common-lisp-declare/"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
 <p>Common Lispのdeclareについて調べた。
 変数の型や式に関することをコンパイラに伝えてやるために使うものらしい。</p>
 <p>例えば、</p>
@@ -317,14 +317,14 @@ Disassembly of section .text:
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/24/cl-practice" />
-    <id>http://mojavy.com/blog/2012/10/24/cl-practice</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/24/cl-practice/" />
+    <id>http://mojavy.com/blog/2012/10/24/cl-practice/</id>
     <updated>2012-10-24T18:00:00Z</updated>
     <published>2012-10-24T18:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="programming" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/24/cl-practice"><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/24/cl-practice/"><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
 <p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>
 <p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
 <p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
@@ -419,8 +419,8 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[iOSでZeroMQを試す]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq" />
-    <id>http://mojavy.com/blog/2012/10/18/objective-c-zeromq</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/" />
+    <id>http://mojavy.com/blog/2012/10/18/objective-c-zeromq/</id>
     <updated>2012-10-18T18:00:01Z</updated>
     <published>2012-10-18T18:00:01Z</published>
     <category scheme="http://mojavy.com/blog" term="objective-c" />
@@ -428,7 +428,7 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
     <category scheme="http://mojavy.com/blog" term="zeromq" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[iOSでZeroMQを試す]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/objective-c-zeromq"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
 <h1 id="zeromqiphone">ZeroMQをiPhone用にビルド</h1>
 <p>ZeroMQはautotoolsで作成されておりconfigure &amp;&amp; make でビルドできるようになっているが、iPhone用にクロスコンパイルをするためには適切なオプションを与えてやる必要がある。</p>
@@ -651,15 +651,15 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[Common LispでZeroMQを試す]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq" />
-    <id>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/" />
+    <id>http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/</id>
     <updated>2012-10-17T00:00:00Z</updated>
     <published>2012-10-17T00:00:00Z</published>
     <category scheme="http://mojavy.com/blog" term="zeromq" />
     <category scheme="http://mojavy.com/blog" term="sbcl" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[Common LispでZeroMQを試す]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/"><![CDATA[<p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
 <p>Common LispでZeroMQを試してみた。</p>
 <p>使用環境は以下のとおり</p>
 <ul>
@@ -769,15 +769,15 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[sbclでクラスのスロット一覧を取得する方法]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots" />
-    <id>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" />
+    <id>http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/</id>
     <updated>2012-07-06T18:30:00Z</updated>
     <published>2012-07-06T18:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="memo" />
     <category scheme="http://mojavy.com/blog" term="sbcl" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[sbclでクラスのスロット一覧を取得する方法]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots"><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/"><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
 <p>メモメモ</p>
 <div class="pygments_murphy"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
 (#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;

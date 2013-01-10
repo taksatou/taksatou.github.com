@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[pacoを導入]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/16/paco" />
-    <id>http://mojavy.com/blog/2012/10/16/paco</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/16/paco/" />
+    <id>http://mojavy.com/blog/2012/10/16/paco/</id>
     <updated>2012-10-16T18:30:00Z</updated>
     <published>2012-10-16T18:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="paco" />
     <category scheme="http://mojavy.com/blog" term="linux" />
     <summary type="html"><![CDATA[pacoを導入]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/16/paco"><![CDATA[<p>今さらだけどpacoを導入した。</p>
+    <content type="html" xml:base="http://mojavy.com/blog/2012/10/16/paco/"><![CDATA[<p>今さらだけどpacoを導入した。</p>
 <p><a href="http://sourceforge.net/projects/paco/files/paco/2.0.9/">http://sourceforge.net/projects/paco/files/paco/2.0.9/</a> から最新のパッケージをダウンロード、展開して以下コマンドでインストール。gpacoは使わないと思うので--disable-gpacoした。</p>
 <div class="pygments_murphy"><pre>./configure --disable-gpaco
 make <span class="o">&amp;&amp;</span> sudo make install
