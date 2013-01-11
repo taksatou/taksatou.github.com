@@ -102,6 +102,82 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="tmuxでalcの英単語を引く"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" rel="bookmark" title="Permanent Link to tmuxでalcの英単語を引く">tmuxでalcの英単語を引く</a></h2>
+  <small>January 11, 2013 at 10:00 PM | categories:
+
+<a href='/blog/category/ruby'>ruby</a>, <a href='/blog/category/tmux'>tmux</a>, <a href='/blog/category/english'>english</a>
+ | <a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="english" src="/images/english-200.png" /></p>
+<p>tmuxのcommand-promptを使うと任意のコマンドをインタラクティブに実行できます。
+これをつかってtmux上でalcの英単語を表示できるようにしたら思いの外便利だったので紹介します。</p>
+<p>まず、alcの検索結果をスクレイビングしていい感じに表示するコマンドをつくります。
+rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当なスクリプトでよければこれを使って下さい。</p>
+<div class="pygments_murphy"><pre><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="nb">require</span> <span class="s1">&#39;nokogiri&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rainbow&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;cgi&#39;</span>
+
+<span class="no">Sickill</span><span class="o">::</span><span class="no">Rainbow</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kp">true</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="no">CGI</span><span class="o">.</span><span class="n">escape</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="no">Nokogiri</span><span class="o">::</span><span class="no">HTML</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;http://eow.alc.co.jp/search?q=&#39;</span> <span class="o">+</span> <span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">)</span>
+
+<span class="n">doc</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div#resultsArea div#resultsList ul&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+  <span class="k">next</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="o">.</span><span class="n">empty?</span>
+  <span class="k">next</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.midashi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="o">.</span><span class="n">empty?</span>
+  <span class="nb">puts</span> <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.midashi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="ss">:green</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div ul&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty?</span>
+    <span class="nb">puts</span> <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/(【.+?】)/</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="si">#{</span><span class="vg">$1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div ul&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="nb">puts</span> <span class="s1">&#39;- &#39;</span> <span class="o">+</span> <span class="n">y</span><span class="o">.</span><span class="n">text</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="nb">puts</span> <span class="s1">&#39;----------------&#39;</span>
+<span class="k">end</span>
+</pre></div>
+
+<p><a href="https://github.com/taksatou/linux_utils/blob/master/bin/common/alc">https://github.com/taksatou/linux_utils/blob/master/bin/common/alc</a>  に置いてます。
+一応、英和と和英の両方に対応してます。</p>
+<p>これをパスの通った場所にalcという名前で保存して、.tmux.confに以下の設定を追記します。</p>
+<div class="pygments_murphy"><pre>unbind C-a
+<span class="nb">bind </span>C-a <span class="nb">command</span>-prompt <span class="s2">&quot;split-window -h &#39;alc %% | lv -c&#39;&quot;</span>
+</pre></div>
+
+<p>C-aにバインドしてますがお好みのキーに変えてください。
+rainbowで色付けしてるのでエスケープシーケンスを解釈できるpagerをつかって下さい。</p>
+<p>これで.tmux.confをリロードして、prefix-key C-a とかするとtmux上にプロンプトが表示されるので、そこで調べたい単語を入力します。
+そうすると新しいpaneに結果が表示されます。pagerを閉じると自動的にpaneも閉じます。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" class="hatena-bookmark-button" data-hatena-bookmark-title="tmuxでalcの英単語を引く" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" data-text="tmuxでalcの英単語を引く">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="tmuxでマウスを使う"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" rel="bookmark" title="Permanent Link to tmuxでマウスを使う">tmuxでマウスを使う</a></h2>
   <small>December 13, 2011 at 12:58 AM | categories:
@@ -387,6 +463,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/01/11/alc-nokogiri-tmux/" title="tmuxでalcの英単語を引く"><p>tmuxでalcの英単語を引く</a><span style="font-size: 80%;">(January 11, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/01/09/yaml-mode-ext/" title="yaml-modeを拡張してyamlを高速に編集する"><p>yaml-modeを拡張してyamlを高速に編集する</a><span style="font-size: 80%;">(January 09, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/01/08/favorite-linux-command/" title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)"><p>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a><span style="font-size: 80%;">(January 08, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/01/08/2012-summary/" title="2012年の振り返りと2013年の抱負"><p>2012年の振り返りと2013年の抱負</a><span style="font-size: 80%;">(January 08, 2013 at 12:30 AM)</span></li>
@@ -394,7 +471,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2012/11/20/web-engineers-online-toolbox/" title="ウェブエンジニアのためのオンラインツールまとめ"><p>ウェブエンジニアのためのオンラインツールまとめ</a><span style="font-size: 80%;">(November 20, 2012 at 02:30 AM)</span></li>
       <li><a href="/blog/2012/11/14/quicklinks3/" title="Quicklinks 3"><p>Quicklinks 3</a><span style="font-size: 80%;">(November 14, 2012 at 11:30 PM)</span></li>
       <li><a href="/blog/2012/11/10/cl-frontcoding/" title="cl-frontcodingをつくってみた"><p>cl-frontcodingをつくってみた</a><span style="font-size: 80%;">(November 10, 2012 at 08:30 PM)</span></li>
-      <li><a href="/blog/2012/11/09/common-lisp-declare/" title="Common Lispのdeclareについて"><p>Common Lispのdeclareについて</a><span style="font-size: 80%;">(November 09, 2012 at 11:00 PM)</span></li>
     </ul>
   </div>
 
@@ -425,6 +501,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
@@ -439,10 +516,10 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (1)</li>
@@ -456,7 +533,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>

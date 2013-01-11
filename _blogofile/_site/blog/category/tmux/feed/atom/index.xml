@@ -7,12 +7,70 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2011-12-13T00:58:29Z</updated>
+  <updated>2013-01-11T22:00:00Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[tmuxでalcの英単語を引く]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" />
+    <id>http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/</id>
+    <updated>2013-01-11T22:00:00Z</updated>
+    <published>2013-01-11T22:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="ruby" />
+    <category scheme="http://mojavy.com/blog" term="tmux" />
+    <category scheme="http://mojavy.com/blog" term="english" />
+    <summary type="html"><![CDATA[tmuxでalcの英単語を引く]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/"><![CDATA[<p><img alt="english" src="/images/english-200.png" /></p>
+<p>tmuxのcommand-promptを使うと任意のコマンドをインタラクティブに実行できます。
+これをつかってtmux上でalcの英単語を表示できるようにしたら思いの外便利だったので紹介します。</p>
+<p>まず、alcの検索結果をスクレイビングしていい感じに表示するコマンドをつくります。
+rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当なスクリプトでよければこれを使って下さい。</p>
+<div class="pygments_murphy"><pre><span class="c1">#!/usr/bin/env ruby</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="nb">require</span> <span class="s1">&#39;nokogiri&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;rainbow&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;cgi&#39;</span>
+
+<span class="no">Sickill</span><span class="o">::</span><span class="no">Rainbow</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kp">true</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="no">CGI</span><span class="o">.</span><span class="n">escape</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="no">Nokogiri</span><span class="o">::</span><span class="no">HTML</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;http://eow.alc.co.jp/search?q=&#39;</span> <span class="o">+</span> <span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">)</span>
+
+<span class="n">doc</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div#resultsArea div#resultsList ul&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+  <span class="k">next</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="o">.</span><span class="n">empty?</span>
+  <span class="k">next</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.midashi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="o">.</span><span class="n">empty?</span>
+  <span class="nb">puts</span> <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.midashi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="ss">:green</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div ul&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">empty?</span>
+    <span class="nb">puts</span> <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/(【.+?】)/</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="si">#{</span><span class="vg">$1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div ul&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="nb">puts</span> <span class="s1">&#39;- &#39;</span> <span class="o">+</span> <span class="n">y</span><span class="o">.</span><span class="n">text</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="nb">puts</span> <span class="s1">&#39;----------------&#39;</span>
+<span class="k">end</span>
+</pre></div>
+
+<p><a href="https://github.com/taksatou/linux_utils/blob/master/bin/common/alc">https://github.com/taksatou/linux_utils/blob/master/bin/common/alc</a>  に置いてます。
+一応、英和と和英の両方に対応してます。</p>
+<p>これをパスの通った場所にalcという名前で保存して、.tmux.confに以下の設定を追記します。</p>
+<div class="pygments_murphy"><pre>unbind C-a
+<span class="nb">bind </span>C-a <span class="nb">command</span>-prompt <span class="s2">&quot;split-window -h &#39;alc %% | lv -c&#39;&quot;</span>
+</pre></div>
+
+<p>C-aにバインドしてますがお好みのキーに変えてください。
+rainbowで色付けしてるのでエスケープシーケンスを解釈できるpagerをつかって下さい。</p>
+<p>これで.tmux.confをリロードして、prefix-key C-a とかするとtmux上にプロンプトが表示されるので、そこで調べたい単語を入力します。
+そうすると新しいpaneに結果が表示されます。pagerを閉じると自動的にpaneも閉じます。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
