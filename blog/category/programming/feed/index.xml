@@ -10,10 +10,53 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 24 Oct 2012 18:00:00 GMT</pubDate>
+    <pubDate>Mon, 21 Jan 2013 20:00:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>C言語の文字列初期化について</title>
+      <link>http://mojavy.com/blog/2013/01/21/c-string-initialization/</link>
+      <pubDate>Mon, 21 Jan 2013 20:00:00 JST</pubDate>
+      <category><![CDATA[C]]></category>
+      <category><![CDATA[programming]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/21/c-string-initialization/</guid>
+      <description>C言語の文字列初期化について</description>
+      <content:encoded><![CDATA[<p>なんとなく気になったので以下ひとりごと。</p>
+<hr>
+
+<p>Cで文字列を初期化するときは以下のように書く。</p>
+<div class="pygments_murphy"><pre>char str[] = &quot;xyz&quot;;
+</pre></div>
+
+<p>こう書けばNULL終わりのchar配列としてスタックに格納してくれるので、以下のように書くのと同じことになる。</p>
+<div class="pygments_murphy"><pre>char str1[4] = &quot;xyz&quot;;
+char str2[4] = {&#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;\0&#39;};
+</pre></div>
+
+<p>文字列はcharのポインタで扱うからといって、</p>
+<div class="pygments_murphy"><pre>char *str = &quot;xyz&quot;;
+</pre></div>
+
+<p>のように書くと違う意味になる。
+こう書くと"xyz"が格納されているアドレスでポインタを初期化する。文字列リテラルで宣言したデータが格納される領域は通常はread onlyなので<code>*str='X'</code>などとするとセグフォするが、通常の代入と同じ意味なので違和感はない。</p>
+<p>でも、<code>char str[] = "xyz";</code> のほうはは冷静に考えると気持ち悪い。初期化と代入は違うといってしまえばそれまでだけど、この式だけみても予備知識がないとなにがおこるのかわからないと思う。</p>
+<p>以下のような挙動も合理的とは思えない。そもそもCに配列なんて必要なかったのではないか。</p>
+<div class="pygments_murphy"><pre>void f1(char s[]) {
+    /* 意味はないけどエラーでもない */
+    s = &quot;baz&quot;;
+}
+
+void f2(void) {
+    char s[] = &quot;foo&quot;;
+    /* これはエラー */
+    /* s = &quot;bar&quot;; */
+}
+</pre></div>
+
+<p>などということを今更ながら考えて悶々としていたのだけど、結局のところこういう類の便利機能は欲しくなってくるわけで、便利さのために不合理を許容するとなるとこのあたりが妥当な落とし所のような気もしてきた。</p>
+<p>まとめ：プログラミング言語を考える人はすごい</p>]]></content:encoded>
+    </item>
     <item>
       <title>Common Lisp練習 - CodeChef : TSORT</title>
       <link>http://mojavy.com/blog/2012/10/24/cl-practice/</link>
