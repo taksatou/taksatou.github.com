@@ -7,12 +7,103 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-01-21T20:00:00Z</updated>
+  <updated>2013-02-05T23:00:00Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[人気プログラミング言語ランキング(stackoverflow調べ)]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/05/popular-programming-languages/" />
+    <id>http://mojavy.com/blog/2013/02/05/popular-programming-languages/</id>
+    <updated>2013-02-05T23:00:00Z</updated>
+    <published>2013-02-05T23:00:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <summary type="html"><![CDATA[人気プログラミング言語ランキング(stackoverflow調べ)]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/02/05/popular-programming-languages/"><![CDATA[<p><img alt="stack" src="/images/stackoverflow-200.png" /></p>
+<p>なんとなく気になったのでstackoverflowのでの人気プログラミング言語ランキングをつくってみました。(2013-02-05現在)</p>
+<div class="pygments_murphy"><pre>1.   c#              411382pt
+2.   java            361120pt
+3.   php             337941pt
+4.   javascript      321791pt
+5.   c++             175790pt
+6.   python          160796pt
+7.   html            145373pt
+8.   objective-c     119891pt
+9.   sql             115147pt
+10.  css             113039pt
+11.  c               83501pt
+12.  ruby            64350pt
+13.  xml             56444pt
+14.  regex           51670pt
+15.  vb.net          41260pt
+16.  html5           27217pt
+17.  linq            26200pt
+18.  actionscript-3  24286pt
+19.  perl            24092pt
+20.  r               23256pt
+21.  delphi          18866pt
+22.  tsql            18119pt
+23.  matlab          15289pt
+24.  xaml            14115pt
+25.  scala           13444pt
+26.  vba             12300pt
+27.  css3            11564pt
+28.  xslt            11032pt
+29.  haskell         9827pt
+30.  assembly        7580pt
+31.  razor           7385pt
+32.  actionscript    6440pt
+33.  excel-vba       6309pt
+34.  groovy          5551pt
+35.  vbscript        4926pt
+36.  c++11           4894pt
+37.  vb6             4886pt
+38.  xhtml           4675pt
+39.  plsql           4548pt
+40.  svg             4540pt
+41.  f#              4341pt
+42.  python-3.x      4229pt
+43.  awk             3481pt
+44.  wsdl            3249pt
+45.  lua             3183pt
+46.  erlang          3077pt
+47.  coffeescript    2754pt
+48.  c#-3.0          2615pt
+49.  latex           2570pt
+50.  lisp            2395pt
+51.  mathematica     2395pt
+52.  prolog          2317pt
+53.  scheme          2199pt
+54.  uml             2093pt
+55.  applescript     2092pt
+
+-- 次点
+
+go         1648pt
+ocaml      1329pt
+d          877pt
+</pre></div>
+
+<h3 id="_1">補足</h3>
+<ul>
+<li>stackoverflow APIを利用して調べました</li>
+<li>ランキングは質問につけられたタグの件数順です。</li>
+<li>プログラミング言語のタグは、tag infoのエントリに/language/i がマッチするかどうかで抽出し、明かにプログラミング言語じゃないものは手動で適当に除外しました</li>
+<li>マークアップ言語とかバージョン違いで複数ある言語とかもそのまま残しました</li>
+<li>次点以下の言語は、apiをしばらくクロールしてもでてこなかった言語のうち思いついたものを手動でしらべました</li>
+</ul>
+<h3 id="_2">所感</h3>
+<p>C#が1位なのはちょっと意外でしたがそれ以外は大体イメージ通りでした。
+質問が多い順でもあるので、下位にある言語は質問が少なくて逆にイケてると言えなくもないですね。</p>
+<p>D言語すばらしい。</p>
+<p>ともあれ、stackoverflowのAPIは結構充実してるので色々遊べそうです。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -513,159 +604,5 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
 <p>学習目的でつくったので実用的なライブラリではないですが、CLOSやマクロを使いつつパッケージ作成〜テストまで一通りやりました。</p>
 <p>CLOSもマクロも基本的な使い方をするだけなら意外と簡単でした。</p>
 <p>CLOSとかマクロは本を読んでもいまいちよくわからない上に、深淵なイメージが膨らんで心理的ハードルがあがってしまうだけなので、よくわからないなりになにか作ってみると理解が進んでいいと思います。</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[Common Lispのdeclareについて]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/11/09/common-lisp-declare/" />
-    <id>http://mojavy.com/blog/2012/11/09/common-lisp-declare/</id>
-    <updated>2012-11-09T23:00:00Z</updated>
-    <published>2012-11-09T23:00:00Z</published>
-    <category scheme="http://mojavy.com/blog" term="common lisp" />
-    <summary type="html"><![CDATA[Common Lispのdeclareについて]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/11/09/common-lisp-declare/"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
-<p>Common Lispのdeclareについて調べた。
-変数の型や式に関することをコンパイラに伝えてやるために使うものらしい。</p>
-<p>例えば、</p>
-<div class="pygments_murphy"><pre>(defun add (x y) (+ x y))
-</pre></div>
-
-<p>は</p>
-<div class="pygments_murphy"><pre>(defun add (x y)
-  (declare (fixnum x y))
-  (the fixnum (+ x y)))
-</pre></div>
-
-<p>とすれば、引数と戻り値の型を指定できる。</p>
-<p>さらに、</p>
-<div class="pygments_murphy"><pre>(defun add (x y)
-  (declare (optimize (speed 3) (safety 0)))
-  (declare (fixnum x y))
-  (the fixnum (+ x y)))
-</pre></div>
-
-<p>とすればさらに最適化される。ここまですると、Cで実装した場合と遜色ないくらいになるらしい。</p>
-<p>ためしにdisassembleしてみた。処理系はsbcl 1.0.55.0。</p>
-<p>最初のバージョンは以下のようになった。すでにある程度最適化されてる？
-LEA(load effective address)命令は、srcオペランドのアドレスを計算し、そのアドレスをdestオペランドにロードするというものらしい。<a href="http://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/%E3%83%87%E3%83%BC%E3%82%BF%E8%BB%A2%E9%80%81%E5%91%BD%E4%BB%A4">(参考)</a></p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y) (+ x y))
-
-CL-USER&gt; (disassemble #&#39;add)
-; disassembly for ADD
-; 03C43D5D:       488B55F8         MOV RDX, [RBP-8]           ; no-arg-parsing entry point
-;       61:       488B7DF0         MOV RDI, [RBP-16]
-;       65:       4C8D1C25E0010020 LEA R11, [#x200001E0]      ; GENERIC-+
-;       6D:       41FFD3           CALL R11
-;       70:       480F42E3         CMOVB RSP, RBX
-;       74:       488BE5           MOV RSP, RBP
-;       77:       F8               CLC
-;       78:       5D               POP RBP
-;       79:       C3               RET
-;       7A:       CC0A             BREAK 10                   ; error trap
-;       7C:       02               BYTE #X02
-;       7D:       18               BYTE #X18                  ; INVALID-ARG-COUNT-ERROR
-;       7E:       54               BYTE #X54                  ; RCX
-</pre></div>
-
-<p>2番目の、型だけを宣言したものは以下のようになった。うーむ、確かに型チェックっぽいコードは増えてるが速くなってるわけではなさそうな感じ。あとで調べる。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
-           (declare (fixnum x y))
-           (the fixnum (+ x y)))
-
-CL-USER&gt; (disassemble #&#39;add)
-; disassembly for ADD
-; 039D3B73:       488BD1           MOV RDX, RCX               ; no-arg-parsing entry point
-;       76:       48D1FA           SAR RDX, 1
-;       79:       488BC7           MOV RAX, RDI
-;       7C:       48D1F8           SAR RAX, 1
-;       7F:       4801C2           ADD RDX, RAX
-;       82:       48B80000000000000040 MOV RAX, 4611686018427387904
-;       8C:       4801D0           ADD RAX, RDX
-;       8F:       48C1E83F         SHR RAX, 63
-;       93:       7509             JNE L0
-;       95:       48D1E2           SHL RDX, 1
-;       98:       488BE5           MOV RSP, RBP
-;       9B:       F8               CLC
-;       9C:       5D               POP RBP
-;       9D:       C3               RET
-;       9E: L0:   486BC202         IMUL RAX, RDX, 2
-;       A2:       710E             JNO L1
-;       A4:       488BC2           MOV RAX, RDX
-;       A7:       4C8D1C25B0050020 LEA R11, [#x200005B0]      ; ALLOC-SIGNED-BIGNUM-IN-RAX
-;       AF:       41FFD3           CALL R11
-;       B2: L1:   488B1557FFFFFF   MOV RDX, [RIP-169]         ; &#39;FIXNUM
-;       B9:       CC0A             BREAK 10                   ; error trap
-;       BB:       03               BYTE #X03
-;       BC:       1F               BYTE #X1F                  ; OBJECT-NOT-TYPE-ERROR
-;       BD:       15               BYTE #X15                  ; RAX
-;       BE:       95               BYTE #X95                  ; RDX
-;       BF:       CC0A             BREAK 10                   ; error trap
-;       C1:       02               BYTE #X02
-;       C2:       18               BYTE #X18                  ; INVALID-ARG-COUNT-ERROR
-;       C3:       54               BYTE #X54                  ; RCX
-;       C4:       CC0A             BREAK 10                   ; error trap
-;       C6:       02               BYTE #X02
-;       C7:       08               BYTE #X08                  ; OBJECT-NOT-FIXNUM-ERROR
-;       C8:       95               BYTE #X95                  ; RDX
-;       C9:       CC0A             BREAK 10                   ; error trap
-;       CB:       04               BYTE #X04
-;       CC:       08               BYTE #X08                  ; OBJECT-NOT-FIXNUM-ERROR
-;       CD:       FED501           BYTE #XFE, #XD5, #X01      ; RDI
-</pre></div>
-
-<p>最後の最適化の宣言をつけたものは以下のようになった。たしかに速そうにはなった。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
-           (declare (optimize (speed 3) (safety 0)))
-           (declare (fixnum x y))
-           (the fixnum (+ x y)))
-
-CL-USER&gt; (disassemble #&#39;add)
-; disassembly for ADD
-; 034DD10F:       4801FA           ADD RDX, RDI               ; no-arg-parsing entry point
-;       12:       488BE5           MOV RSP, RBP
-;       15:       F8               CLC
-;       16:       5D               POP RBP
-;       17:       C3               RET
-</pre></div>
-
-<p>ついでにCで書いた以下の関数もdisassebleしてみた。</p>
-<div class="pygments_murphy"><pre><span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-<p><code>cc -c a.c &amp;&amp; objdump -d a.o</code> とすると、</p>
-<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
-
-Disassembly of section .text:
-
-0000000000000000 &lt;add&gt;:
-   0:   55                      push   %rbp
-   1:   48 89 e5                mov    %rsp,%rbp
-   4:   89 7d fc                mov    %edi,-0x4(%rbp)
-   7:   89 75 f8                mov    %esi,-0x8(%rbp)
-   a:   8b 45 f8                mov    -0x8(%rbp),%eax
-   d:   8b 55 fc                mov    -0x4(%rbp),%edx
-  10:   01 d0                   add    %edx,%eax
-  12:   5d                      pop    %rbp
-  13:   c3                      retq
-</pre></div>
-
-<p><code>cc -O3 -c a.c &amp;&amp; objdump -d a.o</code> なら、</p>
-<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
-
-Disassembly of section .text:
-
-0000000000000000 &lt;add&gt;:
-   0:   8d 04 37                lea    (%rdi,%rsi,1),%eax
-   3:   c3                      retq
-</pre></div>
-
-<p>まあとりあえず単純に命令数だけでいうと、
-素のSBCL &gt; 素のGCC &gt; 最適化したSBCL &gt; 最適化したGCC
-という感じにはなったので、CよりLispのほうが速い(場合もある)というふれこみは嘘ではなさそうですね。</p>]]></content>
   </entry>
 </feed>

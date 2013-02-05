@@ -102,6 +102,55 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="twitter-apiで404:-{"errors":[{"message":"sorry,-that-page-does-not-exist","code":34}]}"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/18/twitter-api-error/" rel="bookmark" title="Permanent Link to twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}">twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</a></h2>
+  <small>October 18, 2012 at 10:00 PM | categories:
+
+<a href='/blog/category/web'>web</a>, <a href='/blog/category/twitter'>twitter</a>
+ | <a href="http://mojavy.com/blog/2012/10/18/twitter-api-error/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="twitter" src="/images/twitter-logo.png" /></p>
+<p>最近twitter apiをつかっているサービスで以下のようなエラーがでた。</p>
+<div class="pygments_murphy"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
+</pre></div>
+
+<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。</p>
+<p>つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
+<p>ログイン直後にverify_credentialsをつかってるアプリは多いと思われるが、その場合ログインに失敗したように見えるので認証まわりをライブラリ任せにしてると原因がわかりにくいかも。</p>
+<p>とりあえず<a href="https://dev.twitter.com/blog">twitterの開発ブログ</a>まめにチェックしたほうがよさそう。</p>
+<h1 id="_1">参考</h1>
+<ul>
+<li><a href="https://dev.twitter.com/blog">https://dev.twitter.com/blog</a></li>
+<li><a href="https://dev.twitter.com/discussions/11595">https://dev.twitter.com/discussions/11595</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/10/24/cl-practice/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/10/18/twitter-api-error/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/18/twitter-api-error/" class="hatena-bookmark-button" data-hatena-bookmark-title="twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/10/18/twitter-api-error/" data-text="twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/10/18/twitter-api-error/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="iosでzeromqを試す"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/" rel="bookmark" title="Permanent Link to iOSでZeroMQを試す">iOSでZeroMQを試す</a></h2>
   <small>October 18, 2012 at 06:00 PM | categories:
@@ -621,201 +670,6 @@ Unityまわりの調整は↑を参考にした。以下はその他の問題と
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" rel="bookmark" title="Permanent Link to jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a></h2>
-  <small>August 07, 2012 at 03:30 PM | categories:
-
-<a href='/blog/category/jenkins'>jenkins</a>, <a href='/blog/category/ios'>ios</a>
- | <a href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="jenkins" src="/images/jenkins-logo.png" /></p>
-<p>はまりどころが多くて大変だったので今後同じことをやろうとする人のために一連の作業をメモしておきます。</p>
-<h2 id="_1">目的</h2>
-<ul>
-<li>jenkinsでiOSアプリをビルドする</li>
-<li>ビルドしたアプリは、UDIDの登録なしに実機インストールして確認してもらいたい</li>
-</ul>
-<h2 id="_2">手順</h2>
-<h3 id="ios-developer-enterprise-program">iOS Developer Enterprise Program への参加</h3>
-<p>実機インストールするだけなら通常のデベロッパーアカウントでも大丈夫ですが、UDIDの登録なしにwifiから配布するためにはエンタープライズプログラムに参加する必要があります。</p>
-<p>エンタープライズプログラムに参加すればapp storeを経由せずに自由にインストールできるようになりますが、アクセスできるのが特定の組織内に限定されるように適切に制限をかけなければ規約違反になります。</p>
-<p><a href="https://developer.apple.com/jp/programs/ios/enterprise/">https://developer.apple.com/jp/programs/ios/enterprise/</a></p>
-<h3 id="xcode">xcodeの設定</h3>
-<p><a href="http://golog.plus.vc/iphone/3355/">http://golog.plus.vc/iphone/3355/</a> などを参考に、xcodeからprovisioning profileを設定します。</p>
-<p>また、最近のxcodeではデフォルトではarmv7用バイナリしかビルドしないので、armv6用もビルドするように設定しておきます。
-Build SettingsのArchitectures に 'armv6' を手動で追記すれば大丈夫です。</p>
-<h3 id="_3">実機確認</h3>
-<p>jenkinsでビルドする際は後述のビルドスクリプトを使うのですが、provisioning profileの設定等が正しくされていることを確認するために、一旦ここでxcodeのUI上で作成したipaファイルをiPhone構成ユーティリティを使って実機インストールしてみます。
-xcodeでipaファイルをビルドする方法はすぐにでてくると思うので、適宜調べて下さい。</p>
-<p>ここで正常にインストールできなければ、provisioning profile等の状態を確認してください。</p>
-<h3 id="jenkins">jenkinsのセットアップ</h3>
-<p>jenkinsを用意します。ビルド専用macが用意できない場合でも、開発に用いているmacをJNLP経由でそのままスレーブとして使うことができます。</p>
-<p>jenkins自体の細かいセットアップ方法は割愛しますが、JNLP経由でスレーブを起動する場合は以下のようなスクリプトをバックグランドで起動するようにしておくと便利です。</p>
-<div class="pygments_murphy"><pre><span class="c">#!/bin/sh</span>
-
-<span class="nb">eval</span> <span class="sb">`</span>ssh-agent<span class="sb">`</span>
-ssh-add ~/.ssh/id_rsa
-java -jar slave.jar -jnlpUrl http://jenkins.example.com/computer/mac1/slave-agent.jnlp
-</pre></div>
-
-<p>ここでの注意点は以下のとおりです。</p>
-<ul>
-<li>gitやsvnにssh経由でアクセスする場合は、パスワード無しでチェックアウトできるように適切に設定しておく必要がある。(上記の場合はssh-agentをあらかじめ起動するようにして、パスワード入力は起動時のみになるようにしています。)</li>
-<li>keychainに配布に使用するデベロッパーアカウントの証明書を登録しておく。</li>
-</ul>
-<h3 id="_4">ビルドスクリプトの作成</h3>
-<p>以下のようなmakefileをxcodeプロジェクトのトップディレクトリに配置します。
-(お好みのビルドツールを利用してください)</p>
-<p>ソースコードのコンパイルはxcodebuild, ipaファイルの生成はxcrunというコマンドを使います。</p>
-<div class="pygments_murphy"><pre><span class="nv">APP_NAME</span> <span class="o">=</span> MyApp
-<span class="nv">SRCTOP</span> <span class="o">=</span> <span class="k">$(</span>shell <span class="nb">pwd</span><span class="k">)</span>
-<span class="nv">RELEASE_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>SRCTOP<span class="k">)</span>/build/Release-iphoneos
-<span class="nv">BUILD_HISTORY_DIR</span> <span class="o">=</span> <span class="k">$(</span>SRCTOP<span class="k">)</span>/build
-<span class="nv">DEVELOPER_NAME</span> <span class="o">=</span> <span class="s2">&quot;iPhone Distribution: XXXX.&quot;</span>
-<span class="nv">PROVISIONING_PROFILE</span> <span class="o">=</span> path/to/in_house.mobileprovision
-
-all:: dist
-.PHONY: clean compile dist
-
-dist: compile
-    /usr/bin/xcrun -sdk iphoneos PackageApplication -v <span class="k">${</span><span class="nv">RELEASE_BUILD_DIR</span><span class="k">}</span>/<span class="k">${</span><span class="nv">APP_NAME</span><span class="k">}</span>.app -o <span class="k">${</span><span class="nv">BUILD_HISTORY_DIR</span><span class="k">}</span>/<span class="k">${</span><span class="nv">APP_NAME</span><span class="k">}</span>.ipa --sign <span class="k">${</span><span class="nv">DEVELOPER_NAME</span><span class="k">}</span> --embed <span class="k">${</span><span class="nv">PROVISIONING_PROFILE</span><span class="k">}</span>
-    ./gen_dist_page.sh
-
-compile:
-    xcodebuild
-
-clean:
-    rm -rf build
-</pre></div>
-
-<p>配布用のplistとhtmlを生成するスクリプト(gen_dist_page.sh)は以下のようになります。(BUILD_NUMBERなどの変数はjenkinsの環境変数から取得できます)</p>
-<div class="pygments_murphy"><pre><span class="nv">PACKAGE_NAME</span><span class="o">=</span>MyApp
-
-<span class="nv">PLIST</span><span class="o">=</span>build/<span class="k">${</span><span class="nv">PACKAGE_NAME</span><span class="k">}</span>.plist
-<span class="nv">INSTALL_PAGE</span><span class="o">=</span>build/<span class="k">${</span><span class="nv">PACKAGE_NAME</span><span class="k">}</span>.html
-
-cat <span class="s">&lt;&lt;__PLIST__ &gt; $PLIST</span>
-<span class="s">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="s">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
-<span class="s">&lt;plist version=&quot;1.0&quot;&gt;</span>
-<span class="s">  &lt;dict&gt;</span>
-<span class="s">    &lt;key&gt;items&lt;/key&gt;</span>
-<span class="s">    &lt;array&gt;</span>
-<span class="s">      &lt;dict&gt;</span>
-<span class="s">        &lt;key&gt;assets&lt;/key&gt;</span>
-<span class="s">        &lt;array&gt;</span>
-<span class="s">          &lt;dict&gt;</span>
-<span class="s">            &lt;key&gt;kind&lt;/key&gt;</span>
-<span class="s">            &lt;string&gt;software-package&lt;/string&gt;</span>
-<span class="s">            &lt;key&gt;url&lt;/key&gt;</span>
-<span class="s">            &lt;string&gt;${DIST_URL}/build/${PACKAGE_NAME}.ipa&lt;/string&gt;</span>
-<span class="s">          &lt;/dict&gt;</span>
-<span class="s">          &lt;dict&gt;</span>
-<span class="s">            &lt;key&gt;kind&lt;/key&gt;</span>
-<span class="s">            &lt;string&gt;display-image&lt;/string&gt;</span>
-<span class="s">            &lt;key&gt;needs-shine&lt;/key&gt;</span>
-<span class="s">            &lt;true/&gt;</span>
-<span class="s">            &lt;key&gt;url&lt;/key&gt;</span>
-<span class="s">            &lt;string&gt;http://jenkins.example.com/job/myapp/ws/icon.png&lt;/string&gt;</span>
-<span class="s">          &lt;/dict&gt;</span>
-<span class="s">        &lt;/array&gt;</span>
-<span class="s">        &lt;key&gt;metadata&lt;/key&gt;</span>
-<span class="s">        &lt;dict&gt;</span>
-<span class="s">          &lt;key&gt;bundle-identifier&lt;/key&gt;</span>
-<span class="s">          &lt;string&gt;com.example.myapp.MyApp&lt;/string&gt;</span>
-<span class="s">          &lt;key&gt;kind&lt;/key&gt;</span>
-<span class="s">          &lt;string&gt;software&lt;/string&gt;</span>
-<span class="s">          &lt;key&gt;subtitle&lt;/key&gt;</span>
-<span class="s">          &lt;string&gt;b${BUILD_NUMBER}&lt;/string&gt;</span>
-<span class="s">          &lt;key&gt;title&lt;/key&gt;</span>
-<span class="s">          &lt;string&gt;${PACKAGE_NAME}&lt;/string&gt;</span>
-<span class="s">        &lt;/dict&gt;</span>
-<span class="s">      &lt;/dict&gt;</span>
-<span class="s">    &lt;/array&gt;</span>
-<span class="s">  &lt;/dict&gt;</span>
-<span class="s">&lt;/plist&gt;</span>
-<span class="s">__PLIST__</span>
-
-cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
-<span class="s">&lt;html&gt;</span>
-<span class="s">  &lt;head&gt;</span>
-<span class="s">    &lt;title&gt;${PACKAGE_NAME}: build #$BUILD_NUMBER&lt;/title&gt;</span>
-<span class="s">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0&quot;&gt;</span>
-<span class="s">    &lt;/head&gt;</span>
-<span class="s">    &lt;body&gt;</span>
-<span class="s">    &lt;div style=&quot;text-align: center; vertical-align: middle; margin-top: 100px&quot;&gt;</span>
-<span class="s">      &lt;div style=&quot;padding: 10px;&quot;&gt;$JOB_NAME&lt;/div&gt;</span>
-<span class="s">      &lt;a href=&quot;itms-services://?action=download-manifest&amp;url=${DIST_URL}/${PLIST}&quot;</span>
-<span class="s">         style=&quot;border: none; text-decoration: none; color: #888;&quot;&gt;</span>
-<span class="s">        &lt;img src=&quot;http://jenkins.example.com/job/myapp/ws/demo.png&quot;/&gt;</span>
-<span class="s">        &lt;br /&gt;&lt;br /&gt;</span>
-<span class="s">        Install ${PACKAGE_NAME} b$BUILD_NUMBER</span>
-<span class="s">      &lt;/a&gt;</span>
-<span class="s">    &lt;/div&gt;</span>
-<span class="s">  &lt;/body&gt;</span>
-<span class="s">&lt;/html&gt;</span>
-<span class="s">__HTML__</span>
-</pre></div>
-
-<p>htmlはリンク先さえあっていれば大丈夫なのですが、plistの方はいくつか注意が必要です。</p>
-<ul>
-<li>display-imageは必須。iOSのバージョンによってはなくてもよいようなのですが、iOS 5.1.1だとdisplay-imageがplistにないと「Appをダウンロードできません」というエラーになります。</li>
-<li>bundle-identifierはxcodeのBundle Identifierと一致させる。</li>
-</ul>
-<p>ここではxcodeデフォルトのsdkバージョンを使用していますが、必要に応じてxcodebuild等のコマンドラインオプションを追加してください。</p>
-<p>参考:  <a href="https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf">https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf</a></p>
-<h3 id="jenkinsjob">jenkinsのjob作成</h3>
-<p>通常通りjenkinsのjobを作ります。適切にソースコードをチェックアウトして、ビルドフェーズで上記スクリプトを実行するようにします。</p>
-<div class="pygments_murphy"><pre>make clean <span class="o">&amp;&amp;</span> make <span class="nv">DIST_URL</span><span class="o">=</span><span class="k">${</span><span class="nv">BUILD_URL</span><span class="k">}</span>artifact
-</pre></div>
-
-<p>ビルドに成功するとipa, html, plistファイルが生成されるので、これらを成果物として保存します。
-成果物のhtmlページにiPhoneでアクセスしてみて、アプリがインストールできれば成功です。</p>
-<h2 id="_5">その他</h2>
-<p>今回は触れませんでしたが、以下についても考慮しておいたほうがよいと思います。</p>
-<ul>
-<li>iOSのSDKバージョン</li>
-<li>依存ライブラリ</li>
-<li>プロビジョニングプロファイルの管理</li>
-</ul>
-<p>また、<a href="https://testflightapp.com/">TestFlight</a> というサービスもあるのでそちらの利用も検討してみてもいいと思います。</p>
-<h2 id="_6">まとめ</h2>
-<p>iOSアプリをコマンドラインからビルドするスクリプトを作成して、jenkins上でビルドから配布までを行なうための手順を紹介しました。</p>
-<h2 id="_7">参考</h2>
-<ul>
-<li><a href="https://developer.apple.com/jp/programs/ios/enterprise/">https://developer.apple.com/jp/programs/ios/enterprise/</a></li>
-<li><a href="http://www.apple.com/jp/support/iphone/enterprise/">http://www.apple.com/jp/support/iphone/enterprise/</a></li>
-<li><a href="https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf">https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf</a></li>
-<li><a href="http://support.apple.com/kb/DL1465?viewlocale=ja_JP">http://support.apple.com/kb/DL1465?viewlocale=ja_JP</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/07/25/ios-simulator-log/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/10/16/quick-links/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" class="hatena-bookmark-button" data-hatena-bookmark-title="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" data-text="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../3">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -845,6 +699,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/02/05/popular-programming-languages/" title="人気プログラミング言語ランキング(stackoverflow調べ)"><p>人気プログラミング言語ランキング(stackoverflow調べ)</a><span style="font-size: 80%;">(February 05, 2013 at 11:00 PM)</span></li>
       <li><a href="/blog/2013/01/21/c-string-initialization/" title="C言語の文字列初期化について"><p>C言語の文字列初期化について</a><span style="font-size: 80%;">(January 21, 2013 at 08:00 PM)</span></li>
       <li><a href="/blog/2013/01/11/alc-nokogiri-tmux/" title="tmuxでalcの英単語を引く"><p>tmuxでalcの英単語を引く</a><span style="font-size: 80%;">(January 11, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/01/09/yaml-mode-ext/" title="yaml-modeを拡張してyamlを高速に編集する"><p>yaml-modeを拡張してyamlを高速に編集する</a><span style="font-size: 80%;">(January 09, 2013 at 10:00 PM)</span></li>
@@ -852,7 +707,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/01/08/2012-summary/" title="2012年の振り返りと2013年の抱負"><p>2012年の振り返りと2013年の抱負</a><span style="font-size: 80%;">(January 08, 2013 at 12:30 AM)</span></li>
       <li><a href="/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" title="gearmanクライアントライブラリ cl-gearman"><p>gearmanクライアントライブラリ cl-gearman</a><span style="font-size: 80%;">(December 16, 2012 at 05:30 PM)</span></li>
       <li><a href="/blog/2012/11/20/web-engineers-online-toolbox/" title="ウェブエンジニアのためのオンラインツールまとめ"><p>ウェブエンジニアのためのオンラインツールまとめ</a><span style="font-size: 80%;">(November 20, 2012 at 02:30 AM)</span></li>
-      <li><a href="/blog/2012/11/14/quicklinks3/" title="Quicklinks 3"><p>Quicklinks 3</a><span style="font-size: 80%;">(November 14, 2012 at 11:30 PM)</span></li>
     </ul>
   </div>
 
@@ -895,7 +749,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/others">others</a> (<a href="/blog/category/others/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
@@ -916,6 +770,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
