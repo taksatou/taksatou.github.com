@@ -23,7 +23,7 @@ Clojureで書かれたnetwork event stream processing systemとのこと。
 コンセプト的にはfluentdに近い気がしますが、集める対象がログではなくイベントそれ自体なので適用範囲は広そうです。
 Riemann自体が落ちたときにどうなるか、とか実際に運用するとなると色々気になるところはありそうですが試してみる価値はありそうです。
 
-Clojureで書けるというのもとがってていいと思います。
+設定をClojureで書けるというのもとがってていいと思います。
 
 
 #### [whistlepig](https://github.com/wmorgan/whistlepig)
