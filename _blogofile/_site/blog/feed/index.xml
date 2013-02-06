@@ -10,10 +10,50 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 05 Feb 2013 23:00:00 GMT</pubDate>
+    <pubDate>Wed, 06 Feb 2013 20:00:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Quicklinks 4</title>
+      <link>http://mojavy.com/blog/2013/02/06/quicklinks4/</link>
+      <pubDate>Wed, 06 Feb 2013 20:00:00 JST</pubDate>
+      <category><![CDATA[quicklinks]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/02/06/quicklinks4/</guid>
+      <description>Quicklinks 4</description>
+      <content:encoded><![CDATA[<p><a href="http://mojavy.com/blog/2012/11/14/quicklinks3/">前回</a> から2ヵ月くらいあいてしまいまったのであまり新しくない情報もありますが気にせずいきます。</p>
+<h4 id="q-gears"><a href="http://q-gears.sourceforge.net/index.phtml?content=1">Q-Gears</a></h4>
+<p>FF7のゲームエンジンのクローンを目指したものだそうです。
+LinuxやWindowsで動くようにクロスプラットフォームな設計になっていて、将来的にはスクエニの他のゲームも動かすためのフレームワークとしても提供することも考えているようです。</p>
+<ul>
+<li><a href="http://q-gears.sourceforge.net/gears.pdf">http://q-gears.sourceforge.net/gears.pdf</a></li>
+</ul>
+<p>この資料にはシステムの概要が書かれてます。リバースエンジニアリングして集めた情報と思われますが、読み物としてもおもしろそうです。</p>
+<h4 id="riemann"><a href="http://riemann.io/">Riemann</a></h4>
+<p>Clojureで書かれたnetwork event stream processing systemとのこと。</p>
+<p><a href="http://riemann.io/concepts.html">ここ</a>のイラストと説明を見れば大体イメージはわくと思います。
+コンセプト的にはfluentdに近い気がしますが、集める対象がログではなくイベントそれ自体なので適用範囲は広そうです。
+Riemann自体が落ちたときにどうなるか、とか実際に運用するとなると色々気になるところはありそうですが試してみる価値はありそうです。</p>
+<p>Clojureで書けるというのもとがってていいと思います。</p>
+<h4 id="whistlepig"><a href="https://github.com/wmorgan/whistlepig">whistlepig</a></h4>
+<p>Cで書かれた軽量なリアルタイム全文検索のためのライブラリです。
+複数プロセスでも同時にインデックスを読み書きできるようで、なかなか便利そうです。今度詳細を調べてみようと思います。</p>
+<h4 id="montezuma"><a href="http://code.google.com/p/montezuma/">Montezuma</a></h4>
+<p>こっちはFerretのCommon Lispに移植したもの。ちなみにFerretはLuceneをRubyに移植したものです。
+これはこれで便利だと思います。</p>
+<h4 id="openrtb"><a href="http://code.google.com/p/openrtb/">OpenRTB</a></h4>
+<p>広告業界ではread-time biddingが最近のトレンドのようなので、関係者はこれを読んで理解を深めましょう。</p>
+<h4 id="ios-security-internals"><a href="http://365.rsaconference.com/servlet/JiveServlet/previewBody/3488-102-1-4589/MBS-402.pdf">iOS Security Internals</a></h4>
+<p>jailbreakやったりする人がつくった資料のようです。
+これもなかなか興味深いです。</p>
+<h4 id="unreal4"><a href="http://www.unrealengine.com/unreal_engine_4/">UNREAL4</a></h4>
+<p>Unity3でも十分すごいと思いましたが、最近のゲームエンジンはどれもすごいですね。</p>
+<ul>
+<li>http://www.wmtdesigners.com/wordpress/game-2012-06-19</li>
+</ul>
+<h4 id="leap-motion"><a href="https://www.leapmotion.com/">Leap Motion</a></h4>
+<p>xboxのkinect的なものですが、それよりはるかに上回る精度らしいです。プレオーダーしたので届いたら色々遊んでみます。</p>]]></content:encoded>
+    </item>
     <item>
       <title>人気プログラミング言語ランキング(stackoverflow調べ)</title>
       <link>http://mojavy.com/blog/2013/02/05/popular-programming-languages/</link>
@@ -542,22 +582,6 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
 <p>物理演算を駆使した3次元リアルぷよぷよがやってみたいです。</p>
 <h3 id="mixamo"><a href="http://www.mixamo.com/">mixamo</a></h3>
 <p>こういう素材がもっと増えるといいですね。</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>cl-frontcodingをつくってみた</title>
-      <link>http://mojavy.com/blog/2012/11/10/cl-frontcoding/</link>
-      <pubDate>Sat, 10 Nov 2012 20:30:00 JST</pubDate>
-      <category><![CDATA[algorithms]]></category>
-      <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2012/11/10/cl-frontcoding/</guid>
-      <description>cl-frontcodingをつくってみた</description>
-      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
-<p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
-<p><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">http://d.hatena.ne.jp/naoya/20080914/1221382329</a> のパクりです。</p>
-<p>ソースは<a href="https://github.com/taksatou/cl-frontcoding">https://github.com/taksatou/cl-frontcoding</a>です。</p>
-<p>学習目的でつくったので実用的なライブラリではないですが、CLOSやマクロを使いつつパッケージ作成〜テストまで一通りやりました。</p>
-<p>CLOSもマクロも基本的な使い方をするだけなら意外と簡単でした。</p>
-<p>CLOSとかマクロは本を読んでもいまいちよくわからない上に、深淵なイメージが膨らんで心理的ハードルがあがってしまうだけなので、よくわからないなりになにか作ってみると理解が進んでいいと思います。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
