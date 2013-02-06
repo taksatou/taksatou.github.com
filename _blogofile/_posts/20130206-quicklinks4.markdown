@@ -33,7 +33,7 @@ Cで書かれた軽量なリアルタイム全文検索のためのライブラ�
 
 #### [Montezuma](http://code.google.com/p/montezuma/)
 
-こっちはFerretのCommon Lispに移植したもの。ちなみにFerretはLuceneをRubyに移植したものです。
+こっちはFerretをCommon Lispに移植したもの。ちなみにFerretはLuceneをRubyに移植したものです。
 これはこれで便利だと思います。
 
 
