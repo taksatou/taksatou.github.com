@@ -4,7 +4,7 @@ date: 2013/02/06 21:50:00
 title: Quicklinks 4
 ---
 
-[前回](http://mojavy.com/blog/2012/11/14/quicklinks3/) から2ヵ月くらいあいてしまいまったのであまり新しくない情報もありますが気にせずいきます。
+[前回](http://mojavy.com/blog/2012/11/14/quicklinks3/) から2ヵ月くらいあいてしまいました。古いブックマークはブックマークしたこと自体を忘れてしまうのでもうちょいまめにまとめたいです。
 
 #### [Q-Gears](http://q-gears.sourceforge.net/index.phtml?content=1)
 
@@ -20,7 +20,7 @@ LinuxやWindowsで動くようにクロスプラットフォームな設計に�
 Clojureで書かれたnetwork event stream processing systemとのこと。
 
 [ここ](http://riemann.io/concepts.html)のイラストと説明を見れば大体イメージはわくと思います。
-コンセプト的にはfluentdに近い気がしますが、集める対象がログではなくイベントそれ自体なので適用範囲は広そうです。
+コンセプト的にはfluentdに近い気がしますが、集める対象がログではなくイベントそれ自体なので守備範囲はちょっと違うようです。
 Riemann自体が落ちたときにどうなるか、とか実際に運用するとなると色々気になるところはありそうですが試してみる価値はありそうです。
 
 設定をClojureで書けるというのもとがってていいと思います。
