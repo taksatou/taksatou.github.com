@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     
   <title>
-sbcl
+common lispのdefconstantについての注意点
 </title>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
@@ -102,8 +102,8 @@ href="/blog/feed/atom" />
 <div id="blogleft">
 
 <div class="blog_post">
-  <a name="sbcl"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/31/sbcl-defconstant/" rel="bookmark" title="Permanent Link to sbcl">sbcl</a></h2>
+  <a name="common-lispのdefconstantについての注意点"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/31/sbcl-defconstant/" rel="bookmark" title="Permanent Link to common lispのdefconstantについての注意点">common lispのdefconstantについての注意点</a></h2>
   <small>January 31, 2013 at 08:00 PM | categories:
 
 <a href='/blog/category/common-lisp'>common lisp</a>
@@ -113,8 +113,48 @@ href="/blog/feed/atom" />
   <div class="post_prose">
     
 <div class="blogbody">
-  <p>http://www.lispforum.com/viewtopic.php?f=33&amp;t=4088</p>
+  <p><img alt="lisp" src="/images/lisp-warinig-200.png" /></p>
+<p>なぜかsbclでdefconstantのところで以下のようなエラーがおきたりおきなかったりして不思議に思っていた。</p>
+<div class="pygments_murphy"><pre>The constant CL-GEARMAN::+REQUEST-MAGIC+ is being redefined
+(from #(0 82 69 81) to #(0 82 69 81))
+   [Condition of type DEFCONSTANT-UNEQL]
+See also:
+  Common Lisp Hyperspec, DEFCONSTANT [:macro]
+  SBCL Manual, Idiosyncrasies [:node]
+
+Restarts:
+ 0: [CONTINUE] Go ahead and change the value.
+ 1: [ABORT] Keep the old value.
+ 2: [TRY-RECOMPILING] Recompile protocol and try loading it again
+ 3: [RETRY] Retry loading FASL for #&lt;CL-SOURCE-FILE &quot;cl-gearman&quot; &quot;src&quot; &quot;protocol&quot;&gt;.
+ 4: [ACCEPT] Continue, treating loading FASL for #&lt;CL-SOURCE-FILE &quot;cl-gearman&quot; &quot;src&quot; &quot;protocol&quot;&gt; as having been successful.
+ 5: [ABORT] Give up on &quot;cl-gearman&quot;
+ --more--
+
+Backtrace:
+  0: (SB-C::%DEFCONSTANT ..)
+  1: (SB-FASL::LOAD-FASL-GROUP ..)
+  2: ((FLET SB-THREAD::WITH-RECURSIVE-LOCK-THUNK :IN SB-FASL::LOAD-AS-FASL))
+  3: ((FLET #:WITHOUT-INTERRUPTS-BODY-88874 :IN SB-THREAD::CALL-WITH-RECURSIVE-LOCK))
+  4: (SB-THREAD::CALL-WITH-RECURSIVE-LOCK ..)
+  5: (SB-FASL::LOAD-AS-FASL ..)
+  6: ((FLET SB-FASL::LOAD-STREAM :IN LOAD) ..)
+  7: (LOAD ..)
+  8: (SB-IMPL::%MAP-FOR-EFFECT-ARITY-1 ..)
+</pre></div>
+
+<p>先日公開したcl-gearmanでこれが発生していてしまい原因がわからずそのまま放置していたのですが、以下のforumを発見した。</p>
+<p><a href="http://www.lispforum.com/viewtopic.php?f=33&amp;t=4088">http://www.lispforum.com/viewtopic.php?f=33&amp;t=4088</a></p>
+<blockquote>
 <p>It's not a bug (in SBCL). The value in a DEFCONSTANT form is restricted to being something that's EQL to itself each time it's evaluated (that's horrible phrasing, I know), so using a vector is illegal (that is, you can use a vector, but you have to make sure you return the same vector each time -- so you can't use VECTOR or #(...) for the value).</p>
+</blockquote>
+<p>DEFCONSTANTフォームの値はそれが何度評価されてもEQLになるようなものでなければならないらしい。
+なので、vectorをDEFCONSTANTでバインドすることは可能だけど、DEFCONSTANTフォームの値の場所にVECTOR や #(...)で記述したフォームを書くことはできない。</p>
+<p>CLtL2にもちゃんと書いてあった。</p>
+<blockquote>
+<p>defconstantはdefparameterに似ているが、名前の値が固定されていることを前提としており、コンパイラは、コンパイルされるプログラムでの値について仮定を置くことが許されている。 (...中略...) コンパイラは置き換えたオブジェクトのコピーが定数の実際の値とeqlになるように注意しなければならない。たとえば、コンパイラは数のコピーは自由に作ってもよいが、値がリストであるときは十分に注意しなければならない。</p>
+</blockquote>
+<p>なるほど。</p>
 </div>
 
   </div>
@@ -126,13 +166,13 @@ href="/blog/feed/atom" />
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/01/21/c-string-initialization/"> previous post </a>
     |
-  <a href="http://mojavy.com/blog/2013/01/31/popular-programming-languages/"> next post </a>
+  <a href="http://mojavy.com/blog/2013/02/05/popular-programming-languages/"> next post </a>
 </div>
 <hr class="intersocial">
 
 <div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/31/sbcl-defconstant/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/31/sbcl-defconstant/" class="hatena-bookmark-button" data-hatena-bookmark-title="sbcl" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/31/sbcl-defconstant/" data-text="sbcl">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/31/sbcl-defconstant/" class="hatena-bookmark-button" data-hatena-bookmark-title="common lispのdefconstantについての注意点" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/31/sbcl-defconstant/" data-text="common lispのdefconstantについての注意点">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/31/sbcl-defconstant/"></div>
 
 
@@ -166,14 +206,14 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
-      <li><a href="/blog/2013/01/31/popular-programming-languages/" title="人気プログラミング言語ランキング(stackoverflow調べ)"><p>人気プログラミング言語ランキング(stackoverflow調べ)</a><span style="font-size: 80%;">(January 31, 2013 at 08:00 PM)</span></li>
-      <li><a href="/blog/2013/01/31/sbcl-defconstant/" title="sbcl"><p>sbcl</a><span style="font-size: 80%;">(January 31, 2013 at 08:00 PM)</span></li>
+      <li><a href="/blog/2013/02/06/quicklinks4/" title="Quicklinks 4"><p>Quicklinks 4</a><span style="font-size: 80%;">(February 06, 2013 at 09:50 PM)</span></li>
+      <li><a href="/blog/2013/02/05/popular-programming-languages/" title="人気プログラミング言語ランキング(stackoverflow調べ)"><p>人気プログラミング言語ランキング(stackoverflow調べ)</a><span style="font-size: 80%;">(February 05, 2013 at 11:00 PM)</span></li>
+      <li><a href="/blog/2013/01/31/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(January 31, 2013 at 08:00 PM)</span></li>
       <li><a href="/blog/2013/01/21/c-string-initialization/" title="C言語の文字列初期化について"><p>C言語の文字列初期化について</a><span style="font-size: 80%;">(January 21, 2013 at 08:00 PM)</span></li>
       <li><a href="/blog/2013/01/11/alc-nokogiri-tmux/" title="tmuxでalcの英単語を引く"><p>tmuxでalcの英単語を引く</a><span style="font-size: 80%;">(January 11, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/01/09/yaml-mode-ext/" title="yaml-modeを拡張してyamlを高速に編集する"><p>yaml-modeを拡張してyamlを高速に編集する</a><span style="font-size: 80%;">(January 09, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/01/08/favorite-linux-command/" title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)"><p>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a><span style="font-size: 80%;">(January 08, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/01/08/2012-summary/" title="2012年の振り返りと2013年の抱負"><p>2012年の振り返りと2013年の抱負</a><span style="font-size: 80%;">(January 08, 2013 at 12:30 AM)</span></li>
-      <li><a href="/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" title="gearmanクライアントライブラリ cl-gearman"><p>gearmanクライアントライブラリ cl-gearman</a><span style="font-size: 80%;">(December 16, 2012 at 05:30 PM)</span></li>
     </ul>
   </div>
 
@@ -218,7 +258,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
-     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
@@ -237,7 +277,8 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(7)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>

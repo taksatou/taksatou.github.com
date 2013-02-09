@@ -102,6 +102,70 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="rubyのワンライナーで便利な変数まとめ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" rel="bookmark" title="Permanent Link to rubyのワンライナーで便利な変数まとめ">rubyのワンライナーで便利な変数まとめ</a></h2>
+  <small>July 08, 2012 at 06:30 PM | categories:
+
+<a href='/blog/category/ruby'>ruby</a>
+ | <a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
+<h1 id="_1">$.</h1>
+<p>現在の行番号を表します。awkでいうNRと同じです。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
+</pre></div>
+
+<h1 id="-i">$-i</h1>
+<p>この値を文字列で上書きするとin-place置換を行うようになります。オリジナルのファイルはここで指定した文字が拡張子についたファイルとして保存されます。オリジナルファイルが不要なら空文字を設定すればOKです。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+
+<h1 id="_2">$/</h1>
+<p>入力の区切り文字を表わす文字です。デフォルトは改行です。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
+</pre></div>
+
+<h1 id="_3">$, 、$;</h1>
+<p>$, はjoinのデフォルト区切り文字で、$; はsplitのデフォルト区切り文字です。
+ワンライナーではjoinとsplitをよく使うと思うので、BEGINで上書きしておけばワンライナーを多少短く書けます。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
+</pre></div>
+
+<h1 id="_4">まとめ</h1>
+<p>まだ他にも知らないテクニックがたくさんありそうですが、新しく見つけたら追記していきます。</p>
+<h1 id="_5">参考</h1>
+<ul>
+<li><a href="http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/">http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/</a></li>
+<li><a href="http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html">http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" class="hatena-bookmark-button" data-hatena-bookmark-title="rubyのワンライナーで便利な変数まとめ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" data-text="rubyのワンライナーで便利な変数まとめ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="sbclでクラスのスロット一覧を取得する方法"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" rel="bookmark" title="Permanent Link to sbclでクラスのスロット一覧を取得する方法">sbclでクラスのスロット一覧を取得する方法</a></h2>
   <small>July 06, 2012 at 06:30 PM | categories:
@@ -350,203 +414,6 @@ macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/t
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="tmuxに独自機能を追加する"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/" rel="bookmark" title="Permanent Link to tmuxに独自機能を追加する">tmuxに独自機能を追加する</a></h2>
-  <small>December 06, 2011 at 01:05 AM | categories:
-
-<a href='/blog/category/advent-calendar'>advent calendar</a>, <a href='/blog/category/tmux'>tmux</a>
- | <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の<s>6日目</s>7日目です。(netmark.jpさん,matsuuさん、すいません、出遅れました。)</p>
-<p>5日目はyoshikawさんの<a href="http://yskwkzhr.blogspot.com/2011/12/lets-use-development-version-gnu-screen.html">開発版GNU Screenを使ってみよう</a>でした。</p>
-<p>6日目はnetmark.jpさんの<a href="http://netmark.jp/2011/12/gnu-screen-plusone.html">GNU screenをもうちょっとだけ便利に使おう！</a>でした。</p>
-<p>この記事ではtmuxのいじり方を簡単に紹介してみます。</p>
-<h1 id="_1">はじめに</h1>
-<p>tmuxは比較的若いプロジェクトなこともあってか、かゆいところに手が届かないシチュエーションがたまにあります。
-個人的に不満だったのはバッファの挙動です。</p>
-<p>tmuxでバッファに文字列をコピーした場合、list-buffersに新しいものほど前方になるように格納されていきます。
-choose-bufferコマンドを使えばある程度簡単に過去のものもさかのぼれますがしばらくすると埋もれてしまいます。
-tmuxのバッファにはホスト名とかよくつかうコマンドとかをいれておいて番号を指定して最速でとりだしたいのに、
-場所が固定されていないといちいち探さなくてはならず不便に感じていました。
-なんとかできないかと思ってソースをいじってみたら、意外と簡単だったので簡単な解説をまじえつつ手順を紹介してみます。</p>
-<h1 id="_2">目次</h1>
-<div class="toc">
-<ul>
-<li><a href="#_1">はじめに</a></li>
-<li><a href="#_2">目次</a></li>
-<li><a href="#_3">準備</a><ul>
-<li><a href="#_4">ソースをとってくる</a></li>
-<li><a href="#_5">依存パッケージを入れる</a></li>
-<li><a href="#_6">ビルド</a></li>
-</ul>
-</li>
-<li><a href="#_7">ソース構成</a></li>
-<li><a href="#_8">いじってみる</a></li>
-<li><a href="#_9">まとめ</a></li>
-</ul>
-</div>
-<h1 id="_3">準備</h1>
-<h2 id="_4">ソースをとってくる</h2>
-<p>本家サイトからソースをおとします。とりあえず現在の最新版(1.5)でいいと思います。</p>
-<p><a href="http://tmux.sourceforge.net/">http://tmux.sourceforge.net/</a></p>
-<h2 id="_5">依存パッケージを入れる</h2>
-<p><a href="http://d.hatena.ne.jp/tmatsuu/20111130/1322677832">tmatsuuさんの記事</a>にもちょっとありましたが、
-tmuxはlibeventとnlcursesに依存しているのでビルドするにはライブラリのヘッダも必要です。
-ubuntuだと以下パッケージを入れとけばたぶん大丈夫です。</p>
-<div class="pygments_murphy"><pre>sudo apt-get install libevent-dev libncurses5-dev
-</pre></div>
-
-<h2 id="_6">ビルド</h2>
-<div class="pygments_murphy"><pre>./configure <span class="o">&amp;&amp;</span> make
-</pre></div>
-
-<p>ここまでできたら準備OKです。</p>
-<h1 id="_7">ソース構成</h1>
-<p>結構たくさんファイルがありますが、ファイル名を見れば大体雰囲気がつかめると思います。</p>
-<p>何か機能を追加したいだけなら、いじる必要のあるファイルはごく一部です。</p>
-<dl>
-<dt>tmux.h</dt>
-<dd>
-<dl>
-<dt>ほとんどのコマンドは全部ここに宣言がまとめられてるのでほぼ必ずいじります。</dt>
-<dt>options-table.c</dt>
-<dd>オプション追加する場合はここに追加します。値の肩などを定義するテーブルが宣言されているので、中身を見れば大体わかると思います。</dd>
-</dl>
-</dd>
-</dl>
-<p>いじる必要はないですがarray.hはいろんなところでつかわれてるので目を通しとくとよいと思います。
-Cでリストが使いたい場合は他のとこでも流用できそうな便利なヘッダです。</p>
-<p>あとは必要に応じて関係しそうなところをみていけばよいです。</p>
-<h1 id="_8">いじってみる</h1>
-<p>バッファまわりを改造したいので、paste.cというファイルが主な対象になります。</p>
-<p>細かい解説は省略しますが、paste_stackという構造体がグローバルで共有しているリストの本体で、array.hで宣言されているマクロで値がとりだせるようになっています。
-本来の動作であるpaste_addを参考にしつつpaste_add_tailなんて関数を追加します。
-後に追加した文字列ほど後ろにいってほしいですが、直前のものだけは先頭にあったほうが便利なのでちょっと変則的な感じになってますが、やっていることはシンプルです。</p>
-<div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/paste.c tmux-1.5-patched/paste.c</span>
-<span class="gd">--- tmux-1.5/paste.c    2011-07-09 18:42:38.000000000 +0900</span>
-<span class="gi">+++ tmux-1.5-patched/paste.c    2011-12-06 23:36:31.921805251 +0900</span>
-<span class="gu">@@ -119,6 +119,38 @@</span>
-        pb-&gt;size = size;
- }
-
-<span class="gi">+/*</span>
-<span class="gi">+ * Add an item onto the tail of the stack, freeing the bottom if at limit. Note</span>
-<span class="gi">+ * that the caller is responsible for allocating data.</span>
-<span class="gi">+ */</span>
-<span class="gi">+void</span>
-<span class="gi">+paste_add_tail(struct paste_stack *ps, char *data, size_t size, u_int limit)</span>
-<span class="gi">+{</span>
-<span class="gi">+       struct paste_buffer     *pb;</span>
-<span class="gi">+</span>
-<span class="gi">+       if (size == 0)</span>
-<span class="gi">+               return;</span>
-<span class="gi">+</span>
-<span class="gi">+       while (ARRAY_LENGTH(ps) &gt;= limit) {</span>
-<span class="gi">+               pb = ARRAY_LAST(ps);</span>
-<span class="gi">+               xfree(pb-&gt;data);</span>
-<span class="gi">+               xfree(pb);</span>
-<span class="gi">+               ARRAY_TRUNC(ps, 1);</span>
-<span class="gi">+       }</span>
-<span class="gi">+</span>
-<span class="gi">+       pb = xmalloc(sizeof *pb);</span>
-<span class="gi">+</span>
-<span class="gi">+       if (ARRAY_LENGTH(ps) &gt; 0) {</span>
-<span class="gi">+               ARRAY_ADD(ps, ARRAY_FIRST(ps));</span>
-<span class="gi">+               ARRAY_SET(ps, 0, pb);</span>
-<span class="gi">+       } else {</span>
-<span class="gi">+               ARRAY_ADD(ps, pb);</span>
-<span class="gi">+       }</span>
-<span class="gi">+       ARRAY_INSERT(ps, 0, pb);</span>
-<span class="gi">+</span>
-<span class="gi">+       pb-&gt;data = data;</span>
-<span class="gi">+       pb-&gt;size = size;</span>
-<span class="gi">+}</span>
-</pre></div>
-
-<p>ここで追加した関数はtmux.hで宣言しておきます</p>
-<div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/tmux.h tmux-1.5-patched/tmux.h</span>
-<span class="gd">--- tmux-1.5/tmux.h     2011-07-09 18:42:38.000000000 +0900</span>
-<span class="gi">+++ tmux-1.5-patched/tmux.h     2011-12-06 23:36:31.925805201 +0900</span>
-<span class="gu">@@ -1487,6 +1487,7 @@</span>
- int             paste_free_top(struct paste_stack *);
- int             paste_free_index(struct paste_stack *, u_int);
- void            paste_add(struct paste_stack *, char *, size_t, u_int);
-<span class="gi">+void            paste_add_tail(struct paste_stack *, char *, size_t, u_int);</span>
- int             paste_replace(struct paste_stack *, u_int, char *, size_t);
- char           *paste_print(struct paste_buffer *, size_t);
-</pre></div>
-
-<p>また、今回の機能は設定ファイルでon/offを切り替えられるようにしておきたいので、options-table.cも編集します。</p>
-<div class="pygments_murphy"><pre><span class="n">diff</span> <span class="o">-</span><span class="n">u</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">-</span><span class="n">patched</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>
-<span class="o">---</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>    <span class="mi">2011</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">09</span> <span class="mi">18</span><span class="o">:</span><span class="mi">42</span><span class="o">:</span><span class="mf">38.000000000</span> <span class="o">+</span><span class="mi">0900</span>
-<span class="o">+++</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">-</span><span class="n">patched</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>    <span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mo">06</span> <span class="mi">23</span><span class="o">:</span><span class="mi">36</span><span class="o">:</span><span class="mf">31.921805251</span> <span class="o">+</span><span class="mi">0900</span>
-<span class="err">@@</span> <span class="o">-</span><span class="mi">57</span><span class="p">,</span><span class="mi">6</span> <span class="o">+</span><span class="mi">57</span><span class="p">,</span><span class="mi">11</span> <span class="err">@@</span>
-          <span class="p">.</span><span class="n">default_num</span> <span class="o">=</span> <span class="mi">20</span>
-        <span class="p">},</span>
-
-<span class="o">+</span>       <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;reverse-buffer&quot;</span><span class="p">,</span>
-<span class="o">+</span>         <span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">OPTIONS_TABLE_FLAG</span><span class="p">,</span>
-<span class="o">+</span>         <span class="p">.</span><span class="n">default_num</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="o">+</span>       <span class="p">},</span>
-<span class="o">+</span>
-        <span class="p">{</span> <span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;escape-time&quot;</span><span class="p">,</span>
-          <span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">OPTIONS_TABLE_NUMBER</span><span class="p">,</span>
-          <span class="p">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-</pre></div>
-
-<p>実際にバッファの制御関数を呼び出しているのはwindow-copy.cなので、さっき追加したオプションの値をみて切り替えられるようにします。</p>
-<div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/window-copy.c tmux-1.5-patched/window-copy.c</span>
-<span class="gd">--- tmux-1.5/window-copy.c      2011-07-09 18:42:38.000000000 +0900</span>
-<span class="gi">+++ tmux-1.5-patched/window-copy.c      2011-12-06 23:36:31.921805251 +0900</span>
-<span class="gu">@@ -1348,7 +1348,11 @@</span>
-        /* Add the buffer to the stack. */
-        limit = options_get_number(&amp;global_options, &quot;buffer-limit&quot;);
-<span class="gd">-       paste_add(&amp;global_buffers, buf, off, limit);</span>
-<span class="gi">+       if (options_get_number(&amp;global_options, &quot;reverse-buffer&quot;)) {</span>
-<span class="gi">+               paste_add(&amp;global_buffers, buf, off, limit);</span>
-<span class="gi">+       } else {</span>
-<span class="gi">+               paste_add(&amp;global_buffers, buf, off, limit);</span>
-<span class="gi">+       }</span>
- }
-</pre></div>
-
-<p>あとは設定ファイルに以下を追加してmakeしたtmuxを起動してみます。</p>
-<div class="pygments_murphy"><pre><span class="nb">set</span> -g reverse-buffer on
-</pre></div>
-
-<p>バッファにコピーした文字列がlist-buffersの後ろに追加されていけば成功です。
-簡単ですよね？</p>
-<h1 id="_9">まとめ</h1>
-<p>以上、tmuxにreverse-bufferというオプションを追加して、バッファの挙動を変更できるようにしてみました。</p>
-<p>端末制御のプログラムは普段あまり触れる機会がないし複雑そうなイメージがあって敬遠しがちですが、ちょっとした機能を追加するだけだったら意外と簡単だったりするのでどんどんいじってみるといいと思います。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2011/11/06/blofofile-test/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/" class="hatena-bookmark-button" data-hatena-bookmark-title="tmuxに独自機能を追加する" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/" data-text="tmuxに独自機能を追加する">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../6">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -576,6 +443,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
       <li><a href="/blog/2013/02/06/quicklinks4/" title="Quicklinks 4"><p>Quicklinks 4</a><span style="font-size: 80%;">(February 06, 2013 at 09:50 PM)</span></li>
       <li><a href="/blog/2013/02/05/popular-programming-languages/" title="人気プログラミング言語ランキング(stackoverflow調べ)"><p>人気プログラミング言語ランキング(stackoverflow調べ)</a><span style="font-size: 80%;">(February 05, 2013 at 11:00 PM)</span></li>
       <li><a href="/blog/2013/01/21/c-string-initialization/" title="C言語の文字列初期化について"><p>C言語の文字列初期化について</a><span style="font-size: 80%;">(January 21, 2013 at 08:00 PM)</span></li>
@@ -583,7 +451,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/01/09/yaml-mode-ext/" title="yaml-modeを拡張してyamlを高速に編集する"><p>yaml-modeを拡張してyamlを高速に編集する</a><span style="font-size: 80%;">(January 09, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/01/08/favorite-linux-command/" title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)"><p>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a><span style="font-size: 80%;">(January 08, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/01/08/2012-summary/" title="2012年の振り返りと2013年の抱負"><p>2012年の振り返りと2013年の抱負</a><span style="font-size: 80%;">(January 08, 2013 at 12:30 AM)</span></li>
-      <li><a href="/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" title="gearmanクライアントライブラリ cl-gearman"><p>gearmanクライアントライブラリ cl-gearman</a><span style="font-size: 80%;">(December 16, 2012 at 05:30 PM)</span></li>
     </ul>
   </div>
 
@@ -612,7 +479,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (8)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
@@ -647,7 +514,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
