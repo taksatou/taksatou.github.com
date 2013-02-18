@@ -16,11 +16,11 @@
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
       <title>LTSV for Common Lisp 作りました</title>
-      <link>http://mojavy.com/blog/2013/02/18/ltsv-for-common-list/</link>
+      <link>http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/</link>
       <pubDate>Mon, 18 Feb 2013 20:30:00 JST</pubDate>
       <category><![CDATA[ltsv]]></category>
       <category><![CDATA[common lisp]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/02/18/ltsv-for-common-list/</guid>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/</guid>
       <description>LTSV for Common Lisp 作りました</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
 <p>すっかりブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>

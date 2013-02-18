@@ -19,14 +19,14 @@
       <uri>http://mojavy.com/blog</uri>
     </author>
     <title type="html"><![CDATA[LTSV for Common Lisp 作りました]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-list/" />
-    <id>http://mojavy.com/blog/2013/02/18/ltsv-for-common-list/</id>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/" />
+    <id>http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/</id>
     <updated>2013-02-18T20:30:00Z</updated>
     <published>2013-02-18T20:30:00Z</published>
     <category scheme="http://mojavy.com/blog" term="ltsv" />
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[LTSV for Common Lisp 作りました]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/02/18/ltsv-for-common-list/"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
 <p>すっかりブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
 <p><a href="https://github.com/taksatou/cl-ltsv">https://github.com/taksatou/cl-ltsv</a></p>
 <p><a href="http://ltsv.org/">http://ltsv.org/</a></p>
