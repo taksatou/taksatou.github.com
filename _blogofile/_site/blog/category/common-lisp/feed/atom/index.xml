@@ -7,12 +7,57 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-02-09T17:15:00Z</updated>
+  <updated>2013-02-18T20:30:00Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[LTSV for Common Lisp 作りました]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-list/" />
+    <id>http://mojavy.com/blog/2013/02/18/ltsv-for-common-list/</id>
+    <updated>2013-02-18T20:30:00Z</updated>
+    <published>2013-02-18T20:30:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="ltsv" />
+    <category scheme="http://mojavy.com/blog" term="common lisp" />
+    <summary type="html"><![CDATA[LTSV for Common Lisp 作りました]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/02/18/ltsv-for-common-list/"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
+<p>すっかりブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
+<p><a href="https://github.com/taksatou/cl-ltsv">https://github.com/taksatou/cl-ltsv</a></p>
+<h3 id="_1">インストール</h3>
+<p>現在(2013-02-18) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
+<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-ltsv)
+</pre></div>
+
+<h3 id="_2">使い方</h3>
+<p>以下、使用例です</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-ltsv:parse-line &quot;host:127.0.0.1    ident:- user:frank&quot;)
+((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;frank&quot;))
+
+CL-USER&gt; (with-input-from-string (ss &quot;host:127.0.0.1    ident:- user:frank
+host:127.0.0.1  ident:- user:jane
+host:127.0.0.1  ident:- user:john&quot;)
+           (cl-ltsv:with-ltsv-from-stream (entry ss)
+             (print entry)))
+
+((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;frank&quot;)) 
+((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;jane&quot;)) 
+((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;john&quot;)) 
+NIL
+
+CL-USER&gt; (cl-ltsv:alist-ltsv &#39;((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;frank&quot;)))
+&quot;host:127.0.0.1 ident:- user:frank&quot;
+</pre></div>
+
+<h3 id="_3">まとめ</h3>
+<p>ライブラリにするほどでもなかった気はしますが、Common Lispには文字列のsplitが標準でついてなくてちょっと面倒に感じることもあったのでないよりはましかな、ということで作りました。</p>
+<p>フィードバック等ありましたらコメント頂けるとうれしいです。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
