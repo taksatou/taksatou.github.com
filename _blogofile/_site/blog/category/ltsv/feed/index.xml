@@ -52,7 +52,7 @@ CL-USER&gt; (cl-ltsv:alist-ltsv &#39;((&quot;host&quot; . &quot;127.0.0.1&quot;)
 </pre></div>
 
 <ul>
-<li>parse-lineするとalistを返します</li>
+<li>cl-ltsv:parse-lineするとalistを返します</li>
 <li>cl-ltsv:with-ltsv-from-stream を使えば1行ずつパースしてループします</li>
 <li>cl-ltsv:alist-ltsv でalistからltsv形式の文字列に変換できます</li>
 </ul>

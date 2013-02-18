@@ -44,7 +44,7 @@ CL-USER> (cl-ltsv:alist-ltsv '(("host" . "127.0.0.1") ("ident" . "-") ("user" . 
 "host:127.0.0.1 ident:- user:frank"
 $$/code
 
-* parse-lineするとalistを返します
+* cl-ltsv:parse-lineするとalistを返します
 * cl-ltsv:with-ltsv-from-stream を使えば1行ずつパースしてループします
 * cl-ltsv:alist-ltsv でalistからltsv形式の文字列に変換できます
 
