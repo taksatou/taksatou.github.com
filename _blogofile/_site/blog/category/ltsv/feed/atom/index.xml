@@ -29,6 +29,7 @@
     <content type="html" xml:base="http://mojavy.com/blog/2013/02/18/ltsv-for-common-list/"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
 <p>すっかりブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
 <p><a href="https://github.com/taksatou/cl-ltsv">https://github.com/taksatou/cl-ltsv</a></p>
+<p><a href="http://ltsv.org/">http://ltsv.org/</a></p>
 <h3 id="_1">インストール</h3>
 <p>現在(2013-02-18) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
 <div class="pygments_murphy"><pre>(ql:quickload &#39;cl-ltsv)
