@@ -23,7 +23,7 @@ $$/code
 
 ### 使い方
 
-以下、使用例です
+以下のように使います。
 
 $$code
 CL-USER> (cl-ltsv:parse-line "host:127.0.0.1    ident:- user:frank")
@@ -43,6 +43,10 @@ NIL
 CL-USER> (cl-ltsv:alist-ltsv '(("host" . "127.0.0.1") ("ident" . "-") ("user" . "frank")))
 "host:127.0.0.1 ident:- user:frank"
 $$/code
+
+* parse-lineするとalistを返します
+* cl-ltsv:with-ltsv-from-stream を使えば1行ずつパースしてループします
+* cl-ltsv:alist-ltsv でalistからltsv形式の文字列に変換できます
 
 
 ### まとめ
