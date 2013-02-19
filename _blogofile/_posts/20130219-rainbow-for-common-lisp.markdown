@@ -1,6 +1,6 @@
 ---
 categories: common lisp, ruby
-date: 2013/2/19 20:30:00
+date: 2013/2/19 23:55:00
 title: Rainbow for Common Lisp 作りました
 image: /images/cl-rainbow-demo.png
 ---
