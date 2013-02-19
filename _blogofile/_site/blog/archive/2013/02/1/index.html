@@ -102,6 +102,64 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="rainbow-for-common-lisp-作りました"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/" rel="bookmark" title="Permanent Link to Rainbow for Common Lisp 作りました">Rainbow for Common Lisp 作りました</a></h2>
+  <small>February 19, 2013 at 08:30 PM | categories:
+
+<a href='/blog/category/ruby'>ruby</a>, <a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="lisp" src="/images/cl-rainbow-demo.png" /></p>
+<p><a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/">昨日</a>のテンプレを流用して今日はcl-rainbowという地味なライブラリの宣伝をします。</p>
+<p><a href="https://github.com/taksatou/cl-rainbow">https://github.com/taksatou/cl-rainbow</a></p>
+<p>cl-rainbowとは、<a href="https://github.com/sickill/rainbow">rubygemにあるrainbow</a>をCommon Lispに移植したものです。
+これを使うとターミナルの出力を簡単に色付けできます。</p>
+<h3 id="_1">インストール</h3>
+<p>現在(2013-02-19) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
+<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-rainbow)
+</pre></div>
+
+<h3 id="_2">使い方</h3>
+<p>以下のように使います。</p>
+<div class="pygments_murphy"><pre>(setf cl-rainbow:*enabled* t)
+(print (cl-rainbow:color :red &quot;red string&quot;))
+(print (cl-rainbow:color #x5599ff &quot;rgb color code&quot;))
+(loop for c across &quot;RAINBOW&quot; do (format t &quot;~A&quot; (cl-rainbow:color (random #xffffff) c)))
+</pre></div>
+
+<p>特に解説は不要だと思いますが、端末はカラー表示に対応している必要があります。</p>
+<p>RGBのカラーコード指定すると、256色にダウンサンプルして一番近い色を表示します。</p>
+<p>その他、例にはのせてませんが、端末が対応していれば斜体や太字にもできます。詳細はソースを見てください。</p>
+<h3 id="_3">まとめ</h3>
+<p>ログ出力のときとかにちょっと便利なときがあるかもしれません。</p>
+<p>リードマクロで文字列リテラルをごにょごにょして色付けできるようにするともっと便利なような気がするので、そのうちチャレンジしてみたいと思います。</p>
+<p>フィードバック等ありましたらコメント頂けるとうれしいです。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/" class="hatena-bookmark-button" data-hatena-bookmark-title="Rainbow for Common Lisp 作りました" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/" data-text="Rainbow for Common Lisp 作りました">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ltsv-for-common-lisp-作りました"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/" rel="bookmark" title="Permanent Link to LTSV for Common Lisp 作りました">LTSV for Common Lisp 作りました</a></h2>
   <small>February 18, 2013 at 08:30 PM | categories:
@@ -160,6 +218,8 @@ CL-USER&gt; (cl-ltsv:alist-ltsv &#39;((&quot;host&quot; . &quot;127.0.0.1&quot;)
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -460,6 +520,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/02/19/rainbow-for-common-lisp/" title="Rainbow for Common Lisp 作りました"><p>Rainbow for Common Lisp 作りました</a><span style="font-size: 80%;">(February 19, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
       <li><a href="/blog/2013/02/06/quicklinks4/" title="Quicklinks 4"><p>Quicklinks 4</a><span style="font-size: 80%;">(February 06, 2013 at 09:50 PM)</span></li>
@@ -467,7 +528,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/01/21/c-string-initialization/" title="C言語の文字列初期化について"><p>C言語の文字列初期化について</a><span style="font-size: 80%;">(January 21, 2013 at 08:00 PM)</span></li>
       <li><a href="/blog/2013/01/11/alc-nokogiri-tmux/" title="tmuxでalcの英単語を引く"><p>tmuxでalcの英単語を引く</a><span style="font-size: 80%;">(January 11, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/01/09/yaml-mode-ext/" title="yaml-modeを拡張してyamlを高速に編集する"><p>yaml-modeを拡張してyamlを高速に編集する</a><span style="font-size: 80%;">(January 09, 2013 at 10:00 PM)</span></li>
-      <li><a href="/blog/2013/01/08/favorite-linux-command/" title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)"><p>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a><span style="font-size: 80%;">(January 08, 2013 at 08:30 PM)</span></li>
     </ul>
   </div>
 
@@ -511,7 +571,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
@@ -530,7 +590,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
@@ -547,7 +607,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
