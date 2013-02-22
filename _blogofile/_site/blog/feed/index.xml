@@ -10,10 +10,43 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 19 Feb 2013 23:55:00 GMT</pubDate>
+    <pubDate>Fri, 22 Feb 2013 23:55:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</title>
+      <link>http://mojavy.com/blog/2013/02/22/python-popen/</link>
+      <pubDate>Fri, 22 Feb 2013 23:55:00 JST</pubDate>
+      <category><![CDATA[python]]></category>
+      <category><![CDATA[unix]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/02/22/python-popen/</guid>
+      <description>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</description>
+      <content:encoded><![CDATA[<p><img alt="python" src="/images/python-logo.gif" /></p>
+<p>pythonのsubprocess.Popen()を使っていてはまってしまったのでメモ。</p>
+<p>処理を並列化するために、Popenで起動した複数の子プロセスに対してpipeで入力データを渡して処理させてやろうと以下のようなコードを書いた。
+(ここでは便宜上catコマンドを起動しているが、実際はワーカープロセスのコマンド)</p>
+<div class="pygments_murphy"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s">&quot;cat&quot;</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="c">#</span>
+<span class="c"># do something</span>
+<span class="c">#</span>
+<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+    <span class="n">child</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">child</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>
+
+<p>子プロセスは標準入力がEOFを返したら終了するようにしてあったので、上のコードでも問題なさそうに見えるがwaitでデッドロックする。
+python2.7.3以降だと問題なかったのだけど、python2.5や2.6だと必ずデッドロックしてしまう。</p>
+<p>さんざん悩んだあげくsubprocess.pyのソースを読んでみたら、close_fds=TrueをPopenの引数に渡してやればよいことに気づいた。</p>
+<p>要するに、子プロセスが自分の標準入力のパイプをオープンしたままexecしてしまっていたのが原因だった。
+forkするとファイルディスクリプタも引き継ぐので、pipeで開いた書込み側のファイルディスクリプタを親と子の両方できちんと閉じてやらないと、標準入力の書込み側がオープンしたままの状態になってしまいEOFがこなくなってしまう。</p>
+<p>Popenではclose_fdsにTrueを渡してやるとexecするまえに3以上のファイルディスクリプタをすべて閉じるようになっている。
+(O_CLOEXECフラグを使うのではなく単にループして全部なめるような実装になっていた)</p>
+<p>というわけで、pipe使うときに標準入出力以外のファイルディスクリプタを引き継ぐ必要性はあまりないと思うので、close_fdsを設定するのを忘れないように気をつけましょう
+(Linux以外のプラットフォームでどうなるかは未調査です)</p>]]></content:encoded>
+    </item>
     <item>
       <title>Rainbow for Common Lisp 作りました</title>
       <link>http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/</link>
@@ -57,7 +90,7 @@
       <guid isPermaLink="true">http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/</guid>
       <description>LTSV for Common Lisp 作りました</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
-<p>すっかりブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
+<p>ブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
 <p><a href="https://github.com/taksatou/cl-ltsv">https://github.com/taksatou/cl-ltsv</a></p>
 <p><a href="http://ltsv.org/">http://ltsv.org/</a></p>
 <h3 id="_1">インストール</h3>
@@ -433,40 +466,6 @@ fusermount -u /path/to/mount/point  # unmount
 <div class="pygments_murphy"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
 <span class="s2">&quot;Banana is the common name for herbaceous plants of the genus Musa and for the fruit they produce. It is one of the oldest cultivated plants. They are native to tropical South and Southeast Asia, and are likely to have been first domesticated in Papua New &quot;</span> <span class="s2">&quot;Guinea. Today, they are cultivated throughout the tropics. They are grown in at least 107 countries, primarily for their... http://en.wikipedia.org/wiki/Banana&quot;</span>
 </pre></div>]]></content:encoded>
-    </item>
-    <item>
-      <title>2012年の振り返りと2013年の抱負</title>
-      <link>http://mojavy.com/blog/2013/01/08/2012-summary/</link>
-      <pubDate>Tue, 08 Jan 2013 00:30:00 JST</pubDate>
-      <category><![CDATA[others]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/08/2012-summary/</guid>
-      <description>2012年の振り返りと2013年の抱負</description>
-      <content:encoded><![CDATA[<p><img alt="tool" src="/images/snake-200.png" /></p>
-<p>早いもので1月も8日に突入してしまいましたが、2012年の振り返りと今年の抱負について書いておこうと思います。</p>
-<p>2012年にやったことのうち思いだせる範囲かつ主観的にみてそれなりにやった感のあるものを列挙してみます。</p>
-<ul>
-<li>Androidアプリ開発</li>
-<li>iOSアプリ開発</li>
-<li>Unityゲーム開発</li>
-<li>Common Lisp</li>
-<li>Phonegap (Cordova)</li>
-<li>Hadoop</li>
-<li>HBase</li>
-<li>Symfony</li>
-<li>FuelPHP</li>
-<li>Jenkins</li>
-<li>Gearman</li>
-</ul>
-<p>こうしてならべてみると色々やった年でした。今年だけでC#, Objective-C, Common Lispの3つの言語を新たに使えるようになったし、新しいものを多くやったという意味ではよかったです。
-ただ、長い目で見て有用なスキルが身に付いたかというとそうでもない気がします。技術的に深く掘り下げたものがあまりなかったのも残念です。</p>
-<p>また、転職や引越しがあったり、自炊をするようになったり、持ってた本をほぼ全部bookscanで電子書籍化したり、とプライベートの生活はそれなりに変化がありました。</p>
-<p>今後やりたいことは色々ありますが、もろもろ短かくまとめて</p>
-<ul>
-<li>心身を鍛える</li>
-<li>たくさん遊ぶ</li>
-</ul>
-<p>というのを2013年の抱負としてやっていこうかと思ってます。</p>
-<p>今年もよろしくお願いします。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

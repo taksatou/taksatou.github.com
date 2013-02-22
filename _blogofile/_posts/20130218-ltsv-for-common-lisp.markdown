@@ -7,7 +7,7 @@ image: /images/lisp-alien-logo.png
 
 ![lisp](/images/lisp-alien-logo.png)
 
-すっかりブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。
+ブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。
 
 [https://github.com/taksatou/cl-ltsv](https://github.com/taksatou/cl-ltsv)
 

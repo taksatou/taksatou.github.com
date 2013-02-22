@@ -27,7 +27,7 @@
     <category scheme="http://mojavy.com/blog" term="common lisp" />
     <summary type="html"><![CDATA[LTSV for Common Lisp 作りました]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/"><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
-<p>すっかりブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
+<p>ブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
 <p><a href="https://github.com/taksatou/cl-ltsv">https://github.com/taksatou/cl-ltsv</a></p>
 <p><a href="http://ltsv.org/">http://ltsv.org/</a></p>
 <h3 id="_1">インストール</h3>

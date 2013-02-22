@@ -102,6 +102,63 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="pythonのsubprocess.popen()でpipeしてwaitするとデッドロックしてはまった件"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/22/python-popen/" rel="bookmark" title="Permanent Link to pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件">pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a></h2>
+  <small>February 22, 2013 at 11:55 PM | categories:
+
+<a href='/blog/category/python'>python</a>, <a href='/blog/category/unix'>unix</a>
+ | <a href="http://mojavy.com/blog/2013/02/22/python-popen/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="python" src="/images/python-logo.gif" /></p>
+<p>pythonのsubprocess.Popen()を使っていてはまってしまったのでメモ。</p>
+<p>処理を並列化するために、Popenで起動した複数の子プロセスに対してpipeで入力データを渡して処理させてやろうと以下のようなコードを書いた。
+(ここでは便宜上catコマンドを起動しているが、実際はワーカープロセスのコマンド)</p>
+<div class="pygments_murphy"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s">&quot;cat&quot;</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="c">#</span>
+<span class="c"># do something</span>
+<span class="c">#</span>
+<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+    <span class="n">child</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">child</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>
+
+<p>子プロセスは標準入力がEOFを返したら終了するようにしてあったので、上のコードでも問題なさそうに見えるがwaitでデッドロックする。
+python2.7.3以降だと問題なかったのだけど、python2.5や2.6だと必ずデッドロックしてしまう。</p>
+<p>さんざん悩んだあげくsubprocess.pyのソースを読んでみたら、close_fds=TrueをPopenの引数に渡してやればよいことに気づいた。</p>
+<p>要するに、子プロセスが自分の標準入力のパイプをオープンしたままexecしてしまっていたのが原因だった。
+forkするとファイルディスクリプタも引き継ぐので、pipeで開いた書込み側のファイルディスクリプタを親と子の両方できちんと閉じてやらないと、標準入力の書込み側がオープンしたままの状態になってしまいEOFがこなくなってしまう。</p>
+<p>Popenではclose_fdsにTrueを渡してやるとexecするまえに3以上のファイルディスクリプタをすべて閉じるようになっている。
+(O_CLOEXECフラグを使うのではなく単にループして全部なめるような実装になっていた)</p>
+<p>というわけで、pipe使うときに標準入出力以外のファイルディスクリプタを引き継ぐ必要性はあまりないと思うので、close_fdsを設定するのを忘れないように気をつけましょう
+(Linux以外のプラットフォームでどうなるかは未調査です)</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/22/python-popen/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/22/python-popen/" class="hatena-bookmark-button" data-hatena-bookmark-title="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/22/python-popen/" data-text="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/22/python-popen/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="おやつの時間をお知らせしてくれるunixコマンド：at-teatime-(他...)"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" rel="bookmark" title="Permanent Link to おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a></h2>
   <small>January 08, 2013 at 08:30 PM | categories:
@@ -210,6 +267,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/02/22/python-popen/" title="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件"><p>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a><span style="font-size: 80%;">(February 22, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/19/rainbow-for-common-lisp/" title="Rainbow for Common Lisp 作りました"><p>Rainbow for Common Lisp 作りました</a><span style="font-size: 80%;">(February 19, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
@@ -217,7 +275,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/02/05/popular-programming-languages/" title="人気プログラミング言語ランキング(stackoverflow調べ)"><p>人気プログラミング言語ランキング(stackoverflow調べ)</a><span style="font-size: 80%;">(February 05, 2013 at 11:00 PM)</span></li>
       <li><a href="/blog/2013/01/21/c-string-initialization/" title="C言語の文字列初期化について"><p>C言語の文字列初期化について</a><span style="font-size: 80%;">(January 21, 2013 at 08:00 PM)</span></li>
       <li><a href="/blog/2013/01/11/alc-nokogiri-tmux/" title="tmuxでalcの英単語を引く"><p>tmuxでalcの英単語を引く</a><span style="font-size: 80%;">(January 11, 2013 at 10:00 PM)</span></li>
-      <li><a href="/blog/2013/01/09/yaml-mode-ext/" title="yaml-modeを拡張してyamlを高速に編集する"><p>yaml-modeを拡張してyamlを高速に編集する</a><span style="font-size: 80%;">(January 09, 2013 at 10:00 PM)</span></li>
     </ul>
   </div>
 
@@ -277,7 +334,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (3)</li>
-     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (4)</li>
@@ -286,7 +343,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
@@ -297,7 +354,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(5)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>

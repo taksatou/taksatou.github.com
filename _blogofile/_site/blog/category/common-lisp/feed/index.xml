@@ -57,7 +57,7 @@
       <guid isPermaLink="true">http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/</guid>
       <description>LTSV for Common Lisp 作りました</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
-<p>すっかりブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
+<p>ブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
 <p><a href="https://github.com/taksatou/cl-ltsv">https://github.com/taksatou/cl-ltsv</a></p>
 <p><a href="http://ltsv.org/">http://ltsv.org/</a></p>
 <h3 id="_1">インストール</h3>
