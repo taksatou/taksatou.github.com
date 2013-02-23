@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2013-02-23T18:17:17Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[telnetでメールを送信する方法]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/23/telnet-smtp/" />
+    <id>http://mojavy.com/blog/2013/02/23/telnet-smtp/</id>
+    <updated>2013-02-23T18:17:17Z</updated>
+    <published>2013-02-23T18:17:17Z</published>
+    <category scheme="http://mojavy.com/blog" term="postfix" />
+    <category scheme="http://mojavy.com/blog" term="tips" />
+    <category scheme="http://mojavy.com/blog" term="smtp" />
+    <summary type="html"><![CDATA[telnetでメールを送信する方法]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/02/23/telnet-smtp/"><![CDATA[<p><img alt="lisp" src="/images/mail-logo-100.png" /></p>
+<p>何回やってもpostfixの設定の仕方を覚えられないので、今更ながら最低限のプロトコルを理解するためにtelnetからsmtpでメールを送信してみようと思い立ちました。</p>
+<p>以下は自分のgmailアドレスにtelnetでメールしてみたときの個人的な手順メモです。</p>
+<div class="toc">
+<ul>
+<li><a href="#_1">手順</a><ul>
+<li><a href="#1-mx">1. 該当メールアドレスのMXレコードを調べる</a></li>
+<li><a href="#2-telnet25smtp">2. telnetで25番ポートに接続してsmtpを話す</a></li>
+<li><a href="#3">3. メールの確認</a></li>
+</ul>
+</li>
+<li><a href="#postfix">postfixの設定メモ</a></li>
+</ul>
+</div>
+<h2 id="_1">手順</h2>
+<h3 id="1-mx">1. 該当メールアドレスのMXレコードを調べる</h3>
+<p>普通のメールアドレスの@以下はドメイン名になっている場合がほとんどですが、DNSのAレコードに登録されているのはホスト名なのでメールサービスを提供しているホスト名を調べる必要があります。そのときに使うのがMXレコードで、nslookupでも以下のようにして調べることができます。</p>
+<div class="pygments_murphy"><pre>% nslookup -type=mx gmail.com
+Server:         192.168.1.1
+Address:        192.168.1.1#53
+
+Non-authoritative answer:
+gmail.com       mail exchanger = 5 gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 10 alt1.gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 20 alt2.gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 30 alt3.gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 40 alt4.gmail-smtp-in.l.google.com.
+
+Authoritative answers can be found from:
+</pre></div>
+
+<p>複数のホストが優先度をつけて登録されているので、この場合は <em>gmail-smtp-in.l.google.com</em> を使えばいいということになるみたいです。</p>
+<h3 id="2-telnet25smtp">2. telnetで25番ポートに接続してsmtpを話す</h3>
+<p>smtpはテキストベースのプロトコルなのでtelnetからそのままサーバとやりとりできます。
+smtpプロトコルの詳細は省略しますが、最低限必要なコマンドは以下の5つだけ。</p>
+<ul>
+<li>HELO - 通信開始</li>
+<li>MAIL FROM - 送信元メールアドレス。ドメインのIPと送信元のIPが一致している必要がある。dynamic DNSのドメイン名でも大丈夫。ユーザ名部分は実際に存在しなくてもよい(その場合は返信を受けとれない)</li>
+<li>RCPT TO - 送信先メールアドレス</li>
+<li>DATA - メール本体の開始。'.'(ピリオド)だけの行で本文終了。本文のFromとToはなんでもよい。普通のメーラのfromやtoで表示されるのはここの情報</li>
+<li>QUIT - 通信終了</li>
+</ul>
+<div class="pygments_murphy"><pre>% telnet gmail-smtp-in.l.google.com 25
+Trying 173.194.79.26...
+Connected to gmail-smtp-in.l.google.com.
+Escape character is &#39;^]&#39;.
+220 mx.google.com ESMTP k8si26817952pax.291 - gsmtp
+HELO
+250 mx.google.com at your service
+MAIL FROM:&lt;username@yourhostname&gt;
+250 2.1.0 OK k8si26817952pax.291 - gsmtp
+RCPT TO:&lt;username@gmail.com&gt;
+250 2.1.5 OK k8si26817952pax.291 - gsmtp
+DATA
+354  Go ahead k8si26817952pax.291 - gsmtp
+Subject: xxx
+From: yyy
+To: zzz
+
+.
+250 2.0.0 OK 1361347877 k8si26817952pax.291 - gsmtp
+QUIT
+221 2.0.0 closing connection k8si26817952pax.291 - gsmtp
+Connection closed by foreign host.
+</pre></div>
+
+<h3 id="3">3. メールの確認</h3>
+<p>gmail上でメールがきているか確認します。DATA部分を適当に書くとスパム判定されてしまいますが一応届くはず。</p>
+<h2 id="postfix">postfixの設定メモ</h2>
+<p>上記は直接gmailのsmtpサーバで送信しましたが、mailコマンドからローカルのpostfix経由で送るにはpostfixを適切に設定する必要があります。</p>
+<p>MAIL FROMで使われるのはmyoriginの値になるようなので、送信だけでよいのであればmyoriginのIPが送信元のグローバルIPに一致するように設定しさえすればよいということですかね。</p>
+<p>ちなみに、debianのaptからpostfixを「ローカルのみ」の設定でインストールしてしまうと、デフォルトのmain.cfにリレーしない設定になっているので、main.cfを以下のようにコメントアウト。</p>
+<div class="pygments_murphy"><pre># default_transport = error
+# relay_transport = error
+</pre></div>
+
+<p>あと、sakura vpsのお試し期間中はメール送信できない仕様なので、sakura vpsで試す際は注意。</p>
+<p><a href="http://vps.sakura.ad.jp/terms.html">http://vps.sakura.ad.jp/terms.html</a></p>]]></content>
+  </entry>
+</feed>

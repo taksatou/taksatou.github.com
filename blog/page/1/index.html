@@ -102,6 +102,117 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="telnetでメールを送信する方法"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/" rel="bookmark" title="Permanent Link to telnetでメールを送信する方法">telnetでメールを送信する方法</a></h2>
+  <small>February 23, 2013 at 06:17 PM | categories:
+
+<a href='/blog/category/postfix'>postfix</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/smtp'>smtp</a>
+ | <a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="lisp" src="/images/mail-logo-100.png" /></p>
+<p>何回やってもpostfixの設定の仕方を覚えられないので、今更ながら最低限のプロトコルを理解するためにtelnetからsmtpでメールを送信してみようと思い立ちました。</p>
+<p>以下は自分のgmailアドレスにtelnetでメールしてみたときの個人的な手順メモです。</p>
+<div class="toc">
+<ul>
+<li><a href="#_1">手順</a><ul>
+<li><a href="#1-mx">1. 該当メールアドレスのMXレコードを調べる</a></li>
+<li><a href="#2-telnet25smtp">2. telnetで25番ポートに接続してsmtpを話す</a></li>
+<li><a href="#3">3. メールの確認</a></li>
+</ul>
+</li>
+<li><a href="#postfix">postfixの設定メモ</a></li>
+</ul>
+</div>
+<h2 id="_1">手順</h2>
+<h3 id="1-mx">1. 該当メールアドレスのMXレコードを調べる</h3>
+<p>普通のメールアドレスの@以下はドメイン名になっている場合がほとんどですが、DNSのAレコードに登録されているのはホスト名なのでメールサービスを提供しているホスト名を調べる必要があります。そのときに使うのがMXレコードで、nslookupでも以下のようにして調べることができます。</p>
+<div class="pygments_murphy"><pre>% nslookup -type=mx gmail.com
+Server:         192.168.1.1
+Address:        192.168.1.1#53
+
+Non-authoritative answer:
+gmail.com       mail exchanger = 5 gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 10 alt1.gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 20 alt2.gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 30 alt3.gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 40 alt4.gmail-smtp-in.l.google.com.
+
+Authoritative answers can be found from:
+</pre></div>
+
+<p>複数のホストが優先度をつけて登録されているので、この場合は <em>gmail-smtp-in.l.google.com</em> を使えばいいということになるみたいです。</p>
+<h3 id="2-telnet25smtp">2. telnetで25番ポートに接続してsmtpを話す</h3>
+<p>smtpはテキストベースのプロトコルなのでtelnetからそのままサーバとやりとりできます。
+smtpプロトコルの詳細は省略しますが、最低限必要なコマンドは以下の5つだけ。</p>
+<ul>
+<li>HELO - 通信開始</li>
+<li>MAIL FROM - 送信元メールアドレス。ドメインのIPと送信元のIPが一致している必要がある。dynamic DNSのドメイン名でも大丈夫。ユーザ名部分は実際に存在しなくてもよい(その場合は返信を受けとれない)</li>
+<li>RCPT TO - 送信先メールアドレス</li>
+<li>DATA - メール本体の開始。'.'(ピリオド)だけの行で本文終了。本文のFromとToはなんでもよい。普通のメーラのfromやtoで表示されるのはここの情報</li>
+<li>QUIT - 通信終了</li>
+</ul>
+<div class="pygments_murphy"><pre>% telnet gmail-smtp-in.l.google.com 25
+Trying 173.194.79.26...
+Connected to gmail-smtp-in.l.google.com.
+Escape character is &#39;^]&#39;.
+220 mx.google.com ESMTP k8si26817952pax.291 - gsmtp
+HELO
+250 mx.google.com at your service
+MAIL FROM:&lt;username@yourhostname&gt;
+250 2.1.0 OK k8si26817952pax.291 - gsmtp
+RCPT TO:&lt;username@gmail.com&gt;
+250 2.1.5 OK k8si26817952pax.291 - gsmtp
+DATA
+354  Go ahead k8si26817952pax.291 - gsmtp
+Subject: xxx
+From: yyy
+To: zzz
+
+.
+250 2.0.0 OK 1361347877 k8si26817952pax.291 - gsmtp
+QUIT
+221 2.0.0 closing connection k8si26817952pax.291 - gsmtp
+Connection closed by foreign host.
+</pre></div>
+
+<h3 id="3">3. メールの確認</h3>
+<p>gmail上でメールがきているか確認します。DATA部分を適当に書くとスパム判定されてしまいますが一応届くはず。</p>
+<h2 id="postfix">postfixの設定メモ</h2>
+<p>上記は直接gmailのsmtpサーバで送信しましたが、mailコマンドからローカルのpostfix経由で送るにはpostfixを適切に設定する必要があります。</p>
+<p>MAIL FROMで使われるのはmyoriginの値になるようなので、送信だけでよいのであればmyoriginのIPが送信元のグローバルIPに一致するように設定しさえすればよいということですかね。</p>
+<p>ちなみに、debianのaptからpostfixを「ローカルのみ」の設定でインストールしてしまうと、デフォルトのmain.cfにリレーしない設定になっているので、main.cfを以下のようにコメントアウト。</p>
+<div class="pygments_murphy"><pre># default_transport = error
+# relay_transport = error
+</pre></div>
+
+<p>あと、sakura vpsのお試し期間中はメール送信できない仕様なので、sakura vpsで試す際は注意。</p>
+<p><a href="http://vps.sakura.ad.jp/terms.html">http://vps.sakura.ad.jp/terms.html</a></p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/02/22/python-popen/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/23/telnet-smtp/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/23/telnet-smtp/" class="hatena-bookmark-button" data-hatena-bookmark-title="telnetでメールを送信する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/23/telnet-smtp/" data-text="telnetでメールを送信する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/23/telnet-smtp/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="pythonのsubprocess.popen()でpipeしてwaitするとデッドロックしてはまった件"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/22/python-popen/" rel="bookmark" title="Permanent Link to pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件">pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a></h2>
   <small>February 22, 2013 at 11:55 PM | categories:
@@ -147,6 +258,8 @@ forkするとファイルディスクリプタも引き継ぐので、pipeで開
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -370,73 +483,6 @@ each time -- so you can't use VECTOR or #(...) for the value).</p>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="quicklinks-4"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/06/quicklinks4/" rel="bookmark" title="Permanent Link to Quicklinks 4">Quicklinks 4</a></h2>
-  <small>February 06, 2013 at 09:50 PM | categories:
-
-<a href='/blog/category/quicklinks'>quicklinks</a>
- | <a href="http://mojavy.com/blog/2013/02/06/quicklinks4/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><a href="http://mojavy.com/blog/2012/11/14/quicklinks3/">前回</a> から2ヵ月くらいあいてしまいました。古いブックマークはブックマークしたこと自体を忘れてしまうのでもうちょいまめにまとめたいです。</p>
-<h4 id="q-gears"><a href="http://q-gears.sourceforge.net/index.phtml?content=1">Q-Gears</a></h4>
-<p>FF7のゲームエンジンのクローンを目指したものだそうです。
-LinuxやWindowsで動くようにクロスプラットフォームな設計になっていて、将来的にはsquareの他のゲームも動かすためのフレームワークとしても提供することも考えているようです。</p>
-<ul>
-<li><a href="http://q-gears.sourceforge.net/gears.pdf">http://q-gears.sourceforge.net/gears.pdf</a></li>
-</ul>
-<p>この資料にはシステムの概要が書かれてます。リバースエンジニアリングして集めた情報と思われますが、読み物としてもおもしろそうです。</p>
-<h4 id="riemann"><a href="http://riemann.io/">Riemann</a></h4>
-<p>Clojureで書かれたnetwork event stream processing systemとのこと。</p>
-<p><a href="http://riemann.io/concepts.html">ここ</a>のイラストと説明を見れば大体イメージはわくと思います。
-コンセプト的にはfluentdに近い気がしますが、集める対象がログではなくイベントそれ自体なので守備範囲はちょっと違うようです。
-Riemann自体が落ちたときにどうなるか、とか実際に運用するとなると色々気になるところはありそうですが試してみる価値はありそうです。</p>
-<p>設定をClojureで書けるというのもとがってていいと思います。</p>
-<h4 id="whistlepig"><a href="https://github.com/wmorgan/whistlepig">whistlepig</a></h4>
-<p>Cで書かれた軽量なリアルタイム全文検索のためのライブラリです。
-複数プロセスでも同時にインデックスを読み書きできるようで、なかなか便利そうです。今度詳細を調べてみようと思います。</p>
-<h4 id="montezuma"><a href="http://code.google.com/p/montezuma/">Montezuma</a></h4>
-<p>こっちはFerretをCommon Lispに移植したもの。ちなみにFerretはLuceneをRubyに移植したものです。
-これはこれで便利だと思います。</p>
-<h4 id="openrtb"><a href="http://code.google.com/p/openrtb/">OpenRTB</a></h4>
-<p>広告業界ではread-time biddingが最近のトレンドのようなので、関係者はこれを読んで理解を深めましょう。</p>
-<h4 id="ios-security-internals"><a href="http://365.rsaconference.com/servlet/JiveServlet/previewBody/3488-102-1-4589/MBS-402.pdf">iOS Security Internals</a></h4>
-<p>jailbreakやったりする人がつくった資料のようです。
-これもなかなか興味深いです。</p>
-<h4 id="unreal4"><a href="http://www.unrealengine.com/unreal_engine_4/">UNREAL4</a></h4>
-<p>Unity3でも十分すごいと思いましたが、最近のゲームエンジンはどれもすごいですね。</p>
-<ul>
-<li>http://www.wmtdesigners.com/wordpress/game-2012-06-19</li>
-</ul>
-<h4 id="leap-motion"><a href="https://www.leapmotion.com/">Leap Motion</a></h4>
-<p>xboxのkinect的なものですが、それよりはるかに上回る精度らしいです。プレオーダーしたので届いたら色々遊んでみます。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/02/05/popular-programming-languages/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/06/quicklinks4/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/06/quicklinks4/" class="hatena-bookmark-button" data-hatena-bookmark-title="Quicklinks 4" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/06/quicklinks4/" data-text="Quicklinks 4">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/06/quicklinks4/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../2">Next »</a>
 </div>
@@ -464,6 +510,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
       <li><a href="/blog/2013/02/22/python-popen/" title="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件"><p>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a><span style="font-size: 80%;">(February 22, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/19/rainbow-for-common-lisp/" title="Rainbow for Common Lisp 作りました"><p>Rainbow for Common Lisp 作りました</a><span style="font-size: 80%;">(February 19, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
@@ -471,7 +518,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/02/06/quicklinks4/" title="Quicklinks 4"><p>Quicklinks 4</a><span style="font-size: 80%;">(February 06, 2013 at 09:50 PM)</span></li>
       <li><a href="/blog/2013/02/05/popular-programming-languages/" title="人気プログラミング言語ランキング(stackoverflow調べ)"><p>人気プログラミング言語ランキング(stackoverflow調べ)</a><span style="font-size: 80%;">(February 05, 2013 at 11:00 PM)</span></li>
       <li><a href="/blog/2013/01/21/c-string-initialization/" title="C言語の文字列初期化について"><p>C言語の文字列初期化について</a><span style="font-size: 80%;">(January 21, 2013 at 08:00 PM)</span></li>
-      <li><a href="/blog/2013/01/11/alc-nokogiri-tmux/" title="tmuxでalcの英単語を引く"><p>tmuxでalcの英単語を引く</a><span style="font-size: 80%;">(January 11, 2013 at 10:00 PM)</span></li>
     </ul>
   </div>
 
@@ -530,13 +576,15 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/others">others</a> (<a href="/blog/category/others/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
@@ -551,7 +599,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(6)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(7)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>

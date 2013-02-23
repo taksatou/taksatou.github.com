@@ -7,12 +7,105 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-02-22T23:55:00Z</updated>
+  <updated>2013-02-23T18:17:17Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[telnetでメールを送信する方法]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/23/telnet-smtp/" />
+    <id>http://mojavy.com/blog/2013/02/23/telnet-smtp/</id>
+    <updated>2013-02-23T18:17:17Z</updated>
+    <published>2013-02-23T18:17:17Z</published>
+    <category scheme="http://mojavy.com/blog" term="postfix" />
+    <category scheme="http://mojavy.com/blog" term="tips" />
+    <category scheme="http://mojavy.com/blog" term="smtp" />
+    <summary type="html"><![CDATA[telnetでメールを送信する方法]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/02/23/telnet-smtp/"><![CDATA[<p><img alt="lisp" src="/images/mail-logo-100.png" /></p>
+<p>何回やってもpostfixの設定の仕方を覚えられないので、今更ながら最低限のプロトコルを理解するためにtelnetからsmtpでメールを送信してみようと思い立ちました。</p>
+<p>以下は自分のgmailアドレスにtelnetでメールしてみたときの個人的な手順メモです。</p>
+<div class="toc">
+<ul>
+<li><a href="#_1">手順</a><ul>
+<li><a href="#1-mx">1. 該当メールアドレスのMXレコードを調べる</a></li>
+<li><a href="#2-telnet25smtp">2. telnetで25番ポートに接続してsmtpを話す</a></li>
+<li><a href="#3">3. メールの確認</a></li>
+</ul>
+</li>
+<li><a href="#postfix">postfixの設定メモ</a></li>
+</ul>
+</div>
+<h2 id="_1">手順</h2>
+<h3 id="1-mx">1. 該当メールアドレスのMXレコードを調べる</h3>
+<p>普通のメールアドレスの@以下はドメイン名になっている場合がほとんどですが、DNSのAレコードに登録されているのはホスト名なのでメールサービスを提供しているホスト名を調べる必要があります。そのときに使うのがMXレコードで、nslookupでも以下のようにして調べることができます。</p>
+<div class="pygments_murphy"><pre>% nslookup -type=mx gmail.com
+Server:         192.168.1.1
+Address:        192.168.1.1#53
+
+Non-authoritative answer:
+gmail.com       mail exchanger = 5 gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 10 alt1.gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 20 alt2.gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 30 alt3.gmail-smtp-in.l.google.com.
+gmail.com       mail exchanger = 40 alt4.gmail-smtp-in.l.google.com.
+
+Authoritative answers can be found from:
+</pre></div>
+
+<p>複数のホストが優先度をつけて登録されているので、この場合は <em>gmail-smtp-in.l.google.com</em> を使えばいいということになるみたいです。</p>
+<h3 id="2-telnet25smtp">2. telnetで25番ポートに接続してsmtpを話す</h3>
+<p>smtpはテキストベースのプロトコルなのでtelnetからそのままサーバとやりとりできます。
+smtpプロトコルの詳細は省略しますが、最低限必要なコマンドは以下の5つだけ。</p>
+<ul>
+<li>HELO - 通信開始</li>
+<li>MAIL FROM - 送信元メールアドレス。ドメインのIPと送信元のIPが一致している必要がある。dynamic DNSのドメイン名でも大丈夫。ユーザ名部分は実際に存在しなくてもよい(その場合は返信を受けとれない)</li>
+<li>RCPT TO - 送信先メールアドレス</li>
+<li>DATA - メール本体の開始。'.'(ピリオド)だけの行で本文終了。本文のFromとToはなんでもよい。普通のメーラのfromやtoで表示されるのはここの情報</li>
+<li>QUIT - 通信終了</li>
+</ul>
+<div class="pygments_murphy"><pre>% telnet gmail-smtp-in.l.google.com 25
+Trying 173.194.79.26...
+Connected to gmail-smtp-in.l.google.com.
+Escape character is &#39;^]&#39;.
+220 mx.google.com ESMTP k8si26817952pax.291 - gsmtp
+HELO
+250 mx.google.com at your service
+MAIL FROM:&lt;username@yourhostname&gt;
+250 2.1.0 OK k8si26817952pax.291 - gsmtp
+RCPT TO:&lt;username@gmail.com&gt;
+250 2.1.5 OK k8si26817952pax.291 - gsmtp
+DATA
+354  Go ahead k8si26817952pax.291 - gsmtp
+Subject: xxx
+From: yyy
+To: zzz
+
+.
+250 2.0.0 OK 1361347877 k8si26817952pax.291 - gsmtp
+QUIT
+221 2.0.0 closing connection k8si26817952pax.291 - gsmtp
+Connection closed by foreign host.
+</pre></div>
+
+<h3 id="3">3. メールの確認</h3>
+<p>gmail上でメールがきているか確認します。DATA部分を適当に書くとスパム判定されてしまいますが一応届くはず。</p>
+<h2 id="postfix">postfixの設定メモ</h2>
+<p>上記は直接gmailのsmtpサーバで送信しましたが、mailコマンドからローカルのpostfix経由で送るにはpostfixを適切に設定する必要があります。</p>
+<p>MAIL FROMで使われるのはmyoriginの値になるようなので、送信だけでよいのであればmyoriginのIPが送信元のグローバルIPに一致するように設定しさえすればよいということですかね。</p>
+<p>ちなみに、debianのaptからpostfixを「ローカルのみ」の設定でインストールしてしまうと、デフォルトのmain.cfにリレーしない設定になっているので、main.cfを以下のようにコメントアウト。</p>
+<div class="pygments_murphy"><pre># default_transport = error
+# relay_transport = error
+</pre></div>
+
+<p>あと、sakura vpsのお試し期間中はメール送信できない仕様なので、sakura vpsで試す際は注意。</p>
+<p><a href="http://vps.sakura.ad.jp/terms.html">http://vps.sakura.ad.jp/terms.html</a></p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -451,69 +544,5 @@ rainbowで色付けしてるのでエスケープシーケンスを解釈でき�
 </ul>
 <p>当初はyaml-modeをhideshow.elに対応させようと思ってたのですが、ブロック単位で移動ができるようになったところで満足してしまいました。</p>
 <p>なお、ブロックの境界はインデントレベルだけをみて判定しているのでyamlに限定する必要はなかった気はしますが、pythonとかhaskellとかでもつかいたくなってきたら書き直そうと思います。</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" />
-    <id>http://mojavy.com/blog/2013/01/08/favorite-linux-command/</id>
-    <updated>2013-01-08T20:30:00Z</updated>
-    <published>2013-01-08T20:30:00Z</published>
-    <category scheme="http://mojavy.com/blog" term="unix" />
-    <category scheme="http://mojavy.com/blog" term="tips" />
-    <category scheme="http://mojavy.com/blog" term="linux" />
-    <summary type="html"><![CDATA[おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/01/08/favorite-linux-command/"><![CDATA[<p><img alt="banana" src="/images/banana-200.png" /></p>
-<p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
-<h2 id="at">at</h2>
-<p>入力されたコマンドを指定されたタイミングで実行するようにスケジュールする。
-cronに登録するほどでもない単発のコマンドを実行したいときとかにつかう。
-時間の指定には現在の時刻からの経過時間や絶対時間の他にteatimeやmidnightといった文字列もつかえる。
-ちなみにteatimeは午後4時。
-出力先を指定しなければコマンドの出力はcronと同じようにメールにとぶ。$TTYにリダイレクトしてやればコマンドを実行した端末に表示させることもできる。</p>
-<p>例</p>
-<div class="pygments_murphy"><pre>echo &quot;echo おやつの時間です &gt; $TTY&quot;| at teatime
-echo &quot;echo はろー &gt; $TTY&quot; | at now + 3 minute
-</pre></div>
-
-<h2 id="mtr">mtr</h2>
-<p>tracerouteとpingをあわせたようなもの。tracerouteより表示がみやすい。
-ネットワークのどこで時間がかかってるのか一目でわかる。</p>
-<p>例</p>
-<div class="pygments_murphy"><pre>mtr mojavy.com
-</pre></div>
-
-<h2 id="column">column</h2>
-<p>入力テキストをいい感じのカラム表示にフォーマットしてくれる。
-縦に長い出力するコマンドとか、そのままだと出力がみづらいときとかにつかう。</p>
-<p>例</p>
-<div class="pygments_murphy"><pre>gem list | column
-mount | column -t
-grep -v &#39;^#&#39; /etc/apt/sources.list | column -t
-</pre></div>
-
-<h2 id="reset">reset</h2>
-<p>端末をリセットする。
-うっかりバイナリファイルをcatとかしてしまって端末が壊れてしまった場合に端末を閉じずに復帰できる。</p>
-<h2 id="sshfs">sshfs</h2>
-<p>ssh経由でリモートのファイルシステムをマウントできる。</p>
-<p>例</p>
-<div class="pygments_murphy"><pre>sshfs name@server:/path/to/dir /path/to/mount/point
-fusermount -u /path/to/mount/point  # unmount
-</pre></div>
-
-<h2 id="_1">その他</h2>
-<p>以下はコマンド自体の機能ではないけど覚えておくと便利かもしれないもの</p>
-<h3 id="curl-ifconfigme">curl ifconfig.me</h3>
-<p>ifconfig.meというサイトがある。自分のグローバルIPがわかる。</p>
-<h3 id="dig-short-txt-wzxhzdk5wpdgcx">dig +short txt <keyword>.wp.dg.cx</h3>
-<p>dnsクエリでwikipediaのエントリーがみれる。</p>
-<p>例</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
-<span class="s2">&quot;Banana is the common name for herbaceous plants of the genus Musa and for the fruit they produce. It is one of the oldest cultivated plants. They are native to tropical South and Southeast Asia, and are likely to have been first domesticated in Papua New &quot;</span> <span class="s2">&quot;Guinea. Today, they are cultivated throughout the tropics. They are grown in at least 107 countries, primarily for their... http://en.wikipedia.org/wiki/Banana&quot;</span>
-</pre></div>]]></content>
   </entry>
 </feed>

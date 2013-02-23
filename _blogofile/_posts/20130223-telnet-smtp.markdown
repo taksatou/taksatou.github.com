@@ -1,18 +1,20 @@
 ---
 categories: smtp, postfix, tips
-date: 2013/2/20 23:55:00
-title: 
-image: /images/cl-rainbow-demo.png
-draft: True
+date: 2013/02/23 18:17:17
+title: telnetでメールを送信する方法
+image: /images/mail-logo-100.png
 ---
 
-![lisp](/images/cl-rainbow-demo.png)
+![lisp](/images/mail-logo-100.png)
 
-新しくvpsを立ちあげたときとかにたまにpostfixの設定をするときがあるのですが、何回やっても設定がよくわからなくて適当にコピペしたらうまく動かなくて時間を無駄にする、というパターンを繰り返してしまうので最低限のsmtpプロトコルを理解しておこうと思い立たちました。
+何回やってもpostfixの設定の仕方を覚えられないので、今更ながら最低限のプロトコルを理解するためにtelnetからsmtpでメールを送信してみようと思い立ちました。
 
-プロトコルを理解するには実際に話してみるのが手っ取り早いということで、telnetで自分のgmailアドレスにメールしてみたときのメモを以下に残しておきます。
+以下は自分のgmailアドレスにtelnetでメールしてみたときの個人的な手順メモです。
 
-## 以下手順メモ
+
+[TOC]
+
+## 手順
 
 ### 1. 該当メールアドレスのMXレコードを調べる
 
@@ -34,16 +36,16 @@ Authoritative answers can be found from:
 
 $$/code
 
-複数のホストが優先度をつけて登録されているので、この場合は *gmail-smtp-in.l.google.com* を使えばいいのかな。
+複数のホストが優先度をつけて登録されているので、この場合は *gmail-smtp-in.l.google.com* を使えばいいということになるみたいです。
 
 ### 2. telnetで25番ポートに接続してsmtpを話す
 
-テキストベースのプロトコルなのでtelnetからそのままsmtpサーバとやりとりできます。
+smtpはテキストベースのプロトコルなのでtelnetからそのままサーバとやりとりできます。
 smtpプロトコルの詳細は省略しますが、最低限必要なコマンドは以下の5つだけ。
 
 * HELO - 通信開始
 * MAIL FROM - 送信元メールアドレス。ドメインのIPと送信元のIPが一致している必要がある。dynamic DNSのドメイン名でも大丈夫。ユーザ名部分は実際に存在しなくてもよい(その場合は返信を受けとれない)
-* RCPT TO - 送信先メールアドレス。
+* RCPT TO - 送信先メールアドレス
 * DATA - メール本体の開始。'.'(ピリオド)だけの行で本文終了。本文のFromとToはなんでもよい。普通のメーラのfromやtoで表示されるのはここの情報
 * QUIT - 通信終了
 
@@ -75,16 +77,13 @@ $$/code
 
 ### 3. メールの確認
 
-gmail上でメールがきているか確認します。DATA部分を適当に書くとスパム判定されてしまうけど一応届くはず。
+gmail上でメールがきているか確認します。DATA部分を適当に書くとスパム判定されてしまいますが一応届くはず。
 
-## postfixの設定
+## postfixの設定メモ
 
-上記は直接gmailのsmtpサーバで送信しましたが、mailコマンドでローカルのpostfix経由で送るにはpostfixを適切に設定する必要があります。
+上記は直接gmailのsmtpサーバで送信しましたが、mailコマンドからローカルのpostfix経由で送るにはpostfixを適切に設定する必要があります。
 
-なんでmydomainとmyhostnameとmyoriginにわかれてるのかいまいちよくわからず適当に設定してましたが、MXレコードの意味とMAIL FROMのドメインが送信元IPと一致しなければならないことがわかって理解できました。
-
-MAIL FROM で使われるのはmyoriginの値になるようなので、送信できればいいだけならmyoriginさえあわせておけばとりあえず大丈夫っぽいです。
-(myoriginをmydomainにしたいのであればMXレコードにmyhostnameを登録すればよい、ということになるのかな？)
+MAIL FROMで使われるのはmyoriginの値になるようなので、送信だけでよいのであればmyoriginのIPが送信元のグローバルIPに一致するように設定しさえすればよいということですかね。
 
 ちなみに、debianのaptからpostfixを「ローカルのみ」の設定でインストールしてしまうと、デフォルトのmain.cfにリレーしない設定になっているので、main.cfを以下のようにコメントアウト。
 
@@ -94,9 +93,8 @@ $$code
 $$/code
 
 
-## その他
+あと、sakura vpsのお試し期間中はメール送信できない仕様なので、sakura vpsで試す際は注意。
 
-sakura vpsのお試し期間中はメール送信できない仕様なので、sakura vpsで試す際は注意。これを知らずにはまってしまいました。
+[http://vps.sakura.ad.jp/terms.html](http://vps.sakura.ad.jp/terms.html)
 
-http://vps.sakura.ad.jp/terms.html
 
