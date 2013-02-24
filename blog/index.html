@@ -102,6 +102,47 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="the-p-convention"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/24/the-p-convention/" rel="bookmark" title="Permanent Link to The P Convention">The P Convention</a></h2>
+  <small>February 24, 2013 at 02:42 PM | categories:
+
+<a href='/blog/category/lisp'>lisp</a>, <a href='/blog/category/programming'>programming</a>
+ | <a href="http://mojavy.com/blog/2013/02/24/the-p-convention/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="lisp" src="/images/lisplogo_fancy_128.png" /></p>
+<p>Lispには'p'という接尾辞がつく名前の関数があるが、この'p'はpredicateのこと。</p>
+<p><a href="http://catb.org/jargon/html/p-convention.html">The -P Convention</a></p>
+<p>ところが、HaskellやOCamlにも'p'という接尾辞がつく関数があって、そちらはprimeの意味で使うらしい。
+シングルクオート(ダッシュ)記号は英語だとprimeというので、例えば<code>foo'</code>という名前の関数は<code>foo</code>という名前のヘルパー関数的なもの、ということになる。</p>
+<p><a href="http://stackoverflow.com/questions/5279286/foop-a-naming-convention-its-a-helper-recursive-function-for-foo-what-do">“foop”: a naming convention? It's a helper recursive function for “foo”; what does the suffix “p” mean?</a></p>
+<p>ちなみに、OCamlだとシングルクオートが識別子につかえるのでfoo'という名前の関数も結構あるらしい。</p>
+<p>まぎらわしい、かと思ったけど使う文脈が違うし意外とそうでもないか。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/24/the-p-convention/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/24/the-p-convention/" class="hatena-bookmark-button" data-hatena-bookmark-title="The P Convention" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/24/the-p-convention/" data-text="The P Convention">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/24/the-p-convention/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="telnetでメールを送信する方法"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/" rel="bookmark" title="Permanent Link to telnetでメールを送信する方法">telnetでメールを送信する方法</a></h2>
   <small>February 23, 2013 at 06:17 PM | categories:
@@ -201,6 +242,8 @@ Connection closed by foreign host.
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/02/22/python-popen/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/02/24/the-p-convention/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -402,87 +445,6 @@ CL-USER&gt; (cl-ltsv:alist-ltsv &#39;((&quot;host&quot; . &quot;127.0.0.1&quot;)
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="common-lispのdefconstantについての注意点"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" rel="bookmark" title="Permanent Link to common lispのdefconstantについての注意点">common lispのdefconstantについての注意点</a></h2>
-  <small>February 09, 2013 at 05:15 PM | categories:
-
-<a href='/blog/category/common-lisp'>common lisp</a>
- | <a href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="lisp" src="/images/lisp-warinig-150.png" /></p>
-<p>sbclでdefconstantすると以下のようなエラーがおきたりおきなかったりして不思議に思っていた。</p>
-<div class="pygments_murphy"><pre>The constant CL-GEARMAN::+REQUEST-MAGIC+ is being redefined
-(from #(0 82 69 81) to #(0 82 69 81))
-   [Condition of type DEFCONSTANT-UNEQL]
-See also:
-  Common Lisp Hyperspec, DEFCONSTANT [:macro]
-  SBCL Manual, Idiosyncrasies [:node]
-
-Restarts:
- 0: [CONTINUE] Go ahead and change the value.
- 1: [ABORT] Keep the old value.
- 2: [TRY-RECOMPILING] Recompile protocol and try loading it again
- 3: [RETRY] Retry loading FASL for #&lt;CL-SOURCE-FILE &quot;cl-gearman&quot; &quot;src&quot; &quot;protocol&quot;&gt;.
- 4: [ACCEPT] Continue, treating loading FASL for #&lt;CL-SOURCE-FILE &quot;cl-gearman&quot; &quot;src&quot; &quot;protocol&quot;&gt; as having been successful.
- 5: [ABORT] Give up on &quot;cl-gearman&quot;
- --more--
-
-Backtrace:
-  0: (SB-C::%DEFCONSTANT ..)
-  1: (SB-FASL::LOAD-FASL-GROUP ..)
-  2: ((FLET SB-THREAD::WITH-RECURSIVE-LOCK-THUNK :IN SB-FASL::LOAD-AS-FASL))
-  3: ((FLET #:WITHOUT-INTERRUPTS-BODY-88874 :IN SB-THREAD::CALL-WITH-RECURSIVE-LOCK))
-  4: (SB-THREAD::CALL-WITH-RECURSIVE-LOCK ..)
-  5: (SB-FASL::LOAD-AS-FASL ..)
-  6: ((FLET SB-FASL::LOAD-STREAM :IN LOAD) ..)
-  7: (LOAD ..)
-  8: (SB-IMPL::%MAP-FOR-EFFECT-ARITY-1 ..)
-</pre></div>
-
-<p>先日公開したcl-gearmanでこれが発生していてしまい原因がわからずそのまま放置していたのだけど、以下のforumを発見した。</p>
-<p><a href="http://www.lispforum.com/viewtopic.php?f=33&amp;t=4088">http://www.lispforum.com/viewtopic.php?f=33&amp;t=4088</a></p>
-<blockquote>
-<p>It's not a bug (in SBCL). The value in a DEFCONSTANT form is restricted
-to being something that's EQL to itself each time it's evaluated (that's
-horrible phrasing, I know), so using a vector is illegal (that is, you
-can use a vector, but you have to make sure you return the same vector
-each time -- so you can't use VECTOR or #(...) for the value).</p>
-</blockquote>
-<p>DEFCONSTANTフォームの値はそれが何度評価されてもEQLになるようなものでなければならないらしい。
-なので、vectorをDEFCONSTANTでバインドすることは可能だけど、DEFCONSTANTフォームの値の場所にVECTOR や #(...)で記述したフォームを書くことはできない。</p>
-<p>CLtL2にもちゃんと書いてあった。</p>
-<blockquote>
-<p>defconstantはdefparameterに似ているが、名前の値が固定されていることを前提としており、コンパイラは、コンパイルされるプログラムでの値について仮定を置くことが許されている。 (...中略...) コンパイラは置き換えたオブジェクトのコピーが定数の実際の値とeqlになるように注意しなければならない。たとえば、コンパイラは数のコピーは自由に作ってもよいが、値がリストであるときは十分に注意しなければならない。</p>
-</blockquote>
-<p>なるほど。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/02/06/quicklinks4/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" class="hatena-bookmark-button" data-hatena-bookmark-title="common lispのdefconstantについての注意点" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" data-text="common lispのdefconstantについての注意点">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/page/2">Next »</a>
 </div>
@@ -510,6 +472,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
       <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
       <li><a href="/blog/2013/02/22/python-popen/" title="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件"><p>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a><span style="font-size: 80%;">(February 22, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/19/rainbow-for-common-lisp/" title="Rainbow for Common Lisp 作りました"><p>Rainbow for Common Lisp 作りました</a><span style="font-size: 80%;">(February 19, 2013 at 11:55 PM)</span></li>
@@ -517,7 +480,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
       <li><a href="/blog/2013/02/06/quicklinks4/" title="Quicklinks 4"><p>Quicklinks 4</a><span style="font-size: 80%;">(February 06, 2013 at 09:50 PM)</span></li>
       <li><a href="/blog/2013/02/05/popular-programming-languages/" title="人気プログラミング言語ランキング(stackoverflow調べ)"><p>人気プログラミング言語ランキング(stackoverflow調べ)</a><span style="font-size: 80%;">(February 05, 2013 at 11:00 PM)</span></li>
-      <li><a href="/blog/2013/01/21/c-string-initialization/" title="C言語の文字列初期化について"><p>C言語の文字列初期化について</a><span style="font-size: 80%;">(January 21, 2013 at 08:00 PM)</span></li>
     </ul>
   </div>
 
@@ -569,6 +531,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
@@ -577,7 +540,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
@@ -599,7 +562,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(7)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>

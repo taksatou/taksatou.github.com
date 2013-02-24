@@ -7,12 +7,34 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-02-05T23:00:00Z</updated>
+  <updated>2013-02-24T14:42:00Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[The P Convention]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/24/the-p-convention/" />
+    <id>http://mojavy.com/blog/2013/02/24/the-p-convention/</id>
+    <updated>2013-02-24T14:42:00Z</updated>
+    <published>2013-02-24T14:42:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="lisp" />
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <summary type="html"><![CDATA[The P Convention]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/02/24/the-p-convention/"><![CDATA[<p><img alt="lisp" src="/images/lisplogo_fancy_128.png" /></p>
+<p>Lispには'p'という接尾辞がつく名前の関数があるが、この'p'はpredicateのこと。</p>
+<p><a href="http://catb.org/jargon/html/p-convention.html">The -P Convention</a></p>
+<p>ところが、HaskellやOCamlにも'p'という接尾辞がつく関数があって、そちらはprimeの意味で使うらしい。
+シングルクオート(ダッシュ)記号は英語だとprimeというので、例えば<code>foo'</code>という名前の関数は<code>foo</code>という名前のヘルパー関数的なもの、ということになる。</p>
+<p><a href="http://stackoverflow.com/questions/5279286/foop-a-naming-convention-its-a-helper-recursive-function-for-foo-what-do">“foop”: a naming convention? It's a helper recursive function for “foo”; what does the suffix “p” mean?</a></p>
+<p>ちなみに、OCamlだとシングルクオートが識別子につかえるのでfoo'という名前の関数も結構あるらしい。</p>
+<p>まぎらわしい、かと思ったけど使う文脈が違うし意外とそうでもないか。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

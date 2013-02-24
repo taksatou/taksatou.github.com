@@ -10,10 +10,27 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 05 Feb 2013 23:00:00 GMT</pubDate>
+    <pubDate>Sun, 24 Feb 2013 14:42:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>The P Convention</title>
+      <link>http://mojavy.com/blog/2013/02/24/the-p-convention/</link>
+      <pubDate>Sun, 24 Feb 2013 14:42:00 JST</pubDate>
+      <category><![CDATA[lisp]]></category>
+      <category><![CDATA[programming]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/02/24/the-p-convention/</guid>
+      <description>The P Convention</description>
+      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisplogo_fancy_128.png" /></p>
+<p>Lispには'p'という接尾辞がつく名前の関数があるが、この'p'はpredicateのこと。</p>
+<p><a href="http://catb.org/jargon/html/p-convention.html">The -P Convention</a></p>
+<p>ところが、HaskellやOCamlにも'p'という接尾辞がつく関数があって、そちらはprimeの意味で使うらしい。
+シングルクオート(ダッシュ)記号は英語だとprimeというので、例えば<code>foo'</code>という名前の関数は<code>foo</code>という名前のヘルパー関数的なもの、ということになる。</p>
+<p><a href="http://stackoverflow.com/questions/5279286/foop-a-naming-convention-its-a-helper-recursive-function-for-foo-what-do">“foop”: a naming convention? It's a helper recursive function for “foo”; what does the suffix “p” mean?</a></p>
+<p>ちなみに、OCamlだとシングルクオートが識別子につかえるのでfoo'という名前の関数も結構あるらしい。</p>
+<p>まぎらわしい、かと思ったけど使う文脈が違うし意外とそうでもないか。</p>]]></content:encoded>
+    </item>
     <item>
       <title>人気プログラミング言語ランキング(stackoverflow調べ)</title>
       <link>http://mojavy.com/blog/2013/02/05/popular-programming-languages/</link>

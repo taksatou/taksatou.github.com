@@ -10,10 +10,27 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sat, 23 Feb 2013 18:17:17 GMT</pubDate>
+    <pubDate>Sun, 24 Feb 2013 14:42:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>The P Convention</title>
+      <link>http://mojavy.com/blog/2013/02/24/the-p-convention/</link>
+      <pubDate>Sun, 24 Feb 2013 14:42:00 JST</pubDate>
+      <category><![CDATA[lisp]]></category>
+      <category><![CDATA[programming]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/02/24/the-p-convention/</guid>
+      <description>The P Convention</description>
+      <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisplogo_fancy_128.png" /></p>
+<p>Lispには'p'という接尾辞がつく名前の関数があるが、この'p'はpredicateのこと。</p>
+<p><a href="http://catb.org/jargon/html/p-convention.html">The -P Convention</a></p>
+<p>ところが、HaskellやOCamlにも'p'という接尾辞がつく関数があって、そちらはprimeの意味で使うらしい。
+シングルクオート(ダッシュ)記号は英語だとprimeというので、例えば<code>foo'</code>という名前の関数は<code>foo</code>という名前のヘルパー関数的なもの、ということになる。</p>
+<p><a href="http://stackoverflow.com/questions/5279286/foop-a-naming-convention-its-a-helper-recursive-function-for-foo-what-do">“foop”: a naming convention? It's a helper recursive function for “foo”; what does the suffix “p” mean?</a></p>
+<p>ちなみに、OCamlだとシングルクオートが識別子につかえるのでfoo'という名前の関数も結構あるらしい。</p>
+<p>まぎらわしい、かと思ったけど使う文脈が違うし意外とそうでもないか。</p>]]></content:encoded>
+    </item>
     <item>
       <title>telnetでメールを送信する方法</title>
       <link>http://mojavy.com/blog/2013/02/23/telnet-smtp/</link>
@@ -468,33 +485,6 @@ rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当�
 rainbowで色付けしてるのでエスケープシーケンスを解釈できるpagerをつかって下さい。</p>
 <p>これで.tmux.confをリロードして、prefix-key C-a とかするとtmux上にプロンプトが表示されるので、そこで調べたい単語を入力します。
 そうすると新しいpaneに結果が表示されます。pagerを閉じると自動的にpaneも閉じます。</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>yaml-modeを拡張してyamlを高速に編集する</title>
-      <link>http://mojavy.com/blog/2013/01/09/yaml-mode-ext/</link>
-      <pubDate>Wed, 09 Jan 2013 22:00:00 JST</pubDate>
-      <category><![CDATA[elisp]]></category>
-      <category><![CDATA[emacs]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/09/yaml-mode-ext/</guid>
-      <description>yaml-modeを拡張してyamlを高速に編集する</description>
-      <content:encoded><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
-<p>とあるプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の<a href="https://github.com/yoshiki/yaml-mode">yaml-mode</a>だけだと非力に感じたので拡張するためのemacs lispを書きました。</p>
-<p>といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。</p>
-<p>使い方は、<a href="https://github.com/taksatou/yaml-mode-ext">https://github.com/taksatou/yaml-mode-ext</a>からおとしてきてloadするだけです。
-(yaml-modeはあらかじめインストールしておく必要があります)</p>
-<div class="pygments_murphy"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
-</pre></div>
-
-<p>以下のキーバインドが使えます。</p>
-<ul>
-<li>M-C-f  同じ階層の次のブロックへ移動</li>
-<li>M-C-b  同じ階層の前のブロックへ移動</li>
-<li>M-C-u  親ブロックの先頭へ移動</li>
-<li>M-C-e  親ブロックの末尾へ移動</li>
-<li>M-C-d  直下の子ブロックへ移動</li>
-</ul>
-<p>当初はyaml-modeをhideshow.elに対応させようと思ってたのですが、ブロック単位で移動ができるようになったところで満足してしまいました。</p>
-<p>なお、ブロックの境界はインデントレベルだけをみて判定しているのでyamlに限定する必要はなかった気はしますが、pythonとかhaskellとかでもつかいたくなってきたら書き直そうと思います。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

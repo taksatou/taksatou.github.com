@@ -7,12 +7,34 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-02-23T18:17:17Z</updated>
+  <updated>2013-02-24T14:42:00Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[The P Convention]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/24/the-p-convention/" />
+    <id>http://mojavy.com/blog/2013/02/24/the-p-convention/</id>
+    <updated>2013-02-24T14:42:00Z</updated>
+    <published>2013-02-24T14:42:00Z</published>
+    <category scheme="http://mojavy.com/blog" term="lisp" />
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <summary type="html"><![CDATA[The P Convention]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/02/24/the-p-convention/"><![CDATA[<p><img alt="lisp" src="/images/lisplogo_fancy_128.png" /></p>
+<p>Lispには'p'という接尾辞がつく名前の関数があるが、この'p'はpredicateのこと。</p>
+<p><a href="http://catb.org/jargon/html/p-convention.html">The -P Convention</a></p>
+<p>ところが、HaskellやOCamlにも'p'という接尾辞がつく関数があって、そちらはprimeの意味で使うらしい。
+シングルクオート(ダッシュ)記号は英語だとprimeというので、例えば<code>foo'</code>という名前の関数は<code>foo</code>という名前のヘルパー関数的なもの、ということになる。</p>
+<p><a href="http://stackoverflow.com/questions/5279286/foop-a-naming-convention-its-a-helper-recursive-function-for-foo-what-do">“foop”: a naming convention? It's a helper recursive function for “foo”; what does the suffix “p” mean?</a></p>
+<p>ちなみに、OCamlだとシングルクオートが識別子につかえるのでfoo'という名前の関数も結構あるらしい。</p>
+<p>まぎらわしい、かと思ったけど使う文脈が違うし意外とそうでもないか。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -512,37 +534,5 @@ rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当�
 rainbowで色付けしてるのでエスケープシーケンスを解釈できるpagerをつかって下さい。</p>
 <p>これで.tmux.confをリロードして、prefix-key C-a とかするとtmux上にプロンプトが表示されるので、そこで調べたい単語を入力します。
 そうすると新しいpaneに結果が表示されます。pagerを閉じると自動的にpaneも閉じます。</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[yaml-modeを拡張してyamlを高速に編集する]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/" />
-    <id>http://mojavy.com/blog/2013/01/09/yaml-mode-ext/</id>
-    <updated>2013-01-09T22:00:00Z</updated>
-    <published>2013-01-09T22:00:00Z</published>
-    <category scheme="http://mojavy.com/blog" term="elisp" />
-    <category scheme="http://mojavy.com/blog" term="emacs" />
-    <summary type="html"><![CDATA[yaml-modeを拡張してyamlを高速に編集する]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/"><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
-<p>とあるプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の<a href="https://github.com/yoshiki/yaml-mode">yaml-mode</a>だけだと非力に感じたので拡張するためのemacs lispを書きました。</p>
-<p>といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。</p>
-<p>使い方は、<a href="https://github.com/taksatou/yaml-mode-ext">https://github.com/taksatou/yaml-mode-ext</a>からおとしてきてloadするだけです。
-(yaml-modeはあらかじめインストールしておく必要があります)</p>
-<div class="pygments_murphy"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
-</pre></div>
-
-<p>以下のキーバインドが使えます。</p>
-<ul>
-<li>M-C-f  同じ階層の次のブロックへ移動</li>
-<li>M-C-b  同じ階層の前のブロックへ移動</li>
-<li>M-C-u  親ブロックの先頭へ移動</li>
-<li>M-C-e  親ブロックの末尾へ移動</li>
-<li>M-C-d  直下の子ブロックへ移動</li>
-</ul>
-<p>当初はyaml-modeをhideshow.elに対応させようと思ってたのですが、ブロック単位で移動ができるようになったところで満足してしまいました。</p>
-<p>なお、ブロックの境界はインデントレベルだけをみて判定しているのでyamlに限定する必要はなかった気はしますが、pythonとかhaskellとかでもつかいたくなってきたら書き直そうと思います。</p>]]></content>
   </entry>
 </feed>
