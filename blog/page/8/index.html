@@ -102,6 +102,50 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="xcodeのキーバインディングをもっとemacsっぽくする"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/" rel="bookmark" title="Permanent Link to Xcodeのキーバインディングをもっとemacsっぽくする">Xcodeのキーバインディングをもっとemacsっぽくする</a></h2>
+  <small>July 12, 2012 at 12:30 PM | categories:
+
+<a href='/blog/category/xcode'>xcode</a>, <a href='/blog/category/mac'>mac</a>
+ | <a href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="xcode" src="/images/xcode-logo.png" /></p>
+<p>xcodeのキーバインディングはデフォルトでemacsっぽいものが使えますが、普段emacsを使ってる身としては中途半端すぎて逆にいらつきます。</p>
+<p>C-xC-sで変な文字が入ったり、escで補完リストのポップアップをトグル表示とかやめてほしかったので、
+このあたりのうざい動きを抑えつつ最低限の設定を追加した設定をつくりました。</p>
+<script src="https://gist.github.com/3095366.js"> </script>
+
+<p>これを$HOME/Library/Developer/Xcode/UserData/KeyBindings あたりに保存すれば、
+xcodeのkey bindingsの設定に読ませることができると思います。</p>
+<p>もっと良い設定があれば教えてほしいです。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/07/13/objective-c-memo/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/" class="hatena-bookmark-button" data-hatena-bookmark-title="Xcodeのキーバインディングをもっとemacsっぽくする" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/" data-text="Xcodeのキーバインディングをもっとemacsっぽくする">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="rubyのワンライナーで便利な変数まとめ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" rel="bookmark" title="Permanent Link to rubyのワンライナーで便利な変数まとめ">rubyのワンライナーで便利な変数まとめ</a></h2>
   <small>July 08, 2012 at 06:30 PM | categories:
@@ -350,70 +394,6 @@ deb-src http://archive.debian.org/debian/ lenny main
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="tmuxでマウスを使う"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" rel="bookmark" title="Permanent Link to tmuxでマウスを使う">tmuxでマウスを使う</a></h2>
-  <small>December 13, 2011 at 12:58 AM | categories:
-
-<a href='/blog/category/advent-calendar'>advent calendar</a>, <a href='/blog/category/tmux'>tmux</a>
- | <a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の13日目です。
-12日目はnetmarkjpさんの<a href="http://netmark.jp/2011/12/gnu-screen-xmodem.html">GNU screen でシリアル通信 + xmodem転送</a>でした。</p>
-<p>今日はtmuxのマウスまわりの設定について紹介してみます。</p>
-<p>tmuxにはマウスで操作するための機能がいくつか提供されています。ChangeLogを見る限りでは結構前からマウスサポートはされているようですが、mac portから入れたtmuxでは動かなかったのでソースから最新版をいれることをおすすめします。
-macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/tmatsuu/20111130/1322677832">matsuuさんが紹介してくれている</a>のでそちらを参考にしてください。</p>
-<p>tmux-1.5の時点で使えるマウス関連の設定項目は以下の通りです。</p>
-<dl>
-<dt>mode-mouse</dt>
-<dd>onにすると、マウスで画面をドラッグしたときにコピーモードに入ります。マウスホイールでスクロールすることもできます。</dd>
-<dt>mouse-select-pane</dt>
-<dd>マウスクリックでpaneを選択できるようになります。</dd>
-<dt>mouse-select-window</dt>
-<dd>statusを有効にしているときに、window名の部分をクリックすることでwindowを切り替えられます。</dd>
-<dt>mouse-utf8</dt>
-<dd>マウスの入力をutf-8として扱うための設定だそうです。効果はよくわかりませんでした。</dd>
-</dl>
-<p>なお、shiftを押しながらターミナルをクリックすれば、本来のマウスの動作になります。</p>
-<p>macのiTerm, windowsのputty, ubuntuのgnome-terminalで動作確認できました。
-たまに画面が乱れることがありますが、再描画すると直ります。</p>
-<h1 id="_1">まとめ</h1>
-<p>以下を.tmux.confにコピペするとtmuxでマウスがつかえます。</p>
-<div class="pygments_murphy"><pre><span class="nb">set</span> -g mode-mouse on
-<span class="nb">set</span> -g mouse-resize-pane on
-<span class="nb">set</span> -g mouse-select-pane on
-<span class="nb">set</span> -g mouse-select-window on
-</pre></div>
-
-<p>本当は、set-clipboardという機能も紹介したかったのですが、ちゃんと動かすことができなかったのでまたの機会にします。
-以上非常に簡単でしたがマウスサポート機能の紹介でした。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" class="hatena-bookmark-button" data-hatena-bookmark-title="tmuxでマウスを使う" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" data-text="tmuxでマウスを使う">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../7">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -443,6 +423,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
       <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
       <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
       <li><a href="/blog/2013/02/22/python-popen/" title="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件"><p>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a><span style="font-size: 80%;">(February 22, 2013 at 11:55 PM)</span></li>
@@ -450,7 +431,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
       <li><a href="/blog/2013/02/06/quicklinks4/" title="Quicklinks 4"><p>Quicklinks 4</a><span style="font-size: 80%;">(February 06, 2013 at 09:50 PM)</span></li>
-      <li><a href="/blog/2013/02/05/popular-programming-languages/" title="人気プログラミング言語ランキング(stackoverflow調べ)"><p>人気プログラミング言語ランキング(stackoverflow調べ)</a><span style="font-size: 80%;">(February 05, 2013 at 11:00 PM)</span></li>
     </ul>
   </div>
 
@@ -495,13 +475,14 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
+     <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
@@ -512,7 +493,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
-     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (4)</li>
@@ -533,7 +514,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>

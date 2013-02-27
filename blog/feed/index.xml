@@ -10,10 +10,118 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sun, 24 Feb 2013 14:42:00 GMT</pubDate>
+    <pubDate>Wed, 27 Feb 2013 23:46:03 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>pythonのswigエクステンションからdebian packageをつくる手順メモ</title>
+      <link>http://mojavy.com/blog/2013/02/27/building-python-debian-package/</link>
+      <pubDate>Wed, 27 Feb 2013 23:46:03 JST</pubDate>
+      <category><![CDATA[python]]></category>
+      <category><![CDATA[debian]]></category>
+      <category><![CDATA[linux]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/02/27/building-python-debian-package/</guid>
+      <description>pythonのswigエクステンションからdebian packageをつくる手順メモ</description>
+      <content:encoded><![CDATA[<p><img alt="debian" src="/images/debian-200.png" /></p>
+<p>注: 以下は古めの環境(Lenny or Squeeze)と古めのpython (2.5 or 2.6)をターゲットにしたときの手順なので、最新の環境では別な方法があるかもしれません。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a><ul>
+<li><a href="#1">1. 必要なパッケージをインストール</a></li>
+<li><a href="#2-setuppy">2. setup.pyをかく</a></li>
+<li><a href="#3">3. ビルド確認</a></li>
+<li><a href="#4-debianize">4. debianizeする</a></li>
+<li><a href="#5-deb">5. debをつくる</a></li>
+<li><a href="#_2">その他ツール等</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="1">1. 必要なパッケージをインストール</h3>
+<ul>
+<li>python-setuptools</li>
+<li>python-all-dev</li>
+<li>python-support</li>
+<li>python-stdeb</li>
+<li>swig</li>
+<li>debhelper</li>
+<li>devscripts</li>
+<li>dh_make</li>
+</ul>
+<p>たぶんこれだけあれば大丈夫。(python-supportはdeprecatedらしいけどここでは無視)</p>
+<h3 id="2-setuppy">2. setup.pyをかく</h3>
+<p><code>apt-get source python-xxx</code>で適当なパッケージのソースをダウンロードして参考にするとよい</p>
+<p>以下例</p>
+<div class="pygments_murphy"><pre><span class="c">#!/usr/bin/python</span>
+
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.0.1&quot;</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span>         <span class="o">=</span> <span class="s">&quot;yourext&quot;</span><span class="p">,</span>
+      <span class="n">version</span>      <span class="o">=</span> <span class="n">__version__</span><span class="p">,</span>
+      <span class="n">author</span>       <span class="o">=</span> <span class="s">&quot;Your Name&quot;</span><span class="p">,</span>
+      <span class="n">author_email</span> <span class="o">=</span> <span class="s">&quot;yourname@example.com,</span>
+      <span class="n">url</span>          <span class="o">=</span> <span class="s">&quot;http://example.com/python-yourext&quot;</span><span class="p">,</span>
+      <span class="n">download_url</span> <span class="o">=</span> <span class="s">&quot;http://example.com/python-yourext-</span><span class="si">%s</span><span class="s">.tgz&quot;</span> <span class="o">%</span> <span class="n">__version__</span><span class="p">,</span>
+      <span class="n">description</span>  <span class="o">=</span> <span class="s">&quot;yourext client library for python&quot;</span><span class="p">,</span>
+      <span class="n">long_description</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;README.md&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
+      <span class="n">license</span>      <span class="o">=</span> <span class="s">&quot;LGPL&quot;</span><span class="p">,</span>
+      <span class="n">platforms</span>    <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Platform Independent&quot;</span><span class="p">],</span>
+      <span class="n">classifiers</span>  <span class="o">=</span> <span class="p">[</span>
+        <span class="s">&quot;Development Status :: 5 - Production/Stable&quot;</span><span class="p">,</span>
+        <span class="s">&quot;Intended Audience :: Developers&quot;</span><span class="p">,</span>
+        <span class="s">&quot;License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)&quot;</span><span class="p">,</span>
+        <span class="s">&quot;Operating System :: OS Independent&quot;</span><span class="p">,</span>
+        <span class="s">&quot;Programming Language :: Python&quot;</span><span class="p">,</span>
+        <span class="s">&quot;Topic :: Software Development :: Libraries :: Python Modules&quot;</span>
+      <span class="p">],</span>
+      <span class="n">ext_modules</span>  <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Extension</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;yourext&#39;</span><span class="p">,</span>
+                  <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;path_to_swig/yourext.i&#39;</span><span class="p">],</span>
+                  <span class="n">include_dirs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;path_to_lib/include&#39;</span><span class="p">],</span>
+                  <span class="n">library_dirs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;path_to_lib/lib&#39;</span><span class="p">],</span>
+                  <span class="n">libraries</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;yourlibrary&#39;</span><span class="p">],</span>
+                  <span class="n">define_macros</span><span class="o">=</span><span class="p">[(</span><span class="n">FOO_BAR</span><span class="p">,</span> <span class="mi">123</span><span class="p">),</span> <span class="p">(</span><span class="n">DEBUG</span><span class="p">,</span> <span class="bp">None</span><span class="p">)],</span>
+                  <span class="n">extra_compile_args</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;-std=gnu99&#39;</span><span class="p">,</span> <span class="s">&#39;-Wextra&#39;</span><span class="p">],</span>
+                  <span class="p">)</span>
+      <span class="p">],</span>
+      <span class="n">py_modules</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;pure_python_module_name&#39;</span><span class="p">,</span> <span class="s">&#39;foo.bar&#39;</span><span class="p">],</span>
+      <span class="n">include_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+
+<ul>
+<li>ext_modulesの中にExtensionをかく
+<ul></li>
+<li>Extension.sources にはswigの定義ファイルを直接指定できる</li>
+<li>Extension.include_dirs, Extension.library_dirs, Extension.librariesはそれぞれgccでいう<code>-I, -L, -l</code>の値</li>
+<li>Extension.define_macrosはタプルで渡す。上の例だと <code>-DFOO_BAR=123 -DDEBUG</code> の意味</li>
+<li>Extension.extra_compile_args はその他のコンパイルオプション
+</ul></li>
+<li>platforms, classifiersの内容はpython-cjsonあたりからコピーした</li>
+<li>pure pythonの部分はpy_modulesにモジュール名を列挙する。パスではない</li>
+<li>swigが生成した<code>.py</code>ファイルをpy_modulesに含める汎用的な方法は見つからなかった。(必要な場合はスクリプトでinclude_dirsにコピーすることで対応できる)</li>
+</ul>
+<h3 id="3">3. ビルド確認</h3>
+<p>以下コマンドでpython extのビルドを確認する。成功すると、buildディレクトリ以下に共有ライブラリが生成される</p>
+<p><code>python setup.py build</code></p>
+<h3 id="4-debianize">4. debianizeする</h3>
+<p>以下コマンドでdebianパッケージに必要なファイルを生成する。このときegg-info等も生成される</p>
+<p><code>python setup.py --command-package=stdeb.command debianize --force-buildsystem=True</code></p>
+<h3 id="5-deb">5. debをつくる</h3>
+<p><code>debuild -uc -us</code></p>
+<p><code>-uc -us</code>は署名を省略するためのオプション。</p>
+<p>成功すると、親ディレクトリにdebファイルができてるはず</p>
+<h3 id="_2">その他ツール等</h3>
+<ul>
+<li>dupload: リポジトリにアップロードするためのもの</li>
+<li>dlocate: <code>dlocate -S filename</code> のようにすればそのファイルを含むパッケージを調べることができる</li>
+<li>cdbs: debianパッケージを作成するための別なやりかた(?)。 ちゃんとしらべてない</li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>The P Convention</title>
       <link>http://mojavy.com/blog/2013/02/24/the-p-convention/</link>
@@ -457,34 +565,6 @@ void f2(void) {
 
 <p>などということを今更ながら考えて悶々としていたのだけど、結局のところこういう類の便利機能は欲しくなってくるわけで、便利さのために不合理を許容するとなるとこのあたりが妥当な落とし所のような気もしてきた。</p>
 <p>まとめ：プログラミング言語を考える人はすごい</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>tmuxでalcの英単語を引く</title>
-      <link>http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/</link>
-      <pubDate>Fri, 11 Jan 2013 22:00:00 JST</pubDate>
-      <category><![CDATA[ruby]]></category>
-      <category><![CDATA[tmux]]></category>
-      <category><![CDATA[english]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/</guid>
-      <description>tmuxでalcの英単語を引く</description>
-      <content:encoded><![CDATA[<p><img alt="english" src="/images/english-200.png" /></p>
-<p><b>2013-01-15追記 規約違反とのコメント頂いたのでスクレイピングするスクリプトを削除しました。</b></p>
-<p>tmuxのcommand-promptを使うと任意のコマンドをインタラクティブに実行できます。
-これをつかってtmux上でalcの英単語を表示できるようにしたら思いの外便利だったので紹介します。</p>
-<p>まず、alcの検索結果をスクレイビングしていい感じに表示するコマンドをつくります。
-rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当なスクリプトでよければこれを使って下さい。</p>
-<div class="pygments_murphy"><pre><span class="c1"># 2013-01-15 削除しました</span>
-</pre></div>
-
-<p>これをパスの通った場所にalcという名前で保存して、.tmux.confに以下の設定を追記します。</p>
-<div class="pygments_murphy"><pre>unbind C-a
-<span class="nb">bind </span>C-a <span class="nb">command</span>-prompt <span class="s2">&quot;split-window -h &#39;alc %% | lv -c&#39;&quot;</span>
-</pre></div>
-
-<p>C-aにバインドしてますがお好みのキーに変えてください。
-rainbowで色付けしてるのでエスケープシーケンスを解釈できるpagerをつかって下さい。</p>
-<p>これで.tmux.confをリロードして、prefix-key C-a とかするとtmux上にプロンプトが表示されるので、そこで調べたい単語を入力します。
-そうすると新しいpaneに結果が表示されます。pagerを閉じると自動的にpaneも閉じます。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

@@ -102,6 +102,137 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="pythonのswigエクステンションからdebian-packageをつくる手順メモ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/27/building-python-debian-package/" rel="bookmark" title="Permanent Link to pythonのswigエクステンションからdebian packageをつくる手順メモ">pythonのswigエクステンションからdebian packageをつくる手順メモ</a></h2>
+  <small>February 27, 2013 at 11:46 PM | categories:
+
+<a href='/blog/category/python'>python</a>, <a href='/blog/category/debian'>debian</a>, <a href='/blog/category/linux'>linux</a>
+ | <a href="http://mojavy.com/blog/2013/02/27/building-python-debian-package/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="debian" src="/images/debian-200.png" /></p>
+<p>注: 以下は古めの環境(Lenny or Squeeze)と古めのpython (2.5 or 2.6)をターゲットにしたときの手順なので、最新の環境では別な方法があるかもしれません。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a><ul>
+<li><a href="#1">1. 必要なパッケージをインストール</a></li>
+<li><a href="#2-setuppy">2. setup.pyをかく</a></li>
+<li><a href="#3">3. ビルド確認</a></li>
+<li><a href="#4-debianize">4. debianizeする</a></li>
+<li><a href="#5-deb">5. debをつくる</a></li>
+<li><a href="#_2">その他ツール等</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="1">1. 必要なパッケージをインストール</h3>
+<ul>
+<li>python-setuptools</li>
+<li>python-all-dev</li>
+<li>python-support</li>
+<li>python-stdeb</li>
+<li>swig</li>
+<li>debhelper</li>
+<li>devscripts</li>
+<li>dh_make</li>
+</ul>
+<p>たぶんこれだけあれば大丈夫。(python-supportはdeprecatedらしいけどここでは無視)</p>
+<h3 id="2-setuppy">2. setup.pyをかく</h3>
+<p><code>apt-get source python-xxx</code>で適当なパッケージのソースをダウンロードして参考にするとよい</p>
+<p>以下例</p>
+<div class="pygments_murphy"><pre><span class="c">#!/usr/bin/python</span>
+
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.0.1&quot;</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span>         <span class="o">=</span> <span class="s">&quot;yourext&quot;</span><span class="p">,</span>
+      <span class="n">version</span>      <span class="o">=</span> <span class="n">__version__</span><span class="p">,</span>
+      <span class="n">author</span>       <span class="o">=</span> <span class="s">&quot;Your Name&quot;</span><span class="p">,</span>
+      <span class="n">author_email</span> <span class="o">=</span> <span class="s">&quot;yourname@example.com,</span>
+      <span class="n">url</span>          <span class="o">=</span> <span class="s">&quot;http://example.com/python-yourext&quot;</span><span class="p">,</span>
+      <span class="n">download_url</span> <span class="o">=</span> <span class="s">&quot;http://example.com/python-yourext-</span><span class="si">%s</span><span class="s">.tgz&quot;</span> <span class="o">%</span> <span class="n">__version__</span><span class="p">,</span>
+      <span class="n">description</span>  <span class="o">=</span> <span class="s">&quot;yourext client library for python&quot;</span><span class="p">,</span>
+      <span class="n">long_description</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;README.md&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
+      <span class="n">license</span>      <span class="o">=</span> <span class="s">&quot;LGPL&quot;</span><span class="p">,</span>
+      <span class="n">platforms</span>    <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Platform Independent&quot;</span><span class="p">],</span>
+      <span class="n">classifiers</span>  <span class="o">=</span> <span class="p">[</span>
+        <span class="s">&quot;Development Status :: 5 - Production/Stable&quot;</span><span class="p">,</span>
+        <span class="s">&quot;Intended Audience :: Developers&quot;</span><span class="p">,</span>
+        <span class="s">&quot;License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)&quot;</span><span class="p">,</span>
+        <span class="s">&quot;Operating System :: OS Independent&quot;</span><span class="p">,</span>
+        <span class="s">&quot;Programming Language :: Python&quot;</span><span class="p">,</span>
+        <span class="s">&quot;Topic :: Software Development :: Libraries :: Python Modules&quot;</span>
+      <span class="p">],</span>
+      <span class="n">ext_modules</span>  <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Extension</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;yourext&#39;</span><span class="p">,</span>
+                  <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;path_to_swig/yourext.i&#39;</span><span class="p">],</span>
+                  <span class="n">include_dirs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;path_to_lib/include&#39;</span><span class="p">],</span>
+                  <span class="n">library_dirs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;path_to_lib/lib&#39;</span><span class="p">],</span>
+                  <span class="n">libraries</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;yourlibrary&#39;</span><span class="p">],</span>
+                  <span class="n">define_macros</span><span class="o">=</span><span class="p">[(</span><span class="n">FOO_BAR</span><span class="p">,</span> <span class="mi">123</span><span class="p">),</span> <span class="p">(</span><span class="n">DEBUG</span><span class="p">,</span> <span class="bp">None</span><span class="p">)],</span>
+                  <span class="n">extra_compile_args</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;-std=gnu99&#39;</span><span class="p">,</span> <span class="s">&#39;-Wextra&#39;</span><span class="p">],</span>
+                  <span class="p">)</span>
+      <span class="p">],</span>
+      <span class="n">py_modules</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;pure_python_module_name&#39;</span><span class="p">,</span> <span class="s">&#39;foo.bar&#39;</span><span class="p">],</span>
+      <span class="n">include_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+
+<ul>
+<li>ext_modulesの中にExtensionをかく
+<ul></li>
+<li>Extension.sources にはswigの定義ファイルを直接指定できる</li>
+<li>Extension.include_dirs, Extension.library_dirs, Extension.librariesはそれぞれgccでいう<code>-I, -L, -l</code>の値</li>
+<li>Extension.define_macrosはタプルで渡す。上の例だと <code>-DFOO_BAR=123 -DDEBUG</code> の意味</li>
+<li>Extension.extra_compile_args はその他のコンパイルオプション
+</ul></li>
+<li>platforms, classifiersの内容はpython-cjsonあたりからコピーした</li>
+<li>pure pythonの部分はpy_modulesにモジュール名を列挙する。パスではない</li>
+<li>swigが生成した<code>.py</code>ファイルをpy_modulesに含める汎用的な方法は見つからなかった。(必要な場合はスクリプトでinclude_dirsにコピーすることで対応できる)</li>
+</ul>
+<h3 id="3">3. ビルド確認</h3>
+<p>以下コマンドでpython extのビルドを確認する。成功すると、buildディレクトリ以下に共有ライブラリが生成される</p>
+<p><code>python setup.py build</code></p>
+<h3 id="4-debianize">4. debianizeする</h3>
+<p>以下コマンドでdebianパッケージに必要なファイルを生成する。このときegg-info等も生成される</p>
+<p><code>python setup.py --command-package=stdeb.command debianize --force-buildsystem=True</code></p>
+<h3 id="5-deb">5. debをつくる</h3>
+<p><code>debuild -uc -us</code></p>
+<p><code>-uc -us</code>は署名を省略するためのオプション。</p>
+<p>成功すると、親ディレクトリにdebファイルができてるはず</p>
+<h3 id="_2">その他ツール等</h3>
+<ul>
+<li>dupload: リポジトリにアップロードするためのもの</li>
+<li>dlocate: <code>dlocate -S filename</code> のようにすればそのファイルを含むパッケージを調べることができる</li>
+<li>cdbs: debianパッケージを作成するための別なやりかた(?)。 ちゃんとしらべてない</li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/02/24/the-p-convention/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/27/building-python-debian-package/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/27/building-python-debian-package/" class="hatena-bookmark-button" data-hatena-bookmark-title="pythonのswigエクステンションからdebian packageをつくる手順メモ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/27/building-python-debian-package/" data-text="pythonのswigエクステンションからdebian packageをつくる手順メモ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/27/building-python-debian-package/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="pythonのsubprocess.popen()でpipeしてwaitするとデッドロックしてはまった件"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/22/python-popen/" rel="bookmark" title="Permanent Link to pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件">pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a></h2>
   <small>February 22, 2013 at 11:55 PM | categories:
@@ -354,69 +485,8 @@ deb-src http://archive.debian.org/debian/ lenny main
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="blogofileでサムネイル画像を表示する方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/11/06/blofofile-test/" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
-  <small>November 06, 2011 at 08:32 PM | categories:
-
-<a href='/blog/category/python'>python</a>, <a href='/blog/category/memo'>memo</a>, <a href='/blog/category/blogofile'>blogofile</a>
- | <a href="http://mojavy.com/blog/2011/11/06/blofofile-test/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="rena" src="/images/rena.jpg" /></p>
-<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
-<p>例えば、
-<a href="http://mojavy.com">http://mojavy.com</a>
-のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
-<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
-<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
-         self.slug = None
-         self.draft = False
-         self.filters = None
-<span class="gi">+        self.image = None</span>
-         self.__parse()
-         self.__post_process()
-</pre></div>
-
-<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
-<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
-</pre></div>
-
-<p>のようにすれば${post.image}のようにして参照できる。</p>
-<ul>
-<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2011/11/06/new_blog/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/blofofile-test/" class="hatena-bookmark-button" data-hatena-bookmark-title="blogofileでサムネイル画像を表示する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/11/06/blofofile-test/" data-text="blogofileでサムネイル画像を表示する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
+ <a href="/blog/category/python/2">Next »</a>
 </div>
 
 </div>
@@ -442,6 +512,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
       <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
       <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
       <li><a href="/blog/2013/02/22/python-popen/" title="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件"><p>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a><span style="font-size: 80%;">(February 22, 2013 at 11:55 PM)</span></li>
@@ -449,7 +520,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
       <li><a href="/blog/2013/02/06/quicklinks4/" title="Quicklinks 4"><p>Quicklinks 4</a><span style="font-size: 80%;">(February 06, 2013 at 09:50 PM)</span></li>
-      <li><a href="/blog/2013/02/05/popular-programming-languages/" title="人気プログラミング言語ランキング(stackoverflow調べ)"><p>人気プログラミング言語ランキング(stackoverflow調べ)</a><span style="font-size: 80%;">(February 05, 2013 at 11:00 PM)</span></li>
     </ul>
   </div>
 
@@ -494,13 +564,14 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
+     <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
@@ -511,7 +582,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
-     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (4)</li>
@@ -532,7 +603,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
