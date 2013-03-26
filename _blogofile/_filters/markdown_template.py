@@ -15,4 +15,4 @@ logging.getLogger("MARKDOWN").setLevel(logging.ERROR)
 
 
 def run(content):
-    return markdown.markdown(content, ['toc', 'def_list', 'tables'])
+    return markdown.markdown(content, ['toc', 'def_list', 'tables', 'footnotes'])

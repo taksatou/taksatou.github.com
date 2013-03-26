@@ -25,7 +25,8 @@ div.interblog-sep { margin: 15px 0 5px 0; }
 hr.interblog  { border: solid; border-color: #888888; border-width: 1px 0 0 0 ; height: 1px; clear:both; }
 hr.intersocial { border: solid; border-color: #e0e0e0; border-width: 1px 0 0 0 ; height: 1px; clear:both; }
 pre  { font-family: "courier"; border: solid; background-color: #fafafa; border-color: #888888; border-width: 1px; padding: 8px 8px 8px 5px; margin: 0px 3px 12px 0; overflow: auto; }
-code { font-family: "courier"; border: solid; background-color: #fafafa; border-color: #aaaaaa; border-width: 1px; padding: 1px 2px 1px 2px; margin: 2px 2px 2px 2px; overflow: auto; }
+code { font-family: "courier"; border: solid; background-color: #fafafa; border-color: #aaaaaa; border-width: 1px; padding: 0px 3px 0px 3px; overflow: auto; }
+
 
 #prev_next_link { padding:10px 15px 10px 0; float: right; }
 /* Header */
@@ -250,3 +251,5 @@ a.readmore:hover						{ background-color: #2f2f2f; background-image: none; text-
 #mainfooter li							{ margin: 0 6px 0 0; }
 .copyright								{ float: left; color: #b8b8b8; margin: 8px 0 0 0; }
 }
+
+.footnote { font-size: 80%; }
