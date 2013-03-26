@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     
   <title>
-mojavy.com
+berkshelfを使ったchefのcookbook管理
 </title>
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
@@ -100,46 +100,60 @@ href="/blog/feed/atom" />
           
 <div id="maincontent2" class="bodywidth">
 <div id="blogleft">
-  
-<div class="blog_post">
-  <a name="blogofileでサムネイル画像を表示する方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/11/06/blofofile-test/" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
-  <small>November 06, 2011 at 08:32 PM | categories:
 
-<a href='/blog/category/python'>python</a>, <a href='/blog/category/memo'>memo</a>, <a href='/blog/category/blogofile'>blogofile</a>
- | <a href="http://mojavy.com/blog/2011/11/06/blofofile-test/#disqus_thread"></a>
+<div class="blog_post">
+  <a name="berkshelfを使ったchefのcookbook管理"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/03/15/chef-tools/" rel="bookmark" title="Permanent Link to berkshelfを使ったchefのcookbook管理">berkshelfを使ったchefのcookbook管理</a></h2>
+  <small>March 15, 2013 at 04:33 PM | categories:
+
+<a href='/blog/category/chef'>chef</a>, <a href='/blog/category/vagrant'>vagrant</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/ruby'>ruby</a>
+ | <a href="http://mojavy.com/blog/2013/03/15/chef-tools/#disqus_thread"></a>
 </small>
 <p/>
   <div class="post_prose">
     
 <div class="blogbody">
-  <p><img alt="rena" src="/images/rena.jpg" /></p>
-<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
-<p>例えば、
-<a href="http://mojavy.com">http://mojavy.com</a>
-のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
-<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
-<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
-         self.slug = None
-         self.draft = False
-         self.filters = None
-<span class="gi">+        self.image = None</span>
-         self.__parse()
-         self.__post_process()
+  <p><img alt="debian" src="/images/debian-200.png" /></p>
+<p>Berkshelfとは、bundlerのようにchefのcookbookを管理できるgemです。
+bundlerに慣れた人ならフィーリングで大体わかると思いますが、vagrant連携等の便利機能もあるので使い方を紹介します。</p>
+<h3 id="_1">インストール</h3>
+<p>rubygemsに登録してあるので普通にgemからインストールできます。</p>
+<div class="pygments_murphy"><pre>$ gem install berkshelf
 </pre></div>
 
-<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
-<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
-<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
+<h3 id="berksfile">Berksfile</h3>
+<p>Gemfileと同じようなDSLでBerksfileを記述します。</p>
+<div class="pygments_murphy"><pre>site :opscode
+
+cookbook &#39;mysql&#39;
+cookbook &#39;nginx&#39;, &#39;~&gt; 0.101.5&#39;
 </pre></div>
 
-<p>のようにすれば${post.image}のようにして参照できる。</p>
+<h3 id="cookbook">cookbookのインストール</h3>
+<div class="pygments_murphy"><pre>berks install --path cookbooks
+</pre></div>
+
+<p>berks install コマンドで必要なcookbookを依存関係も含めてすべて取得してくれます。デフォルトでは<code>$HOME/.berkshelf</code>以下にバージョン別にインストールされますが、<code>berks install --path cookbooks</code> のようにしてインストール先ディレクトリを指定することもできます。また、<code>BERKSHELF_PATH</code>環境変数でも変更できます。</p>
+<p>bundlerがgemのインストールに成功すると<code>Gemfile.lock</code>を生成するのとおなじように、cookbookのインストールに成功すると<code>Berksfile.lock</code>ができます。これをgit等で管理するようにしておけばcookbookのバージョンを固定できます。</p>
+<h3 id="cookbook_1">独自cookbookを作成する</h3>
+<p><code>berks cookbook myapp</code></p>
+<p>cookbookは単一のgitプロジェクトとしておくのが何かと再利用しやすくてよい</p>
+<h2 id="_2">その他リンク</h2>
+<h3 id="cookbook_2">cookbook</h3>
 <ul>
-<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
+<li>https://github.com/cookbooks</li>
 </ul>
+<h3 id="vm">vm</h3>
+<ul>
+<li>http://www.vagrantbox.es/</li>
+</ul>
+<h2 id="knife-github-cookbooks">knife-github-cookbooks</h2>
+<p>https://github.com/websterclay/knife-github-cookbooks</p>
+<h2 id="berkshelf">berkshelf</h2>
+<p>http://berkshelf.com/</p>
+<h2 id="vagrant-vbguest">vagrant-vbguest</h2>
+<p>https://github.com/dotless-de/vagrant-vbguest</p>
+<p>https://github.com/mitchellh/vagrant-aws</p>
 </div>
 
   </div>
@@ -149,22 +163,22 @@ href="/blog/feed/atom" />
 
 
 <div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2011/11/06/new_blog/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/"> next post </a>
+  <a href="http://mojavy.com/blog/2013/02/27/building-python-debian-package/"> previous post </a>
 </div>
 <hr class="intersocial">
 
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/blofofile-test/" class="hatena-bookmark-button" data-hatena-bookmark-title="blogofileでサムネイル画像を表示する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/11/06/blofofile-test/" data-text="blogofileでサムネイル画像を表示する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test/"></div>
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/03/15/chef-tools/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/03/15/chef-tools/" class="hatena-bookmark-button" data-hatena-bookmark-title="berkshelfを使ったchefのcookbook管理" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/03/15/chef-tools/" data-text="berkshelfを使ったchefのcookbook管理">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/03/15/chef-tools/"></div>
 
 
-  <div class="interblog-sep"><hr class="interblog" /></div>
-<div style="text-align: right;">
- <a href="/blog/category/python/1">« Previous</a>
-</div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_url = "http://mojavy.com/blog/2013/03/15/chef-tools/";
+</script>
+<script type="text/javascript" src="http://disqus.com/forums/mojavy/embed.js"></script>
+<noscript><a href="http://mojavy.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 
 </div>
 <section id="blogright">
@@ -189,6 +203,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/03/15/chef-tools/" title="berkshelfを使ったchefのcookbook管理"><p>berkshelfを使ったchefのcookbook管理</a><span style="font-size: 80%;">(March 15, 2013 at 04:33 PM)</span></li>
       <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
       <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
       <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
@@ -196,7 +211,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/02/19/rainbow-for-common-lisp/" title="Rainbow for Common Lisp 作りました"><p>Rainbow for Common Lisp 作りました</a><span style="font-size: 80%;">(February 19, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
-      <li><a href="/blog/2013/02/06/quicklinks4/" title="Quicklinks 4"><p>Quicklinks 4</a><span style="font-size: 80%;">(February 06, 2013 at 09:50 PM)</span></li>
     </ul>
   </div>
 
@@ -240,6 +254,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
@@ -262,14 +277,15 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/vagrant">vagrant</a> (<a href="/blog/category/vagrant/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
@@ -280,6 +296,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(9)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>

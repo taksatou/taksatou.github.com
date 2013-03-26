@@ -221,6 +221,8 @@ href="/blog/feed/atom" />
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/02/24/the-p-convention/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/03/26/jekyll-plugin/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -228,65 +230,6 @@ href="/blog/feed/atom" />
 <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/27/building-python-debian-package/" class="hatena-bookmark-button" data-hatena-bookmark-title="pythonのswigエクステンションからdebian packageをつくる手順メモ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/27/building-python-debian-package/" data-text="pythonのswigエクステンションからdebian packageをつくる手順メモ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/27/building-python-debian-package/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="pythonのsubprocess.popen()でpipeしてwaitするとデッドロックしてはまった件"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/22/python-popen/" rel="bookmark" title="Permanent Link to pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件">pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a></h2>
-  <small>February 22, 2013 at 11:55 PM | categories:
-
-<a href='/blog/category/python'>python</a>, <a href='/blog/category/unix'>unix</a>
- | <a href="http://mojavy.com/blog/2013/02/22/python-popen/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="python" src="/images/python-logo.gif" /></p>
-<p>pythonのsubprocess.Popen()を使っていてはまってしまったのでメモ。</p>
-<p>処理を並列化するために、Popenで起動した複数の子プロセスに対してpipeで入力データを渡して処理させてやろうと以下のようなコードを書いた。
-(ここでは便宜上catコマンドを起動しているが、実際はワーカープロセスのコマンド)</p>
-<div class="pygments_murphy"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s">&quot;cat&quot;</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
-<span class="c">#</span>
-<span class="c"># do something</span>
-<span class="c">#</span>
-<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
-    <span class="n">child</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="n">child</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-</pre></div>
-
-<p>子プロセスは標準入力がEOFを返したら終了するようにしてあったので、上のコードでも問題なさそうに見えるがwaitでデッドロックする。
-python2.7.3以降だと問題なかったのだけど、python2.5や2.6だと必ずデッドロックしてしまう。</p>
-<p>さんざん悩んだあげくsubprocess.pyのソースを読んでみたら、close_fds=TrueをPopenの引数に渡してやればよいことに気づいた。</p>
-<p>要するに、子プロセスが自分の標準入力のパイプをオープンしたままexecしてしまっていたのが原因だった。
-forkするとファイルディスクリプタも引き継ぐので、pipeで開いた書込み側のファイルディスクリプタを親と子の両方できちんと閉じてやらないと、標準入力の書込み側がオープンしたままの状態になってしまいEOFがこなくなってしまう。</p>
-<p>Popenではclose_fdsにTrueを渡してやるとexecするまえに3以上のファイルディスクリプタをすべて閉じるようになっている。
-(O_CLOEXECフラグを使うのではなく単にループして全部なめるような実装になっていた)</p>
-<p>というわけで、pipe使うときに標準入出力以外のファイルディスクリプタを引き継ぐ必要性はあまりないと思うので、close_fdsを設定するのを忘れないように気をつけましょう
-(Linux以外のプラットフォームでどうなるかは未調査です)</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/22/python-popen/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/22/python-popen/" class="hatena-bookmark-button" data-hatena-bookmark-title="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/22/python-popen/" data-text="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/22/python-popen/"></div>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
@@ -485,8 +428,69 @@ deb-src http://archive.debian.org/debian/ lenny main
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
+  <a name="blogofileでサムネイル画像を表示する方法"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/11/06/blofofile-test/" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
+  <small>November 06, 2011 at 08:32 PM | categories:
+
+<a href='/blog/category/python'>python</a>, <a href='/blog/category/memo'>memo</a>, <a href='/blog/category/blogofile'>blogofile</a>
+ | <a href="http://mojavy.com/blog/2011/11/06/blofofile-test/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="rena" src="/images/rena.jpg" /></p>
+<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
+<p>例えば、
+<a href="http://mojavy.com">http://mojavy.com</a>
+のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
+<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
+<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
+         self.slug = None
+         self.draft = False
+         self.filters = None
+<span class="gi">+        self.image = None</span>
+         self.__parse()
+         self.__post_process()
+</pre></div>
+
+<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
+<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
+</pre></div>
+
+<p>のようにすれば${post.image}のようにして参照できる。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2011/11/06/new_blog/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/blofofile-test/" class="hatena-bookmark-button" data-hatena-bookmark-title="blogofileでサムネイル画像を表示する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/11/06/blofofile-test/" data-text="blogofileでサムネイル画像を表示する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
- <a href="/blog/category/python/2">Next »</a>
 </div>
 
 </div>
@@ -512,10 +516,10 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/03/26/jekyll-plugin/" title="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"><p>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a><span style="font-size: 80%;">(March 26, 2013 at 08:37 PM)</span></li>
       <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
       <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
       <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
-      <li><a href="/blog/2013/02/22/python-popen/" title="pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件"><p>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</a><span style="font-size: 80%;">(February 22, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/19/rainbow-for-common-lisp/" title="Rainbow for Common Lisp 作りました"><p>Rainbow for Common Lisp 作りました</a><span style="font-size: 80%;">(February 19, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
@@ -569,7 +573,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
@@ -582,17 +588,17 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
-     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
@@ -603,7 +609,8 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(9)</li>
+      <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>

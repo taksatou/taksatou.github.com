@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Tue, 26 Mar 2013 20:37:24 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</title>
+      <link>http://mojavy.com/blog/2013/03/26/jekyll-plugin/</link>
+      <pubDate>Tue, 26 Mar 2013 20:37:24 JST</pubDate>
+      <category><![CDATA[jekyll]]></category>
+      <category><![CDATA[impress.js]]></category>
+      <category><![CDATA[ruby]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/03/26/jekyll-plugin/</guid>
+      <description>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</description>
+      <content:encoded><![CDATA[<p><a href="https://github.com/bmcmurray/hekyll">hekyll</a>は<a href="https://github.com/bartaz/impress.js/">impress.js</a>用<a href="https://github.com/mojombo/jekyll">jekyll</a>テンプレのようなものだけど、スライドの位置を個別に指定する必要があってめんどうだったので適当なグリッドに配置するプラグインを書いた。</p>
+<h3 id="jekyll">jekyllのプラグインについて</h3>
+<p><a href="https://github.com/mojombo/jekyll/wiki/Plugins">https://github.com/mojombo/jekyll/wiki/Plugins</a>に必要なことは大体書いてある。</p>
+<p>jekyllのディレクトリに<code>_plugins</code>ディレクトリを作り、その中に<code>*.rb</code>をおいておけば自動的にロードされる。
+プラグインの種類はおおまかに以下の4通り。サンプルは本家wikiにあるのでメモもかねて概要だけ。</p>
+<ul>
+<li>Generators 
+<ul></li>
+<li>カテゴリ別とか期間別といった任意のルールでページを生成する
+</ul></li>
+<li>Converters
+<ul></li>
+<li>hamlとかjsonとかのフォーマット変換をする
+</ul></li>
+<li>Tags
+<ul></li>
+<li>liquidテンプレートエンジンのタグを追加する</li>
+<li>たとえば、<code>{{ your_tag }}</code> というタグをつかいたければ、<code>Liquid::Tag</code>を継承したクラスをつくって、<code>Liquid::Template.register_tag('your_tag', Jekyll::YourTag)</code> などとする
+</ul></li>
+<li>Filters
+<ul></li>
+<li>liquidのフィルタを追加する</li>
+<li>フィルタとはいいつつどんな関数でも登録できる</li>
+<li>適当にモジュールをつくって、<code>Liquid::Template.register_filter(Jekyll::YourModule)</code>とすると、<code>{{ 'arg' | your_filter }}</code> のようにして呼びだせる
+</ul></li>
+</ul>
+<h3 id="_1">ソース</h3>
+<p>wikiで説明されているpluginの書き方を踏まえた上で、それを完全に無視する方法で実装した。
+Postクラスを拡張してhekyllにあうようにliquidに渡すデータを上書きしてるだけ。</p>
+<p>もっといい方法はあると思う。</p>
+<div class="pygments_murphy"><pre><span class="k">def</span> <span class="nf">once</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+  <span class="k">unless</span> <span class="p">(</span><span class="vi">@__once_executed__</span> <span class="o">||=</span> <span class="o">[]</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span> <span class="n">tag</span>
+    <span class="k">yield</span>
+    <span class="vi">@__once_executed__</span> <span class="o">&lt;&lt;</span> <span class="n">tag</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nn">Jekyll</span>
+  <span class="k">class</span> <span class="nc">Post</span>
+
+    <span class="k">def</span> <span class="nf">grid_position</span>
+      <span class="n">pos</span> <span class="o">=</span> <span class="vi">@site</span><span class="o">.</span><span class="n">posts</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+      <span class="n">siz</span> <span class="o">=</span> <span class="no">Math</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="vi">@site</span><span class="o">.</span><span class="n">posts</span><span class="o">.</span><span class="n">size</span><span class="p">)</span><span class="o">.</span><span class="n">ceil</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;x&quot;</span> <span class="o">=&gt;</span> <span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">pos</span> <span class="o">%</span> <span class="n">siz</span><span class="p">),</span>
+        <span class="s2">&quot;y&quot;</span> <span class="o">=&gt;</span> <span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">pos</span> <span class="o">/</span> <span class="n">siz</span><span class="p">),</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+
+    <span class="n">once</span><span class="p">(</span><span class="ss">:redefine_to_liquid</span><span class="p">)</span> <span class="k">do</span>
+      <span class="k">alias</span> <span class="n">__old_to_liquid</span> <span class="n">to_liquid</span>
+      <span class="k">def</span> <span class="nf">to_liquid</span>
+
+        <span class="n">dat</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s2">&quot;data&quot;</span><span class="o">]</span>
+
+        <span class="k">if</span> <span class="n">dat</span><span class="o">.</span><span class="n">nil?</span>
+          <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s2">&quot;data&quot;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">grid_position</span>
+        <span class="k">end</span>
+        <span class="n">__old_to_liquid</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p><a href="https://gist.github.com/taksatou/5244991">https://gist.github.com/taksatou/5244991</a></p>
+<h3 id="_2">まとめ</h3>
+<p>impress.jsをつかっておいて単なるグリッドというのもどうかとは思いますが、位置決めをする部分をかえればなんとでもなるのでひまなときにがんばればいいと思います</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

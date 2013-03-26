@@ -3,6 +3,7 @@ categories: python, unix
 date: 2013/2/22 23:55:00
 title: pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件
 image: /images/python-logo.gif
+draft: True
 ---
 
 ![python](/images/python-logo.gif)

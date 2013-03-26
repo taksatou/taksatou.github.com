@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2013-03-06T18:01:48Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Untitled - 2013-03-06 20:31:53]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/03/06/git-introduction-for-emacs-users/" />
+    <id>http://mojavy.com/blog/2013/03/06/git-introduction-for-emacs-users/</id>
+    <updated>2013-03-06T18:01:48Z</updated>
+    <published>2013-03-06T18:01:48Z</published>
+    <category scheme="http://mojavy.com/blog" term="tips" />
+    <category scheme="http://mojavy.com/blog" term="git" />
+    <category scheme="http://mojavy.com/blog" term="emacs" />
+    <summary type="html"><![CDATA[Untitled - 2013-03-06 20:31:53]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/03/06/git-introduction-for-emacs-users/"><![CDATA[<p><img alt="debian" src="/images/debian-200.png" /></p>
+<p>emacsのvc-modeが意外とあんまり知られていないようなので簡単に使いかたを紹介します。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+<h3></h3>
+<h3 id="push">push</h3>
+<p>残念ながらvc-modeにはgit pushに対応するコマンドはありません。
+ですが、emacsではシェルコマンドを簡単に起動できるのでそこからgit push</p>
+<h3 id="vsc">他のVSCとの共存</h3>
+<p>したり</p>
+<p>gitで普段の作業しつつ <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></p>
+<p>git-svnは</p>
+<h3 id="_1">その他</h3>
+<h4 id="tig">tig</h4>
+<p>tigというgitのCUIフロントエンドもありますが、大体のことはvc-modeでもできます。</p>
+<h4 id="magit">magit</h4>
+<p>http://philjackson.github.com/magit/</p>
+<p>もっと本格的にemacsからgitを使うならmagitを使うといいと思います。</p>
+<h3 id="_2">まとめ</h3>
+<p>vc-modeはいろんなVCSの最大公約数的なものなのでgitの便利さを全部享受できるわけではありませんが、vc-modeを使うことでgitで行う日常的な作業の多くがスムーズにできるようになります。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>2013年にもなってemacsネタですいません&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>一般的な方法かどうかはしらないですが、やむをえずsubversionを使わなければいけないときとかは<code>.gitignore</code>に<code>.svn</code>を追加してgitのローカルリポジトリとして作業するということをやったりしてます。git-svnは気持ち悪いのであまりつかいたくない。。&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content>
+  </entry>
+</feed>

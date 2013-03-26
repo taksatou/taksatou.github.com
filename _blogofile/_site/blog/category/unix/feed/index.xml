@@ -10,43 +10,10 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Fri, 22 Feb 2013 23:55:00 GMT</pubDate>
+    <pubDate>Tue, 08 Jan 2013 20:30:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
-    <item>
-      <title>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</title>
-      <link>http://mojavy.com/blog/2013/02/22/python-popen/</link>
-      <pubDate>Fri, 22 Feb 2013 23:55:00 JST</pubDate>
-      <category><![CDATA[python]]></category>
-      <category><![CDATA[unix]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/02/22/python-popen/</guid>
-      <description>pythonのsubprocess.Popen()でpipeしてwaitするとデッドロックしてはまった件</description>
-      <content:encoded><![CDATA[<p><img alt="python" src="/images/python-logo.gif" /></p>
-<p>pythonのsubprocess.Popen()を使っていてはまってしまったのでメモ。</p>
-<p>処理を並列化するために、Popenで起動した複数の子プロセスに対してpipeで入力データを渡して処理させてやろうと以下のようなコードを書いた。
-(ここでは便宜上catコマンドを起動しているが、実際はワーカープロセスのコマンド)</p>
-<div class="pygments_murphy"><pre><span class="kn">import</span> <span class="nn">subprocess</span>
-
-<span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s">&quot;cat&quot;</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
-<span class="c">#</span>
-<span class="c"># do something</span>
-<span class="c">#</span>
-<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
-    <span class="n">child</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="n">child</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-</pre></div>
-
-<p>子プロセスは標準入力がEOFを返したら終了するようにしてあったので、上のコードでも問題なさそうに見えるがwaitでデッドロックする。
-python2.7.3以降だと問題なかったのだけど、python2.5や2.6だと必ずデッドロックしてしまう。</p>
-<p>さんざん悩んだあげくsubprocess.pyのソースを読んでみたら、close_fds=TrueをPopenの引数に渡してやればよいことに気づいた。</p>
-<p>要するに、子プロセスが自分の標準入力のパイプをオープンしたままexecしてしまっていたのが原因だった。
-forkするとファイルディスクリプタも引き継ぐので、pipeで開いた書込み側のファイルディスクリプタを親と子の両方できちんと閉じてやらないと、標準入力の書込み側がオープンしたままの状態になってしまいEOFがこなくなってしまう。</p>
-<p>Popenではclose_fdsにTrueを渡してやるとexecするまえに3以上のファイルディスクリプタをすべて閉じるようになっている。
-(O_CLOEXECフラグを使うのではなく単にループして全部なめるような実装になっていた)</p>
-<p>というわけで、pipe使うときに標準入出力以外のファイルディスクリプタを引き継ぐ必要性はあまりないと思うので、close_fdsを設定するのを忘れないように気をつけましょう
-(Linux以外のプラットフォームでどうなるかは未調査です)</p>]]></content:encoded>
-    </item>
     <item>
       <title>おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</title>
       <link>http://mojavy.com/blog/2013/01/08/favorite-linux-command/</link>
