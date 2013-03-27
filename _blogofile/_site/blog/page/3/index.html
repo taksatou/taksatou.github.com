@@ -102,6 +102,75 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="c言語の文字列初期化について"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/21/c-string-initialization/" rel="bookmark" title="Permanent Link to C言語の文字列初期化について">C言語の文字列初期化について</a></h2>
+  <small>January 21, 2013 at 08:00 PM | categories:
+
+<a href='/blog/category/c'>C</a>, <a href='/blog/category/programming'>programming</a>
+ | <a href="http://mojavy.com/blog/2013/01/21/c-string-initialization/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>なんとなく気になったので以下ひとりごと。</p>
+<hr>
+
+<p>Cで文字列を初期化するときは以下のように書く。</p>
+<div class="pygments_murphy"><pre>char str[] = &quot;xyz&quot;;
+</pre></div>
+
+<p>こう書けばNULL終わりのchar配列としてスタックに格納してくれるので、以下のように書くのと同じことになる。</p>
+<div class="pygments_murphy"><pre>char str1[4] = &quot;xyz&quot;;
+char str2[4] = {&#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;\0&#39;};
+</pre></div>
+
+<p>文字列はcharのポインタで扱うからといって、</p>
+<div class="pygments_murphy"><pre>char *str = &quot;xyz&quot;;
+</pre></div>
+
+<p>のように書くと違う意味になる。
+こう書くと"xyz"が格納されているアドレスでポインタを初期化する。文字列リテラルで宣言したデータが格納される領域は通常はread onlyなので<code>*str='X'</code>などとするとセグフォするが、通常の代入と同じ意味なので違和感はない。</p>
+<p>でも、<code>char str[] = "xyz";</code> のほうはは冷静に考えると気持ち悪い。初期化と代入は違うといってしまえばそれまでだけど、この式だけみても予備知識がないとなにがおこるのかわからないと思う。</p>
+<p>以下のような挙動も合理的とは思えない。そもそもCに配列なんて必要なかったのではないか。</p>
+<div class="pygments_murphy"><pre>void f1(char s[]) {
+    /* 意味はないけどエラーでもない */
+    s = &quot;baz&quot;;
+}
+
+void f2(void) {
+    char s[] = &quot;foo&quot;;
+    /* これはエラー */
+    /* s = &quot;bar&quot;; */
+}
+</pre></div>
+
+<p>などということを今更ながら考えて悶々としていたのだけど、結局のところこういう類の便利機能は欲しくなってくるわけで、便利さのために不合理を許容するとなるとこのあたりが妥当な落とし所のような気もしてきた。</p>
+<p>まとめ：プログラミング言語を考える人はすごい</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/02/05/popular-programming-languages/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/21/c-string-initialization/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/21/c-string-initialization/" class="hatena-bookmark-button" data-hatena-bookmark-title="C言語の文字列初期化について" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/21/c-string-initialization/" data-text="C言語の文字列初期化について">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/21/c-string-initialization/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="tmuxでalcの英単語を引く"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" rel="bookmark" title="Permanent Link to tmuxでalcの英単語を引く">tmuxでalcの英単語を引く</a></h2>
   <small>January 11, 2013 at 10:00 PM | categories:
@@ -351,150 +420,6 @@ fusermount -u /path/to/mount/point  # unmount
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="gearmanクライアントライブラリ-cl-gearman"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" rel="bookmark" title="Permanent Link to gearmanクライアントライブラリ cl-gearman">gearmanクライアントライブラリ cl-gearman</a></h2>
-  <small>December 16, 2012 at 05:30 PM | categories:
-
-<a href='/blog/category/gearman'>gearman</a>, <a href='/blog/category/common-lisp'>common lisp</a>
- | <a href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="tool" src="/images/gearman-logo.png" /></p>
-<p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
-<p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
-<h2 id="gearman">Gearmanとは</h2>
-<p>今更感はありますが、Gearman自体について簡単に説明しておきます。</p>
-<p><a href="http://gearman.org/">http://gearman.org/</a></p>
-<p>Gearmanとは時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。Gearmanを利用するアプリケーションでは、client, job server, workerという3つの要素が存在します。
-それぞれの役割は以下の通りです。</p>
-<ul>
-<li>job server: clientから受けとったジョブを適切なworkerに渡す</li>
-<li>client: ジョブを生成してjob serverに送信する</li>
-<li>worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す</li>
-</ul>
-<p>cl-gearmanは、clientとjob server間、及びworkerとjob server間のプロトコルを抽象化したライブラリです。</p>
-<p>余談ですが、Gearmanはデータ永続化をしないものだとずっと思っていたのですがmysqlやsqliteに永続化できます。
-ジョブキューを使うなら以前はTheSchwartzという選択肢もありましたが、今はGearmanでほとんどの場合に対応できるのではないでしょうか。</p>
-<h2 id="_1">インストール</h2>
-<p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
-<p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
-<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
-git clone https://github.com/taksatou/cl-gearman.git
-</pre></div>
-
-<h2 id="_2">使い方</h2>
-<p>以下サンプルコードです</p>
-<h3 id="client">client</h3>
-<p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
-           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
-           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
-hello
-foo
-NIL
-</pre></div>
-
-<p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
-そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
-           (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
-                  (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
-                  (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
-                  (jobs `(:medium ,job1 :low ,job2 :high ,job3)))
-
-             (dotimes (i 5)
-               (loop for (k v) on jobs by #&#39;cddr
-                  do (format t &quot;~a: ~a~%&quot; k (cl-gearman:get-job-status client v)))
-               (sleep 1))))
-MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
-LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
-HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
-MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
-LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
-HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
-MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
-LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
-HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
-MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
-LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
-HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
-MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
-LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
-HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
-NIL
-</pre></div>
-
-<h3 id="worker">worker</h3>
-<p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
-ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
-返り値はprincでフォーマットした文字列としてclientに渡されます。workを実行するとジョブが割り当てられるまでブロックし、1つのジョブの実行が完了すると戻ります。</p>
-<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
-  (cl-gearman:add-ability worker &quot;hello&quot;
-                          #&#39;(lambda (arg job) &quot;hello&quot;))
-
-  (cl-gearman:add-ability worker &quot;echo&quot;
-                          #&#39;(lambda (arg job) arg))
-
-  (cl-gearman:add-ability worker &quot;sleep&quot;
-                          #&#39;(lambda (arg job)
-                              (sleep (parse-integer arg))
-                              (format nil &quot;job:~A finished~%&quot; job)))
-
-  (loop do (cl-gearman:work worker)))
-</pre></div>
-
-<h3 id="_3">エラーハンドリング</h3>
-<p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
-workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
-<p>例えば、</p>
-<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
-  (cl-gearman:add-ability worker &quot;error&quot;
-                          #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
-
-  (loop do (handler-bind ((error #&#39;(lambda (c) (invoke-restart &#39;cl-gearman:skip-job))))
-             (cl-gearman:work worker))))
-</pre></div>
-
-<p>のようにしておけば、エラーが発生したjobを無視することができます。
-abort-jobはclientに失敗を通知します。retry-jobは名前の通りハンドラを再度実行します。</p>
-<h2 id="_4">対応する処理系</h2>
-<p>メインに開発を行った環境は ubuntu 12.04, sbcl 1.0.55.0.debian です。
-一応以下の処理系で動作確認しました</p>
-<ul>
-<li>sbcl 1.0.55.0.debian </li>
-<li>clisp 2.49</li>
-<li>clozure cl 1.8-r15286M</li>
-</ul>
-<p>ffi系のライブラリには依存してないので比較的動かしやすいとは思いますが、動かなければ教えて下さい。</p>
-<h2 id="_5">まとめ</h2>
-<p>以上、拙作のcl-gearmanを紹介しました。Common Lispを始めてまだ半年足らずなのでおかしいところがあるかと思いますが、フィードバックを頂けるとうれしいです。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/01/08/2012-summary/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" class="hatena-bookmark-button" data-hatena-bookmark-title="gearmanクライアントライブラリ cl-gearman" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" data-text="gearmanクライアントライブラリ cl-gearman">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../2">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -524,6 +449,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" title="Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法"><p>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</a><span style="font-size: 80%;">(March 28, 2013 at 02:50 AM)</span></li>
       <li><a href="/blog/2013/03/26/jekyll-plugin/" title="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"><p>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a><span style="font-size: 80%;">(March 26, 2013 at 08:37 PM)</span></li>
       <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
       <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
@@ -531,7 +457,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/02/19/rainbow-for-common-lisp/" title="Rainbow for Common Lisp 作りました"><p>Rainbow for Common Lisp 作りました</a><span style="font-size: 80%;">(February 19, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
       <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
-      <li><a href="/blog/2013/02/06/quicklinks4/" title="Quicklinks 4"><p>Quicklinks 4</a><span style="font-size: 80%;">(February 06, 2013 at 09:50 PM)</span></li>
     </ul>
   </div>
 
@@ -588,7 +513,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/others">others</a> (<a href="/blog/category/others/feed">rss</a>) (1)</li>
@@ -601,8 +526,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
@@ -617,7 +543,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
