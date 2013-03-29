@@ -10,10 +10,83 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 07 Nov 2012 12:00:00 GMT</pubDate>
+    <pubDate>Fri, 29 Mar 2013 21:53:15 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Rubotoを使ってRubyでAndroidアプリをかく</title>
+      <link>http://mojavy.com/blog/2013/03/29/ruboto/</link>
+      <pubDate>Fri, 29 Mar 2013 21:53:15 JST</pubDate>
+      <category><![CDATA[android]]></category>
+      <category><![CDATA[ruby]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/03/29/ruboto/</guid>
+      <description>Rubotoを使ってRubyでAndroidアプリをかく</description>
+      <content:encoded><![CDATA[<p><img alt="ruboto" src="/images/ruboto-200.png" /></p>
+<p>最近iOSアプリ界隈では<a href="http://www.rubymotion.com/">RubyMotion</a>や<a href="http://mobiruby.org/">MobiRuby</a>が盛り上がってきてますが、Androidでも<a href="http://ruboto.org/">Ruboto</a>をつかえば簡単にrubyで開発することができるようになります。</p>
+<p>そもそもjavaで実装された処理系であれば大抵javaクラスの呼びだしは簡単にできるようになっているので、jrubyやjythonでandroidアプリを開発することは以前から可能でした。
+しかし、以下のような問題があって実際にやるとなるとそれなりに面倒なものでした。</p>
+<ol>
+<li>jrubyやjythonをdalvikvm用バイナリ(dex)にコンパイルするのに時間がかかる<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></li>
+<li>androidのjavaでは使えない機能を使って処理系を実装してある場合があるので、何らかの方法で回避する必要がある</li>
+<li>スクリプトのソースファイルの配置やパスの設定を自分でやる必要があってパッケージングが面倒 </li>
+<li>アプリのフットプリントが大きくなる<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></li>
+</ol>
+<p>Rubotoをつかえばこのあたりの面倒をみてくれるので、ほとんどjavaを書く必要がなくなります。
+以下Rubotoの使用方法について簡単に紹介します。</p>
+<h2 id="_1">インストール</h2>
+<div class="pygments_murphy"><pre>gem install ruboto
+gem install jruby-jars
+</pre></div>
+
+<p>また、<code>ANDROID_HOME</code>環境変数の設定と、android sdkの <code>tools/</code> と <code>platform-tools/</code>にはあらかじめパスをとおしておきます</p>
+<h2 id="_2">雛形の生成</h2>
+<div class="pygments_murphy"><pre>ruboto gen app --package org.rubyandroid.new_demo
+
+# 以下のようにしてより詳細に設定することもできます
+# ruboto gen app --package org.rubyandroid.new_demo --path ./myapp --name MyApp --target android-17 --min-sdk android-10 --activity MainActivityName
+</pre></div>
+
+<h2 id="_3">ビルドとインストール</h2>
+<p>rakeからビルドできるようになっています。また、rubyスクリプトの更新はコンパイル不要で反映できます。
+あとは普通にrubyを書くだけです。</p>
+<div class="pygments_murphy"><pre>cd new_demo
+rake
+rake install
+
+#
+# edit ruby scripts..
+#
+
+rake update_scripts
+</pre></div>
+
+<h2 id="rubygems">rubygemsを使う</h2>
+<p>通常の<code>Gemfile</code>と同じ内容を、<code>Gemfile.apk</code>という名前のファイルに書いてプロジェクトのルートディレクトリに置いておけば、<code>rake</code>した際に<code>libs/bundle.jar</code>を生成してapkにいれてくれます。</p>
+<p>詳細は以下の例を参考にしてください。
+<a href="https://github.com/ruboto/ruboto/wiki/Tutorial%3A-Using-an-SQLite-database-with-ActiveRecord">https://github.com/ruboto/ruboto/wiki/Tutorial%3A-Using-an-SQLite-database-with-ActiveRecord</a></p>
+<h2 id="_4">補足</h2>
+<p>rubotoではjrubyの実行環境は別途Ruboto Core platformというapkで提供されています。そのためアプリ本体にruby処理系を同梱する必要がなく、省サイズでコンパイルも速くなるというメリットがあります。しかし、このやり方だとRuboto Core platformを別途インストールしてもらう必要がでてきてしまい、実際にGoogle Playで配布するようなアプリでは受け入れ難いと思います。</p>
+<p>これを回避する方法も提供されていて、プロジェクトを生成する際に<code>--with-jruby</code>というオプションをつければjrubyを同梱したapkをビルドできるようになりますが、この場合は前述のメリットはうけられなくなります。ただ、コンパイル時間に関しては、rubyスクリプトだけを触っている限りは、dexの再コンパイルは必要ないのでそれほど気にならないと思います。</p>
+<h2 id="_5">まとめ</h2>
+<ul>
+<li>androidで素のjrubyを使うのは茨の道ですが、rubotoを使えば非常に簡単にrubyを使えるようになります</li>
+<li>jrubyなので普通のrubygemsやjavaでかかれたライブラリもそのまま使えます</li>
+<li>javaで開発した場合はコンパイル〜再インストールが毎回必要になりますが、<code>.rb</code>の更新反映は高速にできるので開発効率があがります</li>
+<li>ぼく自身はまだそれほど使い込んでないので思わぬはまりどころがあるかもしれません</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>dxが分割コンパイルに対応してないので回避しづらい&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>ファイルサイズも実行時のメモリ使用量も&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded>
+    </item>
     <item>
       <title>細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</title>
       <link>http://mojavy.com/blog/2012/11/07/android-pitfalls/</link>

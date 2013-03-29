@@ -6,13 +6,6 @@ draft: True
 ---
 
 
-### twitter
-
-http://internet.watch.impress.co.jp/docs/news/20130322_592721.html
-
-### 岡山県
-
-http://rocketnews24.com/2013/03/12/303309/
 
 ### RTBkit
 
@@ -89,11 +82,28 @@ http://www.infoq.com/jp/news/2013/03/peerjs-0.1.7-released
 
 http://blog.livedoor.jp/kotesaki/archives/1794148.html
 
-### RubyMotion
+### [RubyMotion](http://www.rubymotion.com/)
 
-http://mobiruby.org/
+rubyをつかったiOSアプリのためのツールチェイン。
+rubyのコードをllvmベースのマシン語にコンパイルするので高速に実行できる。
+既存のrubyコードがすべてそのまま動くというわけではないけど、XCodeとObjective-Cのめんどさから開放されるのは魅力的ですね。
 
-http://rubysource.com/getting-to-know-rubymotion-with-laurent-sansonetti/
+* http://rubysource.com/getting-to-know-rubymotion-with-laurent-sansonetti/
+* http://d.hatena.ne.jp/naoya/20120831/1346409758
+
+### [MobiRuby](http://mobiruby.org/)
+
+これもrubyでiOSアプリをつくるためのものですが、こちらはmrubyをベースにしたruby実行環境をiOSの上に構築するので、既存のrubyのコードがほとんどそのまま動くそうです。
+
+
+### [Ruboto](http://ruboto.org/)
+
+こっちはrubyでAndroidアプリをつくるためのもの。jrubyベース。
+
+結構前にjrubyをつかって[こういうもの](https://github.com/taksatou/rime)をつくったりしたけど、これつくった当時はjrubyのjarからdalvikvm用のdexに変換する処理に時間がかかって結構面倒だった記憶があります。
+
+これに関しては[別途記事書きました]()
+
 
 
 ### 
@@ -102,6 +112,23 @@ http://podcast.bulknews.net/
 
 ### [fatcache](https://github.com/twitter/fatcache)
 
+
+
+## その他
+
 ### [Compressorhead](http://compressorheadband.com/)
- 
-American
+
+メタルでできたメタルバンド。日本人にはボーカロイドのようなものが好まれ米国人にはリアルロボが
+国民性が顕著に反映された
+
+[http://www.youtube.com/watch?v=3RBSkq-_St8](http://www.youtube.com/watch?v=3RBSkq-_St8)
+
+
+
+### [七葉院まゆせ](http://shichihain.com/)
+
+地元にはあまり興味なかったのですが、
+3Dモデル配布してくれないのかな。
+
+[http://rocketnews24.com/2013/03/12/303309/](http://rocketnews24.com/2013/03/12/303309/)
+

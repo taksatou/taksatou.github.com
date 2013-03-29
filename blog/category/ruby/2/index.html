@@ -1,0 +1,379 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+  <title>
+mojavy.com
+</title>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
+<link rel="alternate" type="application/atom+xml" title="Atom 1.0"
+href="/blog/feed/atom" />
+<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+
+
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold' rel='stylesheet' type='text/css'>
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script><![endif]-->
+
+<link rel='stylesheet' href="/styles/styles.css" type='text/css' />
+<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/pepper-grinder/jquery-ui.css' type='text/css' />
+<script src="https://www.google.com/jsapi?key=ABQIAAAAcOj4HIzbhVG_glmoxqtIlhSZ8YWc9pfyrPx-qTk3ymJ7vBNWbhSCYgWPuVGOqTugaARvpRrNszeUJQ" type="text/javascript"></script>
+<script language="Javascript" type="text/javascript">
+  google.load("search", "1");
+  google.load("jquery", "1.6.4");
+  google.load("jqueryui", "1.8.16");
+
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26834066-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- coderwall -->
+<link href="http://coderwall.com/stylesheets/jquery.coderwall.css" media="all" rel="stylesheet" type="text/css">
+<script src="http://coderwall.com/javascripts/jquery.coderwall.js"></script>
+
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <rdf:Description rdf:about="http://mojavy.com/">
+    <foaf:maker rdf:parseType="Resource">
+      <foaf:holdsAccount>
+        <foaf:OnlineAccount foaf:accountName="armyofpigs">
+          <foaf:accountServiceHomepage rdf:resource="http://www.hatena.ne.jp/" />
+        </foaf:OnlineAccount>
+      </foaf:holdsAccount>
+    </foaf:maker>
+  </rdf:Description>
+</rdf:RDF>
+
+
+  </head>
+  <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=169540733170142";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <div id="content">
+      
+  <div id="headerwrap">
+  <header id="mainheader" class="bodywidth">
+    <hgroup id="websitetitle">
+      <h1><span class="bold"><a href="/">mojavy.com</a></h1>
+      <h2></h2>
+    </hgroup>
+    <nav>
+      <ul>
+        <li><a href="/" title="Home">Home</a></li>
+        <li><a href="/blog" title="Blog">Blog</a></li>
+        <li><a href="/apps.html" title="Apps">Apps</a></li>
+        <li><a href="http://twitter.com/#!/taksatou" title="Twitter">Twitter</a></li>
+        <li><a href="https://github.com/taksatou" title="github">github</a></li>
+        <li><a href="/about.html" title="About">About</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+
+      <div id="main_block">
+        <div id="prose_block">
+          
+<div id="maincontent2" class="bodywidth">
+<div id="blogleft">
+  
+<div class="blog_post">
+  <a name="rubyのワンライナーで便利な変数まとめ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" rel="bookmark" title="Permanent Link to rubyのワンライナーで便利な変数まとめ">rubyのワンライナーで便利な変数まとめ</a></h2>
+  <small>July 08, 2012 at 06:30 PM | categories:
+
+<a href='/blog/category/ruby'>ruby</a>
+ | <a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
+<h1 id="_1">$.</h1>
+<p>現在の行番号を表します。awkでいうNRと同じです。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
+</pre></div>
+
+<h1 id="-i">$-i</h1>
+<p>この値を文字列で上書きするとin-place置換を行うようになります。オリジナルのファイルはここで指定した文字が拡張子についたファイルとして保存されます。オリジナルファイルが不要なら空文字を設定すればOKです。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+
+<h1 id="_2">$/</h1>
+<p>入力の区切り文字を表わす文字です。デフォルトは改行です。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
+</pre></div>
+
+<h1 id="_3">$, 、$;</h1>
+<p>$, はjoinのデフォルト区切り文字で、$; はsplitのデフォルト区切り文字です。
+ワンライナーではjoinとsplitをよく使うと思うので、BEGINで上書きしておけばワンライナーを多少短く書けます。</p>
+<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
+</pre></div>
+
+<h1 id="_4">まとめ</h1>
+<p>まだ他にも知らないテクニックがたくさんありそうですが、新しく見つけたら追記していきます。</p>
+<h1 id="_5">参考</h1>
+<ul>
+<li><a href="http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/">http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/</a></li>
+<li><a href="http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html">http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" class="hatena-bookmark-button" data-hatena-bookmark-title="rubyのワンライナーで便利な変数まとめ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" data-text="rubyのワンライナーで便利な変数まとめ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+<div style="text-align: right;">
+ <a href="/blog/category/ruby/1">« Previous</a>
+</div>
+
+</div>
+<section id="blogright">
+  <div id="aboutme">
+    <h1>About Me</h1>
+    <table>
+      <td>
+        <img src="http://www.gravatar.com/avatar/69238498491bce19f67cf79d528f08ee.png?s=150" alt="pic" />
+      </td><td>
+        <script>
+$(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
+        </script>
+        <h6>mojavy</h6>
+        <ul>
+          <li class="msg"></li>
+        </ul>
+      </td>
+    </table>
+  </div>
+
+<hr />
+  <div id="recent_posts">			
+    <h1>Recent posts</h1>
+    <ul>
+      <li><a href="/blog/2013/03/29/ruboto/" title="Rubotoを使ってRubyでAndroidアプリをかく"><p>Rubotoを使ってRubyでAndroidアプリをかく</a><span style="font-size: 80%;">(March 29, 2013 at 09:53 PM)</span></li>
+      <li><a href="/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" title="Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法"><p>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</a><span style="font-size: 80%;">(March 28, 2013 at 02:50 AM)</span></li>
+      <li><a href="/blog/2013/03/26/jekyll-plugin/" title="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"><p>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a><span style="font-size: 80%;">(March 26, 2013 at 08:37 PM)</span></li>
+      <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
+      <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
+      <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
+      <li><a href="/blog/2013/02/19/rainbow-for-common-lisp/" title="Rainbow for Common Lisp 作りました"><p>Rainbow for Common Lisp 作りました</a><span style="font-size: 80%;">(February 19, 2013 at 11:55 PM)</span></li>
+      <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
+    </ul>
+  </div>
+
+<hr />
+  <div id="hatena_popular">
+    <h1>Recent Popular posts</h1>
+<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript">
+Hatena.BookmarkWidget.url   = "http://mojavy.com/";
+Hatena.BookmarkWidget.title = "";
+Hatena.BookmarkWidget.sort  = "";
+Hatena.BookmarkWidget.width = 0;
+Hatena.BookmarkWidget.num   = 5;
+Hatena.BookmarkWidget.theme = "hatenadiary";
+Hatena.BookmarkWidget.load();
+</script>
+  </div><br>
+
+<hr />
+<div id="hatena_popular">
+  <h1>Popular posts</h1>
+  <script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+  <script language="javascript" type="text/javascript">
+    Hatena.BookmarkWidget.url   = "http://mojavy.com/";
+    Hatena.BookmarkWidget.title = "";
+    Hatena.BookmarkWidget.sort  = "count";
+    Hatena.BookmarkWidget.width = 0;
+    Hatena.BookmarkWidget.num   = 5;
+    Hatena.BookmarkWidget.theme = "hatenadiary";
+    Hatena.BookmarkWidget.load();
+  </script>
+</div><br>
+
+<hr />
+  <div id="categories">
+    <h1>Categories</h1>
+    <ul>
+     <li><a href="/blog/category/c">C</a> (<a href="/blog/category/c/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
+     <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/others">others</a> (<a href="/blog/category/others/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
+    </ul>
+  </div> 
+
+<hr />
+  <div id="archives">			
+    <h1>Archives</h1>
+    <ul>
+      <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
+      <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
+      <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
+      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
+      <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2011/11/1" title="November 2011">November 2011</a>&nbsp;(2)</li>
+    </ul>
+  </div>
+
+<hr />
+  <div id="coderwall">
+    <h1>Badges</h1>
+    <section class="coderwall" data-coderwall-username="taksatou" data-coderwall-orientation="vertical"></section>
+  </div><br>
+
+</section>
+</div>
+
+        </div><!-- End Prose Block -->
+      </div><!-- End Main Block -->
+      <div id="footer">
+        
+  <div id="feedicon">
+  <a href="/blog/feed"><img src="/images/rss_icon.png" alt="rss" /></a>
+  </div>
+
+<div id="footerwrap">
+  <script type="text/javascript">
+    (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+
+  <footer id="mainfooter" class="bodywidth">
+    
+    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>. </p>
+    
+
+  </footer>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+		var links = document.getElementsByTagName('a');
+		var query = '?';
+		for(var i = 0; i < links.length; i++) {
+			if(links[i].href.indexOf('#disqus_thread') >= 0) {
+				query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+			}
+		}
+		document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/mojavy/get_num_replies.js' + query + '"></' + 'script>');
+	})();
+//]]>
+</script>
+
+
+      </div> <!-- End Footer -->
+    </div> <!-- End Content -->
+
+    <!-- shareaholic -->
+    <script type="text/javascript">
+      //<![CDATA[
+  (function() {
+    var shr = document.createElement('script');
+    shr.src = '//dtym7iokkjlif.cloudfront.net/assets/pub/shareaholic.js';
+    shr.type = 'text/javascript';
+    shr.async = 'true';
+    shr.onload = shr.onreadystatechange = function() {
+      var rs = this.readyState;
+      if (rs && rs != 'complete' && rs != 'loaded') return;
+      var apikey = 'd9fb965c81d656a30f7629e4e251e405'
+      try { Shareaholic.init(apikey); } catch (e) {}
+    };
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(shr, s);
+  })();
+//]]>
+    </script>
+  </body>
+</html>
+
+
+
+

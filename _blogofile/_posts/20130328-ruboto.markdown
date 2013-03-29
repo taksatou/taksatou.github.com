@@ -1,0 +1,91 @@
+---
+categories: ruby, android
+date: 2013/03/29 21:53:15
+title: Rubotoを使ってRubyでAndroidアプリをかく
+image: /images/ruboto-200.png
+---
+
+![ruboto](/images/ruboto-200.png)
+
+最近iOSアプリ界隈では[RubyMotion](http://www.rubymotion.com/)や[MobiRuby](http://mobiruby.org/)が盛り上がってきてますが、Androidでも[Ruboto](http://ruboto.org/)をつかえば簡単にrubyで開発することができるようになります。
+
+そもそもjavaで実装された処理系であれば大抵javaクラスの呼びだしは簡単にできるようになっているので、jrubyやjythonでandroidアプリを開発することは以前から可能でした。
+しかし、以下のような問題があって実際にやるとなるとそれなりに面倒なものでした。
+
+1. jrubyやjythonをdalvikvm用バイナリ(dex)にコンパイルするのに時間がかかる[^1]
+2. androidのjavaでは使えない機能を使って処理系を実装してある場合があるので、何らかの方法で回避する必要がある
+3. スクリプトのソースファイルの配置やパスの設定を自分でやる必要があってパッケージングが面倒 
+4. アプリのフットプリントが大きくなる[^2]
+
+Rubotoをつかえばこのあたりの面倒をみてくれるので、ほとんどjavaを書く必要がなくなります。
+以下Rubotoの使用方法について簡単に紹介します。
+
+## インストール
+
+$$code
+
+gem install ruboto
+gem install jruby-jars
+
+$$/code
+
+また、`ANDROID_HOME`環境変数の設定と、android sdkの `tools/` と `platform-tools/`にはあらかじめパスをとおしておきます
+
+## 雛形の生成
+
+$$code
+ruboto gen app --package org.rubyandroid.new_demo
+
+# 以下のようにしてより詳細に設定することもできます
+# ruboto gen app --package org.rubyandroid.new_demo --path ./myapp --name MyApp --target android-17 --min-sdk android-10 --activity MainActivityName
+$$/code
+
+
+## ビルドとインストール
+
+rakeからビルドできるようになっています。また、rubyスクリプトの更新はコンパイル不要で反映できます。
+あとは普通にrubyを書くだけです。
+
+$$code
+cd new_demo
+rake
+rake install
+
+#
+# edit ruby scripts..
+#
+
+rake update_scripts
+
+$$/code
+
+
+## rubygemsを使う
+
+通常の`Gemfile`と同じ内容を、`Gemfile.apk`という名前のファイルに書いてプロジェクトのルートディレクトリに置いておけば、`rake`した際に`libs/bundle.jar`を生成してapkにいれてくれます。
+
+
+詳細は以下の例を参考にしてください。
+[https://github.com/ruboto/ruboto/wiki/Tutorial%3A-Using-an-SQLite-database-with-ActiveRecord](https://github.com/ruboto/ruboto/wiki/Tutorial%3A-Using-an-SQLite-database-with-ActiveRecord)
+
+
+## 補足
+
+rubotoではjrubyの実行環境は別途Ruboto Core platformというapkで提供されています。そのためアプリ本体にruby処理系を同梱する必要がなく、省サイズでコンパイルも速くなるというメリットがあります。しかし、このやり方だとRuboto Core platformを別途インストールしてもらう必要がでてきてしまい、実際にGoogle Playで配布するようなアプリでは受け入れ難いと思います。
+
+これを回避する方法も提供されていて、プロジェクトを生成する際に`--with-jruby`というオプションをつければjrubyを同梱したapkをビルドできるようになりますが、この場合は前述のメリットはうけられなくなります。ただ、コンパイル時間に関しては、rubyスクリプトだけを触っている限りは、dexの再コンパイルは必要ないのでそれほど気にならないと思います。
+
+
+## まとめ
+
+* androidで素のjrubyを使うのは茨の道ですが、rubotoを使えば非常に簡単にrubyを使えるようになります
+* jrubyなので普通のrubygemsやjavaでかかれたライブラリもそのまま使えます
+* javaで開発した場合はコンパイル〜再インストールが毎回必要になりますが、`.rb`の更新反映は高速にできるので開発効率があがります
+* ぼく自身はまだそれほど使い込んでないので思わぬはまりどころがあるかもしれません
+
+
+
+
+[^1]: dxが分割コンパイルに対応してないので回避しづらい
+[^2]: ファイルサイズも実行時のメモリ使用量も
+

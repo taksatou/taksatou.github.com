@@ -102,6 +102,103 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="rubotoを使ってrubyでandroidアプリをかく"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/03/29/ruboto/" rel="bookmark" title="Permanent Link to Rubotoを使ってRubyでAndroidアプリをかく">Rubotoを使ってRubyでAndroidアプリをかく</a></h2>
+  <small>March 29, 2013 at 09:53 PM | categories:
+
+<a href='/blog/category/android'>android</a>, <a href='/blog/category/ruby'>ruby</a>
+ | <a href="http://mojavy.com/blog/2013/03/29/ruboto/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="ruboto" src="/images/ruboto-200.png" /></p>
+<p>最近iOSアプリ界隈では<a href="http://www.rubymotion.com/">RubyMotion</a>や<a href="http://mobiruby.org/">MobiRuby</a>が盛り上がってきてますが、Androidでも<a href="http://ruboto.org/">Ruboto</a>をつかえば簡単にrubyで開発することができるようになります。</p>
+<p>そもそもjavaで実装された処理系であれば大抵javaクラスの呼びだしは簡単にできるようになっているので、jrubyやjythonでandroidアプリを開発することは以前から可能でした。
+しかし、以下のような問題があって実際にやるとなるとそれなりに面倒なものでした。</p>
+<ol>
+<li>jrubyやjythonをdalvikvm用バイナリ(dex)にコンパイルするのに時間がかかる<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></li>
+<li>androidのjavaでは使えない機能を使って処理系を実装してある場合があるので、何らかの方法で回避する必要がある</li>
+<li>スクリプトのソースファイルの配置やパスの設定を自分でやる必要があってパッケージングが面倒 </li>
+<li>アプリのフットプリントが大きくなる<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></li>
+</ol>
+<p>Rubotoをつかえばこのあたりの面倒をみてくれるので、ほとんどjavaを書く必要がなくなります。
+以下Rubotoの使用方法について簡単に紹介します。</p>
+<h2 id="_1">インストール</h2>
+<div class="pygments_murphy"><pre>gem install ruboto
+gem install jruby-jars
+</pre></div>
+
+<p>また、<code>ANDROID_HOME</code>環境変数の設定と、android sdkの <code>tools/</code> と <code>platform-tools/</code>にはあらかじめパスをとおしておきます</p>
+<h2 id="_2">雛形の生成</h2>
+<div class="pygments_murphy"><pre>ruboto gen app --package org.rubyandroid.new_demo
+
+# 以下のようにしてより詳細に設定することもできます
+# ruboto gen app --package org.rubyandroid.new_demo --path ./myapp --name MyApp --target android-17 --min-sdk android-10 --activity MainActivityName
+</pre></div>
+
+<h2 id="_3">ビルドとインストール</h2>
+<p>rakeからビルドできるようになっています。また、rubyスクリプトの更新はコンパイル不要で反映できます。
+あとは普通にrubyを書くだけです。</p>
+<div class="pygments_murphy"><pre>cd new_demo
+rake
+rake install
+
+#
+# edit ruby scripts..
+#
+
+rake update_scripts
+</pre></div>
+
+<h2 id="rubygems">rubygemsを使う</h2>
+<p>通常の<code>Gemfile</code>と同じ内容を、<code>Gemfile.apk</code>という名前のファイルに書いてプロジェクトのルートディレクトリに置いておけば、<code>rake</code>した際に<code>libs/bundle.jar</code>を生成してapkにいれてくれます。</p>
+<p>詳細は以下の例を参考にしてください。
+<a href="https://github.com/ruboto/ruboto/wiki/Tutorial%3A-Using-an-SQLite-database-with-ActiveRecord">https://github.com/ruboto/ruboto/wiki/Tutorial%3A-Using-an-SQLite-database-with-ActiveRecord</a></p>
+<h2 id="_4">補足</h2>
+<p>rubotoではjrubyの実行環境は別途Ruboto Core platformというapkで提供されています。そのためアプリ本体にruby処理系を同梱する必要がなく、省サイズでコンパイルも速くなるというメリットがあります。しかし、このやり方だとRuboto Core platformを別途インストールしてもらう必要がでてきてしまい、実際にGoogle Playで配布するようなアプリでは受け入れ難いと思います。</p>
+<p>これを回避する方法も提供されていて、プロジェクトを生成する際に<code>--with-jruby</code>というオプションをつければjrubyを同梱したapkをビルドできるようになりますが、この場合は前述のメリットはうけられなくなります。ただ、コンパイル時間に関しては、rubyスクリプトだけを触っている限りは、dexの再コンパイルは必要ないのでそれほど気にならないと思います。</p>
+<h2 id="_5">まとめ</h2>
+<ul>
+<li>androidで素のjrubyを使うのは茨の道ですが、rubotoを使えば非常に簡単にrubyを使えるようになります</li>
+<li>jrubyなので普通のrubygemsやjavaでかかれたライブラリもそのまま使えます</li>
+<li>javaで開発した場合はコンパイル〜再インストールが毎回必要になりますが、<code>.rb</code>の更新反映は高速にできるので開発効率があがります</li>
+<li>ぼく自身はまだそれほど使い込んでないので思わぬはまりどころがあるかもしれません</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>dxが分割コンパイルに対応してないので回避しづらい&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>ファイルサイズも実行時のメモリ使用量も&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/03/29/ruboto/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/03/29/ruboto/" class="hatena-bookmark-button" data-hatena-bookmark-title="Rubotoを使ってRubyでAndroidアプリをかく" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/03/29/ruboto/" data-text="Rubotoを使ってRubyでAndroidアプリをかく">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/03/29/ruboto/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/03/26/jekyll-plugin/" rel="bookmark" title="Permanent Link to hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン">hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a></h2>
   <small>March 26, 2013 at 08:37 PM | categories:
@@ -375,71 +472,8 @@ rainbowで色付けしてるのでエスケープシーケンスを解釈でき�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="rubyのワンライナーで便利な変数まとめ"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" rel="bookmark" title="Permanent Link to rubyのワンライナーで便利な変数まとめ">rubyのワンライナーで便利な変数まとめ</a></h2>
-  <small>July 08, 2012 at 06:30 PM | categories:
-
-<a href='/blog/category/ruby'>ruby</a>
- | <a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
-<h1 id="_1">$.</h1>
-<p>現在の行番号を表します。awkでいうNRと同じです。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
-</pre></div>
-
-<h1 id="-i">$-i</h1>
-<p>この値を文字列で上書きするとin-place置換を行うようになります。オリジナルのファイルはここで指定した文字が拡張子についたファイルとして保存されます。オリジナルファイルが不要なら空文字を設定すればOKです。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
-</pre></div>
-
-<h1 id="_2">$/</h1>
-<p>入力の区切り文字を表わす文字です。デフォルトは改行です。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
-</pre></div>
-
-<h1 id="_3">$, 、$;</h1>
-<p>$, はjoinのデフォルト区切り文字で、$; はsplitのデフォルト区切り文字です。
-ワンライナーではjoinとsplitをよく使うと思うので、BEGINで上書きしておけばワンライナーを多少短く書けます。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
-</pre></div>
-
-<h1 id="_4">まとめ</h1>
-<p>まだ他にも知らないテクニックがたくさんありそうですが、新しく見つけたら追記していきます。</p>
-<h1 id="_5">参考</h1>
-<ul>
-<li><a href="http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/">http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/</a></li>
-<li><a href="http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html">http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" class="hatena-bookmark-button" data-hatena-bookmark-title="rubyのワンライナーで便利な変数まとめ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" data-text="rubyのワンライナーで便利な変数まとめ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
+ <a href="/blog/category/ruby/2">Next »</a>
 </div>
 
 </div>
@@ -465,6 +499,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/03/29/ruboto/" title="Rubotoを使ってRubyでAndroidアプリをかく"><p>Rubotoを使ってRubyでAndroidアプリをかく</a><span style="font-size: 80%;">(March 29, 2013 at 09:53 PM)</span></li>
       <li><a href="/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" title="Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法"><p>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</a><span style="font-size: 80%;">(March 28, 2013 at 02:50 AM)</span></li>
       <li><a href="/blog/2013/03/26/jekyll-plugin/" title="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"><p>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a><span style="font-size: 80%;">(March 26, 2013 at 08:37 PM)</span></li>
       <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
@@ -472,7 +507,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
       <li><a href="/blog/2013/02/19/rainbow-for-common-lisp/" title="Rainbow for Common Lisp 作りました"><p>Rainbow for Common Lisp 作りました</a><span style="font-size: 80%;">(February 19, 2013 at 11:55 PM)</span></li>
       <li><a href="/blog/2013/02/18/ltsv-for-common-lisp/" title="LTSV for Common Lisp 作りました"><p>LTSV for Common Lisp 作りました</a><span style="font-size: 80%;">(February 18, 2013 at 08:30 PM)</span></li>
-      <li><a href="/blog/2013/02/09/sbcl-defconstant/" title="common lispのdefconstantについての注意点"><p>common lispのdefconstantについての注意点</a><span style="font-size: 80%;">(February 09, 2013 at 05:15 PM)</span></li>
     </ul>
   </div>
 
@@ -513,7 +547,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/c">C</a> (<a href="/blog/category/c/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
@@ -540,7 +574,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
@@ -559,7 +593,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
