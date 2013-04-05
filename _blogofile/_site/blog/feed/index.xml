@@ -10,10 +10,40 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Fri, 29 Mar 2013 21:53:15 GMT</pubDate>
+    <pubDate>Fri, 05 Apr 2013 19:49:49 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</title>
+      <link>http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/</link>
+      <pubDate>Fri, 05 Apr 2013 19:49:49 JST</pubDate>
+      <category><![CDATA[php]]></category>
+      <category><![CDATA[emacs]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/</guid>
+      <description>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</description>
+      <content:encoded><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /> </p>
+<p>phper人口は多いはずなのになぜかどこにも見つからなかったのでemacsでphpのインタラクティブシェルを動かすための<a href="https://github.com/taksatou/inf-php">inf-php.el</a> を書いた。</p>
+<h4 id="install">install</h4>
+<p>auto-installがはいっていれば、<code>(auto-install-from-url "https://raw.github.com/taksatou/inf-php/master/inf-php.el")</code>で、はいってなければ <a href="https://raw.github.com/taksatou/inf-php/master/inf-php.el">inf-php.el</a> をダウンロードして適当にload-pathの通った場所に配置して、<code>.emacs</code>に以下を追記</p>
+<div class="pygments_murphy"><pre>(require &#39;inf-php)
+</pre></div>
+
+<h4 id="usage">usage</h4>
+<p>現状のキーバインドは以下の通り</p>
+<div class="pygments_murphy"><pre>(define-key php-mode-map &quot;\C-c\C-s&quot; &#39;inf-php)              ;; inf-phpを起動する
+(define-key php-mode-map &quot;\C-c\C-z&quot; &#39;php-switch-to-inf)    ;; inf-rubyバッファに切り替える
+(define-key php-mode-map &quot;\M-\C-x&quot; &#39;php-send-definition)   ;; 現在カーソルがあるところの関数をinf-phpに送る
+(define-key php-mode-map &quot;\C-c\C-x&quot; &#39;php-send-definition)  ;; 同上
+(define-key php-mode-map &quot;\C-c\M-x&quot; &#39;php-send-definition-and-go)  ;; 同上だが送った後バッファを切り替える
+(define-key php-mode-map &quot;\C-c\C-r&quot; &#39;php-send-region)             ;; 現在のregionを送る
+(define-key php-mode-map &quot;\C-c\M-r&quot; &#39;php-send-region-and-go)      ;; 同上だが送った後バッファを切り替える
+(define-key php-mode-map &quot;\C-x\C-e&quot; &#39;php-send-last-sexp)          ;; 直前のsexpをinf-phpに送る
+</pre></div>
+
+<h4 id="misc">misc</h4>
+<p>フィードバック、要望等ありましたらgithubからおねがいします。</p>]]></content:encoded>
+    </item>
     <item>
       <title>Rubotoを使ってRubyでAndroidアプリをかく</title>
       <link>http://mojavy.com/blog/2013/03/29/ruboto/</link>
@@ -543,46 +573,6 @@ each time -- so you can't use VECTOR or #(...) for the value).</p>
 <p>defconstantはdefparameterに似ているが、名前の値が固定されていることを前提としており、コンパイラは、コンパイルされるプログラムでの値について仮定を置くことが許されている。 (...中略...) コンパイラは置き換えたオブジェクトのコピーが定数の実際の値とeqlになるように注意しなければならない。たとえば、コンパイラは数のコピーは自由に作ってもよいが、値がリストであるときは十分に注意しなければならない。</p>
 </blockquote>
 <p>なるほど。</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Quicklinks 4</title>
-      <link>http://mojavy.com/blog/2013/02/06/quicklinks4/</link>
-      <pubDate>Wed, 06 Feb 2013 21:50:00 JST</pubDate>
-      <category><![CDATA[quicklinks]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/02/06/quicklinks4/</guid>
-      <description>Quicklinks 4</description>
-      <content:encoded><![CDATA[<p><a href="http://mojavy.com/blog/2012/11/14/quicklinks3/">前回</a> から2ヵ月くらいあいてしまいました。古いブックマークはブックマークしたこと自体を忘れてしまうのでもうちょいまめにまとめたいです。</p>
-<h4 id="q-gears"><a href="http://q-gears.sourceforge.net/index.phtml?content=1">Q-Gears</a></h4>
-<p>FF7のゲームエンジンのクローンを目指したものだそうです。
-LinuxやWindowsで動くようにクロスプラットフォームな設計になっていて、将来的にはsquareの他のゲームも動かすためのフレームワークとしても提供することも考えているようです。</p>
-<ul>
-<li><a href="http://q-gears.sourceforge.net/gears.pdf">http://q-gears.sourceforge.net/gears.pdf</a></li>
-</ul>
-<p>この資料にはシステムの概要が書かれてます。リバースエンジニアリングして集めた情報と思われますが、読み物としてもおもしろそうです。</p>
-<h4 id="riemann"><a href="http://riemann.io/">Riemann</a></h4>
-<p>Clojureで書かれたnetwork event stream processing systemとのこと。</p>
-<p><a href="http://riemann.io/concepts.html">ここ</a>のイラストと説明を見れば大体イメージはわくと思います。
-コンセプト的にはfluentdに近い気がしますが、集める対象がログではなくイベントそれ自体なので守備範囲はちょっと違うようです。
-Riemann自体が落ちたときにどうなるか、とか実際に運用するとなると色々気になるところはありそうですが試してみる価値はありそうです。</p>
-<p>設定をClojureで書けるというのもとがってていいと思います。</p>
-<h4 id="whistlepig"><a href="https://github.com/wmorgan/whistlepig">whistlepig</a></h4>
-<p>Cで書かれた軽量なリアルタイム全文検索のためのライブラリです。
-複数プロセスでも同時にインデックスを読み書きできるようで、なかなか便利そうです。今度詳細を調べてみようと思います。</p>
-<h4 id="montezuma"><a href="http://code.google.com/p/montezuma/">Montezuma</a></h4>
-<p>こっちはFerretをCommon Lispに移植したもの。ちなみにFerretはLuceneをRubyに移植したものです。
-これはこれで便利だと思います。</p>
-<h4 id="openrtb"><a href="http://code.google.com/p/openrtb/">OpenRTB</a></h4>
-<p>広告業界ではread-time biddingが最近のトレンドのようなので、関係者はこれを読んで理解を深めましょう。</p>
-<h4 id="ios-security-internals"><a href="http://365.rsaconference.com/servlet/JiveServlet/previewBody/3488-102-1-4589/MBS-402.pdf">iOS Security Internals</a></h4>
-<p>jailbreakやったりする人がつくった資料のようです。
-これもなかなか興味深いです。</p>
-<h4 id="unreal4"><a href="http://www.unrealengine.com/unreal_engine_4/">UNREAL4</a></h4>
-<p>Unity3でも十分すごいと思いましたが、最近のゲームエンジンはどれもすごいですね。</p>
-<ul>
-<li>http://www.wmtdesigners.com/wordpress/game-2012-06-19</li>
-</ul>
-<h4 id="leap-motion"><a href="https://www.leapmotion.com/">Leap Motion</a></h4>
-<p>xboxのkinect的なものですが、それよりはるかに上回る精度らしいです。プレオーダーしたので届いたら色々遊んでみます。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

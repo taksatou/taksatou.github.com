@@ -10,10 +10,40 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 09 Jan 2013 22:00:00 GMT</pubDate>
+    <pubDate>Fri, 05 Apr 2013 19:49:49 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</title>
+      <link>http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/</link>
+      <pubDate>Fri, 05 Apr 2013 19:49:49 JST</pubDate>
+      <category><![CDATA[php]]></category>
+      <category><![CDATA[emacs]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/</guid>
+      <description>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</description>
+      <content:encoded><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /> </p>
+<p>phper人口は多いはずなのになぜかどこにも見つからなかったのでemacsでphpのインタラクティブシェルを動かすための<a href="https://github.com/taksatou/inf-php">inf-php.el</a> を書いた。</p>
+<h4 id="install">install</h4>
+<p>auto-installがはいっていれば、<code>(auto-install-from-url "https://raw.github.com/taksatou/inf-php/master/inf-php.el")</code>で、はいってなければ <a href="https://raw.github.com/taksatou/inf-php/master/inf-php.el">inf-php.el</a> をダウンロードして適当にload-pathの通った場所に配置して、<code>.emacs</code>に以下を追記</p>
+<div class="pygments_murphy"><pre>(require &#39;inf-php)
+</pre></div>
+
+<h4 id="usage">usage</h4>
+<p>現状のキーバインドは以下の通り</p>
+<div class="pygments_murphy"><pre>(define-key php-mode-map &quot;\C-c\C-s&quot; &#39;inf-php)              ;; inf-phpを起動する
+(define-key php-mode-map &quot;\C-c\C-z&quot; &#39;php-switch-to-inf)    ;; inf-rubyバッファに切り替える
+(define-key php-mode-map &quot;\M-\C-x&quot; &#39;php-send-definition)   ;; 現在カーソルがあるところの関数をinf-phpに送る
+(define-key php-mode-map &quot;\C-c\C-x&quot; &#39;php-send-definition)  ;; 同上
+(define-key php-mode-map &quot;\C-c\M-x&quot; &#39;php-send-definition-and-go)  ;; 同上だが送った後バッファを切り替える
+(define-key php-mode-map &quot;\C-c\C-r&quot; &#39;php-send-region)             ;; 現在のregionを送る
+(define-key php-mode-map &quot;\C-c\M-r&quot; &#39;php-send-region-and-go)      ;; 同上だが送った後バッファを切り替える
+(define-key php-mode-map &quot;\C-x\C-e&quot; &#39;php-send-last-sexp)          ;; 直前のsexpをinf-phpに送る
+</pre></div>
+
+<h4 id="misc">misc</h4>
+<p>フィードバック、要望等ありましたらgithubからおねがいします。</p>]]></content:encoded>
+    </item>
     <item>
       <title>yaml-modeを拡張してyamlを高速に編集する</title>
       <link>http://mojavy.com/blog/2013/01/09/yaml-mode-ext/</link>
