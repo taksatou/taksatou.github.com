@@ -23,7 +23,7 @@
       <guid isPermaLink="true">http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/</guid>
       <description>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</description>
       <content:encoded><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /> </p>
-<p>phper人口は多いはずなのになぜかどこにも見つからなかったのでemacsでphpのインタラクティブシェルを動かすための<a href="https://github.com/taksatou/inf-php">inf-php.el</a> を書いた。</p>
+<p>phper人口は多いはずなのになぜかどこにも見つからなかったので<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>emacsでphpのインタラクティブシェルを動かすための<a href="https://github.com/taksatou/inf-php">inf-php.el</a> を書いた。</p>
 <h4 id="install">install</h4>
 <p>auto-installがはいっていれば、<code>(auto-install-from-url "https://raw.github.com/taksatou/inf-php/master/inf-php.el")</code>で、はいってなければ <a href="https://raw.github.com/taksatou/inf-php/master/inf-php.el">inf-php.el</a> をダウンロードして適当にload-pathの通った場所に配置して、<code>.emacs</code>に以下を追記</p>
 <div class="pygments_murphy"><pre>(require &#39;inf-php)
@@ -42,7 +42,15 @@
 </pre></div>
 
 <h4 id="misc">misc</h4>
-<p>フィードバック、要望等ありましたらgithubからおねがいします。</p>]]></content:encoded>
+<p>フィードバック、要望等ありましたらgithubからおねがいします。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>と思ったら、<a href="https://github.com/ieure/php_repl">php_repl</a> なるものが存在していた。php_replのほうが機能的には充実してそう。inf-phpはpear使うメリットはpearなしで動いてインストールが簡単,というくらいか(2013/04/05 20:57:35 追記)&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded>
     </item>
     <item>
       <title>yaml-modeを拡張してyamlを高速に編集する</title>

@@ -8,7 +8,7 @@ image: /images/carbon-emacs-icon-200.png
 ![emacs](/images/carbon-emacs-icon-200.png) 
 
 
-phper人口は多いはずなのになぜかどこにも見つからなかったのでemacsでphpのインタラクティブシェルを動かすための[inf-php.el](https://github.com/taksatou/inf-php) を書いた。
+phper人口は多いはずなのになぜかどこにも見つからなかったので[^1]emacsでphpのインタラクティブシェルを動かすための[inf-php.el](https://github.com/taksatou/inf-php) を書いた。
 
 
 #### install ####
@@ -40,3 +40,4 @@ $$/code
 フィードバック、要望等ありましたらgithubからおねがいします。
 
 
+[^1]: と思ったら、[php_repl](https://github.com/ieure/php_repl ) なるものが存在していた。php_replのほうが機能的には充実してそう。inf-phpはpear使うメリットはpearなしで動いてインストールが簡単,というくらいか(2013/04/05 20:57:35 追記)
