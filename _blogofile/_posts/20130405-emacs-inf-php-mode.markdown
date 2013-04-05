@@ -40,4 +40,4 @@ $$/code
 フィードバック、要望等ありましたらgithubからおねがいします。
 
 
-[^1]: と思ったら、[php_repl](https://github.com/ieure/php_repl ) なるものが存在していた。php_replのほうが機能的には充実してそう。inf-phpはpear使うメリットはpearなしで動いてインストールが簡単,というくらいか(2013/04/05 20:57:35 追記)
+[^1]: と思ったら、[php_repl](https://github.com/ieure/php_repl ) なるものが存在していた。php_replのほうが機能的には充実してそう。inf-phpのメリットはpearなしで動いてインストールが簡単,というくらいか(2013/04/05 20:57:35 追記)
