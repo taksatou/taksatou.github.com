@@ -5,7 +5,7 @@ del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
+nnfieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
@@ -163,7 +163,7 @@ h1 {
   font-family: 'Open Sans', Arial, sans-serif;
   color: #787a64;
   text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-  font-size: 30px;
+  font-size: 20px;
   line-height: 36px;
   letter-spacing: -1px; }
 
@@ -174,14 +174,57 @@ h1 {
   margin-top: 100px; }
 .slide q strong {
   white-space: nowrap; }
-.slide p {
+nn.slide p {
   margin: 1.25em 0; }
+
 .slide h1 {
-  line-height: 100%; }
+   font-size: 200%
+   line-height: 100%; 
+}
+.slide h2 {
+  color: #6c577a;
+  font-size: 180%;
+  line-height: 90%; 
+}
+.slide h3 {
+  color: #6c577a;
+  font-size: 146%; 
+  line-height: 73%; 
+}
+.slide h4 {
+  color: #6c577a;
+  font-size: 132%; 
+  line-height: 66%; 
+}
+.slide h5 {
+  color: #6c577a;
+  font-size: 118%; 
+  line-height: 59%; 
+}
+.slide h6 {
+  color: #6c577a;
+  font-size: 108%; 
+  line-height: 54%; 
+}
+
 .slide ul, .slide p, .slide h2, .slide h3, .slide h4, .slide h5, .slide h6 {
   margin-top: 1em; }
 .slide li {
   margin: 0 0 0.5em; }
+
+
+.footnotes {
+   font-size: 50%;
+   line-height: 10%;
+ }
+
+sup {
+   font-size: 50%;
+}
+
+[rev=footnote] {
+   font-size: 0%;
+}
 
 /* IMPRESS NOT SUPPORTED STYLES */
 .fallback-message {
@@ -208,3 +251,4 @@ h1 {
 @media print {
   .step {
     page-break-after: always; } }
+
