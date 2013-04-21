@@ -10,10 +10,30 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Fri, 05 Apr 2013 19:49:49 GMT</pubDate>
+    <pubDate>Sun, 21 Apr 2013 16:56:41 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>inf-php.elがmelpaに登録されました</title>
+      <link>http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/</link>
+      <pubDate>Sun, 21 Apr 2013 16:56:41 JST</pubDate>
+      <category><![CDATA[php]]></category>
+      <category><![CDATA[emacs]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/</guid>
+      <description>inf-php.elがmelpaに登録されました</description>
+      <content:encoded><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /> </p>
+<p><a href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/">先日つくったinf-php</a> が <a href="http://melpa.milkbox.net/">melpa</a> に登録されました。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+<p>emacs24 以降をつかっている人は<code>M-x list-packages</code> からinf-phpをインストールできるようになります。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>初めてmelpaにpull requestを送ってみましたが、送って1分でmergeされるという爆速対応でした。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded>
+    </item>
     <item>
       <title>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</title>
       <link>http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/</link>

@@ -7,12 +7,37 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-04-05T19:49:49Z</updated>
+  <updated>2013-04-21T16:56:41Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[inf-php.elがmelpaに登録されました]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/" />
+    <id>http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/</id>
+    <updated>2013-04-21T16:56:41Z</updated>
+    <published>2013-04-21T16:56:41Z</published>
+    <category scheme="http://mojavy.com/blog" term="php" />
+    <category scheme="http://mojavy.com/blog" term="emacs" />
+    <summary type="html"><![CDATA[inf-php.elがmelpaに登録されました]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/"><![CDATA[<p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /> </p>
+<p><a href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/">先日つくったinf-php</a> が <a href="http://melpa.milkbox.net/">melpa</a> に登録されました。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+<p>emacs24 以降をつかっている人は<code>M-x list-packages</code> からinf-phpをインストールできるようになります。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>初めてmelpaにpull requestを送ってみましたが、送って1分でmergeされるという爆速対応でした。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -571,64 +596,5 @@ CL-USER&gt; (cl-ltsv:alist-ltsv &#39;((&quot;host&quot; . &quot;127.0.0.1&quot;)
 <h3 id="_3">まとめ</h3>
 <p>ライブラリにするほどでもなかった気はしますが、Common Lispには文字列のsplitが標準でついてなくてちょっと面倒に感じることもあったのでないよりはましかな、ということで作りました。</p>
 <p>フィードバック等ありましたらコメント頂けるとうれしいです。</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[common lispのdefconstantについての注意点]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" />
-    <id>http://mojavy.com/blog/2013/02/09/sbcl-defconstant/</id>
-    <updated>2013-02-09T17:15:00Z</updated>
-    <published>2013-02-09T17:15:00Z</published>
-    <category scheme="http://mojavy.com/blog" term="common lisp" />
-    <summary type="html"><![CDATA[common lispのdefconstantについての注意点]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/"><![CDATA[<p><img alt="lisp" src="/images/lisp-warinig-150.png" /></p>
-<p>sbclでdefconstantすると以下のようなエラーがおきたりおきなかったりして不思議に思っていた。</p>
-<div class="pygments_murphy"><pre>The constant CL-GEARMAN::+REQUEST-MAGIC+ is being redefined
-(from #(0 82 69 81) to #(0 82 69 81))
-   [Condition of type DEFCONSTANT-UNEQL]
-See also:
-  Common Lisp Hyperspec, DEFCONSTANT [:macro]
-  SBCL Manual, Idiosyncrasies [:node]
-
-Restarts:
- 0: [CONTINUE] Go ahead and change the value.
- 1: [ABORT] Keep the old value.
- 2: [TRY-RECOMPILING] Recompile protocol and try loading it again
- 3: [RETRY] Retry loading FASL for #&lt;CL-SOURCE-FILE &quot;cl-gearman&quot; &quot;src&quot; &quot;protocol&quot;&gt;.
- 4: [ACCEPT] Continue, treating loading FASL for #&lt;CL-SOURCE-FILE &quot;cl-gearman&quot; &quot;src&quot; &quot;protocol&quot;&gt; as having been successful.
- 5: [ABORT] Give up on &quot;cl-gearman&quot;
- --more--
-
-Backtrace:
-  0: (SB-C::%DEFCONSTANT ..)
-  1: (SB-FASL::LOAD-FASL-GROUP ..)
-  2: ((FLET SB-THREAD::WITH-RECURSIVE-LOCK-THUNK :IN SB-FASL::LOAD-AS-FASL))
-  3: ((FLET #:WITHOUT-INTERRUPTS-BODY-88874 :IN SB-THREAD::CALL-WITH-RECURSIVE-LOCK))
-  4: (SB-THREAD::CALL-WITH-RECURSIVE-LOCK ..)
-  5: (SB-FASL::LOAD-AS-FASL ..)
-  6: ((FLET SB-FASL::LOAD-STREAM :IN LOAD) ..)
-  7: (LOAD ..)
-  8: (SB-IMPL::%MAP-FOR-EFFECT-ARITY-1 ..)
-</pre></div>
-
-<p>先日公開したcl-gearmanでこれが発生していてしまい原因がわからずそのまま放置していたのだけど、以下のforumを発見した。</p>
-<p><a href="http://www.lispforum.com/viewtopic.php?f=33&amp;t=4088">http://www.lispforum.com/viewtopic.php?f=33&amp;t=4088</a></p>
-<blockquote>
-<p>It's not a bug (in SBCL). The value in a DEFCONSTANT form is restricted
-to being something that's EQL to itself each time it's evaluated (that's
-horrible phrasing, I know), so using a vector is illegal (that is, you
-can use a vector, but you have to make sure you return the same vector
-each time -- so you can't use VECTOR or #(...) for the value).</p>
-</blockquote>
-<p>DEFCONSTANTフォームの値はそれが何度評価されてもEQLになるようなものでなければならないらしい。
-なので、vectorをDEFCONSTANTでバインドすることは可能だけど、DEFCONSTANTフォームの値の場所にVECTOR や #(...)で記述したフォームを書くことはできない。</p>
-<p>CLtL2にもちゃんと書いてあった。</p>
-<blockquote>
-<p>defconstantはdefparameterに似ているが、名前の値が固定されていることを前提としており、コンパイラは、コンパイルされるプログラムでの値について仮定を置くことが許されている。 (...中略...) コンパイラは置き換えたオブジェクトのコピーが定数の実際の値とeqlになるように注意しなければならない。たとえば、コンパイラは数のコピーは自由に作ってもよいが、値がリストであるときは十分に注意しなければならない。</p>
-</blockquote>
-<p>なるほど。</p>]]></content>
   </entry>
 </feed>
