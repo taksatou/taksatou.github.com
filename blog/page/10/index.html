@@ -102,6 +102,70 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="tmuxでマウスを使う"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" rel="bookmark" title="Permanent Link to tmuxでマウスを使う">tmuxでマウスを使う</a></h2>
+  <small>December 13, 2011 at 12:58 AM | categories:
+
+<a href='/blog/category/advent-calendar'>advent calendar</a>, <a href='/blog/category/tmux'>tmux</a>
+ | <a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>これは<a href="http://atnd.org/events/22320">ターミナルマルチプレクサ Advent Calendar 2011</a>の13日目です。
+12日目はnetmarkjpさんの<a href="http://netmark.jp/2011/12/gnu-screen-xmodem.html">GNU screen でシリアル通信 + xmodem転送</a>でした。</p>
+<p>今日はtmuxのマウスまわりの設定について紹介してみます。</p>
+<p>tmuxにはマウスで操作するための機能がいくつか提供されています。ChangeLogを見る限りでは結構前からマウスサポートはされているようですが、mac portから入れたtmuxでは動かなかったのでソースから最新版をいれることをおすすめします。
+macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/tmatsuu/20111130/1322677832">matsuuさんが紹介してくれている</a>のでそちらを参考にしてください。</p>
+<p>tmux-1.5の時点で使えるマウス関連の設定項目は以下の通りです。</p>
+<dl>
+<dt>mode-mouse</dt>
+<dd>onにすると、マウスで画面をドラッグしたときにコピーモードに入ります。マウスホイールでスクロールすることもできます。</dd>
+<dt>mouse-select-pane</dt>
+<dd>マウスクリックでpaneを選択できるようになります。</dd>
+<dt>mouse-select-window</dt>
+<dd>statusを有効にしているときに、window名の部分をクリックすることでwindowを切り替えられます。</dd>
+<dt>mouse-utf8</dt>
+<dd>マウスの入力をutf-8として扱うための設定だそうです。効果はよくわかりませんでした。</dd>
+</dl>
+<p>なお、shiftを押しながらターミナルをクリックすれば、本来のマウスの動作になります。</p>
+<p>macのiTerm, windowsのputty, ubuntuのgnome-terminalで動作確認できました。
+たまに画面が乱れることがありますが、再描画すると直ります。</p>
+<h1 id="_1">まとめ</h1>
+<p>以下を.tmux.confにコピペするとtmuxでマウスがつかえます。</p>
+<div class="pygments_murphy"><pre><span class="nb">set</span> -g mode-mouse on
+<span class="nb">set</span> -g mouse-resize-pane on
+<span class="nb">set</span> -g mouse-select-pane on
+<span class="nb">set</span> -g mouse-select-window on
+</pre></div>
+
+<p>本当は、set-clipboardという機能も紹介したかったのですが、ちゃんと動かすことができなかったのでまたの機会にします。
+以上非常に簡単でしたがマウスサポート機能の紹介でした。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" class="hatena-bookmark-button" data-hatena-bookmark-title="tmuxでマウスを使う" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/" data-text="tmuxでマウスを使う">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="tmuxに独自機能を追加する"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/" rel="bookmark" title="Permanent Link to tmuxに独自機能を追加する">tmuxに独自機能を追加する</a></h2>
   <small>December 06, 2011 at 01:05 AM | categories:
@@ -432,6 +496,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
       <li><a href="/blog/2013/04/21/inf-php-on-melpa/" title="inf-php.elがmelpaに登録されました"><p>inf-php.elがmelpaに登録されました</a><span style="font-size: 80%;">(April 21, 2013 at 04:56 PM)</span></li>
       <li><a href="/blog/2013/04/05/emacs-inf-php-mode/" title="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた"><p>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</a><span style="font-size: 80%;">(April 05, 2013 at 07:49 PM)</span></li>
       <li><a href="/blog/2013/03/29/ruboto/" title="Rubotoを使ってRubyでAndroidアプリをかく"><p>Rubotoを使ってRubyでAndroidアプリをかく</a><span style="font-size: 80%;">(March 29, 2013 at 09:53 PM)</span></li>
@@ -439,7 +504,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/03/26/jekyll-plugin/" title="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"><p>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a><span style="font-size: 80%;">(March 26, 2013 at 08:37 PM)</span></li>
       <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
       <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
-      <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
     </ul>
   </div>
 
@@ -506,7 +570,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
@@ -527,7 +591,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>

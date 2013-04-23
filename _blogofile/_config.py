@@ -56,6 +56,18 @@ blog.auto_permalink.enabled = True
 
 blog.auto_permalink.path = ":blog_path/:year/:month/:day/:filename/"
 
+import mimetypes
+mimetypes.types_map['.svg'] = 'image/svg+xml'
+
+# blog.post_default_filters = {
+#     "markdown": "syntax_highlight, latex, markdown",
+#     "textile": "syntax_highlight, textile",
+#     "org": "syntax_highlight, org",
+#     "rst": "syntax_highlight, rst",
+#     "html": "syntax_highlight"
+# }
+
+#blog.post_default_filters['markdown'] = "syntax_highlight, latex, markdown"
 
 #############################
 ## scripts

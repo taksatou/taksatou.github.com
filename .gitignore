@@ -8,3 +8,4 @@ _documentation/themes/blogofile/layout.html
 *.draft
 _draft
 .DS_Store
+_tmp

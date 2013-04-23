@@ -102,6 +102,68 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="ubuntuでpdfの日本語フォントが表示できないときの対処メモ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/" rel="bookmark" title="Permanent Link to UbuntuでPDFの日本語フォントが表示できないときの対処メモ">UbuntuでPDFの日本語フォントが表示できないときの対処メモ</a></h2>
+  <small>November 02, 2012 at 12:00 PM | categories:
+
+<a href='/blog/category/pdf'>pdf</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/ubuntu'>ubuntu</a>
+ | <a href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
+<p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>
+<div class="pygments_murphy"><pre>Error <span class="o">(</span>13373<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13412<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13497<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13515<span class="o">)</span>: No font in show
+Error <span class="o">(</span>13555<span class="o">)</span>: No font in show/space
+Error <span class="o">(</span>13572<span class="o">)</span>: No font in show
+Error <span class="o">(</span>13607<span class="o">)</span>: No font in show/space
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Missing language pack <span class="k">for</span> <span class="s1">&#39;Adobe-Japan1&#39;</span> mapping
+Error: Unknown font tag <span class="s1">&#39;C0_0&#39;</span>
+Error <span class="o">(</span>231<span class="o">)</span>: No font in show
+Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
+</pre></div>
+
+<p>pdfビューワはDocument Viewerでもokularでも同様だった。</p>
+<p>そこで、<a href="https://forums.ubuntulinux.jp/viewtopic.php?id=8281">このあたり</a>を参考に、</p>
+<div class="pygments_murphy"><pre>sudo apt-get install poppler-data
+</pre></div>
+
+<p>としたらちゃんと表示されるようになった。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/10/31/quick-links/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/11/07/android-pitfalls/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/02/ubuntu-pdf/" class="hatena-bookmark-button" data-hatena-bookmark-title="UbuntuでPDFの日本語フォントが表示できないときの対処メモ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/" data-text="UbuntuでPDFの日本語フォントが表示できないときの対処メモ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="quick-links"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/31/quick-links/" rel="bookmark" title="Permanent Link to Quick links">Quick links</a></h2>
   <small>October 31, 2012 at 11:30 PM | categories:
@@ -583,144 +645,6 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="common-lispでzeromqを試す"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/" rel="bookmark" title="Permanent Link to Common LispでZeroMQを試す">Common LispでZeroMQを試す</a></h2>
-  <small>October 17, 2012 at 12:00 AM | categories:
-
-<a href='/blog/category/zeromq'>zeromq</a>, <a href='/blog/category/sbcl'>sbcl</a>, <a href='/blog/category/common-lisp'>common lisp</a>
- | <a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
-<p>Common LispでZeroMQを試してみた。</p>
-<p>使用環境は以下のとおり</p>
-<ul>
-<li>OS: Ubuntu 12.04 LTS</li>
-<li>Common Lisp 処理系：<a href="http://www.sbcl.org/">sbcl (1.0.55.0.debian)</a></li>
-<li><a href="http://download.zeromq.org/zeromq-2.2.0.tar.gz">ZeroMQ 2.2.0</a></li>
-</ul>
-<h1 id="1-quicklisp">1. quicklispのインストール</h1>
-<p>以下を参考にquicklispをインストールする。</p>
-<ul>
-<li><a href="http://www.quicklisp.org/beta/">Quicklisp</a></li>
-<li><a href="http://modern-cl.blogspot.jp/2011/03/quicklisp.html">第2回 Quicklispによるライブラリ環境</a></li>
-</ul>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
-<span class="nv">$ </span>sbcl
-<span class="o">(</span>load <span class="s2">&quot;quicklisp.lisp&quot;</span><span class="o">)</span>
-<span class="o">(</span>quicklisp-quickstart:install :path <span class="s2">&quot;.quicklisp/&quot;</span><span class="o">)</span>
-<span class="o">(</span>ql:add-to-init-file<span class="o">)</span>
-</pre></div>
-
-<p>※ (quicklisp-quickstart:install :path ".quicklisp/") のパスで最後のスラッシュは省略不可</p>
-<h1 id="2-cl-zmq">2. cl-zmqのインストール</h1>
-<div class="pygments_murphy"><pre>(ql:quickload :zeromq)
-</pre></div>
-
-<p>ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。ld.so.confにzeromqをインストールしたディレクトリがはいってることを確認して、sudo ldconfig すればちゃんとロードされるはず。</p>
-<div class="pygments_murphy"><pre>debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread
-<span class="c">#&lt;THREAD &quot;initial thread&quot; RUNNING {10029990A3}&gt;:</span>
-  Unable to load any of the alternatives:
-   <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">)</span>
-
-Type HELP <span class="k">for </span>debugger <span class="nb">help</span>, or <span class="o">(</span>SB-EXT:QUIT<span class="o">)</span> to <span class="nb">exit </span>from SBCL.
-
-restarts <span class="o">(</span>invokable by number or by possibly-abbreviated name<span class="o">)</span>:
-  0: <span class="o">[</span>RETRY          <span class="o">]</span> Try loading the foreign library again.
-  1: <span class="o">[</span>USE-VALUE      <span class="o">]</span> Use another library instead.
-  2: <span class="o">[</span>TRY-RECOMPILING<span class="o">]</span> Recompile package and try loading it again
-  3: <span class="o">[</span>RETRY          <span class="o">]</span> Retry
-                       loading FASL <span class="k">for</span> <span class="c">#&lt;CL-SOURCE-FILE &quot;zeromq&quot; &quot;package&quot;&gt;.</span>
-  4: <span class="o">[</span>ACCEPT         <span class="o">]</span> Continue, treating
-                       loading FASL <span class="k">for</span> <span class="c">#&lt;CL-SOURCE-FILE &quot;zeromq&quot; &quot;package&quot;&gt; as</span>
-                       having been successful.
-  5: <span class="o">[</span>ABORT          <span class="o">]</span> Give up on <span class="s2">&quot;zeromq&quot;</span>
-  6:                   Exit debugger, returning to top level.
-
-<span class="o">(</span>CFFI::FL-ERROR
- <span class="s2">&quot;Unable to load any of the alternatives:~%   ~S&quot;</span>
- <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">))</span>
-0<span class="o">]</span> 2
-</pre></div>
-
-<p>以下のようにしてライブラリのパスを設定してやっても回避はできるがおすすめしない。</p>
-<div class="pygments_murphy"><pre>(pushnew &quot;/path/to/lib/&quot; *foreign-library-directories*)
-</pre></div>
-
-<p><a href="http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html">http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html</a></p>
-<h1 id="3">3. サーバ側起動</h1>
-<p><a href="http://www.cliki.net/cl-zmq">cl-zmq</a> のサンプルコード参考に以下のようなエコーサーバを書いた。これをserver.lispに保存して、 sbcl --script server.lisp で実行。ちなみに、127.0.0.1:5555 の部分をlocalhost:5555のように書くとNo such deviceといわれる。 (参考 <a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a> )</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-
-(defun server ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:rep)
-      (zmq:bind socket &quot;tcp://127.0.0.1:5555&quot;)
-      (loop
-         (let ((query (make-instance &#39;zmq:msg)))
-           (zmq:recv socket query)
-           (let ((req-string (zmq:msg-data-as-string query)))
-             (format t &quot;Recieved message: &#39;~A&#39;~%&quot; req-string)
-             (zmq:send socket (make-instance &#39;zmq:msg :data req-string)) ))))))
-
-(server)
-</pre></div>
-
-<h1 id="4">4. クライアント側起動</h1>
-<p>こちらも同様に以下をclient.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-
-(defun client ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:req)
-      (zmq:connect socket &quot;tcp://127.0.0.1:5555&quot;)
-      (loop
-      (zmq:send socket (make-instance &#39;zmq:msg
-                                      :data (read-line)))
-      (let ((result (make-instance &#39;zmq:msg)))
-        (zmq:recv socket result)
-        (format t &quot;Recieved message: &#39;~A&#39;~%&quot;
-                (zmq:msg-data-as-string result) ))))))
-
-(client)
-</pre></div>
-
-<h1 id="_1">まとめ</h1>
-<p>Common Lisp(sbcl)でZeroMQを利用して、簡単なエコーサーバ/クライアントを実装した。</p>
-<h1 id="_2">参考</h1>
-<ul>
-<li><a href="http://www.cliki.net/cl-zmq">cl-zmq</a></li>
-<li><a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/10/16/paco/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/" class="hatena-bookmark-button" data-hatena-bookmark-title="Common LispでZeroMQを試す" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/" data-text="Common LispでZeroMQを試す">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../5">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -750,6 +674,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
       <li><a href="/blog/2013/04/21/inf-php-on-melpa/" title="inf-php.elがmelpaに登録されました"><p>inf-php.elがmelpaに登録されました</a><span style="font-size: 80%;">(April 21, 2013 at 04:56 PM)</span></li>
       <li><a href="/blog/2013/04/05/emacs-inf-php-mode/" title="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた"><p>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</a><span style="font-size: 80%;">(April 05, 2013 at 07:49 PM)</span></li>
       <li><a href="/blog/2013/03/29/ruboto/" title="Rubotoを使ってRubyでAndroidアプリをかく"><p>Rubotoを使ってRubyでAndroidアプリをかく</a><span style="font-size: 80%;">(March 29, 2013 at 09:53 PM)</span></li>
@@ -757,7 +682,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/03/26/jekyll-plugin/" title="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"><p>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a><span style="font-size: 80%;">(March 26, 2013 at 08:37 PM)</span></li>
       <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
       <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
-      <li><a href="/blog/2013/02/23/telnet-smtp/" title="telnetでメールを送信する方法"><p>telnetでメールを送信する方法</a><span style="font-size: 80%;">(February 23, 2013 at 06:17 PM)</span></li>
     </ul>
   </div>
 
@@ -824,7 +748,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
@@ -845,7 +769,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
