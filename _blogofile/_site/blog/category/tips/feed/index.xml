@@ -10,10 +10,68 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Thu, 28 Mar 2013 02:50:01 GMT</pubDate>
+    <pubDate>Fri, 26 Apr 2013 20:21:11 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>TOMLノススメ</title>
+      <link>http://mojavy.com/blog/2013/04/26/toml/</link>
+      <pubDate>Fri, 26 Apr 2013 20:21:11 JST</pubDate>
+      <category><![CDATA[tips]]></category>
+      <category><![CDATA[toml]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/04/26/toml/</guid>
+      <description>TOMLノススメ</description>
+      <content:encoded><![CDATA[<p><img alt="github" src="/images/github-logo-transparent-200.png" /> </p>
+<h2 id="toml">TOMLとは</h2>
+<p><a href="https://github.com/mojombo/toml">https://github.com/mojombo/toml</a> </p>
+<p>Tom's Obvious, Minimal Language (TOML) とはgithubの中の人が提案している設定ファイルのためのミニ言語で、以下のような特徴があります。</p>
+<ul>
+<li>人間が読み書きしやすい</li>
+<li>標準的なデータ型が利用できる</li>
+<li>曖昧さが発生する余地が極力排除されている</li>
+<li>パーサをかくのが簡単</li>
+</ul>
+<h2 id="toml_1">なぜTOML?</h2>
+<p>例えば、YAMLを設定ファイルに使っているシステムは多いですが、<a href="http://yaml.org/spec/1.2/spec.pdf">YAMLの仕様書</a>は80ページもあり正しく使うのは意外と大変です。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+<p>またJSONはカッコやダブルクオートの割合が多すぎますし、コメントも使えません。<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> </p>
+<p>TOMLをつかえばそのようなストレスはありません。</p>
+<h2 id="toml_2">TOMLの使い方</h2>
+<p>TOMLの書き方は<a href="https://github.com/mojombo/toml">本家のドキュメント</a> をみてもらえばすぐわかると思います。</p>
+<p>TOMLのライブラリは各種言語に対応したものが既にたくさんあります。
+言語によっては複数の実装が存在するものもありますが、とりあえずはgithub上でのstarの数が一番多いものから試すといいと思います。</p>
+<p>わざわざ説明するほどの内容でもないですが、ここでは一応rubyでの使い方を紹介します。
+<code>gem install toml</code>でインストールして、以下のようにするだけです。YAMLの場合と大体同じですね。</p>
+<div class="pygments_murphy"><pre><span class="nb">require</span> <span class="s1">&#39;toml&#39;</span>
+
+<span class="no">TOML</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;thing = 9&quot;</span><span class="p">)</span>
+<span class="c1"># =&gt; {&quot;thing&quot; =&gt; 9}</span>
+
+<span class="no">TOML</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;my_file.toml&quot;</span><span class="p">)</span>
+<span class="c1"># =&gt; {&quot;whatever&quot; =&gt; &quot;keys&quot;}</span>
+</pre></div>
+
+<h3 id="_1">その他</h3>
+<ul>
+<li>TOMLでは日付型も定義されていて、それもUTC固定というのが地味にいいです</li>
+<li>githubのコードハイライトは既にTOMLに対応してます</li>
+<li>emacsユーザはtoml-modeというのがmelpaに登録されているので、<code>M-x list-packages</code>からインストールできます。</li>
+</ul>
+<h3 id="_2">まとめ</h3>
+<p>TOMLという設定ファイルのための新しいフォーマットを紹介しました。
+設定ファイルにYAMLやJSONつかってるひとはTOMLに移行すると幸せになれるかもしれません。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>仕様を正確に実装したYAMLパーサはほとんど存在しないとかいう話もちらほら&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://github.com/mojombo/toml/issues/2">https://github.com/mojombo/toml/issues/2</a> &#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded>
+    </item>
     <item>
       <title>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</title>
       <link>http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/</link>

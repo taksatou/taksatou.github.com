@@ -102,6 +102,66 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="rainbow-for-common-lisp-作りました"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/" rel="bookmark" title="Permanent Link to Rainbow for Common Lisp 作りました">Rainbow for Common Lisp 作りました</a></h2>
+  <small>February 19, 2013 at 11:55 PM | categories:
+
+<a href='/blog/category/ruby'>ruby</a>, <a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="lisp" src="/images/cl-rainbow-demo.png" /></p>
+<p><a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/">昨日</a>のテンプレを流用して今日はcl-rainbowという地味なライブラリの宣伝をします。</p>
+<p><a href="https://github.com/taksatou/cl-rainbow">https://github.com/taksatou/cl-rainbow</a></p>
+<p>cl-rainbowとは、<a href="https://github.com/sickill/rainbow">rubygemにあるrainbow</a>をCommon Lispに移植したものです。
+これを使うとターミナルの出力を簡単に色付けできます。</p>
+<h3 id="_1">インストール</h3>
+<p>現在(2013-02-19) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
+<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-rainbow)
+</pre></div>
+
+<h3 id="_2">使い方</h3>
+<p>以下のように使います。</p>
+<div class="pygments_murphy"><pre>(setf cl-rainbow:*enabled* t)
+(print (cl-rainbow:color :red &quot;red string&quot;))
+(print (cl-rainbow:color #x5599ff &quot;rgb color code&quot;))
+(loop for c across &quot;RAINBOW&quot; do (format t &quot;~A&quot; (cl-rainbow:color (random #xffffff) c)))
+</pre></div>
+
+<p>特に解説は不要だと思いますが、端末はカラー表示に対応している必要があります。</p>
+<p>RGBのカラーコード指定すると、256色にダウンサンプルして一番近い色を表示します。</p>
+<p>その他、例にはのせてませんが、端末が対応していれば斜体や太字にもできます。詳細はソースを見てください。</p>
+<h3 id="_3">まとめ</h3>
+<p>ログ出力のときとかにちょっと便利なときがあるかもしれません。</p>
+<p>リードマクロで文字列リテラルをごにょごにょして色付けできるようにするともうちょっと便利になるような気がするので、そのうちチャレンジしてみたいと思います。</p>
+<p>フィードバック等ありましたらコメント頂けるとうれしいです。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/" class="hatena-bookmark-button" data-hatena-bookmark-title="Rainbow for Common Lisp 作りました" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/" data-text="Rainbow for Common Lisp 作りました">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ltsv-for-common-lisp-作りました"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/" rel="bookmark" title="Permanent Link to LTSV for Common Lisp 作りました">LTSV for Common Lisp 作りました</a></h2>
   <small>February 18, 2013 at 08:30 PM | categories:
@@ -436,75 +496,6 @@ d          877pt
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="c言語の文字列初期化について"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/21/c-string-initialization/" rel="bookmark" title="Permanent Link to C言語の文字列初期化について">C言語の文字列初期化について</a></h2>
-  <small>January 21, 2013 at 08:00 PM | categories:
-
-<a href='/blog/category/c'>C</a>, <a href='/blog/category/programming'>programming</a>
- | <a href="http://mojavy.com/blog/2013/01/21/c-string-initialization/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>なんとなく気になったので以下ひとりごと。</p>
-<hr>
-
-<p>Cで文字列を初期化するときは以下のように書く。</p>
-<div class="pygments_murphy"><pre>char str[] = &quot;xyz&quot;;
-</pre></div>
-
-<p>こう書けばNULL終わりのchar配列としてスタックに格納してくれるので、以下のように書くのと同じことになる。</p>
-<div class="pygments_murphy"><pre>char str1[4] = &quot;xyz&quot;;
-char str2[4] = {&#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;\0&#39;};
-</pre></div>
-
-<p>文字列はcharのポインタで扱うからといって、</p>
-<div class="pygments_murphy"><pre>char *str = &quot;xyz&quot;;
-</pre></div>
-
-<p>のように書くと違う意味になる。
-こう書くと"xyz"が格納されているアドレスでポインタを初期化する。文字列リテラルで宣言したデータが格納される領域は通常はread onlyなので<code>*str='X'</code>などとするとセグフォするが、通常の代入と同じ意味なので違和感はない。</p>
-<p>でも、<code>char str[] = "xyz";</code> のほうはは冷静に考えると気持ち悪い。初期化と代入は違うといってしまえばそれまでだけど、この式だけみても予備知識がないとなにがおこるのかわからないと思う。</p>
-<p>以下のような挙動も合理的とは思えない。そもそもCに配列なんて必要なかったのではないか。</p>
-<div class="pygments_murphy"><pre>void f1(char s[]) {
-    /* 意味はないけどエラーでもない */
-    s = &quot;baz&quot;;
-}
-
-void f2(void) {
-    char s[] = &quot;foo&quot;;
-    /* これはエラー */
-    /* s = &quot;bar&quot;; */
-}
-</pre></div>
-
-<p>などということを今更ながら考えて悶々としていたのだけど、結局のところこういう類の便利機能は欲しくなってくるわけで、便利さのために不合理を許容するとなるとこのあたりが妥当な落とし所のような気もしてきた。</p>
-<p>まとめ：プログラミング言語を考える人はすごい</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/02/05/popular-programming-languages/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/21/c-string-initialization/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/21/c-string-initialization/" class="hatena-bookmark-button" data-hatena-bookmark-title="C言語の文字列初期化について" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/21/c-string-initialization/" data-text="C言語の文字列初期化について">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/21/c-string-initialization/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../2">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -534,6 +525,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/04/26/toml/" title="TOMLノススメ"><p>TOMLノススメ</a><span style="font-size: 80%;">(April 26, 2013 at 08:21 PM)</span></li>
       <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
       <li><a href="/blog/2013/04/21/inf-php-on-melpa/" title="inf-php.elがmelpaに登録されました"><p>inf-php.elがmelpaに登録されました</a><span style="font-size: 80%;">(April 21, 2013 at 04:56 PM)</span></li>
       <li><a href="/blog/2013/04/05/emacs-inf-php-mode/" title="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた"><p>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</a><span style="font-size: 80%;">(April 05, 2013 at 07:49 PM)</span></li>
@@ -541,7 +533,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" title="Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法"><p>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</a><span style="font-size: 80%;">(March 28, 2013 at 02:50 AM)</span></li>
       <li><a href="/blog/2013/03/26/jekyll-plugin/" title="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"><p>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a><span style="font-size: 80%;">(March 26, 2013 at 08:37 PM)</span></li>
       <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
-      <li><a href="/blog/2013/02/24/the-p-convention/" title="The P Convention"><p>The P Convention</a><span style="font-size: 80%;">(February 24, 2013 at 02:42 PM)</span></li>
     </ul>
   </div>
 
@@ -614,8 +605,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (1)</li>
@@ -629,7 +621,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
