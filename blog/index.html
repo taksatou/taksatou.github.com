@@ -102,6 +102,80 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="ワイヤレスなraspberry-pi環境をつくる"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" rel="bookmark" title="Permanent Link to ワイヤレスなRaspberry Pi環境をつくる">ワイヤレスなRaspberry Pi環境をつくる</a></h2>
+  <small>April 28, 2013 at 01:54 AM | categories:
+
+<a href='/blog/category/raspberry-pi'>raspberry pi</a>
+ | <a href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="raspberry" src="/images/raspberry-pi-150.png" /></p>
+<p>Raspberry Pi遊ぶからにはその小ささを生かしたことがしたいですよね。
+というわけで手始めにワイヤレス化しました。手順は非常に簡単で、ほぼAmazonで買ったパーツを差すだけで達成できました。</p>
+<p>Raspberry Piを標準的な構成でうごかすとLANケーブル、電源、 キーボード、ディスプレイの4本コードがのびることになりますが、sshで接続できればディスプレイもキーボードも不要なのであと必要なのはネットワーク環境と電源だけです。</p>
+<p>電源は 5V 700mA なので、普通のスマートフォン用バッテリーがそのまま使えます。
+5V 700mAを越えていれば何でもいいと思いますが、今回は以下をつかいました。</p>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B0067TQQI8" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p><br></p>
+<p>ネットワークはUSBの無線LAN受信機を使います。
+これも何でもいいと思いますが、あまり最新のモデルだとドライバが対応してないかもしれないのでちょっと古めのもののほうが無難です。以下の商品は問題なく動きました。</p>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B003NSAMW2" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p>wifiの設定はX Windowの設定画面からしました。<code>startx</code>でデスクトップを起動すると<code>WiFi Config</code>というアイコンがあるのでそこから設定できます。
+ターミナルで<code>ifconfig</code>を実行してwlan0にinet addrが割り当てられていることを確認できればOKです。</p>
+<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr b8:27:eb:90:32:15
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1104 (1.0 KiB)  TX bytes:1104 (1.0 KiB)
+
+wlan0     Link encap:Ethernet  HWaddr 10:6f:3f:ec:5f:b8
+          inet addr:192.168.1.13  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4285 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:673 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:937903 (915.9 KiB)  TX bytes:81630 (79.7 KiB)
+</pre></div>
+
+<p>ここで確認したIPアドレスにsshしてつながれば完了です。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/04/28/raspberry-pi/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" class="hatena-bookmark-button" data-hatena-bookmark-title="ワイヤレスなRaspberry Pi環境をつくる" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" data-text="ワイヤレスなRaspberry Pi環境をつくる">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="raspberry-pi-はじめました"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/28/raspberry-pi/" rel="bookmark" title="Permanent Link to Raspberry Pi はじめました">Raspberry Pi はじめました</a></h2>
   <small>April 28, 2013 at 01:30 AM | categories:
@@ -113,14 +187,10 @@ href="/blog/feed/atom" />
   <div class="post_prose">
     
 <div class="blogbody">
-  <p><img alt="raspberry" src="/images/raspberry-pi-200.png" /></p>
+  <p><img alt="raspberry" src="/images/raspberry-pi-150.png" /></p>
 <p>前々から気になってたRaspberry Piを手に入れました。</p>
-<p>最終的にはセンサーとかいろいろつけてインタラクティブなおもちゃをつくり
-たいですが、当面の目標は秋月電子で調達してきたLCDディスプレイに文字を表
-示させるためのドライバを書くことにしようと思います。</p>
-<p>Raspberry Piのセットアップ手順はぐぐればすぐでてくるので割愛しますが、
-そのままだとsdcardの空き領域がつかえないので起動時にマウントできるよう
-にするまでの手順だけメモしときます。</p>
+<p>最終的にはセンサーとかいろいろつけてインタラクティブなおもちゃをつくりたいですが、当面の目標は秋月電子で調達してきたLCDディスプレイに文字を表示させるためのドライバを書くことにしようと思います。</p>
+<p>Raspberry Piのセットアップ手順はぐぐればすぐでてくるので割愛しますが、そのままだとsdcardの空き領域がつかえないので起動時にマウントできるようにするまでの手順だけメモしときます。</p>
 <div class="pygments_murphy"><pre>pi@raspberrypi ~ $ sudo fdisk /dev/mmcblk0
 
 Command (m for help): p
@@ -211,8 +281,10 @@ tmpfs            44M  276K   44M   1% /run
 tmpfs           5.0M     0  5.0M   0% /run/lock
 tmpfs            88M     0   88M   0% /run/shm
 /dev/mmcblk0p1   56M   19M   38M  34% /boot
-/dev/mmcblk0p3   28G  172M   26G   1% /home/pi/tmp
+/dev/mmcblk0p3   28G  172M   26G   1% /home
 </pre></div>
+
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B003VNKNF0" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
 </div>
 
   </div>
@@ -223,6 +295,8 @@ tmpfs            88M     0   88M   0% /run/shm
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/04/26/toml/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -471,70 +545,6 @@ rubyのコードをllvmベースのマシン語にコンパイルするので高
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/" rel="bookmark" title="Permanent Link to emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた">emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</a></h2>
-  <small>April 05, 2013 at 07:49 PM | categories:
-
-<a href='/blog/category/php'>php</a>, <a href='/blog/category/emacs'>emacs</a>
- | <a href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /> </p>
-<p>phper人口は多いはずなのになぜかどこにも見つからなかったので<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>emacsでphpのインタラクティブシェルを動かすための<a href="https://github.com/taksatou/inf-php">inf-php.el</a> を書いた。</p>
-<h4 id="install">install</h4>
-<p>auto-installがはいっていれば、<code>(auto-install-from-url "https://raw.github.com/taksatou/inf-php/master/inf-php.el")</code>で、はいってなければ <a href="https://raw.github.com/taksatou/inf-php/master/inf-php.el">inf-php.el</a> をダウンロードして適当にload-pathの通った場所に配置して、<code>.emacs</code>に以下を追記</p>
-<div class="pygments_murphy"><pre>(require &#39;inf-php)
-</pre></div>
-
-<h4 id="usage">usage</h4>
-<p>現状のキーバインドは以下の通り</p>
-<div class="pygments_murphy"><pre>(define-key php-mode-map &quot;\C-c\C-s&quot; &#39;inf-php)              ;; inf-phpを起動する
-(define-key php-mode-map &quot;\C-c\C-z&quot; &#39;php-switch-to-inf)    ;; inf-rubyバッファに切り替える
-(define-key php-mode-map &quot;\M-\C-x&quot; &#39;php-send-definition)   ;; 現在カーソルがあるところの関数をinf-phpに送る
-(define-key php-mode-map &quot;\C-c\C-x&quot; &#39;php-send-definition)  ;; 同上
-(define-key php-mode-map &quot;\C-c\M-x&quot; &#39;php-send-definition-and-go)  ;; 同上だが送った後バッファを切り替える
-(define-key php-mode-map &quot;\C-c\C-r&quot; &#39;php-send-region)             ;; 現在のregionを送る
-(define-key php-mode-map &quot;\C-c\M-r&quot; &#39;php-send-region-and-go)      ;; 同上だが送った後バッファを切り替える
-(define-key php-mode-map &quot;\C-x\C-e&quot; &#39;php-send-last-sexp)          ;; 直前のsexpをinf-phpに送る
-</pre></div>
-
-<h4 id="misc">misc</h4>
-<p>フィードバック、要望等ありましたらgithubからおねがいします。</p>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>と思ったら、<a href="https://github.com/ieure/php_repl">php_repl</a> なるものが存在していた。php_replのほうが機能的には充実してそう。inf-phpは依存がほぼないのでインストールが簡単という点がメリットなのでまあよしとします(2013/04/05 20:57:35 追記)&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/03/29/ruboto/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/" class="hatena-bookmark-button" data-hatena-bookmark-title="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/" data-text="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/page/2">Next »</a>
 </div>
@@ -562,6 +572,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/04/28/wireless-raspberry-pi/" title="ワイヤレスなRaspberry Pi環境をつくる"><p>ワイヤレスなRaspberry Pi環境をつくる</a><span style="font-size: 80%;">(April 28, 2013 at 01:54 AM)</span></li>
       <li><a href="/blog/2013/04/28/raspberry-pi/" title="Raspberry Pi はじめました"><p>Raspberry Pi はじめました</a><span style="font-size: 80%;">(April 28, 2013 at 01:30 AM)</span></li>
       <li><a href="/blog/2013/04/26/toml/" title="TOMLノススメ"><p>TOMLノススメ</a><span style="font-size: 80%;">(April 26, 2013 at 08:21 PM)</span></li>
       <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
@@ -569,7 +580,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/04/05/emacs-inf-php-mode/" title="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた"><p>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</a><span style="font-size: 80%;">(April 05, 2013 at 07:49 PM)</span></li>
       <li><a href="/blog/2013/03/29/ruboto/" title="Rubotoを使ってRubyでAndroidアプリをかく"><p>Rubotoを使ってRubyでAndroidアプリをかく</a><span style="font-size: 80%;">(March 29, 2013 at 09:53 PM)</span></li>
       <li><a href="/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" title="Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法"><p>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</a><span style="font-size: 80%;">(March 28, 2013 at 02:50 AM)</span></li>
-      <li><a href="/blog/2013/03/26/jekyll-plugin/" title="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"><p>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a><span style="font-size: 80%;">(March 26, 2013 at 08:37 PM)</span></li>
     </ul>
   </div>
 
@@ -637,7 +647,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
@@ -659,7 +669,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(5)</li>
+      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>

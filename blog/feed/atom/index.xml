@@ -7,12 +7,66 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-04-28T01:30:01Z</updated>
+  <updated>2013-04-28T01:54:53Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[ワイヤレスなRaspberry Pi環境をつくる]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" />
+    <id>http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/</id>
+    <updated>2013-04-28T01:54:53Z</updated>
+    <published>2013-04-28T01:54:53Z</published>
+    <category scheme="http://mojavy.com/blog" term="raspberry pi" />
+    <summary type="html"><![CDATA[ワイヤレスなRaspberry Pi環境をつくる]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/"><![CDATA[<p><img alt="raspberry" src="/images/raspberry-pi-150.png" /></p>
+<p>Raspberry Pi遊ぶからにはその小ささを生かしたことがしたいですよね。
+というわけで手始めにワイヤレス化しました。手順は非常に簡単で、ほぼAmazonで買ったパーツを差すだけで達成できました。</p>
+<p>Raspberry Piを標準的な構成でうごかすとLANケーブル、電源、 キーボード、ディスプレイの4本コードがのびることになりますが、sshで接続できればディスプレイもキーボードも不要なのであと必要なのはネットワーク環境と電源だけです。</p>
+<p>電源は 5V 700mA なので、普通のスマートフォン用バッテリーがそのまま使えます。
+5V 700mAを越えていれば何でもいいと思いますが、今回は以下をつかいました。</p>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B0067TQQI8" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p><br></p>
+<p>ネットワークはUSBの無線LAN受信機を使います。
+これも何でもいいと思いますが、あまり最新のモデルだとドライバが対応してないかもしれないのでちょっと古めのもののほうが無難です。以下の商品は問題なく動きました。</p>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B003NSAMW2" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p>wifiの設定はX Windowの設定画面からしました。<code>startx</code>でデスクトップを起動すると<code>WiFi Config</code>というアイコンがあるのでそこから設定できます。
+ターミナルで<code>ifconfig</code>を実行してwlan0にinet addrが割り当てられていることを確認できればOKです。</p>
+<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr b8:27:eb:90:32:15
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1104 (1.0 KiB)  TX bytes:1104 (1.0 KiB)
+
+wlan0     Link encap:Ethernet  HWaddr 10:6f:3f:ec:5f:b8
+          inet addr:192.168.1.13  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4285 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:673 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:937903 (915.9 KiB)  TX bytes:81630 (79.7 KiB)
+</pre></div>
+
+<p>ここで確認したIPアドレスにsshしてつながれば完了です。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -25,14 +79,10 @@
     <published>2013-04-28T01:30:01Z</published>
     <category scheme="http://mojavy.com/blog" term="raspberry pi" />
     <summary type="html"><![CDATA[Raspberry Pi はじめました]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/04/28/raspberry-pi/"><![CDATA[<p><img alt="raspberry" src="/images/raspberry-pi-200.png" /></p>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/04/28/raspberry-pi/"><![CDATA[<p><img alt="raspberry" src="/images/raspberry-pi-150.png" /></p>
 <p>前々から気になってたRaspberry Piを手に入れました。</p>
-<p>最終的にはセンサーとかいろいろつけてインタラクティブなおもちゃをつくり
-たいですが、当面の目標は秋月電子で調達してきたLCDディスプレイに文字を表
-示させるためのドライバを書くことにしようと思います。</p>
-<p>Raspberry Piのセットアップ手順はぐぐればすぐでてくるので割愛しますが、
-そのままだとsdcardの空き領域がつかえないので起動時にマウントできるよう
-にするまでの手順だけメモしときます。</p>
+<p>最終的にはセンサーとかいろいろつけてインタラクティブなおもちゃをつくりたいですが、当面の目標は秋月電子で調達してきたLCDディスプレイに文字を表示させるためのドライバを書くことにしようと思います。</p>
+<p>Raspberry Piのセットアップ手順はぐぐればすぐでてくるので割愛しますが、そのままだとsdcardの空き領域がつかえないので起動時にマウントできるようにするまでの手順だけメモしときます。</p>
 <div class="pygments_murphy"><pre>pi@raspberrypi ~ $ sudo fdisk /dev/mmcblk0
 
 Command (m for help): p
@@ -123,8 +173,10 @@ tmpfs            44M  276K   44M   1% /run
 tmpfs           5.0M     0  5.0M   0% /run/lock
 tmpfs            88M     0   88M   0% /run/shm
 /dev/mmcblk0p1   56M   19M   38M  34% /boot
-/dev/mmcblk0p3   28G  172M   26G   1% /home/pi/tmp
-</pre></div>]]></content>
+/dev/mmcblk0p3   28G  172M   26G   1% /home
+</pre></div>
+
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B003VNKNF0" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>]]></content>
   </entry>
   <entry>
     <author>
@@ -653,27 +705,5 @@ Postクラスを拡張してhekyllにあうようにliquidに渡すデータを�
 <li>dlocate: <code>dlocate -S filename</code> のようにすればそのファイルを含むパッケージを調べることができる</li>
 <li>cdbs: debianパッケージを作成するための別なやりかた(?)。 ちゃんとしらべてない</li>
 </ul>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[The P Convention]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/24/the-p-convention/" />
-    <id>http://mojavy.com/blog/2013/02/24/the-p-convention/</id>
-    <updated>2013-02-24T14:42:00Z</updated>
-    <published>2013-02-24T14:42:00Z</published>
-    <category scheme="http://mojavy.com/blog" term="lisp" />
-    <category scheme="http://mojavy.com/blog" term="programming" />
-    <summary type="html"><![CDATA[The P Convention]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/02/24/the-p-convention/"><![CDATA[<p><img alt="lisp" src="/images/lisplogo_fancy_128.png" /></p>
-<p>Lispには'p'という接尾辞がつく名前の関数があるが、この'p'はpredicateのこと。</p>
-<p><a href="http://catb.org/jargon/html/p-convention.html">The -P Convention</a></p>
-<p>ところが、HaskellやOCamlにも'p'という接尾辞がつく関数があって、そちらはprimeの意味で使うらしい。
-シングルクオート(ダッシュ)記号は英語だとprimeというので、例えば<code>foo'</code>という名前の関数は<code>foo</code>という名前のヘルパー関数的なもの、ということになる。</p>
-<p><a href="http://stackoverflow.com/questions/5279286/foop-a-naming-convention-its-a-helper-recursive-function-for-foo-what-do">“foop”: a naming convention? It's a helper recursive function for “foo”; what does the suffix “p” mean?</a></p>
-<p>ちなみに、OCamlだとシングルクオートが識別子につかえるのでfoo'という名前の関数も結構あるらしい。</p>
-<p>まぎらわしい、かと思ったけど使う文脈が違うし意外とそうでもないか。</p>]]></content>
   </entry>
 </feed>

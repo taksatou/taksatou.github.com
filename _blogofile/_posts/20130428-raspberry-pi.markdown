@@ -2,10 +2,10 @@
 categories: raspberry pi
 date: 2013/04/28 01:30:01
 title: Raspberry Pi はじめました
-image: /images/raspberry-pi-200.png
+image: /images/raspberry-pi-150.png
 ---
 
-![raspberry](/images/raspberry-pi-200.png)
+![raspberry](/images/raspberry-pi-150.png)
 
 
 前々から気になってたRaspberry Piを手に入れました。
@@ -113,7 +113,9 @@ tmpfs            44M  276K   44M   1% /run
 tmpfs           5.0M     0  5.0M   0% /run/lock
 tmpfs            88M     0   88M   0% /run/shm
 /dev/mmcblk0p1   56M   19M   38M  34% /boot
-/dev/mmcblk0p3   28G  172M   26G   1% /home/pi/tmp
+/dev/mmcblk0p3   28G  172M   26G   1% /home
 
 $$/code
 
+
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B003VNKNF0" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
