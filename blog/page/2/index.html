@@ -102,6 +102,105 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="rubotoを使ってrubyでandroidアプリをかく"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/03/29/ruboto/" rel="bookmark" title="Permanent Link to Rubotoを使ってRubyでAndroidアプリをかく">Rubotoを使ってRubyでAndroidアプリをかく</a></h2>
+  <small>March 29, 2013 at 09:53 PM | categories:
+
+<a href='/blog/category/android'>android</a>, <a href='/blog/category/ruby'>ruby</a>
+ | <a href="http://mojavy.com/blog/2013/03/29/ruboto/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="ruboto" src="/images/ruboto-200.png" /></p>
+<p>最近iOSアプリ界隈では<a href="http://www.rubymotion.com/">RubyMotion</a>や<a href="http://mobiruby.org/">MobiRuby</a>が盛り上がってきてますが、Androidでも<a href="http://ruboto.org/">Ruboto</a>をつかえば簡単にrubyで開発することができるようになります。</p>
+<p>そもそもjavaで実装された処理系であれば大抵javaクラスの呼びだしは簡単にできるようになっているので、jrubyやjythonでandroidアプリを開発することは以前から可能でした。
+しかし、以下のような問題があって実際にやるとなるとそれなりに面倒なものでした。</p>
+<ol>
+<li>jrubyやjythonをdalvikvm用バイナリ(dex)にコンパイルするのに時間がかかる<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></li>
+<li>androidのjavaでは使えない機能を使って処理系を実装してある場合があるので、何らかの方法で回避する必要がある</li>
+<li>スクリプトのソースファイルの配置やパスの設定を自分でやる必要があり、パッケージングが面倒 </li>
+<li>アプリのフットプリントが大きくなる<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></li>
+</ol>
+<p>Rubotoをつかえばこのあたりの面倒をみてくれるので、ほとんどjavaを書く必要がなくなります。Ruboto自体は結構前からありますが、ここ1年くらいでもろもろの機能が充実してきて大分実用的になってきた感があります。</p>
+<p>以下Rubotoの使用方法について簡単に紹介します。</p>
+<h2 id="_1">インストール</h2>
+<div class="pygments_murphy"><pre>gem install ruboto
+gem install jruby-jars
+</pre></div>
+
+<p>また、<code>ANDROID_HOME</code>環境変数の設定と、android sdkの <code>tools/</code> と <code>platform-tools/</code>にはあらかじめパスをとおしておきます</p>
+<h2 id="_2">雛形の生成</h2>
+<div class="pygments_murphy"><pre>ruboto gen app --package org.rubyandroid.new_demo
+
+# 以下のようにしてより詳細に設定することもできます
+# ruboto gen app --package org.rubyandroid.new_demo --path ./myapp --name MyApp --target android-17 --min-sdk android-10 --activity MainActivityName
+</pre></div>
+
+<h2 id="_3">ビルドとインストール</h2>
+<p>rakeからビルドできるようになっています。また、rubyスクリプトの更新はコンパイル不要で反映できます。
+あとは普通にrubyを書くだけです。</p>
+<div class="pygments_murphy"><pre>cd new_demo
+rake
+rake install
+
+#
+# edit ruby scripts..
+#
+
+rake update_scripts
+</pre></div>
+
+<h2 id="rubygems">rubygemsを使う</h2>
+<p>通常の<code>Gemfile</code>と同じ内容を、<code>Gemfile.apk</code>という名前のファイルに書いてプロジェクトのルートディレクトリに置いておけば、<code>rake</code>した際に<code>libs/bundle.jar</code>を生成してapkにいれてくれます。</p>
+<p>詳細は以下の例を参考にしてください。
+<a href="https://github.com/ruboto/ruboto/wiki/Tutorial%3A-Using-an-SQLite-database-with-ActiveRecord">https://github.com/ruboto/ruboto/wiki/Tutorial%3A-Using-an-SQLite-database-with-ActiveRecord</a></p>
+<h2 id="_4">補足</h2>
+<p>rubotoではjrubyの実行環境は別途Ruboto Core platformというapkで提供されています。そのためアプリ本体にruby処理系を同梱する必要がなく、省サイズでコンパイルも速くなるというメリットがあります。しかし、このやり方だとRuboto Core platformを別途インストールしてもらう必要がでてきてしまい、実際にGoogle Playで配布するようなアプリでは受け入れ難いと思います。</p>
+<p>これを回避する方法も提供されていて、プロジェクトを生成する際に<code>--with-jruby</code>というオプションをつければjrubyを同梱したapkをビルドできるようになりますが、この場合は前述のメリットはうけられなくなります。ただ、コンパイル時間に関しては、rubyスクリプトだけを触っている限りは、dexの再コンパイルは必要ないのでそれほど気にならないと思います。</p>
+<h2 id="_5">まとめ</h2>
+<ul>
+<li>androidで素のjrubyを使うのは茨の道ですが、rubotoを使えば非常に簡単にrubyを使えるようになります</li>
+<li>jrubyなので普通のrubygemsやjavaでかかれたライブラリもそのまま使えます</li>
+<li>javaで開発した場合はコンパイル〜再インストールが毎回必要になりますが、<code>.rb</code>の更新反映は高速にできるので開発効率があがります</li>
+<li>まだそれほど使い込んでないので思わぬはまりどころがあるかもしれません</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>dxが分割コンパイルに対応してないので回避しづらい&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>ファイルサイズも実行時のメモリ使用量も&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/03/29/ruboto/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/03/29/ruboto/" class="hatena-bookmark-button" data-hatena-bookmark-title="Rubotoを使ってRubyでAndroidアプリをかく" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/03/29/ruboto/" data-text="Rubotoを使ってRubyでAndroidアプリをかく">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/03/29/ruboto/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="mac-osxでシェルスクリプトをキーボードショートカットに登録する方法"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" rel="bookmark" title="Permanent Link to Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法">Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</a></h2>
   <small>March 28, 2013 at 02:50 AM | categories:
@@ -436,119 +535,6 @@ Postクラスを拡張してhekyllにあうようにliquidに渡すデータを�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="telnetでメールを送信する方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/" rel="bookmark" title="Permanent Link to telnetでメールを送信する方法">telnetでメールを送信する方法</a></h2>
-  <small>February 23, 2013 at 06:17 PM | categories:
-
-<a href='/blog/category/postfix'>postfix</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/smtp'>smtp</a>
- | <a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="lisp" src="/images/mail-logo-100.png" /></p>
-<p>何回やってもpostfixの設定の仕方を覚えられないので、今更ながら最低限のプロトコルを理解するためにtelnetからsmtpでメールを送信してみようと思い立ちました。</p>
-<p>以下は自分のgmailアドレスにtelnetでメールしてみたときの個人的な手順メモです。</p>
-<div class="toc">
-<ul>
-<li><a href="#_1">手順</a><ul>
-<li><a href="#1-mx">1. 該当メールアドレスのMXレコードを調べる</a></li>
-<li><a href="#2-telnet25smtp">2. telnetで25番ポートに接続してsmtpを話す</a></li>
-<li><a href="#3">3. メールの確認</a></li>
-</ul>
-</li>
-<li><a href="#postfix">postfixの設定メモ</a></li>
-</ul>
-</div>
-<h2 id="_1">手順</h2>
-<h3 id="1-mx">1. 該当メールアドレスのMXレコードを調べる</h3>
-<p>普通のメールアドレスの@以下はドメイン名になっている場合がほとんどですが、DNSのAレコードに登録されているのはホスト名なのでメールサービスを提供しているホスト名を調べる必要があります。そのときに使うのがMXレコードで、nslookupでも以下のようにして調べることができます。</p>
-<div class="pygments_murphy"><pre>% nslookup -type=mx gmail.com
-Server:         192.168.1.1
-Address:        192.168.1.1#53
-
-Non-authoritative answer:
-gmail.com       mail exchanger = 5 gmail-smtp-in.l.google.com.
-gmail.com       mail exchanger = 10 alt1.gmail-smtp-in.l.google.com.
-gmail.com       mail exchanger = 20 alt2.gmail-smtp-in.l.google.com.
-gmail.com       mail exchanger = 30 alt3.gmail-smtp-in.l.google.com.
-gmail.com       mail exchanger = 40 alt4.gmail-smtp-in.l.google.com.
-
-Authoritative answers can be found from:
-</pre></div>
-
-<p>複数のホストが優先度をつけて登録されているので、この場合は <em>gmail-smtp-in.l.google.com</em> を使えばいいということになるみたいです。</p>
-<h3 id="2-telnet25smtp">2. telnetで25番ポートに接続してsmtpを話す</h3>
-<p>smtpはテキストベースのプロトコルなのでtelnetからそのままサーバとやりとりできます。
-smtpプロトコルの詳細は省略しますが、最低限必要なコマンドは以下の5つだけ。</p>
-<ul>
-<li>HELO - 通信開始</li>
-<li>MAIL FROM - 送信元メールアドレス。ドメインのIPと送信元のIPが一致している必要がある。dynamic DNSのドメイン名でも大丈夫。ユーザ名部分は実際に存在しなくてもよい(その場合は返信を受けとれない)</li>
-<li>RCPT TO - 送信先メールアドレス</li>
-<li>DATA - メール本体の開始。'.'(ピリオド)だけの行で本文終了。本文のFromとToはなんでもよい。普通のメーラのfromやtoで表示されるのはここの情報</li>
-<li>QUIT - 通信終了</li>
-</ul>
-<div class="pygments_murphy"><pre>% telnet gmail-smtp-in.l.google.com 25
-Trying 173.194.79.26...
-Connected to gmail-smtp-in.l.google.com.
-Escape character is &#39;^]&#39;.
-220 mx.google.com ESMTP k8si26817952pax.291 - gsmtp
-HELO
-250 mx.google.com at your service
-MAIL FROM:&lt;username@yourhostname&gt;
-250 2.1.0 OK k8si26817952pax.291 - gsmtp
-RCPT TO:&lt;username@gmail.com&gt;
-250 2.1.5 OK k8si26817952pax.291 - gsmtp
-DATA
-354  Go ahead k8si26817952pax.291 - gsmtp
-Subject: xxx
-From: yyy
-To: zzz
-
-.
-250 2.0.0 OK 1361347877 k8si26817952pax.291 - gsmtp
-QUIT
-221 2.0.0 closing connection k8si26817952pax.291 - gsmtp
-Connection closed by foreign host.
-</pre></div>
-
-<h3 id="3">3. メールの確認</h3>
-<p>gmail上でメールがきているか確認します。DATA部分を適当に書くとスパム判定されてしまいますが一応届くはず。</p>
-<h2 id="postfix">postfixの設定メモ</h2>
-<p>上記は直接gmailのsmtpサーバで送信しましたが、mailコマンドからローカルのpostfix経由で送るにはpostfixを適切に設定する必要があります。</p>
-<p>MAIL FROMで使われるのはmyoriginの値になるようなので、送信だけでよいのであればmyoriginのIPが送信元のグローバルIPに一致するように設定しさえすればよいということですかね。</p>
-<p>ちなみに、debianのaptからpostfixを「ローカルのみ」の設定でインストールしてしまうと、デフォルトのmain.cfにリレーしない設定になっているので、main.cfを以下のようにコメントアウト。</p>
-<div class="pygments_murphy"><pre># default_transport = error
-# relay_transport = error
-</pre></div>
-
-<p>あと、sakura vpsのお試し期間中はメール送信できない仕様なので、sakura vpsで試す際は注意。</p>
-<p><a href="http://vps.sakura.ad.jp/terms.html">http://vps.sakura.ad.jp/terms.html</a></p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/02/24/the-p-convention/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/23/telnet-smtp/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/23/telnet-smtp/" class="hatena-bookmark-button" data-hatena-bookmark-title="telnetでメールを送信する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/23/telnet-smtp/" data-text="telnetでメールを送信する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/23/telnet-smtp/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../1">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -578,6 +564,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/04/28/raspberry-pi/" title="Raspberry Pi はじめました"><p>Raspberry Pi はじめました</a><span style="font-size: 80%;">(April 28, 2013 at 01:30 AM)</span></li>
       <li><a href="/blog/2013/04/26/toml/" title="TOMLノススメ"><p>TOMLノススメ</a><span style="font-size: 80%;">(April 26, 2013 at 08:21 PM)</span></li>
       <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
       <li><a href="/blog/2013/04/21/inf-php-on-melpa/" title="inf-php.elがmelpaに登録されました"><p>inf-php.elがmelpaに登録されました</a><span style="font-size: 80%;">(April 21, 2013 at 04:56 PM)</span></li>
@@ -585,7 +572,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/03/29/ruboto/" title="Rubotoを使ってRubyでAndroidアプリをかく"><p>Rubotoを使ってRubyでAndroidアプリをかく</a><span style="font-size: 80%;">(March 29, 2013 at 09:53 PM)</span></li>
       <li><a href="/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" title="Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法"><p>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</a><span style="font-size: 80%;">(March 28, 2013 at 02:50 AM)</span></li>
       <li><a href="/blog/2013/03/26/jekyll-plugin/" title="hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン"><p>hekyllのimpress.jsスライドを自動的にグリッド配置するjekyllプラグイン</a><span style="font-size: 80%;">(March 26, 2013 at 08:37 PM)</span></li>
-      <li><a href="/blog/2013/02/27/building-python-debian-package/" title="pythonのswigエクステンションからdebian packageをつくる手順メモ"><p>pythonのswigエクステンションからdebian packageをつくる手順メモ</a><span style="font-size: 80%;">(February 27, 2013 at 11:46 PM)</span></li>
     </ul>
   </div>
 
@@ -653,6 +639,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
@@ -674,7 +661,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
       <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
