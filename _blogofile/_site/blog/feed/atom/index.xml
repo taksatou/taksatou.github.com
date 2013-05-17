@@ -7,12 +7,106 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-04-28T01:54:53Z</updated>
+  <updated>2013-05-17T19:46:31Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Mach-Oバイナリのライブラリロードパスをカスタマイズする方法]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/" />
+    <id>http://mojavy.com/blog/2013/05/17/mach-o-rpath/</id>
+    <updated>2013-05-17T19:46:31Z</updated>
+    <published>2013-05-17T19:46:31Z</published>
+    <category scheme="http://mojavy.com/blog" term="osx" />
+    <category scheme="http://mojavy.com/blog" term="unix" />
+    <category scheme="http://mojavy.com/blog" term="elf" />
+    <category scheme="http://mojavy.com/blog" term="mach-o" />
+    <summary type="html"><![CDATA[Mach-Oバイナリのライブラリロードパスをカスタマイズする方法]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/05/17/mach-o-rpath/"><![CDATA[<p><img alt="matrix" src="/images/matrix3.png" /></p>
+<p>ライブラリの単体テストをするときとかに、実行プログラムがロードする共有ライブラリのパスを任意のディレクトリで上書きしたいときがある。</p>
+<p>例えば以下のようなディレクトリ構成で、<code>project/t/mytest</code>というバイナリをビルドするときに<code>project/src/libmy.so</code>をリンクするようにしておけば作業しやすい。</p>
+<div class="pygments_murphy"><pre>└── project
+    ├── src
+    │   ├── libmy.a
+    │   ├── libmy.so -&gt; libmy.so.1
+    │   ├── libmy.so.1
+    │   ├── Makefile
+    │   ├── mylib.c
+    │   ├── mylib.h
+    │   └── mylib.o
+    └── t
+        ├── Makefile
+        ├── mytest
+        ├── mytest.c
+        └── mytest.o
+</pre></div>
+
+<p>こういうときは、<code>mytest</code>をビルドするときに以下のようにしてrpathを相対パスで追加していた。</p>
+<div class="pygments_murphy"><pre>$ cc -I../src -L../src -Wl,-rpath=../src *.c -lmy -o mytest
+$ readelf -d mytest
+Dynamic section at offset 0xe30 contains 22 entries:
+  Tag        Type                         Name/Value
+ 0x0000000000000001 (NEEDED)             Shared library: [libmy.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x000000000000000f (RPATH)              Library rpath: [../src]
+ 0x000000000000000c (INIT)               0x4004c8
+ 0x000000000000000d (FINI)               0x4006f8
+ 0x000000006ffffef5 (GNU_HASH)           0x400298
+ 0x0000000000000005 (STRTAB)             0x4003c0
+ 0x0000000000000006 (SYMTAB)             0x4002d0
+ 0x000000000000000a (STRSZ)              134 (bytes)
+ 0x000000000000000b (SYMENT)             24 (bytes)
+ 0x0000000000000015 (DEBUG)              0x0
+ 0x0000000000000003 (PLTGOT)             0x600fe8
+ 0x0000000000000002 (PLTRELSZ)           48 (bytes)
+ 0x0000000000000014 (PLTREL)             RELA
+ 0x0000000000000017 (JMPREL)             0x400498
+ 0x0000000000000007 (RELA)               0x400480
+ 0x0000000000000008 (RELASZ)             24 (bytes)
+ 0x0000000000000009 (RELAENT)            24 (bytes)
+ 0x000000006ffffffe (VERNEED)            0x400460
+ 0x000000006fffffff (VERNEEDNUM)         1
+ 0x000000006ffffff0 (VERSYM)             0x400446
+ 0x0000000000000000 (NULL)               0x0
+</pre></div>
+
+<p>しかし、OSXの場合は上記のように単に実行バイナリ側にrpathを追加しただけだと、ローダがrpathを設定するコマンドより先にライブラリをロードするコマンドを実行しようとして該当ファイルがみつけられなくて以下のようなエラーになってしまう.</p>
+<div class="pygments_murphy"><pre>dyld: Library not loaded: libmy.1.dylib
+  Referenced from: /Users/path/to/project/t/./mytest
+  Reason: image not found
+zsh: trace trap  ./mytest
+</pre></div>
+
+<p><code>otool -l &lt;executable file&gt;</code>でロードコマンドの詳細をみると以下のようなエントリがみつかるが、ここのnameの値はライブラリ側の<code>install_path</code>が設定される。</p>
+<div class="pygments_murphy"><pre>-- 中略
+Load command 11
+          cmd LC_LOAD_DYLIB
+      cmdsize 40
+         name libmy.1.dylib (offset 24)
+   time stamp 2 Thu Jan  1 09:00:02 1970
+      current version 1.0.0
+compatibility version 0.0.0
+</pre></div>
+
+<p><code>install_path</code>は<code>soname</code>のかわりのようなもので、なにも指定しなければ出力ファイル名になる。
+ここに<code>@executable_path</code>や<code>@rpath</code>をつかうことによって、このダイナミックライブラリをリンクする側のバイナリに応じて挙動をかえることができる。
+これらの変数(?)の詳細は参考リンクに解説がある。</p>
+<p>要は、ELFのrpathとおなじような挙動にしたければ、 <code>-Wl,-install_name,@rpath/libmy.1.dylib</code> というようなオプション付きでライブラリをビルドすればよい。</p>
+<p>また、<code>-Wl,-install_name,@executable_path/../src/libmy.1.dylib</code>のようにすると実行ファイルからの相対パスにすることができる。</p>
+<p>この情報はリンクされる側のライブラリに埋めこまれている点に注意。</p>
+<p>ELFに比べると柔軟にロードパスを制御することができると思われるが、うまく活用するのはちょっと難しそう。</p>
+<h4 id="_1">参考リンク</h4>
+<ul>
+<li><a href="https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath">@executable_path, @load_path and @rpath </a> </li>
+<li><a href="https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/DynamicLibraryDesignGuidelines.html">DynamicLibraryDesignGuidelines</a> </li>
+</ul>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -592,118 +686,5 @@ Postクラスを拡張してhekyllにあうようにliquidに渡すデータを�
 <p><a href="https://gist.github.com/taksatou/5244991">https://gist.github.com/taksatou/5244991</a></p>
 <h3 id="_2">まとめ</h3>
 <p>impress.jsをつかっておいて単なるグリッドというのもどうかとは思いますが、位置決めをする部分をかえればなんとでもなるのでひまなときにがんばればいいと思います</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[pythonのswigエクステンションからdebian packageをつくる手順メモ]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/02/27/building-python-debian-package/" />
-    <id>http://mojavy.com/blog/2013/02/27/building-python-debian-package/</id>
-    <updated>2013-02-27T23:46:03Z</updated>
-    <published>2013-02-27T23:46:03Z</published>
-    <category scheme="http://mojavy.com/blog" term="python" />
-    <category scheme="http://mojavy.com/blog" term="debian" />
-    <category scheme="http://mojavy.com/blog" term="linux" />
-    <summary type="html"><![CDATA[pythonのswigエクステンションからdebian packageをつくる手順メモ]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/02/27/building-python-debian-package/"><![CDATA[<p><img alt="debian" src="/images/debian-200.png" /></p>
-<p>注: 以下は古めの環境(Lenny or Squeeze)と古めのpython (2.5 or 2.6)をターゲットにしたときの手順なので、最新の環境では別な方法があるかもしれません。</p>
-<h2 id="_1">目次</h2>
-<div class="toc">
-<ul>
-<li><a href="#_1">目次</a><ul>
-<li><a href="#1">1. 必要なパッケージをインストール</a></li>
-<li><a href="#2-setuppy">2. setup.pyをかく</a></li>
-<li><a href="#3">3. ビルド確認</a></li>
-<li><a href="#4-debianize">4. debianizeする</a></li>
-<li><a href="#5-deb">5. debをつくる</a></li>
-<li><a href="#_2">その他ツール等</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<h3 id="1">1. 必要なパッケージをインストール</h3>
-<ul>
-<li>python-setuptools</li>
-<li>python-all-dev</li>
-<li>python-support</li>
-<li>python-stdeb</li>
-<li>swig</li>
-<li>debhelper</li>
-<li>devscripts</li>
-<li>dh_make</li>
-</ul>
-<p>たぶんこれだけあれば大丈夫。(python-supportはdeprecatedらしいけどここでは無視)</p>
-<h3 id="2-setuppy">2. setup.pyをかく</h3>
-<p><code>apt-get source python-xxx</code>で適当なパッケージのソースをダウンロードして参考にするとよい</p>
-<p>以下例</p>
-<div class="pygments_murphy"><pre><span class="c">#!/usr/bin/python</span>
-
-<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
-
-<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;0.0.1&quot;</span>
-
-<span class="n">setup</span><span class="p">(</span><span class="n">name</span>         <span class="o">=</span> <span class="s">&quot;yourext&quot;</span><span class="p">,</span>
-      <span class="n">version</span>      <span class="o">=</span> <span class="n">__version__</span><span class="p">,</span>
-      <span class="n">author</span>       <span class="o">=</span> <span class="s">&quot;Your Name&quot;</span><span class="p">,</span>
-      <span class="n">author_email</span> <span class="o">=</span> <span class="s">&quot;yourname@example.com,</span>
-      <span class="n">url</span>          <span class="o">=</span> <span class="s">&quot;http://example.com/python-yourext&quot;</span><span class="p">,</span>
-      <span class="n">download_url</span> <span class="o">=</span> <span class="s">&quot;http://example.com/python-yourext-</span><span class="si">%s</span><span class="s">.tgz&quot;</span> <span class="o">%</span> <span class="n">__version__</span><span class="p">,</span>
-      <span class="n">description</span>  <span class="o">=</span> <span class="s">&quot;yourext client library for python&quot;</span><span class="p">,</span>
-      <span class="n">long_description</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;README.md&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
-      <span class="n">license</span>      <span class="o">=</span> <span class="s">&quot;LGPL&quot;</span><span class="p">,</span>
-      <span class="n">platforms</span>    <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Platform Independent&quot;</span><span class="p">],</span>
-      <span class="n">classifiers</span>  <span class="o">=</span> <span class="p">[</span>
-        <span class="s">&quot;Development Status :: 5 - Production/Stable&quot;</span><span class="p">,</span>
-        <span class="s">&quot;Intended Audience :: Developers&quot;</span><span class="p">,</span>
-        <span class="s">&quot;License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)&quot;</span><span class="p">,</span>
-        <span class="s">&quot;Operating System :: OS Independent&quot;</span><span class="p">,</span>
-        <span class="s">&quot;Programming Language :: Python&quot;</span><span class="p">,</span>
-        <span class="s">&quot;Topic :: Software Development :: Libraries :: Python Modules&quot;</span>
-      <span class="p">],</span>
-      <span class="n">ext_modules</span>  <span class="o">=</span> <span class="p">[</span>
-        <span class="n">Extension</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;yourext&#39;</span><span class="p">,</span>
-                  <span class="n">sources</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;path_to_swig/yourext.i&#39;</span><span class="p">],</span>
-                  <span class="n">include_dirs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;path_to_lib/include&#39;</span><span class="p">],</span>
-                  <span class="n">library_dirs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;path_to_lib/lib&#39;</span><span class="p">],</span>
-                  <span class="n">libraries</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;yourlibrary&#39;</span><span class="p">],</span>
-                  <span class="n">define_macros</span><span class="o">=</span><span class="p">[(</span><span class="n">FOO_BAR</span><span class="p">,</span> <span class="mi">123</span><span class="p">),</span> <span class="p">(</span><span class="n">DEBUG</span><span class="p">,</span> <span class="bp">None</span><span class="p">)],</span>
-                  <span class="n">extra_compile_args</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;-std=gnu99&#39;</span><span class="p">,</span> <span class="s">&#39;-Wextra&#39;</span><span class="p">],</span>
-                  <span class="p">)</span>
-      <span class="p">],</span>
-      <span class="n">py_modules</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;pure_python_module_name&#39;</span><span class="p">,</span> <span class="s">&#39;foo.bar&#39;</span><span class="p">],</span>
-      <span class="n">include_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">],</span>
-<span class="p">)</span>
-</pre></div>
-
-<ul>
-<li>ext_modulesの中にExtensionをかく
-<ul></li>
-<li>Extension.sources にはswigの定義ファイルを直接指定できる</li>
-<li>Extension.include_dirs, Extension.library_dirs, Extension.librariesはそれぞれgccでいう<code>-I, -L, -l</code>の値</li>
-<li>Extension.define_macrosはタプルで渡す。上の例だと <code>-DFOO_BAR=123 -DDEBUG</code> の意味</li>
-<li>Extension.extra_compile_args はその他のコンパイルオプション
-</ul></li>
-<li>platforms, classifiersの内容はpython-cjsonあたりからコピーした</li>
-<li>pure pythonの部分はpy_modulesにモジュール名を列挙する。パスではない</li>
-<li>swigが生成した<code>.py</code>ファイルをpy_modulesに含める汎用的な方法は見つからなかった。(必要な場合はスクリプトでinclude_dirsにコピーすることで対応できる)</li>
-</ul>
-<h3 id="3">3. ビルド確認</h3>
-<p>以下コマンドでpython extのビルドを確認する。成功すると、buildディレクトリ以下に共有ライブラリが生成される</p>
-<p><code>python setup.py build</code></p>
-<h3 id="4-debianize">4. debianizeする</h3>
-<p>以下コマンドでdebianパッケージに必要なファイルを生成する。このときegg-info等も生成される</p>
-<p><code>python setup.py --command-package=stdeb.command debianize --force-buildsystem=True</code></p>
-<h3 id="5-deb">5. debをつくる</h3>
-<p><code>debuild -uc -us</code></p>
-<p><code>-uc -us</code>は署名を省略するためのオプション。</p>
-<p>成功すると、親ディレクトリにdebファイルができてるはず</p>
-<h3 id="_2">その他ツール等</h3>
-<ul>
-<li>dupload: リポジトリにアップロードするためのもの</li>
-<li>dlocate: <code>dlocate -S filename</code> のようにすればそのファイルを含むパッケージを調べることができる</li>
-<li>cdbs: debianパッケージを作成するための別なやりかた(?)。 ちゃんとしらべてない</li>
-</ul>]]></content>
   </entry>
 </feed>

@@ -102,6 +102,117 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="mach-oバイナリのライブラリロードパスをカスタマイズする方法"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/" rel="bookmark" title="Permanent Link to Mach-Oバイナリのライブラリロードパスをカスタマイズする方法">Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a></h2>
+  <small>May 17, 2013 at 07:46 PM | categories:
+
+<a href='/blog/category/osx'>osx</a>, <a href='/blog/category/unix'>unix</a>, <a href='/blog/category/elf'>elf</a>, <a href='/blog/category/mach-o'>mach-o</a>
+ | <a href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="matrix" src="/images/matrix3.png" /></p>
+<p>ライブラリの単体テストをするときとかに、実行プログラムがロードする共有ライブラリのパスを任意のディレクトリで上書きしたいときがある。</p>
+<p>例えば以下のようなディレクトリ構成で、<code>project/t/mytest</code>というバイナリをビルドするときに<code>project/src/libmy.so</code>をリンクするようにしておけば作業しやすい。</p>
+<div class="pygments_murphy"><pre>└── project
+    ├── src
+    │   ├── libmy.a
+    │   ├── libmy.so -&gt; libmy.so.1
+    │   ├── libmy.so.1
+    │   ├── Makefile
+    │   ├── mylib.c
+    │   ├── mylib.h
+    │   └── mylib.o
+    └── t
+        ├── Makefile
+        ├── mytest
+        ├── mytest.c
+        └── mytest.o
+</pre></div>
+
+<p>こういうときは、<code>mytest</code>をビルドするときに以下のようにしてrpathを相対パスで追加していた。</p>
+<div class="pygments_murphy"><pre>$ cc -I../src -L../src -Wl,-rpath=../src *.c -lmy -o mytest
+$ readelf -d mytest
+Dynamic section at offset 0xe30 contains 22 entries:
+  Tag        Type                         Name/Value
+ 0x0000000000000001 (NEEDED)             Shared library: [libmy.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x000000000000000f (RPATH)              Library rpath: [../src]
+ 0x000000000000000c (INIT)               0x4004c8
+ 0x000000000000000d (FINI)               0x4006f8
+ 0x000000006ffffef5 (GNU_HASH)           0x400298
+ 0x0000000000000005 (STRTAB)             0x4003c0
+ 0x0000000000000006 (SYMTAB)             0x4002d0
+ 0x000000000000000a (STRSZ)              134 (bytes)
+ 0x000000000000000b (SYMENT)             24 (bytes)
+ 0x0000000000000015 (DEBUG)              0x0
+ 0x0000000000000003 (PLTGOT)             0x600fe8
+ 0x0000000000000002 (PLTRELSZ)           48 (bytes)
+ 0x0000000000000014 (PLTREL)             RELA
+ 0x0000000000000017 (JMPREL)             0x400498
+ 0x0000000000000007 (RELA)               0x400480
+ 0x0000000000000008 (RELASZ)             24 (bytes)
+ 0x0000000000000009 (RELAENT)            24 (bytes)
+ 0x000000006ffffffe (VERNEED)            0x400460
+ 0x000000006fffffff (VERNEEDNUM)         1
+ 0x000000006ffffff0 (VERSYM)             0x400446
+ 0x0000000000000000 (NULL)               0x0
+</pre></div>
+
+<p>しかし、OSXの場合は上記のように単に実行バイナリ側にrpathを追加しただけだと、ローダがrpathを設定するコマンドより先にライブラリをロードするコマンドを実行しようとして該当ファイルがみつけられなくて以下のようなエラーになってしまう.</p>
+<div class="pygments_murphy"><pre>dyld: Library not loaded: libmy.1.dylib
+  Referenced from: /Users/path/to/project/t/./mytest
+  Reason: image not found
+zsh: trace trap  ./mytest
+</pre></div>
+
+<p><code>otool -l &lt;executable file&gt;</code>でロードコマンドの詳細をみると以下のようなエントリがみつかるが、ここのnameの値はライブラリ側の<code>install_path</code>が設定される。</p>
+<div class="pygments_murphy"><pre>-- 中略
+Load command 11
+          cmd LC_LOAD_DYLIB
+      cmdsize 40
+         name libmy.1.dylib (offset 24)
+   time stamp 2 Thu Jan  1 09:00:02 1970
+      current version 1.0.0
+compatibility version 0.0.0
+</pre></div>
+
+<p><code>install_path</code>は<code>soname</code>のかわりのようなもので、なにも指定しなければ出力ファイル名になる。
+ここに<code>@executable_path</code>や<code>@rpath</code>をつかうことによって、このダイナミックライブラリをリンクする側のバイナリに応じて挙動をかえることができる。
+これらの変数(?)の詳細は参考リンクに解説がある。</p>
+<p>要は、ELFのrpathとおなじような挙動にしたければ、 <code>-Wl,-install_name,@rpath/libmy.1.dylib</code> というようなオプション付きでライブラリをビルドすればよい。</p>
+<p>また、<code>-Wl,-install_name,@executable_path/../src/libmy.1.dylib</code>のようにすると実行ファイルからの相対パスにすることができる。</p>
+<p>この情報はリンクされる側のライブラリに埋めこまれている点に注意。</p>
+<p>ELFに比べると柔軟にロードパスを制御することができると思われるが、うまく活用するのはちょっと難しそう。</p>
+<h4 id="_1">参考リンク</h4>
+<ul>
+<li><a href="https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath">@executable_path, @load_path and @rpath </a> </li>
+<li><a href="https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/DynamicLibraryDesignGuidelines.html">DynamicLibraryDesignGuidelines</a> </li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/05/17/mach-o-rpath/" class="hatena-bookmark-button" data-hatena-bookmark-title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/05/17/mach-o-rpath/" data-text="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ワイヤレスなraspberry-pi環境をつくる"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" rel="bookmark" title="Permanent Link to ワイヤレスなRaspberry Pi環境をつくる">ワイヤレスなRaspberry Pi環境をつくる</a></h2>
   <small>April 28, 2013 at 01:54 AM | categories:
@@ -164,6 +275,8 @@ wlan0     Link encap:Ethernet  HWaddr 10:6f:3f:ec:5f:b8
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/04/28/raspberry-pi/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -499,52 +612,6 @@ rubyのコードをllvmベースのマシン語にコンパイルするので高
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="inf-php.elがmelpaに登録されました"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/" rel="bookmark" title="Permanent Link to inf-php.elがmelpaに登録されました">inf-php.elがmelpaに登録されました</a></h2>
-  <small>April 21, 2013 at 04:56 PM | categories:
-
-<a href='/blog/category/php'>php</a>, <a href='/blog/category/emacs'>emacs</a>
- | <a href="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /> </p>
-<p><a href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/">先日つくったinf-php</a> が <a href="http://melpa.milkbox.net/">melpa</a> に登録されました。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
-<p>emacs24 以降をつかっている人は<code>M-x list-packages</code> からinf-phpをインストールできるようになります。</p>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>初めてmelpaにpull requestを送ってみましたが、送って1分でmergeされるという爆速対応でした。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/04/23/quicklinks5/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/" class="hatena-bookmark-button" data-hatena-bookmark-title="inf-php.elがmelpaに登録されました" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/" data-text="inf-php.elがmelpaに登録されました">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/page/2">Next »</a>
 </div>
@@ -572,6 +639,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/05/17/mach-o-rpath/" title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法"><p>Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a><span style="font-size: 80%;">(May 17, 2013 at 07:46 PM)</span></li>
       <li><a href="/blog/2013/04/28/wireless-raspberry-pi/" title="ワイヤレスなRaspberry Pi環境をつくる"><p>ワイヤレスなRaspberry Pi環境をつくる</a><span style="font-size: 80%;">(April 28, 2013 at 01:54 AM)</span></li>
       <li><a href="/blog/2013/04/28/raspberry-pi/" title="Raspberry Pi はじめました"><p>Raspberry Pi はじめました</a><span style="font-size: 80%;">(April 28, 2013 at 01:30 AM)</span></li>
       <li><a href="/blog/2013/04/26/toml/" title="TOMLノススメ"><p>TOMLノススメ</a><span style="font-size: 80%;">(April 26, 2013 at 08:21 PM)</span></li>
@@ -579,7 +647,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/04/21/inf-php-on-melpa/" title="inf-php.elがmelpaに登録されました"><p>inf-php.elがmelpaに登録されました</a><span style="font-size: 80%;">(April 21, 2013 at 04:56 PM)</span></li>
       <li><a href="/blog/2013/04/05/emacs-inf-php-mode/" title="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた"><p>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</a><span style="font-size: 80%;">(April 05, 2013 at 07:49 PM)</span></li>
       <li><a href="/blog/2013/03/29/ruboto/" title="Rubotoを使ってRubyでAndroidアプリをかく"><p>Rubotoを使ってRubyでAndroidアプリをかく</a><span style="font-size: 80%;">(March 29, 2013 at 09:53 PM)</span></li>
-      <li><a href="/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" title="Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法"><p>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</a><span style="font-size: 80%;">(March 28, 2013 at 02:50 AM)</span></li>
     </ul>
   </div>
 
@@ -625,6 +692,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
@@ -637,8 +705,10 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/mach-o">mach-o</a> (<a href="/blog/category/mach-o/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/osx">osx</a> (<a href="/blog/category/osx/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/others">others</a> (<a href="/blog/category/others/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
@@ -658,7 +728,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
@@ -669,6 +739,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
