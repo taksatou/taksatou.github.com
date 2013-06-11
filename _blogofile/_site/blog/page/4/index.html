@@ -102,6 +102,78 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="ltsv-for-common-lisp-作りました"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/" rel="bookmark" title="Permanent Link to LTSV for Common Lisp 作りました">LTSV for Common Lisp 作りました</a></h2>
+  <small>February 18, 2013 at 08:30 PM | categories:
+
+<a href='/blog/category/ltsv'>ltsv</a>, <a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="lisp" src="/images/lisp-alien-logo.png" /></p>
+<p>ブームは過ぎ去ってしまいましたが、意外とまだなかったのでCommon LispのLTSVパーサつくりました。</p>
+<p><a href="https://github.com/taksatou/cl-ltsv">https://github.com/taksatou/cl-ltsv</a></p>
+<p><a href="http://ltsv.org/">http://ltsv.org/</a></p>
+<h3 id="_1">インストール</h3>
+<p>現在(2013-02-18) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
+<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-ltsv)
+</pre></div>
+
+<h3 id="_2">使い方</h3>
+<p>以下のように使います。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-ltsv:parse-line &quot;host:127.0.0.1    ident:- user:frank&quot;)
+((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;frank&quot;))
+
+CL-USER&gt; (with-input-from-string (ss &quot;host:127.0.0.1    ident:- user:frank
+host:127.0.0.1  ident:- user:jane
+host:127.0.0.1  ident:- user:john&quot;)
+           (cl-ltsv:with-ltsv-from-stream (entry ss)
+             (print entry)))
+
+((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;frank&quot;)) 
+((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;jane&quot;)) 
+((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;john&quot;)) 
+NIL
+
+CL-USER&gt; (cl-ltsv:alist-ltsv &#39;((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;frank&quot;)))
+&quot;host:127.0.0.1 ident:- user:frank&quot;
+</pre></div>
+
+<ul>
+<li>cl-ltsv:parse-lineするとalistを返します</li>
+<li>cl-ltsv:with-ltsv-from-stream を使えば1行ずつパースしてループします</li>
+<li>cl-ltsv:alist-ltsv でalistからltsv形式の文字列に変換できます</li>
+</ul>
+<h3 id="_3">まとめ</h3>
+<p>ライブラリにするほどでもなかった気はしますが、Common Lispには文字列のsplitが標準でついてなくてちょっと面倒に感じることもあったのでないよりはましかな、ということで作りました。</p>
+<p>フィードバック等ありましたらコメント頂けるとうれしいです。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/02/19/rainbow-for-common-lisp/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/" class="hatena-bookmark-button" data-hatena-bookmark-title="LTSV for Common Lisp 作りました" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/" data-text="LTSV for Common Lisp 作りました">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="common-lispのdefconstantについての注意点"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" rel="bookmark" title="Permanent Link to common lispのdefconstantについての注意点">common lispのdefconstantについての注意点</a></h2>
   <small>February 09, 2013 at 05:15 PM | categories:
@@ -433,59 +505,6 @@ void f2(void) {
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="tmuxでalcの英単語を引く"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" rel="bookmark" title="Permanent Link to tmuxでalcの英単語を引く">tmuxでalcの英単語を引く</a></h2>
-  <small>January 11, 2013 at 10:00 PM | categories:
-
-<a href='/blog/category/ruby'>ruby</a>, <a href='/blog/category/tmux'>tmux</a>, <a href='/blog/category/english'>english</a>
- | <a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="english" src="/images/english-200.png" /></p>
-<p><b>2013-01-15追記 規約違反とのコメント頂いたのでスクレイピングするスクリプトを削除しました。</b></p>
-<p>tmuxのcommand-promptを使うと任意のコマンドをインタラクティブに実行できます。
-これをつかってtmux上でalcの英単語を表示できるようにしたら思いの外便利だったので紹介します。</p>
-<p>まず、alcの検索結果をスクレイビングしていい感じに表示するコマンドをつくります。
-rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当なスクリプトでよければこれを使って下さい。</p>
-<div class="pygments_murphy"><pre><span class="c1"># 2013-01-15 削除しました</span>
-</pre></div>
-
-<p>これをパスの通った場所にalcという名前で保存して、.tmux.confに以下の設定を追記します。</p>
-<div class="pygments_murphy"><pre>unbind C-a
-<span class="nb">bind </span>C-a <span class="nb">command</span>-prompt <span class="s2">&quot;split-window -h &#39;alc %% | lv -c&#39;&quot;</span>
-</pre></div>
-
-<p>C-aにバインドしてますがお好みのキーに変えてください。
-rainbowで色付けしてるのでエスケープシーケンスを解釈できるpagerをつかって下さい。</p>
-<p>これで.tmux.confをリロードして、prefix-key C-a とかするとtmux上にプロンプトが表示されるので、そこで調べたい単語を入力します。
-そうすると新しいpaneに結果が表示されます。pagerを閉じると自動的にpaneも閉じます。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/01/21/c-string-initialization/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" class="hatena-bookmark-button" data-hatena-bookmark-title="tmuxでalcの英単語を引く" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" data-text="tmuxでalcの英単語を引く">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../3">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -515,6 +534,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/06/12/how-to-choose-aes-algorithm/" title="ブロック暗号化モードについて"><p>ブロック暗号化モードについて</a><span style="font-size: 80%;">(June 12, 2013 at 08:36 AM)</span></li>
       <li><a href="/blog/2013/05/17/mach-o-rpath/" title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法"><p>Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a><span style="font-size: 80%;">(May 17, 2013 at 07:46 PM)</span></li>
       <li><a href="/blog/2013/04/28/wireless-raspberry-pi/" title="ワイヤレスなRaspberry Pi環境をつくる"><p>ワイヤレスなRaspberry Pi環境をつくる</a><span style="font-size: 80%;">(April 28, 2013 at 01:54 AM)</span></li>
       <li><a href="/blog/2013/04/28/raspberry-pi/" title="Raspberry Pi はじめました"><p>Raspberry Pi はじめました</a><span style="font-size: 80%;">(April 28, 2013 at 01:30 AM)</span></li>
@@ -522,7 +542,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
       <li><a href="/blog/2013/04/21/inf-php-on-melpa/" title="inf-php.elがmelpaに登録されました"><p>inf-php.elがmelpaに登録されました</a><span style="font-size: 80%;">(April 21, 2013 at 04:56 PM)</span></li>
       <li><a href="/blog/2013/04/05/emacs-inf-php-mode/" title="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた"><p>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</a><span style="font-size: 80%;">(April 05, 2013 at 07:49 PM)</span></li>
-      <li><a href="/blog/2013/03/29/ruboto/" title="Rubotoを使ってRubyでAndroidアプリをかく"><p>Rubotoを使ってRubyでAndroidアプリをかく</a><span style="font-size: 80%;">(March 29, 2013 at 09:53 PM)</span></li>
     </ul>
   </div>
 
@@ -597,6 +616,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
@@ -615,6 +635,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
