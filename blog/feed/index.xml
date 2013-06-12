@@ -15,14 +15,14 @@
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
-      <title>ブロック暗号化モードについて</title>
-      <link>http://mojavy.com/blog/2013/06/12/how-to-choose-aes-algorithm/</link>
+      <title>暗号利用モードについて</title>
+      <link>http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/</link>
       <pubDate>Wed, 12 Jun 2013 08:36:07 JST</pubDate>
       <category><![CDATA[security]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/06/12/how-to-choose-aes-algorithm/</guid>
-      <description>ブロック暗号化モードについて</description>
-      <content:encoded><![CDATA[<p>AESを使おうと思ったけどどのブロック暗号化モードをつかえばいいかわからなかったので調べたことをまとめておきます。</p>
-<h2 id="_1">ブロック暗号化モードとは</h2>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/</guid>
+      <description>暗号利用モードについて</description>
+      <content:encoded><![CDATA[<p>AESを使おうと思ったけどどの暗号利用モードをつかえばいいかわからなかったので調べたことをまとめておきます。</p>
+<h2 id="_1">暗号利用モードとは</h2>
 <p><a href="http://ja.wikipedia.org/wiki/%E6%9A%97%E5%8F%B7%E5%88%A9%E7%94%A8%E3%83%A2%E3%83%BC%E3%83%89">Wikipedia/暗号利用モード</a></p>
 <blockquote>
 <p>暗号利用モード（あんごうりようモード、Block cipher modes of operation）とは、ブロック暗号を利用して、ブロック長よりも長いメッセージを暗号化するメカニズムのことである。
