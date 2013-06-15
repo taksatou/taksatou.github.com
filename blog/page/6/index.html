@@ -102,6 +102,150 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="gearmanクライアントライブラリ-cl-gearman"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" rel="bookmark" title="Permanent Link to gearmanクライアントライブラリ cl-gearman">gearmanクライアントライブラリ cl-gearman</a></h2>
+  <small>December 16, 2012 at 05:30 PM | categories:
+
+<a href='/blog/category/gearman'>gearman</a>, <a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="tool" src="/images/gearman-logo.png" /></p>
+<p><b>この投稿は<a href="http://qiita.com/advent-calendar/2012/clladvent">Common Lisp Libraries Advent Calendar 2012</a>の16日目の記事です。</b></p>
+<p>GearmanをCommon Lispから使いたかったのですが、既存のものが見付からなかったのでcl-gearmanというものをつくってみました。というわけで紹介、もとい宣伝をさせてもらおうと思います。</p>
+<h2 id="gearman">Gearmanとは</h2>
+<p>今更感はありますが、Gearman自体について簡単に説明しておきます。</p>
+<p><a href="http://gearman.org/">http://gearman.org/</a></p>
+<p>Gearmanとは時間のかかる処理を複数のコンピュータに振り分けるように設計されたオープンソースのアプリケーションフレームワークです。Gearmanを利用するアプリケーションでは、client, job server, workerという3つの要素が存在します。
+それぞれの役割は以下の通りです。</p>
+<ul>
+<li>job server: clientから受けとったジョブを適切なworkerに渡す</li>
+<li>client: ジョブを生成してjob serverに送信する</li>
+<li>worker: job serverを経由して、clientによってリクエストされたジョブを実行してそのレスポンスを返す</li>
+</ul>
+<p>cl-gearmanは、clientとjob server間、及びworkerとjob server間のプロトコルを抽象化したライブラリです。</p>
+<p>余談ですが、Gearmanはデータ永続化をしないものだとずっと思っていたのですがmysqlやsqliteに永続化できます。
+ジョブキューを使うなら以前はTheSchwartzという選択肢もありましたが、今はGearmanでほとんどの場合に対応できるのではないでしょうか。</p>
+<h2 id="_1">インストール</h2>
+<p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
+<p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
+<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
+git clone https://github.com/taksatou/cl-gearman.git
+</pre></div>
+
+<h2 id="_2">使い方</h2>
+<p>以下サンプルコードです</p>
+<h3 id="client">client</h3>
+<p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
+           (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
+hello
+foo
+NIL
+</pre></div>
+
+<p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
+そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
+<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+           (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
+                  (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
+                  (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
+                  (jobs `(:medium ,job1 :low ,job2 :high ,job3)))
+
+             (dotimes (i 5)
+               (loop for (k v) on jobs by #&#39;cddr
+                  do (format t &quot;~a: ~a~%&quot; k (cl-gearman:get-job-status client v)))
+               (sleep 1))))
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 1 IS-RUNNING 1 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+MEDIUM: (JOB-HANDLE H:hostname:109 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+LOW: (JOB-HANDLE H:hostname:110 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+HIGH: (JOB-HANDLE H:hostname:111 IS-KNOWN 0 IS-RUNNING 0 PROGRESS NAN)
+NIL
+</pre></div>
+
+<h3 id="worker">worker</h3>
+<p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
+ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
+返り値はprincでフォーマットした文字列としてclientに渡されます。workを実行するとジョブが割り当てられるまでブロックし、1つのジョブの実行が完了すると戻ります。</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
+  (cl-gearman:add-ability worker &quot;hello&quot;
+                          #&#39;(lambda (arg job) &quot;hello&quot;))
+
+  (cl-gearman:add-ability worker &quot;echo&quot;
+                          #&#39;(lambda (arg job) arg))
+
+  (cl-gearman:add-ability worker &quot;sleep&quot;
+                          #&#39;(lambda (arg job)
+                              (sleep (parse-integer arg))
+                              (format nil &quot;job:~A finished~%&quot; job)))
+
+  (loop do (cl-gearman:work worker)))
+</pre></div>
+
+<h3 id="_3">エラーハンドリング</h3>
+<p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
+workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
+<p>例えば、</p>
+<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
+  (cl-gearman:add-ability worker &quot;error&quot;
+                          #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
+
+  (loop do (handler-bind ((error #&#39;(lambda (c) (invoke-restart &#39;cl-gearman:skip-job))))
+             (cl-gearman:work worker))))
+</pre></div>
+
+<p>のようにしておけば、エラーが発生したjobを無視することができます。
+abort-jobはclientに失敗を通知します。retry-jobは名前の通りハンドラを再度実行します。</p>
+<h2 id="_4">対応する処理系</h2>
+<p>メインに開発を行った環境は ubuntu 12.04, sbcl 1.0.55.0.debian です。
+一応以下の処理系で動作確認しました</p>
+<ul>
+<li>sbcl 1.0.55.0.debian </li>
+<li>clisp 2.49</li>
+<li>clozure cl 1.8-r15286M</li>
+</ul>
+<p>ffi系のライブラリには依存してないので比較的動かしやすいとは思いますが、動かなければ教えて下さい。</p>
+<h2 id="_5">まとめ</h2>
+<p>以上、拙作のcl-gearmanを紹介しました。Common Lispを始めてまだ半年足らずなのでおかしいところがあるかと思いますが、フィードバックを頂けるとうれしいです。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/01/08/2012-summary/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" class="hatena-bookmark-button" data-hatena-bookmark-title="gearmanクライアントライブラリ cl-gearman" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/" data-text="gearmanクライアントライブラリ cl-gearman">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/12/16/common-lisp-libraries-advent-calendar-2012-16/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ウェブエンジニアのためのオンラインツールまとめ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/" rel="bookmark" title="Permanent Link to ウェブエンジニアのためのオンラインツールまとめ">ウェブエンジニアのためのオンラインツールまとめ</a></h2>
   <small>November 20, 2012 at 02:30 AM | categories:
@@ -502,194 +646,6 @@ Disassembly of section .text:
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="細かすぎて伝わらないandroid開発のはまりどころまとめ-その1"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/11/07/android-pitfalls/" rel="bookmark" title="Permanent Link to 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1">細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</a></h2>
-  <small>November 07, 2012 at 12:00 PM | categories:
-
-<a href='/blog/category/android'>android</a>, <a href='/blog/category/tips'>tips</a>
- | <a href="http://mojavy.com/blog/2012/11/07/android-pitfalls/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="android" src="/images/android-logo.png" /></p>
-<p>これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。
-その2はまたねたがたまってきたらたぶんそのうち。</p>
-<h2 id="_1">目次</h2>
-<div class="toc">
-<ul>
-<li><a href="#_1">目次</a></li>
-<li><a href="#onanimationendviewnullpointerexception">onAnimationEndでviewの階層を操作するとNullPointerExceptionでおちる</a></li>
-<li><a href="#animation">Animationが動かない</a></li>
-<li><a href="#windowmanageraddview">WindowManagerにaddViewしたときの挙動</a></li>
-<li><a href="#activity">Activityが横向きでスタートした場合と縦向きでスタートしたときで表示倍率が違う</a></li>
-<li><a href="#oncreate">onCreateが何回もよばれる</a></li>
-<li><a href="#popupwindow">popupWindowのサイズが変わらない</a></li>
-<li><a href="#httpurlconnection-0byteresponse">HttpURLConnectionが 0byteのresponseを返す</a></li>
-<li><a href="#orgapachehttpimplclientdefaulthttpclient">org.apache.http.impl.client.DefaultHttpClientがすごく遅い</a></li>
-<li><a href="#eclipseandroid-plugin">eclipseのAndroid pluginが動かなくなった</a></li>
-<li><a href="#webview">WebViewで表示されるコンテンツが小さすぎる</a></li>
-<li><a href="#javalangruntimeexception-stub">java.lang.RuntimeException: Stub!</a></li>
-<li><a href="#jarandroid">jarとして配布するandroidライブラリ内にリソースを埋め込むことはできない</a></li>
-<li><a href="#android-maven-plugin-mvn-eclipseeclipse-eclipse">android-maven-plugin から mvn eclipse:eclipse でeclipse用にエクスポートすることはできない</a></li>
-</ul>
-</div>
-<h2 id="onanimationendviewnullpointerexception">onAnimationEndでviewの階層を操作するとNullPointerExceptionでおちる</h2>
-<p>Viewをフェードアウトして親Viewからremoveする、というような動作をしたい場合に、普通にonAnimationEndの中でremoveViewとかするとNullPointerExceptionでおちます。onAnimationEndの中でViewの階層構造を操作するような処理をしてはだめらしいです。回避するには、Handlerをつかってタイミングをずらしてやるとよいです。</p>
-<ul>
-<li>参考: <a href="http://stackoverflow.com/questions/5569267/nullpointerexception-that-doesnt-point-to-any-line-in-my-code">http://stackoverflow.com/questions/5569267/nullpointerexception-that-doesnt-point-to-any-line-in-my-code</a></li>
-</ul>
-<h2 id="animation">Animationが動かない</h2>
-<p>AnimationさせるViewには親Viewが存在している必要があります。WindowManagerはViewではないので、WindowManagerにaddViewしたViewをアニメーションさせたい場合は空のRelativeLayoutとかにaddViewしてから、RelativeLayoutのほうをWindowManagerにaddViewしてやる必要があります。</p>
-<h2 id="windowmanageraddview">WindowManagerにaddViewしたときの挙動</h2>
-<p>WindowManagerにもaddViewできますが、通常のViewとは挙動が違います。</p>
-<ul>
-<li>背景透過はWindowManager.LayoutParam.format に TRANSLUCENT をセットすればよいです。</li>
-<li>dimでフェードインできますが、その際のdurationを変更する方法は分かりませんでした。</li>
-<li>BACKボタンはきかなくなります。自分でKeyEventを処理してやる必要があります。android.widget.PopupWindowのdispathKeyEventのソースが参考になります。</li>
-</ul>
-<h2 id="activity">Activityが横向きでスタートした場合と縦向きでスタートしたときで表示倍率が違う</h2>
-<ul>
-<li>参考：<a href="http://d.hatena.ne.jp/acidgraphix/20110126/1296018143">http://d.hatena.ne.jp/acidgraphix/20110126/1296018143</a></li>
-</ul>
-<h2 id="oncreate">onCreateが何回もよばれる</h2>
-<p>回転やキーボード表示のタイミングでもonCreateがよばれます。AndroidManifest.xmlでconfigChangesを設定することで回避できます。</p>
-<ul>
-<li>参考: <a href="http://stackoverflow.com/questions/2606470/unexpected-resume-of-package-name-while-already-resumed-in-package-name-err">http://stackoverflow.com/questions/2606470/unexpected-resume-of-package-name-while-already-resumed-in-package-name-err</a></li>
-</ul>
-<h2 id="popupwindow">popupWindowのサイズが変わらない</h2>
-<p>popupWindowのsetWidth, setHeightは次回以降の表示サイズしか変えられません。既に表示しているポップアップウィンドウのサイズはそのままです。invalidateしても無駄です。</p>
-<h2 id="httpurlconnection-0byteresponse">HttpURLConnectionが 0byteのresponseを返す</h2>
-<p>コネクションプールとkeepaliveがらみで問題が発生する場合があるみたいです。SDKのバージョンとウェブサーバ側の設定も影響します。
-<code>System.setProperty("http.keepAlive", "false")</code> で回避はできるようです。これに遭遇したときは、org.apache.http.impl.client.DefaultHttpClientの方を使うことにしたので詳細は追ってません。</p>
-<ul>
-<li>参考: <a href="http://stackoverflow.com/questions/1440957/httpurlconnection-getresponsecode-returns-1-on-second-invocation">http://stackoverflow.com/questions/1440957/httpurlconnection-getresponsecode-returns-1-on-second-invocation</a></li>
-</ul>
-<h2 id="orgapachehttpimplclientdefaulthttpclient">org.apache.http.impl.client.DefaultHttpClientがすごく遅い</h2>
-<p>httpsでリクエストを投げると、ウェブサーバ側の負荷が高いわけでもネットワークが細いわけでもないのに、返ってくるまでなぜか数秒かかる場合があります。こちらもkeepaliveがらみの問題っぽいです。これもウェブサーバ側の設定が影響します。
-試した限りでは以下のような状況でした。</p>
-<ul>
-<li>setHeader("Connection", "close") しても効果なし</li>
-<li>setKeepAliveStrategyでdurationを 0とか1にしても効果なし</li>
-<li>Connection closeしないウェブサーバならすぐレスポンスが返ってくる</li>
-<li>httpならすぐレスポンスが返ってくる</li>
-</ul>
-<p><a href="http://hc.apache.org/httpclient-3.x/sslguide.html">ここ( http://hc.apache.org/httpclient-3.x/sslguide.html )</a> のKnown limitations and problemsをみるとそれっぽい既知の問題があるようですが、根が深そうだったので詳細は追ってません。</p>
-<h2 id="eclipseandroid-plugin">eclipseのAndroid pluginが動かなくなった</h2>
-<p>なぜかeclipseでAndroid pluginが動かなくなるときがありました。詳細をメモるのを忘れてしまいましたが、以下の手順で直ったような気がします。</p>
-<ol>
-<li>Android Support Libraryをアンインストール</li>
-<li>eclipse再起動</li>
-<li>新しいAndroidプロジェクトを作るとダイアログでライブラリのインストールを促されるのでそれに従う</li>
-<li>android プラグインをアップデート</li>
-</ol>
-<h2 id="webview">WebViewで表示されるコンテンツが小さすぎる</h2>
-<p>通常ビューのスケールとWebViewのスケールは別です。setScaleで調整する必要があります。
-これはたぶんiOSでも同様かと。</p>
-<h2 id="javalangruntimeexception-stub">java.lang.RuntimeException: Stub!</h2>
-<p>android.jar内のコードはdalvikvmの外で実行することはできません。問答無用でタイトルの例外が飛びます。
-エラーメッセージはもうちょいなんとかならなかったのか。</p>
-<p>参考</p>
-<ul>
-<li><a href="http://stackoverflow.com/questions/7247502/using-android-jar-in-java-project-runtimeexception-stub">http://stackoverflow.com/questions/7247502/using-android-jar-in-java-project-runtimeexception-stub</a></li>
-<li><a href="http://www.slideshare.net/miyatay/abc2011w">http://www.slideshare.net/miyatay/abc2011w</a></li>
-</ul>
-<h2 id="jarandroid">jarとして配布するandroidライブラリ内にリソースを埋め込むことはできない</h2>
-<p>リソースIDを列挙しているRパッケージはjarにそのまま入れることはできますが、そのリソースIDは不正なものとなります。
-ライブラリにリソースを含めたい場合は、ソースも含めたプロジェクトをまるごと配布するしかないようです。</p>
-<p>ごく小さなアイコン画像だけとかであればバイナリデータをソース中に埋め込んでしまう、というのも手です。
-iOSならBundleという仕組みがあります。</p>
-<h2 id="android-maven-plugin-mvn-eclipseeclipse-eclipse">android-maven-plugin から mvn eclipse:eclipse でeclipse用にエクスポートすることはできない</h2>
-<p>androidでもmavenは使えますが、androidのmavenプロジェクトは通常の方法(mvn eclipse:eclipse)ではeclipseにインポートできません。
-以下のファイルを手動でつくってみたらとりあえずいけました。</p>
-<ul>
-<li>.classpath</li>
-</ul>
-<div class="pygments_murphy"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;classpath&gt;</span>
-        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;src/main/java&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;gen&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;con&quot;</span> <span class="na">path=</span><span class="s">&quot;com.android.ide.eclipse.adt.ANDROID_FRAMEWORK&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;con&quot;</span> <span class="na">path=</span><span class="s">&quot;com.android.ide.eclipse.adt.LIBRARIES&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;output&quot;</span> <span class="na">path=</span><span class="s">&quot;bin/classes&quot;</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/classpath&gt;</span>
-</pre></div>
-
-<ul>
-<li>.project</li>
-</ul>
-<div class="pygments_murphy"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;projectDescription&gt;</span>
-        <span class="nt">&lt;name&gt;</span>project-name<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;comment&gt;&lt;/comment&gt;</span>
-        <span class="nt">&lt;projects&gt;</span>
-        <span class="nt">&lt;/projects&gt;</span>
-        <span class="nt">&lt;buildSpec&gt;</span>
-                <span class="nt">&lt;buildCommand&gt;</span>
-                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.ResourceManagerBuilder<span class="nt">&lt;/name&gt;</span>
-                        <span class="nt">&lt;arguments&gt;</span>
-                        <span class="nt">&lt;/arguments&gt;</span>
-                <span class="nt">&lt;/buildCommand&gt;</span>
-                <span class="nt">&lt;buildCommand&gt;</span>
-                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.PreCompilerBuilder<span class="nt">&lt;/name&gt;</span>
-                        <span class="nt">&lt;arguments&gt;</span>
-                        <span class="nt">&lt;/arguments&gt;</span>
-                <span class="nt">&lt;/buildCommand&gt;</span>
-                <span class="nt">&lt;buildCommand&gt;</span>
-                        <span class="nt">&lt;name&gt;</span>org.eclipse.jdt.core.javabuilder<span class="nt">&lt;/name&gt;</span>
-                        <span class="nt">&lt;arguments&gt;</span>
-                        <span class="nt">&lt;/arguments&gt;</span>
-                <span class="nt">&lt;/buildCommand&gt;</span>
-                <span class="nt">&lt;buildCommand&gt;</span>
-                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.ApkBuilder<span class="nt">&lt;/name&gt;</span>
-                        <span class="nt">&lt;arguments&gt;</span>
-                        <span class="nt">&lt;/arguments&gt;</span>
-                <span class="nt">&lt;/buildCommand&gt;</span>
-        <span class="nt">&lt;/buildSpec&gt;</span>
-        <span class="nt">&lt;natures&gt;</span>
-                <span class="nt">&lt;nature&gt;</span>com.android.ide.eclipse.adt.AndroidNature<span class="nt">&lt;/nature&gt;</span>
-                <span class="nt">&lt;nature&gt;</span>org.eclipse.jdt.core.javanature<span class="nt">&lt;/nature&gt;</span>
-        <span class="nt">&lt;/natures&gt;</span>
-<span class="nt">&lt;/projectDescription&gt;</span>
-</pre></div>
-
-<ul>
-<li>project.properties</li>
-</ul>
-<div class="pygments_murphy"><pre><span class="c"># Project target.</span>
-<span class="na">target</span><span class="o">=</span><span class="s">android-10</span>
-
-<span class="c"># if it is a library</span>
-<span class="c"># android.library=true</span>
-</pre></div>
-
-<p>まあ、なんというか、Androidはいろいろ残念ですね。</p>
-<p>iOSはこういう仕様なのかバグなのかよくわからないようなものが少ないし、OSバージョンの入れ換わりが早くて対応バージョンも少なくて済む分、個人的な体感ではandroidアプリの工数はiOSの3割増しという感じ。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/11/09/common-lisp-declare/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/11/07/android-pitfalls/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/07/android-pitfalls/" class="hatena-bookmark-button" data-hatena-bookmark-title="細かすぎて伝わらないAndroid開発のはまりどころまとめ その1" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/11/07/android-pitfalls/" data-text="細かすぎて伝わらないAndroid開発のはまりどころまとめ その1">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/11/07/android-pitfalls/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../5">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -719,6 +675,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/06/15/quicklinks6/" title="Quicklinks 6"><p>Quicklinks 6</a><span style="font-size: 80%;">(June 15, 2013 at 11:20 PM)</span></li>
       <li><a href="/blog/2013/06/12/block-cipher-modes-of-operation/" title="暗号利用モードについて"><p>暗号利用モードについて</a><span style="font-size: 80%;">(June 12, 2013 at 08:36 AM)</span></li>
       <li><a href="/blog/2013/05/17/mach-o-rpath/" title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法"><p>Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a><span style="font-size: 80%;">(May 17, 2013 at 07:46 PM)</span></li>
       <li><a href="/blog/2013/04/28/wireless-raspberry-pi/" title="ワイヤレスなRaspberry Pi環境をつくる"><p>ワイヤレスなRaspberry Pi環境をつくる</a><span style="font-size: 80%;">(April 28, 2013 at 01:54 AM)</span></li>
@@ -726,7 +683,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/04/26/toml/" title="TOMLノススメ"><p>TOMLノススメ</a><span style="font-size: 80%;">(April 26, 2013 at 08:21 PM)</span></li>
       <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
       <li><a href="/blog/2013/04/21/inf-php-on-melpa/" title="inf-php.elがmelpaに登録されました"><p>inf-php.elがmelpaに登録されました</a><span style="font-size: 80%;">(April 21, 2013 at 04:56 PM)</span></li>
-      <li><a href="/blog/2013/04/05/emacs-inf-php-mode/" title="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた"><p>emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</a><span style="font-size: 80%;">(April 05, 2013 at 07:49 PM)</span></li>
     </ul>
   </div>
 
@@ -796,7 +752,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (6)</li>
@@ -820,7 +776,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
