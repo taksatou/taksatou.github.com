@@ -62,6 +62,13 @@ IDEでのJavaやC#みたいなインテリジェントなエディタサポー�
 
 もはやぱっと見では実写と見分けがつかないです。
 
+### Haswell
+
+* [http://www.intel.com/content/www/us/en/processors/core/4th-gen-core-family-desktop-vol-1-datasheet.html](http://www.intel.com/content/www/us/en/processors/core/4th-gen-core-family-desktop-vol-1-datasheet.html ) 
+* [http://ascii.jp/elem/000/000/726/726151/](http://ascii.jp/elem/000/000/726/726151/ ) 
+
+何やらおもしろそうな新機能が導入されたようです。
+
 
 ### NSAのリークの話
 
