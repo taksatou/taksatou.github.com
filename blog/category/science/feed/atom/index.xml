@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2013-06-16T20:15:36Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[sailing stones]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/06/16/sailing-rock/" />
+    <id>http://mojavy.com/blog/2013/06/16/sailing-rock/</id>
+    <updated>2013-06-16T20:15:36Z</updated>
+    <published>2013-06-16T20:15:36Z</published>
+    <category scheme="http://mojavy.com/blog" term="science" />
+    <summary type="html"><![CDATA[sailing stones]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/06/16/sailing-rock/"><![CDATA[<p><img alt="sailing-stone" src="/images/sailing-stone.png" /> </p>
+<p>アメリカのデスバレーには <a href="http://en.wikipedia.org/wiki/Sailing_stone">Sailing stone</a> という不思議現象があるらしい。</p>
+<p>何十キロもあるような石が勝手に移動するというもので、</p>
+<p>どういう原理で動くのか長年よくわかっていなかった</p>
+<p>水が少しだけたまったときに、
+石のまわりに氷ができて、
+石が少し浮く
+完全にはうかないけど風でうごく程度
+計算してみるとまあまあ妥当な結果になった</p>
+<p>Further understanding of the geologic processes at work in Racetrack
+Playa goes hand in hand with technological development. In 2009,
+development of inexpensive time-lapse digital cameras allowed the
+capturing of transient meteorological phenomena including dust devils
+and playa flooding.[8] These cameras, cheap for their high amount of
+memory capacity, were aimed at capturing various stages of the
+previously mentioned phenomena, though discussion of the sliding
+stones ensued. The developers of photographic technology describe the
+difficulty of capturing the Racetrack’s stealthy rocks, as movements
+only occur one in three years and last approximately ten
+seconds. Their next identified advancement is wind-triggered imagery,
+vastly reducing the ten million seconds of non-transit time they must
+sift through.  In a study published in 2011 it is postulated that
+small rafts of ice form around the rocks and when the local water
+level rises, the rocks are buoyantly floated off the soft bed thus
+reducing the reaction and friction forces at the bed. Since this
+effect depends on reducing friction, and not on increasing the wind
+drag, these ice cakes need not have a particularly large surface area
+if the ice is adequately thick, as the minimal friction allows the
+rocks to be moved by arbitrarily light winds.[6][9] Theft of
+rocks[edit] On 30 May 2013, the LA Times reported that park officials
+are looking in to the theft of several of the rocks.[10]</p>
+<p>http://www.core77.com/blog/transportation/scientist_figures_out_how_those_big-ass_sailing_stones_move_themselves_across_death_valley_25038.asp</p>
+<p>We suggest that the existence of many of the rock-carved trails at
+Racetrack Playa in Death Valley National Park is predominantly due to
+the effect of arbitrarily weak winds on rocks that are floated off the
+soft bed by small rafts of ice, as also occurs in arctic tidal beaches
+to form boulder barricades. These ice cakes need not have a
+particularly large surface area if the ice is adequately thick—the ice
+cakes allow the rocks to move by buoyantly reducing the reaction and
+friction forces at the bed, not by increasing the wind drag. The
+parameter space of ice thickness and extent versus rock size for
+flotation is calculated and found to be reasonable. We demonstrate the
+effect with a simple experiment.</p>
+<hr />
+<p>"Racetrack Playa" sounds like the screenname of an online teenager
+you're competing against in Need for Speed, but scientists recognize
+it as the name of a dried-up lake in Death Valley. For a century,
+scientific minds have been puzzled by a well-documented,
+poorly-understood phenomenon occuring at Racetrack Playa: Enormous
+stones, some up to 700 pounds, appear to have somehow moved themselves
+across the lakebed floor in random patterns, leaving a furrowed trail
+behind them.</p>
+<p>No one had ever seen these "sailing stones" move, but many
+photographed the end result. The original thought was that the lakebed
+forms a thin sheet of ice on it, and that the wind then blows the
+rocks across it; but that theory was discounted after researchers
+calculated it would take wind speeds of hundreds of miles per hour to
+move the rocks, while the wind at the Racetrack maxes out around 90
+m.p.h. And if you're wondering why they don't just strap a GoPro
+camera onto a rock to see what's going on, scientists returning to the
+site over the years have calculated that the rocks move for short
+periods of time, just once every three years. That's a bit longer than
+your battery's likely to last.</p>
+<p>However, a fortunate collision between two of these magic rocks
+provided planetary scientist Ralph Lorenz with an interesting
+discovery:</p>
+<p>Lorenz, studying the trails left by the stones, observed that one rock
+had collided against another and been deflected. "There was a rock
+trail and it looked like it hit another rock and bounced, but the
+trail didn't go all the way up to other the rock, like it was repelled
+somehow," Lorenz told Smithsonian Magazine. In other words, there was
+some kind of force-field-like barrier around each rock that prevented
+total contact.</p>
+<p>What would spontaneously form a barrier around a rock, then later
+disappear? Lorenz realized that as moisture levels changed with the
+seasons, a collar of ice could form around the rock. With the rest of
+the lakebed covered in a thin, cold-but-not-frozen sheet of water,
+this ice collar would enable the rock it encased to float—slightly. It
+would lift it to the top of the water, but the rock's bottom, the part
+that was resting directly on the ground, would not have ice on
+it. Wind could then blow the rock across the water, and the bottom of
+the rock would dig a furrow into the lakebed. Later the ice and water
+would melt and recede.</p>
+<p>Eventually, Lorenz employed a tried-and-true method for testing his
+nascent idea: the kitchen-table experiment. "I took a small rock, and
+put it in a piece of Tupperware, and filled it with water so there was
+an inch of water with a bit of the rock sticking out," he says. "I put
+it in the freezer, and that then gave me a slab of ice with a rock
+sticking out of it." He flipped the rock-ice hybrid upside down and
+floated it in a tray of water with sand on the bottom. By merely
+blowing gently on the ice, he realized, he could send the embedded
+rock gliding across the tray, scraping a trail in the sand as it
+moved. After decades of theoretical calculations by countless
+scientists, the answer seemed to be sitting on his tabletop.</p>]]></content>
+  </entry>
+</feed>

@@ -102,6 +102,206 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="goroutineでconcurrentにエラトステネスの篩を計算する"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/" rel="bookmark" title="Permanent Link to GoroutineでConcurrentにエラトステネスの篩を計算する">GoroutineでConcurrentにエラトステネスの篩を計算する</a></h2>
+  <small>June 28, 2013 at 08:45 PM | categories:
+
+<a href='/blog/category/go'>go</a>, <a href='/blog/category/programming'>programming</a>
+ | <a href="http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="gopher" src="/images/gopherbw-250.png" /> </p>
+<p>Goの練習がてら<a href="http://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%A9%E3%83%88%E3%82%B9%E3%83%86%E3%83%8D%E3%82%B9%E3%81%AE%E7%AF%A9">エラトステネスの篩</a> を実装してみた。</p>
+<p><a href="http://projecteuler.net/problem=7">Project Eulerにちょうどいい問題(10001st prime)</a> があったので、まずは単なるクロージャで書いてみる。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
+<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="k">var</span> <span class="p">(</span>
+    <span class="n">lim</span> <span class="p">=</span> <span class="mi">10000000</span>
+    <span class="n">tgt</span> <span class="p">=</span> <span class="mi">100001</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">GetPrimes</span><span class="p">()</span> <span class="k">func</span><span class="p">()</span> <span class="nb">int</span> <span class="p">{</span>
+    <span class="n">sieve</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="n">bool</span><span class="p">,</span> <span class="n">lim</span><span class="p">)</span>
+    <span class="n">p</span> <span class="p">:=</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="k">func</span><span class="p">()</span> <span class="nb">int</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="p">*</span> <span class="n">p</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
+            <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">*</span><span class="n">p</span><span class="p">]</span> <span class="p">=</span> <span class="n">true</span>
+        <span class="p">}</span>
+        <span class="n">ret</span> <span class="p">:=</span> <span class="n">p</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="n">p</span> <span class="p">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="n">false</span> <span class="p">{</span>
+                <span class="n">p</span> <span class="p">=</span> <span class="n">i</span>
+                <span class="k">break</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">p</span> <span class="p">:=</span> <span class="n">GetPrimes</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">tgt</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span> <span class="n">p</span><span class="p">()</span> <span class="p">}</span>
+    <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">&quot;&gt;&gt; &quot;</span><span class="p">,</span> <span class="n">p</span><span class="p">())</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>これをGoroutineで書き換えるのは簡単で、返り値のかわりにチャネルをつかうようにするだけ。</p>
+<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="k">var</span> <span class="p">(</span>
+    <span class="n">lim</span> <span class="p">=</span> <span class="mi">10000000</span>
+    <span class="n">tgt</span> <span class="p">=</span> <span class="mi">100001</span>
+    <span class="n">buf</span> <span class="p">=</span> <span class="mi">100</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">GetPrimes2</span><span class="p">(</span><span class="n">lim</span> <span class="nb">int</span><span class="p">)</span> <span class="k">chan</span> <span class="nb">int</span> <span class="p">{</span>
+    <span class="n">sieve</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="n">bool</span><span class="p">,</span> <span class="n">lim</span><span class="p">)</span>
+    <span class="n">primes</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="nb">int</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+    <span class="n">p</span> <span class="p">:=</span> <span class="mi">2</span>
+
+    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="p">*</span> <span class="n">p</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
+                <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">*</span><span class="n">p</span><span class="p">]</span> <span class="p">=</span> <span class="n">true</span>
+            <span class="p">}</span>
+            <span class="n">primes</span> <span class="p">&lt;-</span> <span class="n">p</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="n">p</span> <span class="p">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="n">false</span> <span class="p">{</span>
+                    <span class="n">p</span> <span class="p">=</span> <span class="n">i</span>
+                    <span class="k">break</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+    <span class="k">return</span> <span class="n">primes</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">c</span> <span class="p">:=</span> <span class="n">GetPrimes2</span><span class="p">(</span><span class="n">lim</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">tgt</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span> <span class="p">&lt;-</span><span class="n">c</span> <span class="p">}</span>
+    <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">&quot;&gt;&gt; &quot;</span><span class="p">,</span> <span class="p">&lt;-</span><span class="n">c</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>pが素数のときp〜2*pの区間に少なくとも一つの素数が存在する、という前提<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> をつかって↑を並列化させた。<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
+<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;runtime&quot;</span>
+<span class="p">)</span>
+
+<span class="k">var</span> <span class="p">(</span>
+    <span class="n">lim</span> <span class="p">=</span> <span class="mi">10000000</span>
+    <span class="n">tgt</span> <span class="p">=</span> <span class="mi">100001</span>
+    <span class="n">buf</span> <span class="p">=</span> <span class="mi">100</span>
+    <span class="n">concurrency</span> <span class="p">=</span> <span class="mi">8</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">GetPrimes3</span><span class="p">()</span> <span class="k">chan</span> <span class="nb">int</span> <span class="p">{</span>
+    <span class="n">sieve</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="n">bool</span><span class="p">,</span> <span class="n">lim</span><span class="p">)</span>
+    <span class="n">primes</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="nb">int</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+    <span class="n">primes2</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="nb">int</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+    <span class="n">wait_next</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">bool</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
+
+    <span class="n">primes</span> <span class="p">&lt;-</span> <span class="mi">2</span>
+    <span class="n">primes2</span> <span class="p">&lt;-</span> <span class="mi">2</span>
+
+    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">p</span> <span class="p">:=</span> <span class="mi">2</span>
+        <span class="k">for</span> <span class="p">{</span>
+            <span class="p">&lt;-</span> <span class="n">wait_next</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="n">p</span> <span class="p">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="n">false</span> <span class="p">{</span>
+                    <span class="n">primes</span> <span class="p">&lt;-</span> <span class="n">p</span>
+                    <span class="n">primes2</span> <span class="p">&lt;-</span> <span class="n">p</span>
+                    <span class="n">p</span> <span class="p">=</span> <span class="n">i</span>
+                    <span class="k">break</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+        <span class="p">}</span>
+    <span class="p">}()</span>
+
+    <span class="k">for</span> <span class="n">n</span> <span class="p">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n</span> <span class="p">&lt;</span> <span class="n">concurrency</span><span class="p">;</span> <span class="n">n</span><span class="p">++</span> <span class="p">{</span>
+        <span class="k">go</span> <span class="k">func</span><span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">{</span>
+                <span class="n">p</span> <span class="p">:=</span> <span class="p">&lt;-</span> <span class="n">primes2</span>
+                <span class="n">sieve</span><span class="p">[</span><span class="mi">2</span><span class="p">*</span><span class="n">p</span><span class="p">]</span> <span class="p">=</span> <span class="n">true</span>
+                <span class="n">wait_next</span> <span class="p">&lt;-</span> <span class="n">true</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span> <span class="p">*</span> <span class="n">p</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
+                    <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">*</span><span class="n">p</span><span class="p">]</span> <span class="p">=</span> <span class="n">true</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}(</span><span class="n">n</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">primes</span>
+<span class="p">}</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">runtime</span><span class="p">.</span><span class="n">GOMAXPROCS</span><span class="p">(</span><span class="n">concurrency</span><span class="p">)</span>
+    <span class="n">c</span> <span class="p">:=</span> <span class="n">GetPrimes3</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">tgt</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span> <span class="p">&lt;-</span><span class="n">c</span> <span class="p">}</span>
+    <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">&quot;&gt;&gt; &quot;</span><span class="p">,</span> <span class="p">&lt;-</span><span class="n">c</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>篩をうめるときは最初の数(ある素数の2倍の数)をうめた時点で次の素数が決定できるのでそこのループを並列化できるかと思ったけど、残念ながら速度は体感でわかるほど遅くなってしまった。<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> </p>
+<p>今度スケジューラとかgoroutineまわりのソースを読んでみようと思う。</p>
+<h4 id="_1">参考</h4>
+<ul>
+<li><a href="https://gist.github.com/methane/5377227#file-goscheduler-md">https://gist.github.com/methane/5377227#file-goscheduler-md</a> </li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>ある程度処理に時間がかかるように定数は適当にかえてます&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="http://ja.wikipedia.org/wiki/%E3%83%99%E3%83%AB%E3%83%88%E3%83%A9%E3%83%B3%E3%81%AE%E4%BB%AE%E8%AA%AC">チェビシェフの定理</a>&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>呼び出し側に素数を渡すためのチャネルと篩をうめるgoroutineに素数を渡すためのチャネルの2本にわかれてるのがださい&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>8コアのlinuxマシンで実行しています&#160;<a href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/06/15/quicklinks6/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/" class="hatena-bookmark-button" data-hatena-bookmark-title="GoroutineでConcurrentにエラトステネスの篩を計算する" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/" data-text="GoroutineでConcurrentにエラトステネスの篩を計算する">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="the-p-convention"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/24/the-p-convention/" rel="bookmark" title="Permanent Link to The P Convention">The P Convention</a></h2>
   <small>February 24, 2013 at 02:42 PM | categories:
@@ -477,6 +677,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/" title="GoroutineでConcurrentにエラトステネスの篩を計算する"><p>GoroutineでConcurrentにエラトステネスの篩を計算する</a><span style="font-size: 80%;">(June 28, 2013 at 08:45 PM)</span></li>
       <li><a href="/blog/2013/06/15/quicklinks6/" title="Quicklinks 6"><p>Quicklinks 6</a><span style="font-size: 80%;">(June 15, 2013 at 11:20 PM)</span></li>
       <li><a href="/blog/2013/06/12/block-cipher-modes-of-operation/" title="暗号利用モードについて"><p>暗号利用モードについて</a><span style="font-size: 80%;">(June 12, 2013 at 08:36 AM)</span></li>
       <li><a href="/blog/2013/05/17/mach-o-rpath/" title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法"><p>Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a><span style="font-size: 80%;">(May 17, 2013 at 07:46 PM)</span></li>
@@ -484,7 +685,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/04/28/raspberry-pi/" title="Raspberry Pi はじめました"><p>Raspberry Pi はじめました</a><span style="font-size: 80%;">(April 28, 2013 at 01:30 AM)</span></li>
       <li><a href="/blog/2013/04/26/toml/" title="TOMLノススメ"><p>TOMLノススメ</a><span style="font-size: 80%;">(April 26, 2013 at 08:21 PM)</span></li>
       <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
-      <li><a href="/blog/2013/04/21/inf-php-on-melpa/" title="inf-php.elがmelpaに登録されました"><p>inf-php.elがmelpaに登録されました</a><span style="font-size: 80%;">(April 21, 2013 at 04:56 PM)</span></li>
     </ul>
   </div>
 
@@ -535,6 +735,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/go">go</a> (<a href="/blog/category/go/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
@@ -552,7 +753,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
@@ -578,7 +779,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
