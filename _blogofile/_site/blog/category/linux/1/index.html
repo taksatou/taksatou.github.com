@@ -102,6 +102,105 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/07/12/reptyr/" rel="bookmark" title="Permanent Link to ptraceを駆使してscreenifyっぽいことをするreptyrがすごい">ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a></h2>
+  <small>July 12, 2013 at 07:15 PM | categories:
+
+<a href='/blog/category/c'>C</a>, <a href='/blog/category/linux'>linux</a>
+ | <a href="http://mojavy.com/blog/2013/07/12/reptyr/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>reptyrというおもしろいものをみつけたのでご紹介</p>
+<h2 id="reptyr">reptyr とは</h2>
+<p>reptyrとは"re-ptying"するためのプログラムで、起動中のプロセスを新しい別のターミナルにもってくることができます。
+例えば、うっかりscreenやtmuxの外で起動してしまった長い時間のかかるバッチ処理を、起動したままscreenの中にもってくることができます。</p>
+<p><a href="https://github.com/nelhage/reptyr">https://github.com/nelhage/reptyr</a> </p>
+<h2 id="_1">使い方</h2>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>reptyr PID
+</pre></div>
+
+<p>現在のターミナル内にもってきたいプロセスのpidを引数にします。
+attach後は、そのプロセスの入出力は^Cや^Zも含めて新しいターミナル側を向きます。</p>
+<h2 id="screenify">それscreenifyでできるよ</h2>
+<p>screenifyと呼ばれるスクリプトが昔からあって、それはgdbつかって似たようなことをやってるらしいです。
+でもreptyrならもっとうまくできます。</p>
+<p>例えば従来のscreenifyには以下のような問題がありました。</p>
+<ul>
+<li>screenifyでattachしたプロセスは、元のターミナルから入力をうけつけてしまう</li>
+<li>ncursesをつかってるプログラムをscreenifyすると、そのプログラムはwindowのリサイズがとれなくなる</li>
+<li>screenifyした新しいターミナルでは^Cがきかない</li>
+</ul>
+<p>reptyrはこういった問題を全部解決できます。</p>
+<h2 id="_2">移植性</h2>
+<p>reptyrは対象プロセスを操作するのにptraceをつかっているのでLinuxに強く依存しており、Linuxだけをサポートしています。
+SolarisやBSDに移植することも技術的には可能ですが、現状はプラットフォーム固有の部分を抽象化するようにはデザインされていないようです。</p>
+<p>reptyrは現状ではi386, x86_64, ARMをサポートしています。他のアーキテクチャへの対応はarch以下に対応コードを追加すれば比較的容易です。</p>
+<h2 id="ptrace_scope-on-ubuntu-maverick-and-up">ptrace_scope on Ubuntu Maverick and up</h2>
+<p>Ubuntu Maverick以降ではptraceの機能がデフォルトで無効になっています。
+以下コマンドで一時的に有効にできます。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
+</pre></div>
+
+<p>rootで<code>/etc/sysctl.d/10-ptrace.conf</code>を編集すると永続的に変更できます。また<code>ptrace_scope</code>に関する詳細な説明もここに書いてあります。</p>
+<h2 id="_3">どうやってるの？</h2>
+<p>ソースを追ってみたところ以下のような処理をしているようです。</p>
+<ol>
+<li>reptyrプロセス側でptyをつくる</li>
+<li>attach対象のプロセスのttyのtermios設定をptyにコピーする</li>
+<li>ptraceで対象プロセスをattachしてレジスタ内容を一旦退避</li>
+<li>attachしたプロセス側でmmapし、そこにreptyrプロセス側でつくったptyをコピー</li>
+<li>attachしたプロセス側でコピーしたptyをopenし、setsid〜ioctlでそこに制御端末を割り当てる</li>
+<li>attachしたプロセス側でdup2して入出力をttyに向ける</li>
+<li>レジスタ内容を復元、後始末してptraceをdetach</li>
+</ol>
+<p>reptyrのキモは5の制御端末をptyに割り当てるところで、これをすることによって従来のscreenifyの問題が回避できます。</p>
+<p>しかし、単に<code>ioctl</code>の<code>TIOCSCTTY</code>するだけではうまくいかないのでちょっとしたトリックが必要です。詳細は<a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> に解説があります。
+reptyrの作者は自力でこの方法を思いついたそうですが、同様のテクニックは <a href="https://github.com/ThomasHabets/injcode">injcode</a> や<a href="http://www.ohloh.net/p/neercs">neercs</a> でも使用されているそうです。</p>
+<h2 id="reptyr_1">reptyrってどう読むの？</h2>
+<p><code>repeater</code>のように発音してもいいけど曖昧なので<code>re-P-T-Y-er</code> (たぶんリ・ピーティーワイアー)のように発音してもよいそうです。</p>
+<h2 id="_4">制約</h2>
+<ul>
+<li>backgroundにしたときは前のターミナルでbgやfgを実行する必要があります。background制御はshellがやっているので、これを直すにはshell側に手をいれる必要があります。</li>
+<li>現状では子プロセスがあるプロセスはattachできません</li>
+</ul>
+<h2 id="_5">類似のもの</h2>
+<ul>
+<li><a href="https://github.com/ThomasHabets/injcode">injcode</a> </li>
+<li><a href="http://www.ohloh.net/p/neercs">neercs</a> </li>
+</ul>
+<h2 id="_6">参考</h2>
+<ul>
+<li><a href="http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/">http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/</a> </li>
+<li><a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> </li>
+<li><a href="http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal">http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal</a> </li>
+</ul>
+<h2 id="_7">まとめ</h2>
+<p>reptyrは1000行くらいの小さなプログラムですが、なかなかおもしろいハックだと思うので興味がある方はソースを読んでみて下さい。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/07/10/c-tuple/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/07/12/reptyr/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/07/12/reptyr/" class="hatena-bookmark-button" data-hatena-bookmark-title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/07/12/reptyr/" data-text="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/07/12/reptyr/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="pythonのswigエクステンションからdebian-packageをつくる手順メモ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/27/building-python-debian-package/" rel="bookmark" title="Permanent Link to pythonのswigエクステンションからdebian packageをつくる手順メモ">pythonのswigエクステンションからdebian packageをつくる手順メモ</a></h2>
   <small>February 27, 2013 at 11:46 PM | categories:
@@ -395,14 +494,14 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
+      <li><a href="/blog/2013/07/10/c-tuple/" title="C言語でtuple"><p>C言語でtuple</a><span style="font-size: 80%;">(July 10, 2013 at 09:02 PM)</span></li>
       <li><a href="/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/" title="GoroutineでConcurrentにエラトステネスの篩を計算する"><p>GoroutineでConcurrentにエラトステネスの篩を計算する</a><span style="font-size: 80%;">(June 28, 2013 at 08:45 PM)</span></li>
       <li><a href="/blog/2013/06/15/quicklinks6/" title="Quicklinks 6"><p>Quicklinks 6</a><span style="font-size: 80%;">(June 15, 2013 at 11:20 PM)</span></li>
       <li><a href="/blog/2013/06/12/block-cipher-modes-of-operation/" title="暗号利用モードについて"><p>暗号利用モードについて</a><span style="font-size: 80%;">(June 12, 2013 at 08:36 AM)</span></li>
       <li><a href="/blog/2013/05/17/mach-o-rpath/" title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法"><p>Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a><span style="font-size: 80%;">(May 17, 2013 at 07:46 PM)</span></li>
       <li><a href="/blog/2013/04/28/wireless-raspberry-pi/" title="ワイヤレスなRaspberry Pi環境をつくる"><p>ワイヤレスなRaspberry Pi環境をつくる</a><span style="font-size: 80%;">(April 28, 2013 at 01:54 AM)</span></li>
       <li><a href="/blog/2013/04/28/raspberry-pi/" title="Raspberry Pi はじめました"><p>Raspberry Pi はじめました</a><span style="font-size: 80%;">(April 28, 2013 at 01:30 AM)</span></li>
-      <li><a href="/blog/2013/04/26/toml/" title="TOMLノススメ"><p>TOMLノススメ</a><span style="font-size: 80%;">(April 26, 2013 at 08:21 PM)</span></li>
-      <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
     </ul>
   </div>
 
@@ -440,7 +539,7 @@ Hatena.BookmarkWidget.load();
   <div id="categories">
     <h1>Categories</h1>
     <ul>
-     <li><a href="/blog/category/c">C</a> (<a href="/blog/category/c/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/c">C</a> (<a href="/blog/category/c/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
@@ -458,7 +557,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (2)</li>
@@ -471,7 +570,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
@@ -497,6 +596,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(6)</li>

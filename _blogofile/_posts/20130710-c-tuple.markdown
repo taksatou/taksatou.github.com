@@ -1,0 +1,47 @@
+---
+categories: C, programming
+date: 2013/07/10 21:02:39
+title: C言語でtuple
+---
+
+Cをつかってるとtupleっぽいものがあれば便利なのに、と思うときが時々あります。
+
+別にtupleなんてなくても
+
+$$code(lang=c)
+typedef struct {
+   char *s;
+   int *i;
+} tuple;
+$$/code
+
+のようにして構造体をつかえばいいのですが、必要になるたびにこれをするのはちょっとめんどくさいですよね。
+
+というわけで色々試行錯誤してみたところ、以下のようにしてunionの配列にするというのがそこそこ便利だったので紹介します。
+
+以下は使用例です。
+
+$$code(lang=c)
+#include <stdio.h>
+
+typedef union {
+    void *p;
+    char *s;
+    int i;
+    char c;
+} tuple_u;
+typedef tuple_u tuple[2];
+
+int main(int argc, char *argv[]) {
+    tuple t = { { .s = "hoge" }, { .i = 123 } };
+
+    printf("%s, %d\n", t[0].s, t[1].i);
+    return 0;
+}
+
+$$/code
+
+C99のdesignated initializerをつかえば初期化もまあそこそこ書きやすいし、型の組み合わせもある程度柔軟にできます。
+
+C++ではなくあえてCをつかうような人の多くは独自のコンテナライブラリのようなものをもってると思いますが、上記のようなtupleがあれば便利な場面は結構あるのではないかと思います。
+

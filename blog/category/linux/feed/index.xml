@@ -10,10 +10,85 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 27 Feb 2013 23:46:03 GMT</pubDate>
+    <pubDate>Fri, 12 Jul 2013 19:15:50 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</title>
+      <link>http://mojavy.com/blog/2013/07/12/reptyr/</link>
+      <pubDate>Fri, 12 Jul 2013 19:15:50 JST</pubDate>
+      <category><![CDATA[C]]></category>
+      <category><![CDATA[linux]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/07/12/reptyr/</guid>
+      <description>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</description>
+      <content:encoded><![CDATA[<p>reptyrというおもしろいものをみつけたのでご紹介</p>
+<h2 id="reptyr">reptyr とは</h2>
+<p>reptyrとは"re-ptying"するためのプログラムで、起動中のプロセスを新しい別のターミナルにもってくることができます。
+例えば、うっかりscreenやtmuxの外で起動してしまった長い時間のかかるバッチ処理を、起動したままscreenの中にもってくることができます。</p>
+<p><a href="https://github.com/nelhage/reptyr">https://github.com/nelhage/reptyr</a> </p>
+<h2 id="_1">使い方</h2>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>reptyr PID
+</pre></div>
+
+<p>現在のターミナル内にもってきたいプロセスのpidを引数にします。
+attach後は、そのプロセスの入出力は^Cや^Zも含めて新しいターミナル側を向きます。</p>
+<h2 id="screenify">それscreenifyでできるよ</h2>
+<p>screenifyと呼ばれるスクリプトが昔からあって、それはgdbつかって似たようなことをやってるらしいです。
+でもreptyrならもっとうまくできます。</p>
+<p>例えば従来のscreenifyには以下のような問題がありました。</p>
+<ul>
+<li>screenifyでattachしたプロセスは、元のターミナルから入力をうけつけてしまう</li>
+<li>ncursesをつかってるプログラムをscreenifyすると、そのプログラムはwindowのリサイズがとれなくなる</li>
+<li>screenifyした新しいターミナルでは^Cがきかない</li>
+</ul>
+<p>reptyrはこういった問題を全部解決できます。</p>
+<h2 id="_2">移植性</h2>
+<p>reptyrは対象プロセスを操作するのにptraceをつかっているのでLinuxに強く依存しており、Linuxだけをサポートしています。
+SolarisやBSDに移植することも技術的には可能ですが、現状はプラットフォーム固有の部分を抽象化するようにはデザインされていないようです。</p>
+<p>reptyrは現状ではi386, x86_64, ARMをサポートしています。他のアーキテクチャへの対応はarch以下に対応コードを追加すれば比較的容易です。</p>
+<h2 id="ptrace_scope-on-ubuntu-maverick-and-up">ptrace_scope on Ubuntu Maverick and up</h2>
+<p>Ubuntu Maverick以降ではptraceの機能がデフォルトで無効になっています。
+以下コマンドで一時的に有効にできます。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
+</pre></div>
+
+<p>rootで<code>/etc/sysctl.d/10-ptrace.conf</code>を編集すると永続的に変更できます。また<code>ptrace_scope</code>に関する詳細な説明もここに書いてあります。</p>
+<h2 id="_3">どうやってるの？</h2>
+<p>ソースを追ってみたところ以下のような処理をしているようです。</p>
+<ol>
+<li>reptyrプロセス側でptyをつくる</li>
+<li>attach対象のプロセスのttyのtermios設定をptyにコピーする</li>
+<li>ptraceで対象プロセスをattachしてレジスタ内容を一旦退避</li>
+<li>attachしたプロセス側でmmapし、そこにreptyrプロセス側でつくったptyをコピー</li>
+<li>attachしたプロセス側でコピーしたptyをopenし、setsid〜ioctlでそこに制御端末を割り当てる</li>
+<li>attachしたプロセス側でdup2して入出力をttyに向ける</li>
+<li>レジスタ内容を復元、後始末してptraceをdetach</li>
+</ol>
+<p>reptyrのキモは5の制御端末をptyに割り当てるところで、これをすることによって従来のscreenifyの問題が回避できます。</p>
+<p>しかし、単に<code>ioctl</code>の<code>TIOCSCTTY</code>するだけではうまくいかないのでちょっとしたトリックが必要です。詳細は<a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> に解説があります。
+reptyrの作者は自力でこの方法を思いついたそうですが、同様のテクニックは <a href="https://github.com/ThomasHabets/injcode">injcode</a> や<a href="http://www.ohloh.net/p/neercs">neercs</a> でも使用されているそうです。</p>
+<h2 id="reptyr_1">reptyrってどう読むの？</h2>
+<p><code>repeater</code>のように発音してもいいけど曖昧なので<code>re-P-T-Y-er</code> (たぶんリ・ピーティーワイアー)のように発音してもよいそうです。</p>
+<h2 id="_4">制約</h2>
+<ul>
+<li>backgroundにしたときは前のターミナルでbgやfgを実行する必要があります。background制御はshellがやっているので、これを直すにはshell側に手をいれる必要があります。</li>
+<li>現状では子プロセスがあるプロセスはattachできません</li>
+</ul>
+<h2 id="_5">類似のもの</h2>
+<ul>
+<li><a href="https://github.com/ThomasHabets/injcode">injcode</a> </li>
+<li><a href="http://www.ohloh.net/p/neercs">neercs</a> </li>
+</ul>
+<h2 id="_6">参考</h2>
+<ul>
+<li><a href="http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/">http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/</a> </li>
+<li><a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> </li>
+<li><a href="http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal">http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal</a> </li>
+</ul>
+<h2 id="_7">まとめ</h2>
+<p>reptyrは1000行くらいの小さなプログラムですが、なかなかおもしろいハックだと思うので興味がある方はソースを読んでみて下さい。</p>]]></content:encoded>
+    </item>
     <item>
       <title>pythonのswigエクステンションからdebian packageをつくる手順メモ</title>
       <link>http://mojavy.com/blog/2013/02/27/building-python-debian-package/</link>

@@ -102,6 +102,143 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="ワンライナーでウェブサーバを起動する方法"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/18/one-line-webserver/" rel="bookmark" title="Permanent Link to ワンライナーでウェブサーバを起動する方法">ワンライナーでウェブサーバを起動する方法</a></h2>
+  <small>July 18, 2012 at 12:30 PM | categories:
+
+<a href='/blog/category/python'>python</a>, <a href='/blog/category/web'>web</a>, <a href='/blog/category/ruby'>ruby</a>
+ | <a href="http://mojavy.com/blog/2012/07/18/one-line-webserver/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
+<p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
+起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
+</pre></div>
+
+<p>デフォルトポートは8000ですが、引数で指定することもできます。
+<br>
+ちなみにrubyでもwebrickを使って同様のことができますが、<a href="http://d.hatena.ne.jp/rx7/20090812/p1">こちら</a> で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。
+<br>
+<br>
+でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
+</pre></div>
+
+<p>ポートを変更する場合は以下のようにします</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
+</pre></div>
+
+<h2 id="_1">参考</h2>
+<ul>
+<li><a href="http://d.hatena.ne.jp/rx7/20090812/p1">コマンド1つで今すぐWebサーバを起動させるためのワンライナー(Ruby or Python)</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/07/24/redmine-mail/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/18/one-line-webserver/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/one-line-webserver/" class="hatena-bookmark-button" data-hatena-bookmark-title="ワンライナーでウェブサーバを起動する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/18/one-line-webserver/" data-text="ワンライナーでウェブサーバを起動する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/18/one-line-webserver/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
+  <a name="objective-cのメモリマネージメントについて"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" rel="bookmark" title="Permanent Link to objective-cのメモリマネージメントについて">objective-cのメモリマネージメントについて</a></h2>
+  <small>July 18, 2012 at 11:30 AM | categories:
+
+<a href='/blog/category/objective-c'>objective-c</a>
+ | <a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<p>現在のところ3つの方法がある</p>
+<h2 id="1-gabage-collection">1. Gabage Collection</h2>
+<ul>
+<li>Objective-C 2.0から導入された。</li>
+<li>ただし、iOSの実行環境には含まれない。</li>
+<li>Max OS Xでなら使えるらしい。</li>
+</ul>
+<h2 id="2-manual-reference-counting">2. Manual Reference Counting</h2>
+<ul>
+<li>retainは参照カウントを1あげる。releaseは1さげる</li>
+<li>参照カウントが0でdeallocするとすぐに削除される</li>
+<li>NSMutableArrayのaddObjectやremoveObjectAtIndexなどはオブジェクトの参照カウントを増減させる。</li>
+<li>余分にreleaseしたりするとcrashする</li>
+</ul>
+<h2 id="3-automatic-reference-counting-arc">3. Automatic Reference Counting (ARC)</h2>
+<ul>
+<li>システムが自動的に参照カウントをしてくれる。</li>
+<li>強い変数と弱い変数がある</li>
+</ul>
+<h4 id="_1">強い変数</h4>
+<ul>
+<li>デフォルトでは、オブジェクトのポインタは強い変数。そのようなポインタにアサインした参照は自動的にretainされる。</li>
+<li>新しい参照をアサインする前に古い参照はreleaseされる</li>
+<li>_ _strong キーワードをつかって明示的に強い変数を宣言できる。</li>
+<li>プロパティはデフォルトではstrongではない</li>
+<li>C++のshared_ptrのようなもの？</li>
+</ul>
+<h4 id="_2">弱い変数</h4>
+<ul>
+<li>循環参照している場合や、しても開放されるようにするときに使える。</li>
+<li>親が子の強い参照を持っており、子が親の弱い参照を持っている場合、retainのサイクルが形成されなくなるのでオブジェクトを開放できる。</li>
+<li>_ _weakキーワードを使う。</li>
+<li>iOS4ではサポートされていない</li>
+<li>C++のweak_ptrのようなもの？</li>
+</ul>
+<h4 id="non-arc">Non-ARCのコード</h4>
+<ul>
+<li>init, alloc, copy, new, mutableCopyをprefixにもつメソッドはそのオブジェクトの所有権を返す、というネーミングコンベンションに従っている場合は自動的にARCが適用される。</li>
+<li>名前のコンベンションとは関係なしに、明示的にオブジェクトの所有権を返すメソッドをコンパイラに伝える方法もある。</li>
+</ul>
+<h2 id="_3">参考</h2>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/07/18/one-line-webserver/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" class="hatena-bookmark-button" data-hatena-bookmark-title="objective-cのメモリマネージメントについて" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" data-text="objective-cのメモリマネージメントについて">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="objective-cのプロトコルとデリゲーションについてのメモ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" rel="bookmark" title="Permanent Link to objective-cのプロトコルとデリゲーションについてのメモ">objective-cのプロトコルとデリゲーションについてのメモ</a></h2>
   <small>July 17, 2012 at 06:30 PM | categories:
@@ -306,119 +443,6 @@ xcodeのkey bindingsの設定に読ませることができると思います。
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="rubyのワンライナーで便利な変数まとめ"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" rel="bookmark" title="Permanent Link to rubyのワンライナーで便利な変数まとめ">rubyのワンライナーで便利な変数まとめ</a></h2>
-  <small>July 08, 2012 at 06:30 PM | categories:
-
-<a href='/blog/category/ruby'>ruby</a>
- | <a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
-<h1 id="_1">$.</h1>
-<p>現在の行番号を表します。awkでいうNRと同じです。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
-</pre></div>
-
-<h1 id="-i">$-i</h1>
-<p>この値を文字列で上書きするとin-place置換を行うようになります。オリジナルのファイルはここで指定した文字が拡張子についたファイルとして保存されます。オリジナルファイルが不要なら空文字を設定すればOKです。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
-</pre></div>
-
-<h1 id="_2">$/</h1>
-<p>入力の区切り文字を表わす文字です。デフォルトは改行です。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
-</pre></div>
-
-<h1 id="_3">$, 、$;</h1>
-<p>$, はjoinのデフォルト区切り文字で、$; はsplitのデフォルト区切り文字です。
-ワンライナーではjoinとsplitをよく使うと思うので、BEGINで上書きしておけばワンライナーを多少短く書けます。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
-</pre></div>
-
-<h1 id="_4">まとめ</h1>
-<p>まだ他にも知らないテクニックがたくさんありそうですが、新しく見つけたら追記していきます。</p>
-<h1 id="_5">参考</h1>
-<ul>
-<li><a href="http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/">http://blog.lilyx.net/2007/11/29/writing-one-liner-in-ruby/</a></li>
-<li><a href="http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html">http://www.ruby-lang.org/ja/old-man/html/_C1C8A4DFB9FEA4DFCAD1BFF4.html</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" class="hatena-bookmark-button" data-hatena-bookmark-title="rubyのワンライナーで便利な変数まとめ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/" data-text="rubyのワンライナーで便利な変数まとめ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="sbclでクラスのスロット一覧を取得する方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" rel="bookmark" title="Permanent Link to sbclでクラスのスロット一覧を取得する方法">sbclでクラスのスロット一覧を取得する方法</a></h2>
-  <small>July 06, 2012 at 06:30 PM | categories:
-
-<a href='/blog/category/memo'>memo</a>, <a href='/blog/category/sbcl'>sbcl</a>, <a href='/blog/category/common-lisp'>common lisp</a>
- | <a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
-<p>メモメモ</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
-(#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::INO&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::DEV&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::NLINK&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::UID&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::GID&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::SIZE&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::ATIME&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MTIME&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::CTIME&gt;)
-</pre></div>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" class="hatena-bookmark-button" data-hatena-bookmark-title="sbclでクラスのスロット一覧を取得する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" data-text="sbclでクラスのスロット一覧を取得する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../9">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -448,14 +472,14 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
+      <li><a href="/blog/2013/07/10/c-tuple/" title="C言語でtuple"><p>C言語でtuple</a><span style="font-size: 80%;">(July 10, 2013 at 09:02 PM)</span></li>
       <li><a href="/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/" title="GoroutineでConcurrentにエラトステネスの篩を計算する"><p>GoroutineでConcurrentにエラトステネスの篩を計算する</a><span style="font-size: 80%;">(June 28, 2013 at 08:45 PM)</span></li>
       <li><a href="/blog/2013/06/15/quicklinks6/" title="Quicklinks 6"><p>Quicklinks 6</a><span style="font-size: 80%;">(June 15, 2013 at 11:20 PM)</span></li>
       <li><a href="/blog/2013/06/12/block-cipher-modes-of-operation/" title="暗号利用モードについて"><p>暗号利用モードについて</a><span style="font-size: 80%;">(June 12, 2013 at 08:36 AM)</span></li>
       <li><a href="/blog/2013/05/17/mach-o-rpath/" title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法"><p>Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a><span style="font-size: 80%;">(May 17, 2013 at 07:46 PM)</span></li>
       <li><a href="/blog/2013/04/28/wireless-raspberry-pi/" title="ワイヤレスなRaspberry Pi環境をつくる"><p>ワイヤレスなRaspberry Pi環境をつくる</a><span style="font-size: 80%;">(April 28, 2013 at 01:54 AM)</span></li>
       <li><a href="/blog/2013/04/28/raspberry-pi/" title="Raspberry Pi はじめました"><p>Raspberry Pi はじめました</a><span style="font-size: 80%;">(April 28, 2013 at 01:30 AM)</span></li>
-      <li><a href="/blog/2013/04/26/toml/" title="TOMLノススメ"><p>TOMLノススメ</a><span style="font-size: 80%;">(April 26, 2013 at 08:21 PM)</span></li>
-      <li><a href="/blog/2013/04/23/quicklinks5/" title="Quicklinks 5"><p>Quicklinks 5</a><span style="font-size: 80%;">(April 23, 2013 at 08:20 PM)</span></li>
     </ul>
   </div>
 
@@ -493,7 +517,7 @@ Hatena.BookmarkWidget.load();
   <div id="categories">
     <h1>Categories</h1>
     <ul>
-     <li><a href="/blog/category/c">C</a> (<a href="/blog/category/c/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/c">C</a> (<a href="/blog/category/c/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
@@ -511,7 +535,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (2)</li>
@@ -524,7 +548,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
@@ -550,6 +574,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(6)</li>

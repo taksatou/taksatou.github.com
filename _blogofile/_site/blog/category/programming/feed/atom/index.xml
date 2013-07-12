@@ -7,12 +7,57 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-06-28T20:45:36Z</updated>
+  <updated>2013-07-10T21:02:39Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[C言語でtuple]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/07/10/c-tuple/" />
+    <id>http://mojavy.com/blog/2013/07/10/c-tuple/</id>
+    <updated>2013-07-10T21:02:39Z</updated>
+    <published>2013-07-10T21:02:39Z</published>
+    <category scheme="http://mojavy.com/blog" term="C" />
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <summary type="html"><![CDATA[C言語でtuple]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/07/10/c-tuple/"><![CDATA[<p>Cをつかってるとtupleっぽいものがあれば便利なのに、と思うときが時々あります。</p>
+<p>別にtupleなんてなくても</p>
+<div class="pygments_murphy"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+   <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+   <span class="kt">int</span> <span class="o">*</span><span class="n">i</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">tuple</span><span class="p">;</span>
+</pre></div>
+
+<p>のようにして構造体をつかえばいいのですが、必要になるたびにこれをするのはちょっとめんどくさいですよね。</p>
+<p>というわけで色々試行錯誤してみたところ、以下のようにしてunionの配列にするというのがそこそこ便利だったので紹介します。</p>
+<p>以下は使用例です。</p>
+<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="k">typedef</span> <span class="k">union</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">tuple_u</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">tuple_u</span> <span class="n">tuple</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">tuple</span> <span class="n">t</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span> <span class="p">.</span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;hoge&quot;</span> <span class="p">},</span> <span class="p">{</span> <span class="p">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">123</span> <span class="p">}</span> <span class="p">};</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">i</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>C99のdesignated initializerをつかえば初期化もまあそこそこ書きやすいし、型の組み合わせもある程度柔軟にできます。</p>
+<p>C++ではなくあえてCをつかうような人の多くは独自のコンテナライブラリのようなものをもってると思いますが、上記のようなtupleがあれば便利な場面は結構あるのではないかと思います。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

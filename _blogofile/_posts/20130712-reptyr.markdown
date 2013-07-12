@@ -1,0 +1,100 @@
+---
+categories: C, linux
+date: 2013/07/12 19:15:50
+title: ptraceを駆使してscreenifyっぽいことをするreptyrがすごい
+---
+
+reptyrというおもしろいものをみつけたのでご紹介
+
+## reptyr とは
+
+reptyrとは"re-ptying"するためのプログラムで、起動中のプロセスを新しい別のターミナルにもってくることができます。
+例えば、うっかりscreenやtmuxの外で起動してしまった長い時間のかかるバッチ処理を、起動したままscreenの中にもってくることができます。
+
+[https://github.com/nelhage/reptyr](https://github.com/nelhage/reptyr ) 
+
+
+## 使い方
+
+$$code(lang=bash)
+$ reptyr PID
+$$/code
+
+現在のターミナル内にもってきたいプロセスのpidを引数にします。
+attach後は、そのプロセスの入出力は^Cや^Zも含めて新しいターミナル側を向きます。
+
+
+## それscreenifyでできるよ
+
+screenifyと呼ばれるスクリプトが昔からあって、それはgdbつかって似たようなことをやってるらしいです。
+でもreptyrならもっとうまくできます。
+
+例えば従来のscreenifyには以下のような問題がありました。
+
+* screenifyでattachしたプロセスは、元のターミナルから入力をうけつけてしまう
+* ncursesをつかってるプログラムをscreenifyすると、そのプログラムはwindowのリサイズがとれなくなる
+* screenifyした新しいターミナルでは^Cがきかない
+
+reptyrはこういった問題を全部解決できます。
+
+
+## 移植性
+
+reptyrは対象プロセスを操作するのにptraceをつかっているのでLinuxに強く依存しており、Linuxだけをサポートしています。
+SolarisやBSDに移植することも技術的には可能ですが、現状はプラットフォーム固有の部分を抽象化するようにはデザインされていないようです。
+
+reptyrは現状ではi386, x86_64, ARMをサポートしています。他のアーキテクチャへの対応はarch以下に対応コードを追加すれば比較的容易です。
+
+## ptrace_scope on Ubuntu Maverick and up
+
+Ubuntu Maverick以降ではptraceの機能がデフォルトで無効になっています。
+以下コマンドで一時的に有効にできます。
+
+$$code(lang=bash)
+$ echo 0 > /proc/sys/kernel/yama/ptrace_scope
+$$/code
+
+rootで`/etc/sysctl.d/10-ptrace.conf`を編集すると永続的に変更できます。また`ptrace_scope`に関する詳細な説明もここに書いてあります。
+
+## どうやってるの？
+
+ソースを追ってみたところ以下のような処理をしているようです。
+
+1. reptyrプロセス側でptyをつくる
+2. attach対象のプロセスのttyのtermios設定をptyにコピーする
+3. ptraceで対象プロセスをattachしてレジスタ内容を一旦退避
+4. attachしたプロセス側でmmapし、そこにreptyrプロセス側でつくったptyをコピー
+5. attachしたプロセス側でコピーしたptyをopenし、setsid〜ioctlでそこに制御端末を割り当てる
+6. attachしたプロセス側でdup2して入出力をttyに向ける
+6. レジスタ内容を復元、後始末してptraceをdetach
+
+reptyrのキモは5の制御端末をptyに割り当てるところで、これをすることによって従来のscreenifyの問題が回避できます。
+
+しかし、単に`ioctl`の`TIOCSCTTY`するだけではうまくいかないのでちょっとしたトリックが必要です。詳細は[http://blog.nelhage.com/2011/02/changing-ctty/](http://blog.nelhage.com/2011/02/changing-ctty/ ) に解説があります。
+reptyrの作者は自力でこの方法を思いついたそうですが、同様のテクニックは [injcode](https://github.com/ThomasHabets/injcode ) や[neercs](http://www.ohloh.net/p/neercs ) でも使用されているそうです。
+
+## reptyrってどう読むの？
+
+`repeater`のように発音してもいいけど曖昧なので`re-P-T-Y-er` (たぶんリ・ピーティーワイアー)のように発音してもよいそうです。
+
+## 制約
+
+* backgroundにしたときは前のターミナルでbgやfgを実行する必要があります。background制御はshellがやっているので、これを直すにはshell側に手をいれる必要があります。
+* 現状では子プロセスがあるプロセスはattachできません
+
+## 類似のもの
+
+* [injcode](https://github.com/ThomasHabets/injcode ) 
+* [neercs](http://www.ohloh.net/p/neercs ) 
+
+## 参考
+
+* [http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/](http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/ ) 
+* [http://blog.nelhage.com/2011/02/changing-ctty/](http://blog.nelhage.com/2011/02/changing-ctty/ ) 
+* [http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal](http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal ) 
+
+
+## まとめ
+
+reptyrは1000行くらいの小さなプログラムですが、なかなかおもしろいハックだと思うので興味がある方はソースを読んでみて下さい。
+

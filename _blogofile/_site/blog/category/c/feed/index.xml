@@ -10,10 +10,125 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Mon, 21 Jan 2013 20:00:00 GMT</pubDate>
+    <pubDate>Fri, 12 Jul 2013 19:15:50 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</title>
+      <link>http://mojavy.com/blog/2013/07/12/reptyr/</link>
+      <pubDate>Fri, 12 Jul 2013 19:15:50 JST</pubDate>
+      <category><![CDATA[C]]></category>
+      <category><![CDATA[linux]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/07/12/reptyr/</guid>
+      <description>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</description>
+      <content:encoded><![CDATA[<p>reptyrというおもしろいものをみつけたのでご紹介</p>
+<h2 id="reptyr">reptyr とは</h2>
+<p>reptyrとは"re-ptying"するためのプログラムで、起動中のプロセスを新しい別のターミナルにもってくることができます。
+例えば、うっかりscreenやtmuxの外で起動してしまった長い時間のかかるバッチ処理を、起動したままscreenの中にもってくることができます。</p>
+<p><a href="https://github.com/nelhage/reptyr">https://github.com/nelhage/reptyr</a> </p>
+<h2 id="_1">使い方</h2>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>reptyr PID
+</pre></div>
+
+<p>現在のターミナル内にもってきたいプロセスのpidを引数にします。
+attach後は、そのプロセスの入出力は^Cや^Zも含めて新しいターミナル側を向きます。</p>
+<h2 id="screenify">それscreenifyでできるよ</h2>
+<p>screenifyと呼ばれるスクリプトが昔からあって、それはgdbつかって似たようなことをやってるらしいです。
+でもreptyrならもっとうまくできます。</p>
+<p>例えば従来のscreenifyには以下のような問題がありました。</p>
+<ul>
+<li>screenifyでattachしたプロセスは、元のターミナルから入力をうけつけてしまう</li>
+<li>ncursesをつかってるプログラムをscreenifyすると、そのプログラムはwindowのリサイズがとれなくなる</li>
+<li>screenifyした新しいターミナルでは^Cがきかない</li>
+</ul>
+<p>reptyrはこういった問題を全部解決できます。</p>
+<h2 id="_2">移植性</h2>
+<p>reptyrは対象プロセスを操作するのにptraceをつかっているのでLinuxに強く依存しており、Linuxだけをサポートしています。
+SolarisやBSDに移植することも技術的には可能ですが、現状はプラットフォーム固有の部分を抽象化するようにはデザインされていないようです。</p>
+<p>reptyrは現状ではi386, x86_64, ARMをサポートしています。他のアーキテクチャへの対応はarch以下に対応コードを追加すれば比較的容易です。</p>
+<h2 id="ptrace_scope-on-ubuntu-maverick-and-up">ptrace_scope on Ubuntu Maverick and up</h2>
+<p>Ubuntu Maverick以降ではptraceの機能がデフォルトで無効になっています。
+以下コマンドで一時的に有効にできます。</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
+</pre></div>
+
+<p>rootで<code>/etc/sysctl.d/10-ptrace.conf</code>を編集すると永続的に変更できます。また<code>ptrace_scope</code>に関する詳細な説明もここに書いてあります。</p>
+<h2 id="_3">どうやってるの？</h2>
+<p>ソースを追ってみたところ以下のような処理をしているようです。</p>
+<ol>
+<li>reptyrプロセス側でptyをつくる</li>
+<li>attach対象のプロセスのttyのtermios設定をptyにコピーする</li>
+<li>ptraceで対象プロセスをattachしてレジスタ内容を一旦退避</li>
+<li>attachしたプロセス側でmmapし、そこにreptyrプロセス側でつくったptyをコピー</li>
+<li>attachしたプロセス側でコピーしたptyをopenし、setsid〜ioctlでそこに制御端末を割り当てる</li>
+<li>attachしたプロセス側でdup2して入出力をttyに向ける</li>
+<li>レジスタ内容を復元、後始末してptraceをdetach</li>
+</ol>
+<p>reptyrのキモは5の制御端末をptyに割り当てるところで、これをすることによって従来のscreenifyの問題が回避できます。</p>
+<p>しかし、単に<code>ioctl</code>の<code>TIOCSCTTY</code>するだけではうまくいかないのでちょっとしたトリックが必要です。詳細は<a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> に解説があります。
+reptyrの作者は自力でこの方法を思いついたそうですが、同様のテクニックは <a href="https://github.com/ThomasHabets/injcode">injcode</a> や<a href="http://www.ohloh.net/p/neercs">neercs</a> でも使用されているそうです。</p>
+<h2 id="reptyr_1">reptyrってどう読むの？</h2>
+<p><code>repeater</code>のように発音してもいいけど曖昧なので<code>re-P-T-Y-er</code> (たぶんリ・ピーティーワイアー)のように発音してもよいそうです。</p>
+<h2 id="_4">制約</h2>
+<ul>
+<li>backgroundにしたときは前のターミナルでbgやfgを実行する必要があります。background制御はshellがやっているので、これを直すにはshell側に手をいれる必要があります。</li>
+<li>現状では子プロセスがあるプロセスはattachできません</li>
+</ul>
+<h2 id="_5">類似のもの</h2>
+<ul>
+<li><a href="https://github.com/ThomasHabets/injcode">injcode</a> </li>
+<li><a href="http://www.ohloh.net/p/neercs">neercs</a> </li>
+</ul>
+<h2 id="_6">参考</h2>
+<ul>
+<li><a href="http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/">http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/</a> </li>
+<li><a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> </li>
+<li><a href="http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal">http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal</a> </li>
+</ul>
+<h2 id="_7">まとめ</h2>
+<p>reptyrは1000行くらいの小さなプログラムですが、なかなかおもしろいハックだと思うので興味がある方はソースを読んでみて下さい。</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>C言語でtuple</title>
+      <link>http://mojavy.com/blog/2013/07/10/c-tuple/</link>
+      <pubDate>Wed, 10 Jul 2013 21:02:39 JST</pubDate>
+      <category><![CDATA[C]]></category>
+      <category><![CDATA[programming]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/07/10/c-tuple/</guid>
+      <description>C言語でtuple</description>
+      <content:encoded><![CDATA[<p>Cをつかってるとtupleっぽいものがあれば便利なのに、と思うときが時々あります。</p>
+<p>別にtupleなんてなくても</p>
+<div class="pygments_murphy"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+   <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+   <span class="kt">int</span> <span class="o">*</span><span class="n">i</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">tuple</span><span class="p">;</span>
+</pre></div>
+
+<p>のようにして構造体をつかえばいいのですが、必要になるたびにこれをするのはちょっとめんどくさいですよね。</p>
+<p>というわけで色々試行錯誤してみたところ、以下のようにしてunionの配列にするというのがそこそこ便利だったので紹介します。</p>
+<p>以下は使用例です。</p>
+<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="k">typedef</span> <span class="k">union</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">tuple_u</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">tuple_u</span> <span class="n">tuple</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">tuple</span> <span class="n">t</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span> <span class="p">.</span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;hoge&quot;</span> <span class="p">},</span> <span class="p">{</span> <span class="p">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">123</span> <span class="p">}</span> <span class="p">};</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">i</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>C99のdesignated initializerをつかえば初期化もまあそこそこ書きやすいし、型の組み合わせもある程度柔軟にできます。</p>
+<p>C++ではなくあえてCをつかうような人の多くは独自のコンテナライブラリのようなものをもってると思いますが、上記のようなtupleがあれば便利な場面は結構あるのではないかと思います。</p>]]></content:encoded>
+    </item>
     <item>
       <title>C言語の文字列初期化について</title>
       <link>http://mojavy.com/blog/2013/01/21/c-string-initialization/</link>
