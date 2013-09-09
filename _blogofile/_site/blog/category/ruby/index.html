@@ -102,6 +102,75 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="chef-soloでauthenticationfailedといわれたときの対応"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" rel="bookmark" title="Permanent Link to chef soloでAuthenticationFailedといわれたときの対応">chef soloでAuthenticationFailedといわれたときの対応</a></h2>
+  <small>September 09, 2013 at 08:43 PM | categories:
+
+<a href='/blog/category/chef'>chef</a>, <a href='/blog/category/ruby'>ruby</a>
+ | <a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>公開鍵認証なホストに対してパスフレーズ入力無しでsshログインができるにもかかわらず、</p>
+<div class="pygments_murphy"><pre><span class="nv">$ </span>knife solo cook myhost
+Running Chef on myhost...
+Checking Chef version...
+Enter the password <span class="k">for </span>username@myhost:
+ERROR: Net::SSH::AuthenticationFailed: username
+</pre></div>
+
+<p>のようにいわれてchef soloの実行に失敗してしまうときがある。</p>
+<p>パスフレーズ入力無しでsshできたということは、普通は以下のうちの少くとも1つは満たされている。</p>
+<ol>
+<li>ssh-agentに対象の秘密鍵が登録されている</li>
+<li>デフォルトパス($HOME/.ssh/id_rsa とか)に対象の秘密鍵が保存されている</li>
+<li>ssh_configで秘密鍵を指定している</li>
+</ol>
+<p>それなのにsshで失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
+これを回避するには、ssh_configで<code>PubkeyAuthentication yes</code>を明示すればよい。</p>
+<p>なお、<code>Net::SSH</code>がどのような動きをしているかは以下のスニペットを試すとよい。</p>
+<div class="pygments_murphy"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
+<span class="no">Net</span><span class="o">::</span><span class="no">SSH</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s2">&quot;myhost&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="ss">:verbose</span> <span class="o">=&gt;</span> <span class="ss">:debug</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">p</span> <span class="n">x</span> <span class="p">}</span>
+</pre></div>
+
+<h3 id="_1">備考</h3>
+<p>使ったのは以下のバージョン</p>
+<ul>
+<li>chef: 11.6.0</li>
+<li>knife-solo: 0.3.0</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>この挙動は<code>knife solo</code>コマンドに<code>-i</code>オプションを渡しても変わらなかった。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/07/12/reptyr/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" class="hatena-bookmark-button" data-hatena-bookmark-title="chef soloでAuthenticationFailedといわれたときの対応" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" data-text="chef soloでAuthenticationFailedといわれたときの対応">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="rubotoを使ってrubyでandroidアプリをかく"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/03/29/ruboto/" rel="bookmark" title="Permanent Link to Rubotoを使ってRubyでAndroidアプリをかく">Rubotoを使ってRubyでAndroidアプリをかく</a></h2>
   <small>March 29, 2013 at 09:53 PM | categories:
@@ -416,64 +485,6 @@ rainbowで色付けしてるのでエスケープシーケンスを解釈でき�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="ワンライナーでウェブサーバを起動する方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/18/one-line-webserver/" rel="bookmark" title="Permanent Link to ワンライナーでウェブサーバを起動する方法">ワンライナーでウェブサーバを起動する方法</a></h2>
-  <small>July 18, 2012 at 12:30 PM | categories:
-
-<a href='/blog/category/python'>python</a>, <a href='/blog/category/web'>web</a>, <a href='/blog/category/ruby'>ruby</a>
- | <a href="http://mojavy.com/blog/2012/07/18/one-line-webserver/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
-<p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
-起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
-</pre></div>
-
-<p>デフォルトポートは8000ですが、引数で指定することもできます。
-<br>
-ちなみにrubyでもwebrickを使って同様のことができますが、<a href="http://d.hatena.ne.jp/rx7/20090812/p1">こちら</a> で紹介されているwebrickのワンライナーは長すぎて覚えられないのでいつもpythonを使ってます。
-<br>
-<br>
-でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
-</pre></div>
-
-<p>ポートを変更する場合は以下のようにします</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
-</pre></div>
-
-<h2 id="_1">参考</h2>
-<ul>
-<li><a href="http://d.hatena.ne.jp/rx7/20090812/p1">コマンド1つで今すぐWebサーバを起動させるためのワンライナー(Ruby or Python)</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/07/24/redmine-mail/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/18/one-line-webserver/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/one-line-webserver/" class="hatena-bookmark-button" data-hatena-bookmark-title="ワンライナーでウェブサーバを起動する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/18/one-line-webserver/" data-text="ワンライナーでウェブサーバを起動する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/18/one-line-webserver/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/category/ruby/2">Next »</a>
 </div>
@@ -501,6 +512,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/09/09/chef-solo-ssh-config/" title="chef soloでAuthenticationFailedといわれたときの対応"><p>chef soloでAuthenticationFailedといわれたときの対応</a><span style="font-size: 80%;">(September 09, 2013 at 08:43 PM)</span></li>
       <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
       <li><a href="/blog/2013/07/10/c-tuple/" title="C言語でtuple"><p>C言語でtuple</a><span style="font-size: 80%;">(July 10, 2013 at 09:02 PM)</span></li>
       <li><a href="/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/" title="GoroutineでConcurrentにエラトステネスの篩を計算する"><p>GoroutineでConcurrentにエラトステネスの篩を計算する</a><span style="font-size: 80%;">(June 28, 2013 at 08:45 PM)</span></li>
@@ -508,7 +520,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/06/12/block-cipher-modes-of-operation/" title="暗号利用モードについて"><p>暗号利用モードについて</a><span style="font-size: 80%;">(June 12, 2013 at 08:36 AM)</span></li>
       <li><a href="/blog/2013/05/17/mach-o-rpath/" title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法"><p>Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a><span style="font-size: 80%;">(May 17, 2013 at 07:46 PM)</span></li>
       <li><a href="/blog/2013/04/28/wireless-raspberry-pi/" title="ワイヤレスなRaspberry Pi環境をつくる"><p>ワイヤレスなRaspberry Pi環境をつくる</a><span style="font-size: 80%;">(April 28, 2013 at 01:54 AM)</span></li>
-      <li><a href="/blog/2013/04/28/raspberry-pi/" title="Raspberry Pi はじめました"><p>Raspberry Pi はじめました</a><span style="font-size: 80%;">(April 28, 2013 at 01:30 AM)</span></li>
     </ul>
   </div>
 
@@ -552,6 +563,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
@@ -582,7 +594,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
@@ -603,6 +615,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>
