@@ -128,7 +128,7 @@ ERROR: Net::SSH::AuthenticationFailed: username
 <li>デフォルトパス($HOME/.ssh/id_rsa とか)に対象の秘密鍵が保存されている</li>
 <li>ssh_configで秘密鍵を指定している</li>
 </ol>
-<p>それなのにsshで失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
+<p>それなのに<code>AuthenticationFailed</code>失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
 これを回避するには、ssh_configで<code>PubkeyAuthentication yes</code>を明示すればよい。</p>
 <p>なお、<code>Net::SSH</code>がどのような動きをしているかは以下のスニペットを試すとよい。</p>
 <div class="pygments_murphy"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
