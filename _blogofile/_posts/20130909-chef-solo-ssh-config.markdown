@@ -19,8 +19,8 @@ $$/code
 パスフレーズ入力無しでsshできたということは、普通は以下のうちの少くとも1つは満たされている。
 
 1. ssh-agentに対象の秘密鍵が登録されている
-2. デフォルトパス($HOME/.ssh/id_rsa とか)に対象の秘密鍵が保存されている
-3. ssh_configで秘密鍵を指定している
+2. デフォルトパス($HOME/.ssh/id_rsa とか)に対象のパスフレーズ無し秘密鍵が保存されている
+3. ssh_configでパスフレーズ無し秘密鍵を指定している
 
 それなのに`AuthenticationFailed`失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 [^1] 
 これを回避するには、ssh_configで`PubkeyAuthentication yes`を明示すればよい。

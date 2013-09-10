@@ -102,6 +102,47 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="debianパッケージをchefで削除する場合はpurgeを使う方がよい"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/" rel="bookmark" title="Permanent Link to debianパッケージをchefで削除する場合はpurgeを使う方がよい">debianパッケージをchefで削除する場合はpurgeを使う方がよい</a></h2>
+  <small>September 10, 2013 at 07:39 PM | categories:
+
+<a href='/blog/category/chef'>chef</a>, <a href='/blog/category/ruby'>ruby</a>, <a href='/blog/category/debian'>debian</a>
+ | <a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>apt-getコマンドにはパッケージを削除するためのコマンドが2種類ある</p>
+<ul>
+<li>remove: パッケージを削除するが設定ファイルはそのまま残す</li>
+<li>purge: パッケージを削除するとき設定ファイルも削除する</li>
+</ul>
+<p>chefをつかっているということは設定ファイルもchefで管理しているはずなので、設定ファイルを残す必要はない。
+さらに、依存で入ったパッケージも一緒に削除されるように、<code>options "--auto-remove"</code>などとしてやるとよい。</p>
+<p>ゴミは混乱の元なので早めに消すべし。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/09/10/chef-purge-package/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/09/10/chef-purge-package/" class="hatena-bookmark-button" data-hatena-bookmark-title="debianパッケージをchefで削除する場合はpurgeを使う方がよい" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/09/10/chef-purge-package/" data-text="debianパッケージをchefで削除する場合はpurgeを使う方がよい">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/09/10/chef-purge-package/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="chef-soloでauthenticationfailedといわれたときの対応"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" rel="bookmark" title="Permanent Link to chef soloでAuthenticationFailedといわれたときの対応">chef soloでAuthenticationFailedといわれたときの対応</a></h2>
   <small>September 09, 2013 at 08:43 PM | categories:
@@ -125,8 +166,8 @@ ERROR: Net::SSH::AuthenticationFailed: username
 <p>パスフレーズ入力無しでsshできたということは、普通は以下のうちの少くとも1つは満たされている。</p>
 <ol>
 <li>ssh-agentに対象の秘密鍵が登録されている</li>
-<li>デフォルトパス($HOME/.ssh/id_rsa とか)に対象の秘密鍵が保存されている</li>
-<li>ssh_configで秘密鍵を指定している</li>
+<li>デフォルトパス($HOME/.ssh/id_rsa とか)に対象のパスフレーズ無し秘密鍵が保存されている</li>
+<li>ssh_configでパスフレーズ無し秘密鍵を指定している</li>
 </ol>
 <p>それなのに<code>AuthenticationFailed</code>失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
 これを回避するには、ssh_configで<code>PubkeyAuthentication yes</code>を明示すればよい。</p>
@@ -159,6 +200,8 @@ ERROR: Net::SSH::AuthenticationFailed: username
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/07/12/reptyr/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -432,59 +475,6 @@ Postクラスを拡張してhekyllにあうようにliquidに渡すデータを�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="tmuxでalcの英単語を引く"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" rel="bookmark" title="Permanent Link to tmuxでalcの英単語を引く">tmuxでalcの英単語を引く</a></h2>
-  <small>January 11, 2013 at 10:00 PM | categories:
-
-<a href='/blog/category/ruby'>ruby</a>, <a href='/blog/category/tmux'>tmux</a>, <a href='/blog/category/english'>english</a>
- | <a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="english" src="/images/english-200.png" /></p>
-<p><b>2013-01-15追記 規約違反とのコメント頂いたのでスクレイピングするスクリプトを削除しました。</b></p>
-<p>tmuxのcommand-promptを使うと任意のコマンドをインタラクティブに実行できます。
-これをつかってtmux上でalcの英単語を表示できるようにしたら思いの外便利だったので紹介します。</p>
-<p>まず、alcの検索結果をスクレイビングしていい感じに表示するコマンドをつくります。
-rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当なスクリプトでよければこれを使って下さい。</p>
-<div class="pygments_murphy"><pre><span class="c1"># 2013-01-15 削除しました</span>
-</pre></div>
-
-<p>これをパスの通った場所にalcという名前で保存して、.tmux.confに以下の設定を追記します。</p>
-<div class="pygments_murphy"><pre>unbind C-a
-<span class="nb">bind </span>C-a <span class="nb">command</span>-prompt <span class="s2">&quot;split-window -h &#39;alc %% | lv -c&#39;&quot;</span>
-</pre></div>
-
-<p>C-aにバインドしてますがお好みのキーに変えてください。
-rainbowで色付けしてるのでエスケープシーケンスを解釈できるpagerをつかって下さい。</p>
-<p>これで.tmux.confをリロードして、prefix-key C-a とかするとtmux上にプロンプトが表示されるので、そこで調べたい単語を入力します。
-そうすると新しいpaneに結果が表示されます。pagerを閉じると自動的にpaneも閉じます。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/01/21/c-string-initialization/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" class="hatena-bookmark-button" data-hatena-bookmark-title="tmuxでalcの英単語を引く" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/" data-text="tmuxでalcの英単語を引く">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/category/ruby/2">Next »</a>
 </div>
@@ -512,6 +502,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
       <li><a href="/blog/2013/09/09/chef-solo-ssh-config/" title="chef soloでAuthenticationFailedといわれたときの対応"><p>chef soloでAuthenticationFailedといわれたときの対応</a><span style="font-size: 80%;">(September 09, 2013 at 08:43 PM)</span></li>
       <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
       <li><a href="/blog/2013/07/10/c-tuple/" title="C言語でtuple"><p>C言語でtuple</a><span style="font-size: 80%;">(July 10, 2013 at 09:02 PM)</span></li>
@@ -519,7 +510,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/06/15/quicklinks6/" title="Quicklinks 6"><p>Quicklinks 6</a><span style="font-size: 80%;">(June 15, 2013 at 11:20 PM)</span></li>
       <li><a href="/blog/2013/06/12/block-cipher-modes-of-operation/" title="暗号利用モードについて"><p>暗号利用モードについて</a><span style="font-size: 80%;">(June 12, 2013 at 08:36 AM)</span></li>
       <li><a href="/blog/2013/05/17/mach-o-rpath/" title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法"><p>Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a><span style="font-size: 80%;">(May 17, 2013 at 07:46 PM)</span></li>
-      <li><a href="/blog/2013/04/28/wireless-raspberry-pi/" title="ワイヤレスなRaspberry Pi環境をつくる"><p>ワイヤレスなRaspberry Pi環境をつくる</a><span style="font-size: 80%;">(April 28, 2013 at 01:54 AM)</span></li>
     </ul>
   </div>
 
@@ -563,9 +553,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
-     <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
@@ -594,7 +584,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (8)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
@@ -615,7 +605,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>

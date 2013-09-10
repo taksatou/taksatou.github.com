@@ -10,10 +10,28 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 27 Feb 2013 23:46:03 GMT</pubDate>
+    <pubDate>Tue, 10 Sep 2013 19:39:49 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>debianパッケージをchefで削除する場合はpurgeを使う方がよい</title>
+      <link>http://mojavy.com/blog/2013/09/10/chef-purge-package/</link>
+      <pubDate>Tue, 10 Sep 2013 19:39:49 JST</pubDate>
+      <category><![CDATA[chef]]></category>
+      <category><![CDATA[ruby]]></category>
+      <category><![CDATA[debian]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/09/10/chef-purge-package/</guid>
+      <description>debianパッケージをchefで削除する場合はpurgeを使う方がよい</description>
+      <content:encoded><![CDATA[<p>apt-getコマンドにはパッケージを削除するためのコマンドが2種類ある</p>
+<ul>
+<li>remove: パッケージを削除するが設定ファイルはそのまま残す</li>
+<li>purge: パッケージを削除するとき設定ファイルも削除する</li>
+</ul>
+<p>chefをつかっているということは設定ファイルもchefで管理しているはずなので、設定ファイルを残す必要はない。
+さらに、依存で入ったパッケージも一緒に削除されるように、<code>options "--auto-remove"</code>などとしてやるとよい。</p>
+<p>ゴミは混乱の元なので早めに消すべし。</p>]]></content:encoded>
+    </item>
     <item>
       <title>pythonのswigエクステンションからdebian packageをつくる手順メモ</title>
       <link>http://mojavy.com/blog/2013/02/27/building-python-debian-package/</link>
