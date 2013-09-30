@@ -10,10 +10,94 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 10 Sep 2013 19:39:49 GMT</pubDate>
+    <pubDate>Tue, 01 Oct 2013 00:08:09 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>mustache基礎文法最速マスター</title>
+      <link>http://mojavy.com/blog/2013/10/01/mustache-quick-master/</link>
+      <pubDate>Tue, 01 Oct 2013 00:08:09 JST</pubDate>
+      <category><![CDATA[ruby]]></category>
+      <category><![CDATA[mustache]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/10/01/mustache-quick-master/</guid>
+      <description>mustache基礎文法最速マスター</description>
+      <content:encoded><![CDATA[<p>mustacheはシンプルなテンプレートエンジンなので本家の英語マニュアル <a href="http://mustache.github.io/mustache.5.html">mustache(5)</a> を見ても大したことはないですが、日本語情報の需要もそれなりにあると思うのでまとめておきます。</p>
+<p>以下の内容はrubygemの<code>mustache-0.99.4</code>で確認しています。
+他の言語の場合は適宜置きかえてください。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#_2">変数の展開</a></li>
+<li><a href="#_3">変数のエスケープ</a></li>
+<li><a href="#_4">条件分岐</a></li>
+<li><a href="#_5">ループ</a></li>
+<li><a href="#lambda">無名関数 (Lambda)</a></li>
+<li><a href="#_6">コメント</a></li>
+<li><a href="#_7">まとめ</a></li>
+</ul>
+</div>
+<h2 id="_2">変数の展開</h2>
+<p><code>{{name}}</code>のように2つのブレースで囲ったタグは、<code>name</code>という名前のキーの値でおきかえられます。</p>
+<p>対応するキーが見つからなかった場合はデフォルトでは空文字になります。</p>
+<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Hello, {{world}}!&quot;</span><span class="p">,</span> <span class="n">world</span><span class="p">:</span> <span class="s2">&quot;mustache&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Hello, mustache!&quot;</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{no_such_key}}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&quot;</span>
+</pre></div>
+
+<h2 id="_3">変数のエスケープ</h2>
+<p>デフォルトではHTMLエスケープが有効になjります。アンエスケープされたHTMLが使いたい場合は<code>{{{name}}}</code>のように3つのブレースで囲います。</p>
+<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{html}}&quot;</span><span class="p">,</span>  <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&amp;lt;b&amp;gt;GitHub&amp;lt;/b&amp;gt;&quot;</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{{html}}}&quot;</span><span class="p">,</span> <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span>
+</pre></div>
+
+<h2 id="_4">条件分岐</h2>
+<p><code>{{#name}} ... {{/name}}</code>のように、2つのタグに<code>#</code>と<code>/</code>をそれぞれつけたタグで囲われたブロックはセクションといいます。</p>
+<p>セクションのキーに対応する値にbool値を渡せばif文のような使い方ができます。
+<code>#</code>のかわりに<code>^</code>をつかうと真偽を反転できます。</p>
+<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<span class="sh">{{#condition}}</span>
+<span class="sh">It is true.</span>
+<span class="sh">{{/condition}}</span>
+<span class="sh">{{^condition}}</span>
+<span class="sh">No not true.</span>
+<span class="sh">{{/condition}}</span>
+<span class="no">DOC</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span> <span class="c1"># =&gt; &quot;It is true.\n&quot;</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="kp">false</span><span class="p">)</span> <span class="c1"># =&gt; &quot;No not true.\n&quot;</span>
+</pre></div>
+
+<h2 id="_5">ループ</h2>
+<p>セクションのキーに対応する値に配列を渡した場合は、それぞれの要素を引数として中のブロックが繰り返し評価されます。</p>
+<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<span class="sh">{{#animals}}</span>
+<span class="sh">{{name}}</span>
+<span class="sh">{{/animals}}</span>
+<span class="no">DOC</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">animals</span><span class="p">:</span> <span class="o">[</span><span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;cat&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;dog&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="n">pig</span><span class="s2">&quot;}]}</span>
+<span class="s2">Mustache.render(template, data) # =&gt; &quot;</span><span class="n">cat</span><span class="p">\</span><span class="n">ndog</span><span class="p">\</span><span class="n">npig</span><span class="p">\</span><span class="n">n</span><span class="s2">&quot;</span>
+</pre></div>
+
+<h2 id="lambda">無名関数 (Lambda)</h2>
+<p>セクションのキーに対応する値に呼び出し可能なオブジェクトを渡した場合は、そのブロック内のテキストを引数として実行され、その返り値が結果として出力されます。</p>
+<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<span class="sh">{{#proc}}</span>
+<span class="sh">mojavy is bad</span>
+<span class="sh">{{/proc}}</span>
+<span class="no">DOC</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="nb">proc</span><span class="p">:</span> <span class="o">-&gt;</span><span class="n">text</span><span class="p">{</span><span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/bad/</span><span class="p">,</span> <span class="s1">&#39;nice&#39;</span><span class="p">)})</span> <span class="c1"># =&gt; &quot;mojavy is nice\n&quot;</span>
+</pre></div>
+
+<h2 id="_6">コメント</h2>
+<p><code>!</code>をつけるとコメントになります</p>
+<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Comment here: {{! ignore me }}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Comment here: &quot;</span>
+</pre></div>
+
+<h2 id="_7">まとめ</h2>
+<p>mustacheの基本的な機能について簡単なサンプルコードとともに解説しました。
+ここではrubyのmustacheを使用しましたが、他の言語でも同様の機能が使えます。
+一部の機能については省略しているので、より詳細な情報については本家ドキュメントを参照してください。</p>]]></content:encoded>
+    </item>
     <item>
       <title>debianパッケージをchefで削除する場合はpurgeを使う方がよい</title>
       <link>http://mojavy.com/blog/2013/09/10/chef-purge-package/</link>
@@ -652,112 +736,6 @@ wlan0     Link encap:Ethernet  HWaddr 10:6f:3f:ec:5f:b8
 </pre></div>
 
 <p>ここで確認したIPアドレスにsshしてつながれば完了です。</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>Raspberry Pi はじめました</title>
-      <link>http://mojavy.com/blog/2013/04/28/raspberry-pi/</link>
-      <pubDate>Sun, 28 Apr 2013 01:30:01 JST</pubDate>
-      <category><![CDATA[raspberry pi]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/04/28/raspberry-pi/</guid>
-      <description>Raspberry Pi はじめました</description>
-      <content:encoded><![CDATA[<p><img alt="raspberry" src="/images/raspberry-pi-150.png" /></p>
-<p>前々から気になってたRaspberry Piを手に入れました。</p>
-<p>最終的にはセンサーとかいろいろつけてインタラクティブなおもちゃをつくりたいですが、当面の目標は秋月電子で調達してきたLCDディスプレイに文字を表示させるためのドライバを書くことにしようと思います。</p>
-<p>Raspberry Piのセットアップ手順はぐぐればすぐでてくるので割愛しますが、そのままだとsdcardの空き領域がつかえないので起動時にマウントできるようにするまでの手順だけメモしときます。</p>
-<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ sudo fdisk /dev/mmcblk0
-
-Command (m for help): p
-
-Disk /dev/mmcblk0: 31.7 GB, 31674335232 bytes
-4 heads, 16 sectors/track, 966624 cylinders, total 61863936 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x00014d34
-
-        Device Boot      Start         End      Blocks   Id  System
-/dev/mmcblk0p1            8192      122879       57344    c  W95 FAT32 (LBA)
-/dev/mmcblk0p2          122880     3788799     1832960   83  Linux
-
-Command (m for help): n
-Partition type:
-   p   primary (2 primary, 0 extended, 2 free)
-   e   extended
-Select (default p):
-Using default response p
-Partition number (1-4, default 3):
-Using default value 3
-First sector (2048-61863935, default 2048): 3788800
-Last sector, +sectors or +size{K,M,G} (3788800-61863935, default 61863935):
-Using default value 61863935
-
-Command (m for help): p
-
-Disk /dev/mmcblk0: 31.7 GB, 31674335232 bytes
-4 heads, 16 sectors/track, 966624 cylinders, total 61863936 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk identifier: 0x00014d34
-
-        Device Boot      Start         End      Blocks   Id  System
-/dev/mmcblk0p1            8192      122879       57344    c  W95 FAT32 (LBA)
-/dev/mmcblk0p2          122880     3788799     1832960   83  Linux
-/dev/mmcblk0p3         3788800    61863935    29037568   83  Linux
-
-Command (m for help): w
-The partition table has been altered!
-
-Calling ioctl() to re-read partition table.
-
-WARNING: Re-reading the partition table failed with error 16: Device or resource busy.
-The kernel still uses the old table. The new table will be used at
-the next reboot or after you run partprobe(8) or kpartx(8)
-Syncing disks.
-
-pi@raspberrypi ~ $ sudo mkfs.ext4 /dev/mmcblk0p3
-mke2fs 1.42.5 (29-Jul-2012)
-Filesystem label=
-OS type: Linux
-Block size=4096 (log=2)
-Fragment size=4096 (log=2)
-Stride=0 blocks, Stripe width=0 blocks
-1815072 inodes, 7259392 blocks
-362969 blocks (5.00%) reserved for the super user
-First data block=0
-Maximum filesystem blocks=0
-222 block groups
-32768 blocks per group, 32768 fragments per group
-8176 inodes per group
-Superblock backups stored on blocks:
-        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
-        4096000
-
-Allocating group tables: done
-Writing inode tables: done
-Creating journal (32768 blocks):
-done
-Writing superblocks and filesystem accounting information: done
-</pre></div>
-
-<p>上記のように、<code>fdisk</code>でパーティションをきってrebootしたあと、<code>mkfs.ext4</code>でフォーマットします。
-最後に<code>/etc/fstab</code>に以下を追記してもう一度再起動して完了です。 マウントするディレクトリ(以下だと<code>/home</code>)は適当にかえてください。/homeにマウントする場合はpiユーザのホームディレクトリをコピーしておくといいと思います。</p>
-<div class="pygments_murphy"><pre>/dev/mmcblk0p3 /home            ext4    defaults,noatime  0       2
-</pre></div>
-
-<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ df -h
-Filesystem      Size  Used Avail Use% Mounted on
-rootfs          1.8G  1.4G  246M  86% /
-/dev/root       1.8G  1.4G  246M  86% /
-devtmpfs        212M     0  212M   0% /dev
-tmpfs            44M  276K   44M   1% /run
-tmpfs           5.0M     0  5.0M   0% /run/lock
-tmpfs            88M     0   88M   0% /run/shm
-/dev/mmcblk0p1   56M   19M   38M  34% /boot
-/dev/mmcblk0p3   28G  172M   26G   1% /home
-</pre></div>
-
-<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B003VNKNF0" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>]]></content:encoded>
     </item>
   </channel>
 </rss>
