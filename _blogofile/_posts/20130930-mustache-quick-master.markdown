@@ -2,7 +2,10 @@
 categories: ruby, mustache
 date: 2013/10/01 00:08:09
 title: mustache基礎文法最速マスター
+image: /images/mustache-logo-250.png
 ---
+
+![mustache](/images/mustache-logo-250.png ) 
 
 mustacheはシンプルなテンプレートエンジンなので本家の英語マニュアル [mustache(5)](http://mustache.github.io/mustache.5.html ) を見ても大したことはないですが、日本語情報の需要もそれなりにあると思うのでまとめておきます。
 
@@ -28,7 +31,7 @@ $$/code
 
 ## 変数のエスケープ
 
-デフォルトではHTMLエスケープが有効になjります。アンエスケープされたHTMLが使いたい場合は`{{{name}}}`のように3つのブレースで囲います。
+デフォルトではHTMLエスケープが有効になります。アンエスケープされたHTMLが使いたい場合は`{{{name}}}`のように3つのブレースで囲います。
 
 $$code(lang=ruby)
 Mustache.render("{{html}}",  html: "<b>GitHub</b>") # => "&lt;b&gt;GitHub&lt;/b&gt;"
@@ -66,7 +69,7 @@ template = <<DOC
 {{name}}
 {{/animals}}
 DOC
-data = {animals: [{name: "cat"}, {name: "dog"}, {name: pig"}]}
+data = {animals: [{name: "cat"}, {name: "dog"}, {name: "pig"}]}
 Mustache.render(template, data) # => "cat\ndog\npig\n"
 $$/code
 

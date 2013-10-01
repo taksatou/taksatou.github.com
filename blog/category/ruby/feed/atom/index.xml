@@ -26,7 +26,8 @@
     <category scheme="http://mojavy.com/blog" term="ruby" />
     <category scheme="http://mojavy.com/blog" term="mustache" />
     <summary type="html"><![CDATA[mustache基礎文法最速マスター]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/10/01/mustache-quick-master/"><![CDATA[<p>mustacheはシンプルなテンプレートエンジンなので本家の英語マニュアル <a href="http://mustache.github.io/mustache.5.html">mustache(5)</a> を見ても大したことはないですが、日本語情報の需要もそれなりにあると思うのでまとめておきます。</p>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/10/01/mustache-quick-master/"><![CDATA[<p><img alt="mustache" src="/images/mustache-logo-250.png" /> </p>
+<p>mustacheはシンプルなテンプレートエンジンなので本家の英語マニュアル <a href="http://mustache.github.io/mustache.5.html">mustache(5)</a> を見ても大したことはないですが、日本語情報の需要もそれなりにあると思うのでまとめておきます。</p>
 <p>以下の内容はrubygemの<code>mustache-0.99.4</code>で確認しています。
 他の言語の場合は適宜置きかえてください。</p>
 <h2 id="_1">目次</h2>
@@ -50,7 +51,7 @@
 </pre></div>
 
 <h2 id="_3">変数のエスケープ</h2>
-<p>デフォルトではHTMLエスケープが有効になjります。アンエスケープされたHTMLが使いたい場合は<code>{{{name}}}</code>のように3つのブレースで囲います。</p>
+<p>デフォルトではHTMLエスケープが有効になります。アンエスケープされたHTMLが使いたい場合は<code>{{{name}}}</code>のように3つのブレースで囲います。</p>
 <div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{html}}&quot;</span><span class="p">,</span>  <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&amp;lt;b&amp;gt;GitHub&amp;lt;/b&amp;gt;&quot;</span>
 <span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{{html}}}&quot;</span><span class="p">,</span> <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span>
 </pre></div>
@@ -78,8 +79,8 @@
 <span class="sh">{{name}}</span>
 <span class="sh">{{/animals}}</span>
 <span class="no">DOC</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">animals</span><span class="p">:</span> <span class="o">[</span><span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;cat&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;dog&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="n">pig</span><span class="s2">&quot;}]}</span>
-<span class="s2">Mustache.render(template, data) # =&gt; &quot;</span><span class="n">cat</span><span class="p">\</span><span class="n">ndog</span><span class="p">\</span><span class="n">npig</span><span class="p">\</span><span class="n">n</span><span class="s2">&quot;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">animals</span><span class="p">:</span> <span class="o">[</span><span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;cat&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;dog&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;pig&quot;</span><span class="p">}</span><span class="o">]</span><span class="p">}</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="c1"># =&gt; &quot;cat\ndog\npig\n&quot;</span>
 </pre></div>
 
 <h2 id="lambda">無名関数 (Lambda)</h2>
