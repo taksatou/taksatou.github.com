@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -119,7 +119,7 @@ href="/blog/feed/atom" />
 例えば、うっかりscreenやtmuxの外で起動してしまった長い時間のかかるバッチ処理を、起動したままscreenの中にもってくることができます。</p>
 <p><a href="https://github.com/nelhage/reptyr">https://github.com/nelhage/reptyr</a> </p>
 <h2 id="_1">使い方</h2>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>reptyr PID
+<div class="pygments_borland"><pre><span class="nv">$ </span>reptyr PID
 </pre></div>
 
 <p>現在のターミナル内にもってきたいプロセスのpidを引数にします。
@@ -141,7 +141,7 @@ SolarisやBSDに移植することも技術的には可能ですが、現状は�
 <h2 id="ptrace_scope-on-ubuntu-maverick-and-up">ptrace_scope on Ubuntu Maverick and up</h2>
 <p>Ubuntu Maverick以降ではptraceの機能がデフォルトで無効になっています。
 以下コマンドで一時的に有効にできます。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
 </pre></div>
 
 <p>rootで<code>/etc/sysctl.d/10-ptrace.conf</code>を編集すると永続的に変更できます。また<code>ptrace_scope</code>に関する詳細な説明もここに書いてあります。</p>
@@ -216,7 +216,7 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
 <div class="blogbody">
   <p>Cをつかってるとtupleっぽいものがあれば便利なのに、と思うときが時々あります。</p>
 <p>別にtupleなんてなくても</p>
-<div class="pygments_murphy"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+<div class="pygments_borland"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
    <span class="kt">int</span> <span class="o">*</span><span class="n">i</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">tuple</span><span class="p">;</span>
@@ -225,7 +225,7 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
 <p>のようにして構造体をつかえばいいのですが、必要になるたびにこれをするのはちょっとめんどくさいですよね。</p>
 <p>というわけで色々試行錯誤してみたところ、以下のようにしてunionの配列にするというのがそこそこ便利だったので紹介します。</p>
 <p>以下は使用例です。</p>
-<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
 
 <span class="k">typedef</span> <span class="k">union</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>

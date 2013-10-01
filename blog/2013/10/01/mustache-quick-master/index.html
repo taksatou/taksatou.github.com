@@ -13,7 +13,7 @@ mustache基礎文法最速マスター
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -133,13 +133,13 @@ href="/blog/feed/atom" />
 <h2 id="_2">変数の展開</h2>
 <p><code>{{name}}</code>のように2つのブレースで囲ったタグは、<code>name</code>という名前のキーの値でおきかえられます。</p>
 <p>対応するキーが見つからなかった場合はデフォルトでは空文字になります。</p>
-<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Hello, {{world}}!&quot;</span><span class="p">,</span> <span class="n">world</span><span class="p">:</span> <span class="s2">&quot;mustache&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Hello, mustache!&quot;</span>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Hello, {{world}}!&quot;</span><span class="p">,</span> <span class="n">world</span><span class="p">:</span> <span class="s2">&quot;mustache&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Hello, mustache!&quot;</span>
 <span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{no_such_key}}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&quot;</span>
 </pre></div>
 
 <h2 id="_3">変数のエスケープ</h2>
 <p>デフォルトではHTMLエスケープが有効になります。アンエスケープされたHTMLが使いたい場合は<code>{{{name}}}</code>のように3つのブレースで囲います。</p>
-<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{html}}&quot;</span><span class="p">,</span>  <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&amp;lt;b&amp;gt;GitHub&amp;lt;/b&amp;gt;&quot;</span>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{html}}&quot;</span><span class="p">,</span>  <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&amp;lt;b&amp;gt;GitHub&amp;lt;/b&amp;gt;&quot;</span>
 <span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{{html}}}&quot;</span><span class="p">,</span> <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span>
 </pre></div>
 
@@ -147,7 +147,7 @@ href="/blog/feed/atom" />
 <p><code>{{#name}} ... {{/name}}</code>のように、2つのタグに<code>#</code>と<code>/</code>をそれぞれつけたタグで囲われたブロックはセクションといいます。</p>
 <p>セクションのキーに対応する値にbool値を渡せばif文のような使い方ができます。
 <code>#</code>のかわりに<code>^</code>をつかうと真偽を反転できます。</p>
-<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
 <span class="sh">{{#condition}}</span>
 <span class="sh">It is true.</span>
 <span class="sh">{{/condition}}</span>
@@ -161,7 +161,7 @@ href="/blog/feed/atom" />
 
 <h2 id="_5">ループ</h2>
 <p>セクションのキーに対応する値に配列を渡した場合は、それぞれの要素を引数として中のブロックが繰り返し評価されます。</p>
-<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
 <span class="sh">{{#animals}}</span>
 <span class="sh">{{name}}</span>
 <span class="sh">{{/animals}}</span>
@@ -172,7 +172,7 @@ href="/blog/feed/atom" />
 
 <h2 id="lambda">無名関数 (Lambda)</h2>
 <p>セクションのキーに対応する値に呼び出し可能なオブジェクトを渡した場合は、そのブロック内のテキストを引数として実行され、その返り値が結果として出力されます。</p>
-<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
 <span class="sh">{{#proc}}</span>
 <span class="sh">mojavy is bad</span>
 <span class="sh">{{/proc}}</span>
@@ -182,7 +182,7 @@ href="/blog/feed/atom" />
 
 <h2 id="_6">コメント</h2>
 <p><code>!</code>をつけるとコメントになります</p>
-<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Comment here: {{! ignore me }}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Comment here: &quot;</span>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Comment here: {{! ignore me }}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Comment here: &quot;</span>
 </pre></div>
 
 <h2 id="_7">まとめ</h2>

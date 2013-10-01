@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -115,7 +115,7 @@ href="/blog/feed/atom" />
 <div class="blogbody">
   <p><img alt="stack" src="/images/stackoverflow-200.png" /></p>
 <p>なんとなく気になったのでstackoverflowのでの人気プログラミング言語ランキングをつくってみました。(2013-02-05現在)</p>
-<div class="pygments_murphy"><pre>1.   c#              411382pt
+<div class="pygments_borland"><pre>1.   c#              411382pt
 2.   java            361120pt
 3.   php             337941pt
 4.   javascript      321791pt
@@ -233,23 +233,23 @@ d          877pt
 <hr>
 
 <p>Cで文字列を初期化するときは以下のように書く。</p>
-<div class="pygments_murphy"><pre>char str[] = &quot;xyz&quot;;
+<div class="pygments_borland"><pre>char str[] = &quot;xyz&quot;;
 </pre></div>
 
 <p>こう書けばNULL終わりのchar配列としてスタックに格納してくれるので、以下のように書くのと同じことになる。</p>
-<div class="pygments_murphy"><pre>char str1[4] = &quot;xyz&quot;;
+<div class="pygments_borland"><pre>char str1[4] = &quot;xyz&quot;;
 char str2[4] = {&#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;\0&#39;};
 </pre></div>
 
 <p>文字列はcharのポインタで扱うからといって、</p>
-<div class="pygments_murphy"><pre>char *str = &quot;xyz&quot;;
+<div class="pygments_borland"><pre>char *str = &quot;xyz&quot;;
 </pre></div>
 
 <p>のように書くと違う意味になる。
 こう書くと"xyz"が格納されているアドレスでポインタを初期化する。文字列リテラルで宣言したデータが格納される領域は通常はread onlyなので<code>*str='X'</code>などとするとセグフォするが、通常の代入と同じ意味なので違和感はない。</p>
 <p>でも、<code>char str[] = "xyz";</code> のほうはは冷静に考えると気持ち悪い。初期化と代入は違うといってしまえばそれまでだけど、この式だけみても予備知識がないとなにがおこるのかわからないと思う。</p>
 <p>以下のような挙動も合理的とは思えない。そもそもCに配列なんて必要なかったのではないか。</p>
-<div class="pygments_murphy"><pre>void f1(char s[]) {
+<div class="pygments_borland"><pre>void f1(char s[]) {
     /* 意味はないけどエラーでもない */
     s = &quot;baz&quot;;
 }
@@ -304,11 +304,11 @@ void f2(void) {
 これをつかってtmux上でalcの英単語を表示できるようにしたら思いの外便利だったので紹介します。</p>
 <p>まず、alcの検索結果をスクレイビングしていい感じに表示するコマンドをつくります。
 rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当なスクリプトでよければこれを使って下さい。</p>
-<div class="pygments_murphy"><pre><span class="c1"># 2013-01-15 削除しました</span>
+<div class="pygments_borland"><pre><span class="c1"># 2013-01-15 削除しました</span>
 </pre></div>
 
 <p>これをパスの通った場所にalcという名前で保存して、.tmux.confに以下の設定を追記します。</p>
-<div class="pygments_murphy"><pre>unbind C-a
+<div class="pygments_borland"><pre>unbind C-a
 <span class="nb">bind </span>C-a <span class="nb">command</span>-prompt <span class="s2">&quot;split-window -h &#39;alc %% | lv -c&#39;&quot;</span>
 </pre></div>
 
@@ -356,7 +356,7 @@ rainbowで色付けしてるのでエスケープシーケンスを解釈でき�
 <p>といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。</p>
 <p>使い方は、<a href="https://github.com/taksatou/yaml-mode-ext">https://github.com/taksatou/yaml-mode-ext</a>からおとしてきてloadするだけです。
 (yaml-modeはあらかじめインストールしておく必要があります)</p>
-<div class="pygments_murphy"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
+<div class="pygments_borland"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
 </pre></div>
 
 <p>以下のキーバインドが使えます。</p>
@@ -413,7 +413,7 @@ cronに登録するほどでもない単発のコマンドを実行したいと�
 ちなみにteatimeは午後4時。
 出力先を指定しなければコマンドの出力はcronと同じようにメールにとぶ。$TTYにリダイレクトしてやればコマンドを実行した端末に表示させることもできる。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre>echo &quot;echo おやつの時間です &gt; $TTY&quot;| at teatime
+<div class="pygments_borland"><pre>echo &quot;echo おやつの時間です &gt; $TTY&quot;| at teatime
 echo &quot;echo はろー &gt; $TTY&quot; | at now + 3 minute
 </pre></div>
 
@@ -421,14 +421,14 @@ echo &quot;echo はろー &gt; $TTY&quot; | at now + 3 minute
 <p>tracerouteとpingをあわせたようなもの。tracerouteより表示がみやすい。
 ネットワークのどこで時間がかかってるのか一目でわかる。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre>mtr mojavy.com
+<div class="pygments_borland"><pre>mtr mojavy.com
 </pre></div>
 
 <h2 id="column">column</h2>
 <p>入力テキストをいい感じのカラム表示にフォーマットしてくれる。
 縦に長い出力するコマンドとか、そのままだと出力がみづらいときとかにつかう。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre>gem list | column
+<div class="pygments_borland"><pre>gem list | column
 mount | column -t
 grep -v &#39;^#&#39; /etc/apt/sources.list | column -t
 </pre></div>
@@ -439,7 +439,7 @@ grep -v &#39;^#&#39; /etc/apt/sources.list | column -t
 <h2 id="sshfs">sshfs</h2>
 <p>ssh経由でリモートのファイルシステムをマウントできる。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre>sshfs name@server:/path/to/dir /path/to/mount/point
+<div class="pygments_borland"><pre>sshfs name@server:/path/to/dir /path/to/mount/point
 fusermount -u /path/to/mount/point  # unmount
 </pre></div>
 
@@ -450,7 +450,7 @@ fusermount -u /path/to/mount/point  # unmount
 <h3 id="dig-short-txt-wzxhzdk5wpdgcx">dig +short txt <keyword>.wp.dg.cx</h3>
 <p>dnsクエリでwikipediaのエントリーがみれる。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
+<div class="pygments_borland"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
 <span class="s2">&quot;Banana is the common name for herbaceous plants of the genus Musa and for the fruit they produce. It is one of the oldest cultivated plants. They are native to tropical South and Southeast Asia, and are likely to have been first domesticated in Papua New &quot;</span> <span class="s2">&quot;Guinea. Today, they are cultivated throughout the tropics. They are grown in at least 107 countries, primarily for their... http://en.wikipedia.org/wiki/Banana&quot;</span>
 </pre></div>
 </div>

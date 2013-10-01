@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -126,13 +126,13 @@ href="/blog/feed/atom" />
 <p>Rubotoをつかえばこのあたりの面倒をみてくれるので、ほとんどjavaを書く必要がなくなります。Ruboto自体は結構前からありますが、ここ1年くらいでもろもろの機能が充実してきて大分実用的になってきた感があります。</p>
 <p>以下Rubotoの使用方法について簡単に紹介します。</p>
 <h2 id="_1">インストール</h2>
-<div class="pygments_murphy"><pre>gem install ruboto
+<div class="pygments_borland"><pre>gem install ruboto
 gem install jruby-jars
 </pre></div>
 
 <p>また、<code>ANDROID_HOME</code>環境変数の設定と、android sdkの <code>tools/</code> と <code>platform-tools/</code>にはあらかじめパスをとおしておきます</p>
 <h2 id="_2">雛形の生成</h2>
-<div class="pygments_murphy"><pre>ruboto gen app --package org.rubyandroid.new_demo
+<div class="pygments_borland"><pre>ruboto gen app --package org.rubyandroid.new_demo
 
 # 以下のようにしてより詳細に設定することもできます
 # ruboto gen app --package org.rubyandroid.new_demo --path ./myapp --name MyApp --target android-17 --min-sdk android-10 --activity MainActivityName
@@ -141,7 +141,7 @@ gem install jruby-jars
 <h2 id="_3">ビルドとインストール</h2>
 <p>rakeからビルドできるようになっています。また、rubyスクリプトの更新はコンパイル不要で反映できます。
 あとは普通にrubyを書くだけです。</p>
-<div class="pygments_murphy"><pre>cd new_demo
+<div class="pygments_borland"><pre>cd new_demo
 rake
 rake install
 
@@ -298,7 +298,7 @@ rake update_scripts
 <p>wikiで説明されているpluginの書き方を踏まえた上で、それを完全に無視する方法で実装した。
 Postクラスを拡張してhekyllにあうようにliquidに渡すデータを上書きしてるだけ。</p>
 <p>もっといい方法はあると思う。</p>
-<div class="pygments_murphy"><pre><span class="k">def</span> <span class="nf">once</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+<div class="pygments_borland"><pre><span class="k">def</span> <span class="nf">once</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
   <span class="k">unless</span> <span class="p">(</span><span class="vi">@__once_executed__</span> <span class="o">||=</span> <span class="o">[]</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span> <span class="n">tag</span>
     <span class="k">yield</span>
     <span class="vi">@__once_executed__</span> <span class="o">&lt;&lt;</span> <span class="n">tag</span>
@@ -403,7 +403,7 @@ Postクラスを拡張してhekyllにあうようにliquidに渡すデータを�
 <h3 id="2-setuppy">2. setup.pyをかく</h3>
 <p><code>apt-get source python-xxx</code>で適当なパッケージのソースをダウンロードして参考にするとよい</p>
 <p>以下例</p>
-<div class="pygments_murphy"><pre><span class="c">#!/usr/bin/python</span>
+<div class="pygments_borland"><pre><span class="c">#!/usr/bin/python</span>
 
 <span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
 

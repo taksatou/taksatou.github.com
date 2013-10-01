@@ -13,7 +13,7 @@ tmuxでalcの英単語を引く
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -119,11 +119,11 @@ href="/blog/feed/atom" />
 これをつかってtmux上でalcの英単語を表示できるようにしたら思いの外便利だったので紹介します。</p>
 <p>まず、alcの検索結果をスクレイビングしていい感じに表示するコマンドをつくります。
 rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当なスクリプトでよければこれを使って下さい。</p>
-<div class="pygments_murphy"><pre><span class="c1"># 2013-01-15 削除しました</span>
+<div class="pygments_borland"><pre><span class="c1"># 2013-01-15 削除しました</span>
 </pre></div>
 
 <p>これをパスの通った場所にalcという名前で保存して、.tmux.confに以下の設定を追記します。</p>
-<div class="pygments_murphy"><pre>unbind C-a
+<div class="pygments_borland"><pre>unbind C-a
 <span class="nb">bind </span>C-a <span class="nb">command</span>-prompt <span class="s2">&quot;split-window -h &#39;alc %% | lv -c&#39;&quot;</span>
 </pre></div>
 

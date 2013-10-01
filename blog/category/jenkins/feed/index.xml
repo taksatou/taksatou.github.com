@@ -45,7 +45,7 @@ xcodeでipaファイルをビルドする方法はすぐにでてくると思う
 <h3 id="jenkins">jenkinsのセットアップ</h3>
 <p>jenkinsを用意します。ビルド専用macが用意できない場合でも、開発に用いているmacをJNLP経由でそのままスレーブとして使うことができます。</p>
 <p>jenkins自体の細かいセットアップ方法は割愛しますが、JNLP経由でスレーブを起動する場合は以下のようなスクリプトをバックグランドで起動するようにしておくと便利です。</p>
-<div class="pygments_murphy"><pre><span class="c">#!/bin/sh</span>
+<div class="pygments_borland"><pre><span class="c">#!/bin/sh</span>
 
 <span class="nb">eval</span> <span class="sb">`</span>ssh-agent<span class="sb">`</span>
 ssh-add ~/.ssh/id_rsa
@@ -61,7 +61,7 @@ java -jar slave.jar -jnlpUrl http://jenkins.example.com/computer/mac1/slave-agen
 <p>以下のようなmakefileをxcodeプロジェクトのトップディレクトリに配置します。
 (お好みのビルドツールを利用してください)</p>
 <p>ソースコードのコンパイルはxcodebuild, ipaファイルの生成はxcrunというコマンドを使います。</p>
-<div class="pygments_murphy"><pre><span class="nv">APP_NAME</span> <span class="o">=</span> MyApp
+<div class="pygments_borland"><pre><span class="nv">APP_NAME</span> <span class="o">=</span> MyApp
 <span class="nv">SRCTOP</span> <span class="o">=</span> <span class="k">$(</span>shell <span class="nb">pwd</span><span class="k">)</span>
 <span class="nv">RELEASE_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>SRCTOP<span class="k">)</span>/build/Release-iphoneos
 <span class="nv">BUILD_HISTORY_DIR</span> <span class="o">=</span> <span class="k">$(</span>SRCTOP<span class="k">)</span>/build
@@ -83,7 +83,7 @@ clean:
 </pre></div>
 
 <p>配布用のplistとhtmlを生成するスクリプト(gen_dist_page.sh)は以下のようになります。(BUILD_NUMBERなどの変数はjenkinsの環境変数から取得できます)</p>
-<div class="pygments_murphy"><pre><span class="nv">PACKAGE_NAME</span><span class="o">=</span>MyApp
+<div class="pygments_borland"><pre><span class="nv">PACKAGE_NAME</span><span class="o">=</span>MyApp
 
 <span class="nv">PLIST</span><span class="o">=</span>build/<span class="k">${</span><span class="nv">PACKAGE_NAME</span><span class="k">}</span>.plist
 <span class="nv">INSTALL_PAGE</span><span class="o">=</span>build/<span class="k">${</span><span class="nv">PACKAGE_NAME</span><span class="k">}</span>.html
@@ -160,7 +160,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <p>参考:  <a href="https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf">https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf</a></p>
 <h3 id="jenkinsjob">jenkinsのjob作成</h3>
 <p>通常通りjenkinsのjobを作ります。適切にソースコードをチェックアウトして、ビルドフェーズで上記スクリプトを実行するようにします。</p>
-<div class="pygments_murphy"><pre>make clean <span class="o">&amp;&amp;</span> make <span class="nv">DIST_URL</span><span class="o">=</span><span class="k">${</span><span class="nv">BUILD_URL</span><span class="k">}</span>artifact
+<div class="pygments_borland"><pre>make clean <span class="o">&amp;&amp;</span> make <span class="nv">DIST_URL</span><span class="o">=</span><span class="k">${</span><span class="nv">BUILD_URL</span><span class="k">}</span>artifact
 </pre></div>
 
 <p>ビルドに成功するとipa, html, plistファイルが生成されるので、これらを成果物として保存します。

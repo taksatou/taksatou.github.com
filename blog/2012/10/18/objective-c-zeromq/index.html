@@ -13,7 +13,7 @@ iOSでZeroMQを試す
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -121,7 +121,7 @@ href="/blog/feed/atom" />
 <script src="https://gist.github.com/3899653.js"> </script>
 
 <p>これをZeroMQのtarを展開してできたディレクトリにbuild.shとかで保存して実行すると、armv7とi386に対応したlibzmq.aができる。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
+<div class="pygments_borland"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
 <span class="nv">$ </span><span class="nb">cd </span>zeromq-2.2.0
 <span class="nv">$ </span>./build.sh
 <span class="nv">$ </span>file libzmq.a
@@ -137,7 +137,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 チャットでの発言はREQ/REPを用いてアプリ→サーバに渡し、PUB/SUBを用いてサーバ→アプリにブロードキャストする。</p>
 <h2 id="_1">サーバ側</h2>
 <p>サーバ側はCommon Lispで実装した。単に、rep-sockから発言を受け取ってpub-sockにそのまま流すだけ。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
 (defun pull-and-publish ()
@@ -162,7 +162,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <h2 id="_2">アプリ側</h2>
 <p><a href="https://github.com/jeremy-w/objc-zmq">objective-c版ZeroMQ</a>もあるけど、今回はそのままCのAPIを利用した。
 以下はソースの抜粋。</p>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
 <span class="cp">#import &quot;include/zmq.h&quot;</span>
 
 <span class="k">@interface</span> <span class="nc">ChatViewController</span> <span class="p">()</span> <span class="p">{</span>
@@ -289,7 +289,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <li>上記ソースはUITableViewControllerで発言を表示する想定になっているが、UIまわりのコードは省略</li>
 </ul>
 <h2 id="common-lisp">オマケ(Common Lisp版コマンドライン用チャットクライアント)</h2>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 (ql:quickload :bordeaux-threads)
 

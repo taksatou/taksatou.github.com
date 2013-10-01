@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -128,7 +128,7 @@ href="/blog/feed/atom" />
 
 <p>wifiの設定はX Windowの設定画面からしました。<code>startx</code>でデスクトップを起動すると<code>WiFi Config</code>というアイコンがあるのでそこから設定できます。
 ターミナルで<code>ifconfig</code>を実行してwlan0にinet addrが割り当てられていることを確認できればOKです。</p>
-<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
+<div class="pygments_borland"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
 eth0      Link encap:Ethernet  HWaddr b8:27:eb:90:32:15
           UP BROADCAST MULTICAST  MTU:1500  Metric:1
           RX packets:0 errors:0 dropped:0 overruns:0 frame:0
@@ -193,7 +193,7 @@ wlan0     Link encap:Ethernet  HWaddr 10:6f:3f:ec:5f:b8
 <p>前々から気になってたRaspberry Piを手に入れました。</p>
 <p>最終的にはセンサーとかいろいろつけてインタラクティブなおもちゃをつくりたいですが、当面の目標は秋月電子で調達してきたLCDディスプレイに文字を表示させるためのドライバを書くことにしようと思います。</p>
 <p>Raspberry Piのセットアップ手順はぐぐればすぐでてくるので割愛しますが、そのままだとsdcardの空き領域がつかえないので起動時にマウントできるようにするまでの手順だけメモしときます。</p>
-<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ sudo fdisk /dev/mmcblk0
+<div class="pygments_borland"><pre>pi@raspberrypi ~ $ sudo fdisk /dev/mmcblk0
 
 Command (m for help): p
 
@@ -271,10 +271,10 @@ Writing superblocks and filesystem accounting information: done
 
 <p>上記のように、<code>fdisk</code>でパーティションをきってrebootしたあと、<code>mkfs.ext4</code>でフォーマットします。
 最後に<code>/etc/fstab</code>に以下を追記してもう一度再起動して完了です。 マウントするディレクトリ(以下だと<code>/home</code>)は適当にかえてください。/homeにマウントする場合はpiユーザのホームディレクトリをコピーしておくといいと思います。</p>
-<div class="pygments_murphy"><pre>/dev/mmcblk0p3 /home            ext4    defaults,noatime  0       2
+<div class="pygments_borland"><pre>/dev/mmcblk0p3 /home            ext4    defaults,noatime  0       2
 </pre></div>
 
-<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ df -h
+<div class="pygments_borland"><pre>pi@raspberrypi ~ $ df -h
 Filesystem      Size  Used Avail Use% Mounted on
 rootfs          1.8G  1.4G  246M  86% /
 /dev/root       1.8G  1.4G  246M  86% /

@@ -13,7 +13,7 @@ blogofileでサムネイル画像を表示する方法
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -119,7 +119,7 @@ href="/blog/feed/atom" />
 <a href="http://mojavy.com">http://mojavy.com</a>
 のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
 <p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<div class="pygments_borland"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
 <span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
          self.slug = None
          self.draft = False
@@ -130,7 +130,7 @@ href="/blog/feed/atom" />
 </pre></div>
 
 <p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
+<div class="pygments_borland"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
 <span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
 <span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
 <span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>

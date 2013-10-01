@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -118,7 +118,7 @@ href="/blog/feed/atom" />
 それに伴いlennyのリポジトリもoldstable扱いとなりパスが変わったため、デフォルトのsources.listでは404 Not Foundとなってパッケージがインストールできなくなってしまいました。
 早めにアップデートしたほうが好ましいですが、そのまま引き続きlennyを使いたい場合もあると思います。
 そのような場合は以下のようにsources.listを変更してやれば今までどおりパッケージをとれるようになります。</p>
-<div class="pygments_murphy"><pre>deb http://archive.debian.org/debian-security/ lenny/updates main
+<div class="pygments_borland"><pre>deb http://archive.debian.org/debian-security/ lenny/updates main
 deb-src http://archive.debian.org/debian-security/ lenny/updates main
 
 deb http://archive.debian.org/debian/ lenny main
@@ -171,25 +171,25 @@ deb-src http://archive.debian.org/debian/ lenny main
   <p><img alt="python" src="/images/python-logo.gif" /></p>
 <p>pythonではvirtualenvというユーティリティを使って複数の環境を切り替えることができます。しかしvirtualenvはセットアップがちょっとわかりにくかったりバージョンによってはこけたりしていまいち使いこなせていませんでした。久し振りにブログを書くついでにpython環境を再構築しようと思って調べたところ、<a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a> というのが使いやすかったので紹介します。これを使えば非常に簡単にpython環境を整えることができます。</p>
 <h1 id="_1">インストール</h1>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
 </pre></div>
 
 <p>として再ログインするだけです。勝手にパスやシェルの補完設定もしてくれます。</p>
 <h1 id="_2">使い方</h1>
 <p>新しい環境の構築は、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>mkvirtualenv newname
+<div class="pygments_borland"><pre><span class="nv">$ </span>mkvirtualenv newname
 </pre></div>
 
 <p><br></p>
 <p>環境の切り替えは、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>workon newname
+<div class="pygments_borland"><pre><span class="nv">$ </span>workon newname
 <span class="nv">$ </span><span class="c"># or</span>
 <span class="nv">$ </span>workon 2.7
 </pre></div>
 
 <p><br></p>
 <p>不要な環境の削除は、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>rmvirtualenv newname
+<div class="pygments_borland"><pre><span class="nv">$ </span>rmvirtualenv newname
 </pre></div>
 
 <p><br></p>
@@ -202,7 +202,7 @@ deb-src http://archive.debian.org/debian/ lenny main
 <li>python3だとうごきません。python3環境が作れないという意味ではなく、デフォルトパスのpythonバージョンが3だとvirtualenv-burritoのセットアップ途中でこけます。その場合はpython2系をつかってください。</li>
 <li>pipのインストールでこける場合があります。その場合は以下のようなコマンドで回避できます。 <a href="https://github.com/brainsik/virtualenv-burrito/issues/16">(参考)</a></li>
 </ul>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
+<div class="pygments_borland"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
 <span class="nv">$ </span>mkvirtualenv -p <span class="k">$(</span>which python3.2<span class="k">)</span> --distribute py32
 </pre></div>
 
@@ -271,7 +271,7 @@ macでソースから入れる方法は初日に<a href="http://d.hatena.ne.jp/t
 たまに画面が乱れることがありますが、再描画すると直ります。</p>
 <h1 id="_1">まとめ</h1>
 <p>以下を.tmux.confにコピペするとtmuxでマウスがつかえます。</p>
-<div class="pygments_murphy"><pre><span class="nb">set</span> -g mode-mouse on
+<div class="pygments_borland"><pre><span class="nb">set</span> -g mode-mouse on
 <span class="nb">set</span> -g mouse-resize-pane on
 <span class="nb">set</span> -g mouse-select-pane on
 <span class="nb">set</span> -g mouse-select-window on
@@ -350,11 +350,11 @@ tmuxのバッファにはホスト名とかよくつかうコマンドとかを�
 <p><a href="http://d.hatena.ne.jp/tmatsuu/20111130/1322677832">tmatsuuさんの記事</a>にもちょっとありましたが、
 tmuxはlibeventとnlcursesに依存しているのでビルドするにはライブラリのヘッダも必要です。
 ubuntuだと以下パッケージを入れとけばたぶん大丈夫です。</p>
-<div class="pygments_murphy"><pre>sudo apt-get install libevent-dev libncurses5-dev
+<div class="pygments_borland"><pre>sudo apt-get install libevent-dev libncurses5-dev
 </pre></div>
 
 <h2 id="_6">ビルド</h2>
-<div class="pygments_murphy"><pre>./configure <span class="o">&amp;&amp;</span> make
+<div class="pygments_borland"><pre>./configure <span class="o">&amp;&amp;</span> make
 </pre></div>
 
 <p>ここまでできたら準備OKです。</p>
@@ -379,7 +379,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 <p>細かい解説は省略しますが、paste_stackという構造体がグローバルで共有しているリストの本体で、array.hで宣言されているマクロで値がとりだせるようになっています。
 本来の動作であるpaste_addを参考にしつつpaste_add_tailなんて関数を追加します。
 後に追加した文字列ほど後ろにいってほしいですが、直前のものだけは先頭にあったほうが便利なのでちょっと変則的な感じになってますが、やっていることはシンプルです。</p>
-<div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/paste.c tmux-1.5-patched/paste.c</span>
+<div class="pygments_borland"><pre><span class="gh">diff -u tmux-1.5/paste.c tmux-1.5-patched/paste.c</span>
 <span class="gd">--- tmux-1.5/paste.c    2011-07-09 18:42:38.000000000 +0900</span>
 <span class="gi">+++ tmux-1.5-patched/paste.c    2011-12-06 23:36:31.921805251 +0900</span>
 <span class="gu">@@ -119,6 +119,38 @@</span>
@@ -421,7 +421,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 </pre></div>
 
 <p>ここで追加した関数はtmux.hで宣言しておきます</p>
-<div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/tmux.h tmux-1.5-patched/tmux.h</span>
+<div class="pygments_borland"><pre><span class="gh">diff -u tmux-1.5/tmux.h tmux-1.5-patched/tmux.h</span>
 <span class="gd">--- tmux-1.5/tmux.h     2011-07-09 18:42:38.000000000 +0900</span>
 <span class="gi">+++ tmux-1.5-patched/tmux.h     2011-12-06 23:36:31.925805201 +0900</span>
 <span class="gu">@@ -1487,6 +1487,7 @@</span>
@@ -434,7 +434,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 </pre></div>
 
 <p>また、今回の機能は設定ファイルでon/offを切り替えられるようにしておきたいので、options-table.cも編集します。</p>
-<div class="pygments_murphy"><pre><span class="n">diff</span> <span class="o">-</span><span class="n">u</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">-</span><span class="n">patched</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>
+<div class="pygments_borland"><pre><span class="n">diff</span> <span class="o">-</span><span class="n">u</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">-</span><span class="n">patched</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>
 <span class="o">---</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>    <span class="mi">2011</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">09</span> <span class="mi">18</span><span class="o">:</span><span class="mi">42</span><span class="o">:</span><span class="mf">38.000000000</span> <span class="o">+</span><span class="mi">0900</span>
 <span class="o">+++</span> <span class="n">tmux</span><span class="o">-</span><span class="mf">1.5</span><span class="o">-</span><span class="n">patched</span><span class="o">/</span><span class="n">options</span><span class="o">-</span><span class="n">table</span><span class="p">.</span><span class="n">c</span>    <span class="mi">2011</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mo">06</span> <span class="mi">23</span><span class="o">:</span><span class="mi">36</span><span class="o">:</span><span class="mf">31.921805251</span> <span class="o">+</span><span class="mi">0900</span>
 <span class="err">@@</span> <span class="o">-</span><span class="mi">57</span><span class="p">,</span><span class="mi">6</span> <span class="o">+</span><span class="mi">57</span><span class="p">,</span><span class="mi">11</span> <span class="err">@@</span>
@@ -452,7 +452,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 </pre></div>
 
 <p>実際にバッファの制御関数を呼び出しているのはwindow-copy.cなので、さっき追加したオプションの値をみて切り替えられるようにします。</p>
-<div class="pygments_murphy"><pre><span class="gh">diff -u tmux-1.5/window-copy.c tmux-1.5-patched/window-copy.c</span>
+<div class="pygments_borland"><pre><span class="gh">diff -u tmux-1.5/window-copy.c tmux-1.5-patched/window-copy.c</span>
 <span class="gd">--- tmux-1.5/window-copy.c      2011-07-09 18:42:38.000000000 +0900</span>
 <span class="gi">+++ tmux-1.5-patched/window-copy.c      2011-12-06 23:36:31.921805251 +0900</span>
 <span class="gu">@@ -1348,7 +1348,11 @@</span>
@@ -468,7 +468,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 </pre></div>
 
 <p>あとは設定ファイルに以下を追加してmakeしたtmuxを起動してみます。</p>
-<div class="pygments_murphy"><pre><span class="nb">set</span> -g reverse-buffer on
+<div class="pygments_borland"><pre><span class="nb">set</span> -g reverse-buffer on
 </pre></div>
 
 <p>バッファにコピーした文字列がlist-buffersの後ろに追加されていけば成功です。
@@ -517,7 +517,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 <a href="http://mojavy.com">http://mojavy.com</a>
 のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
 <p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<div class="pygments_borland"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
 <span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
          self.slug = None
          self.draft = False
@@ -528,7 +528,7 @@ Cでリストが使いたい場合は他のとこでも流用できそうな便�
 </pre></div>
 
 <p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
+<div class="pygments_borland"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
 <span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
 <span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
 <span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>

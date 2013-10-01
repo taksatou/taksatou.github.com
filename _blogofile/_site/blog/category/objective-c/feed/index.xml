@@ -32,7 +32,7 @@
 <script src="https://gist.github.com/3899653.js"> </script>
 
 <p>これをZeroMQのtarを展開してできたディレクトリにbuild.shとかで保存して実行すると、armv7とi386に対応したlibzmq.aができる。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
+<div class="pygments_borland"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
 <span class="nv">$ </span><span class="nb">cd </span>zeromq-2.2.0
 <span class="nv">$ </span>./build.sh
 <span class="nv">$ </span>file libzmq.a
@@ -48,7 +48,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 チャットでの発言はREQ/REPを用いてアプリ→サーバに渡し、PUB/SUBを用いてサーバ→アプリにブロードキャストする。</p>
 <h2 id="_1">サーバ側</h2>
 <p>サーバ側はCommon Lispで実装した。単に、rep-sockから発言を受け取ってpub-sockにそのまま流すだけ。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
 (defun pull-and-publish ()
@@ -73,7 +73,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <h2 id="_2">アプリ側</h2>
 <p><a href="https://github.com/jeremy-w/objc-zmq">objective-c版ZeroMQ</a>もあるけど、今回はそのままCのAPIを利用した。
 以下はソースの抜粋。</p>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
 <span class="cp">#import &quot;include/zmq.h&quot;</span>
 
 <span class="k">@interface</span> <span class="nc">ChatViewController</span> <span class="p">()</span> <span class="p">{</span>
@@ -200,7 +200,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <li>上記ソースはUITableViewControllerで発言を表示する想定になっているが、UIまわりのコードは省略</li>
 </ul>
 <h2 id="common-lisp">オマケ(Common Lisp版コマンドライン用チャットクライアント)</h2>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 (ql:quickload :bordeaux-threads)
 
@@ -320,7 +320,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 </ul>
 <h2 id="_1">例</h2>
 <h3 id="myprotocolh">myProtocol.h</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 
 <span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
 
@@ -331,7 +331,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 </pre></div>
 
 <h3 id="myprotocolimplh">myProtocolImpl.h</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
 <span class="cp">#import &quot;myProtocol.h&quot;</span>
 
 <span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
@@ -343,7 +343,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 </pre></div>
 
 <h3 id="myprotocolimplm">myProtocolImpl.m</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
 
 <span class="k">@implementation</span> <span class="nc">myProtocolImpl</span>
 
@@ -382,7 +382,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <li>カテゴリ名自体にソースコード上での可読性以上の実質的な意味は無いらしい。</li>
 </ul>
 <h2 id="_1">例</h2>
-<div class="pygments_murphy"><pre><span class="k">@interface</span> <span class="nc">NSObject</span> <span class="nl">(MyExt)</span>
+<div class="pygments_borland"><pre><span class="k">@interface</span> <span class="nc">NSObject</span> <span class="nl">(MyExt)</span>
 <span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">doit:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span><span class="p">;</span>
 <span class="k">@end</span>
 

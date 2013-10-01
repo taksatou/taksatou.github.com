@@ -9,7 +9,8 @@ config = {"name": "Syntax Highlighter",
           "description": "Highlights blocks of code based on syntax",
           "author": "Ryan McGuire",
           "css_dir": "/css",
-          "preload_styles": []}
+          "style": "borland",
+          "preload_styles": ["borland"]}
 
 
 def init():

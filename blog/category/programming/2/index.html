@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -118,7 +118,7 @@ href="/blog/feed/atom" />
 <p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
 <p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
 <p>最初は以下のように書いて、</p>
-<div class="pygments_murphy"><pre>(let ((_n (parse-integer (read-line)))
+<div class="pygments_borland"><pre>(let ((_n (parse-integer (read-line)))
       (lis ()))
   (dotimes (i _n)
     (push (parse-integer (read-line)) lis))
@@ -127,14 +127,14 @@ href="/blog/feed/atom" />
 </pre></div>
 
 <p>以下の用にして時間を測ったところ</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.19s user 0.01s system 91% cpu 1.311 total
 sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938 total
 </pre></div>
 
 <p>ローカルだと3.42s程度だった。codechef上での制限は5secなのでセーフかと思ったけどTime Limit Exceededだった。</p>
 <p>そこで、vectorを使うように改良</p>
-<div class="pygments_murphy"><pre>(let* ((_n (parse-integer (read-line)))
+<div class="pygments_borland"><pre>(let* ((_n (parse-integer (read-line)))
        (lis (make-array _n :fill-pointer 0)))
   (dotimes (i _n)
     (vector-push (parse-integer (read-line)) lis))
@@ -142,14 +142,14 @@ sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938
   (loop for i across lis do (format t &quot;~a~%&quot; i)))
 </pre></div>
 
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.21s user 0.01s system 94% cpu 1.289 total
 sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137 total
 </pre></div>
 
 <p>若干改善されたが、まだTime Limit Exceededだった。</p>
 <p>read-sequenceで読み込んだほうが早いかと思って以下のように書いてみた。</p>
-<div class="pygments_murphy"><pre>(defun parse-input (str)
+<div class="pygments_borland"><pre>(defun parse-input (str)
   (loop
      for i = 0 then (+ 1 j)
      as j = (position #\Newline str :start i)
@@ -167,7 +167,7 @@ sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137
   (loop for i in nums do (format t &quot;~a~%&quot; i)))
 </pre></div>
 
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.13s user 0.01s system 97% cpu 1.159 total
 sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297 total
 </pre></div>
@@ -176,7 +176,7 @@ sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297
 あと、<code>#'(lambda (x y) (&lt; x y))</code>の部分を <code>#'&lt;</code>にするとなぜか遅くなる。</p>
 <p><a href="http://www.codechef.com/status/TSORT?language=31&amp;status=All&amp;handle=&amp;sort_by=All&amp;sorting_order=asc&amp;Submit=GO">まだ誰もlispではパスしてない模様。</a>こういうのをもっと高速に書く方法あるのだろうか。</p>
 <p>ちなみにCだと余裕。ローカルだと0.2秒くらいだけどリモートでは3秒くらいかかってた。そもそもCodeChefの実行環境がしょぼすぎる疑惑が。。</p>
-<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
 <span class="cp">#include &lt;stdlib.h&gt;</span>
 
 <span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
@@ -197,7 +197,7 @@ sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297
     <span class="p">}</span>
 </pre></div>
 
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  0.99s user 0.01s system 99% cpu 1.006 total
 ./a.out &gt; /dev/null  0.18s user 0.01s system 17% cpu 1.116 total
 </pre></div>

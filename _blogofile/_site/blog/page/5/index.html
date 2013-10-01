@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -130,7 +130,7 @@ href="/blog/feed/atom" />
 <h2 id="_1">手順</h2>
 <h3 id="1-mx">1. 該当メールアドレスのMXレコードを調べる</h3>
 <p>普通のメールアドレスの@以下はドメイン名になっている場合がほとんどですが、DNSのAレコードに登録されているのはホスト名なのでメールサービスを提供しているホスト名を調べる必要があります。そのときに使うのがMXレコードで、nslookupでも以下のようにして調べることができます。</p>
-<div class="pygments_murphy"><pre>% nslookup -type=mx gmail.com
+<div class="pygments_borland"><pre>% nslookup -type=mx gmail.com
 Server:         192.168.1.1
 Address:        192.168.1.1#53
 
@@ -155,7 +155,7 @@ smtpプロトコルの詳細は省略しますが、最低限必要なコマン�
 <li>DATA - メール本体の開始。'.'(ピリオド)だけの行で本文終了。本文のFromとToはなんでもよい。普通のメーラのfromやtoで表示されるのはここの情報</li>
 <li>QUIT - 通信終了</li>
 </ul>
-<div class="pygments_murphy"><pre>% telnet gmail-smtp-in.l.google.com 25
+<div class="pygments_borland"><pre>% telnet gmail-smtp-in.l.google.com 25
 Trying 173.194.79.26...
 Connected to gmail-smtp-in.l.google.com.
 Escape character is &#39;^]&#39;.
@@ -185,7 +185,7 @@ Connection closed by foreign host.
 <p>上記は直接gmailのsmtpサーバで送信しましたが、mailコマンドからローカルのpostfix経由で送るにはpostfixを適切に設定する必要があります。</p>
 <p>MAIL FROMで使われるのはmyoriginの値になるようなので、送信だけでよいのであればmyoriginのIPが送信元のグローバルIPに一致するように設定しさえすればよいということですかね。</p>
 <p>ちなみに、debianのaptからpostfixを「ローカルのみ」の設定でインストールしてしまうと、デフォルトのmain.cfにリレーしない設定になっているので、main.cfを以下のようにコメントアウト。</p>
-<div class="pygments_murphy"><pre># default_transport = error
+<div class="pygments_borland"><pre># default_transport = error
 # relay_transport = error
 </pre></div>
 
@@ -233,12 +233,12 @@ Connection closed by foreign host.
 これを使うとターミナルの出力を簡単に色付けできます。</p>
 <h3 id="_1">インストール</h3>
 <p>現在(2013-02-19) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
-<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-rainbow)
+<div class="pygments_borland"><pre>(ql:quickload &#39;cl-rainbow)
 </pre></div>
 
 <h3 id="_2">使い方</h3>
 <p>以下のように使います。</p>
-<div class="pygments_murphy"><pre>(setf cl-rainbow:*enabled* t)
+<div class="pygments_borland"><pre>(setf cl-rainbow:*enabled* t)
 (print (cl-rainbow:color :red &quot;red string&quot;))
 (print (cl-rainbow:color #x5599ff &quot;rgb color code&quot;))
 (loop for c across &quot;RAINBOW&quot; do (format t &quot;~A&quot; (cl-rainbow:color (random #xffffff) c)))
@@ -292,12 +292,12 @@ Connection closed by foreign host.
 <p><a href="http://ltsv.org/">http://ltsv.org/</a></p>
 <h3 id="_1">インストール</h3>
 <p>現在(2013-02-18) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
-<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-ltsv)
+<div class="pygments_borland"><pre>(ql:quickload &#39;cl-ltsv)
 </pre></div>
 
 <h3 id="_2">使い方</h3>
 <p>以下のように使います。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (cl-ltsv:parse-line &quot;host:127.0.0.1    ident:- user:frank&quot;)
+<div class="pygments_borland"><pre>CL-USER&gt; (cl-ltsv:parse-line &quot;host:127.0.0.1    ident:- user:frank&quot;)
 ((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;frank&quot;))
 
 CL-USER&gt; (with-input-from-string (ss &quot;host:127.0.0.1    ident:- user:frank
@@ -360,7 +360,7 @@ CL-USER&gt; (cl-ltsv:alist-ltsv &#39;((&quot;host&quot; . &quot;127.0.0.1&quot;)
 <div class="blogbody">
   <p><img alt="lisp" src="/images/lisp-warinig-150.png" /></p>
 <p>sbclでdefconstantすると以下のようなエラーがおきたりおきなかったりして不思議に思っていた。</p>
-<div class="pygments_murphy"><pre>The constant CL-GEARMAN::+REQUEST-MAGIC+ is being redefined
+<div class="pygments_borland"><pre>The constant CL-GEARMAN::+REQUEST-MAGIC+ is being redefined
 (from #(0 82 69 81) to #(0 82 69 81))
    [Condition of type DEFCONSTANT-UNEQL]
 See also:

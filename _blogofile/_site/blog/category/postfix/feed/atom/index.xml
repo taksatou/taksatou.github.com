@@ -44,7 +44,7 @@
 <h2 id="_1">手順</h2>
 <h3 id="1-mx">1. 該当メールアドレスのMXレコードを調べる</h3>
 <p>普通のメールアドレスの@以下はドメイン名になっている場合がほとんどですが、DNSのAレコードに登録されているのはホスト名なのでメールサービスを提供しているホスト名を調べる必要があります。そのときに使うのがMXレコードで、nslookupでも以下のようにして調べることができます。</p>
-<div class="pygments_murphy"><pre>% nslookup -type=mx gmail.com
+<div class="pygments_borland"><pre>% nslookup -type=mx gmail.com
 Server:         192.168.1.1
 Address:        192.168.1.1#53
 
@@ -69,7 +69,7 @@ smtpプロトコルの詳細は省略しますが、最低限必要なコマン�
 <li>DATA - メール本体の開始。'.'(ピリオド)だけの行で本文終了。本文のFromとToはなんでもよい。普通のメーラのfromやtoで表示されるのはここの情報</li>
 <li>QUIT - 通信終了</li>
 </ul>
-<div class="pygments_murphy"><pre>% telnet gmail-smtp-in.l.google.com 25
+<div class="pygments_borland"><pre>% telnet gmail-smtp-in.l.google.com 25
 Trying 173.194.79.26...
 Connected to gmail-smtp-in.l.google.com.
 Escape character is &#39;^]&#39;.
@@ -99,7 +99,7 @@ Connection closed by foreign host.
 <p>上記は直接gmailのsmtpサーバで送信しましたが、mailコマンドからローカルのpostfix経由で送るにはpostfixを適切に設定する必要があります。</p>
 <p>MAIL FROMで使われるのはmyoriginの値になるようなので、送信だけでよいのであればmyoriginのIPが送信元のグローバルIPに一致するように設定しさえすればよいということですかね。</p>
 <p>ちなみに、debianのaptからpostfixを「ローカルのみ」の設定でインストールしてしまうと、デフォルトのmain.cfにリレーしない設定になっているので、main.cfを以下のようにコメントアウト。</p>
-<div class="pygments_murphy"><pre># default_transport = error
+<div class="pygments_borland"><pre># default_transport = error
 # relay_transport = error
 </pre></div>
 

@@ -139,7 +139,7 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
     <summary type="html"><![CDATA[twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2012/10/18/twitter-api-error/"><![CDATA[<p><img alt="twitter" src="/images/twitter-logo.png" /></p>
 <p>最近twitter apiをつかっているサービスで以下のようなエラーがでた。</p>
-<div class="pygments_murphy"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
+<div class="pygments_borland"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
 </pre></div>
 
 <p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。</p>
@@ -169,7 +169,7 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
     <content type="html" xml:base="http://mojavy.com/blog/2012/07/18/one-line-webserver/"><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
 起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
+<div class="pygments_borland"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
 </pre></div>
 
 <p>デフォルトポートは8000ですが、引数で指定することもできます。
@@ -178,11 +178,11 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
 <br>
 <br>
 でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
 <p>ポートを変更する場合は以下のようにします</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
 <h2 id="_1">参考</h2>

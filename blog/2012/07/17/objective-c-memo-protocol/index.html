@@ -13,7 +13,7 @@ objective-cのプロトコルとデリゲーションについてのメモ
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -133,7 +133,7 @@ href="/blog/feed/atom" />
 </ul>
 <h2 id="_1">例</h2>
 <h3 id="myprotocolh">myProtocol.h</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 
 <span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
 
@@ -144,7 +144,7 @@ href="/blog/feed/atom" />
 </pre></div>
 
 <h3 id="myprotocolimplh">myProtocolImpl.h</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
 <span class="cp">#import &quot;myProtocol.h&quot;</span>
 
 <span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
@@ -156,7 +156,7 @@ href="/blog/feed/atom" />
 </pre></div>
 
 <h3 id="myprotocolimplm">myProtocolImpl.m</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
 
 <span class="k">@implementation</span> <span class="nc">myProtocolImpl</span>
 

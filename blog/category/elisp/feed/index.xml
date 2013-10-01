@@ -27,7 +27,7 @@
 <p>といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。</p>
 <p>使い方は、<a href="https://github.com/taksatou/yaml-mode-ext">https://github.com/taksatou/yaml-mode-ext</a>からおとしてきてloadするだけです。
 (yaml-modeはあらかじめインストールしておく必要があります)</p>
-<div class="pygments_murphy"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
+<div class="pygments_borland"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
 </pre></div>
 
 <p>以下のキーバインドが使えます。</p>

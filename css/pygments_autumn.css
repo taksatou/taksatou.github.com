@@ -1,0 +1,59 @@
+.pygments_autumn .hll { background-color: #ffffcc }
+.pygments_autumn  { background: #ffffff; }
+.pygments_autumn .c { color: #aaaaaa; font-style: italic } /* Comment */
+.pygments_autumn .err { color: #F00000; background-color: #F0A0A0 } /* Error */
+.pygments_autumn .k { color: #0000aa } /* Keyword */
+.pygments_autumn .cm { color: #aaaaaa; font-style: italic } /* Comment.Multiline */
+.pygments_autumn .cp { color: #4c8317 } /* Comment.Preproc */
+.pygments_autumn .c1 { color: #aaaaaa; font-style: italic } /* Comment.Single */
+.pygments_autumn .cs { color: #0000aa; font-style: italic } /* Comment.Special */
+.pygments_autumn .gd { color: #aa0000 } /* Generic.Deleted */
+.pygments_autumn .ge { font-style: italic } /* Generic.Emph */
+.pygments_autumn .gr { color: #aa0000 } /* Generic.Error */
+.pygments_autumn .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.pygments_autumn .gi { color: #00aa00 } /* Generic.Inserted */
+.pygments_autumn .go { color: #888888 } /* Generic.Output */
+.pygments_autumn .gp { color: #555555 } /* Generic.Prompt */
+.pygments_autumn .gs { font-weight: bold } /* Generic.Strong */
+.pygments_autumn .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.pygments_autumn .gt { color: #aa0000 } /* Generic.Traceback */
+.pygments_autumn .kc { color: #0000aa } /* Keyword.Constant */
+.pygments_autumn .kd { color: #0000aa } /* Keyword.Declaration */
+.pygments_autumn .kn { color: #0000aa } /* Keyword.Namespace */
+.pygments_autumn .kp { color: #0000aa } /* Keyword.Pseudo */
+.pygments_autumn .kr { color: #0000aa } /* Keyword.Reserved */
+.pygments_autumn .kt { color: #00aaaa } /* Keyword.Type */
+.pygments_autumn .m { color: #009999 } /* Literal.Number */
+.pygments_autumn .s { color: #aa5500 } /* Literal.String */
+.pygments_autumn .na { color: #1e90ff } /* Name.Attribute */
+.pygments_autumn .nb { color: #00aaaa } /* Name.Builtin */
+.pygments_autumn .nc { color: #00aa00; text-decoration: underline } /* Name.Class */
+.pygments_autumn .no { color: #aa0000 } /* Name.Constant */
+.pygments_autumn .nd { color: #888888 } /* Name.Decorator */
+.pygments_autumn .ni { color: #800000; font-weight: bold } /* Name.Entity */
+.pygments_autumn .nf { color: #00aa00 } /* Name.Function */
+.pygments_autumn .nn { color: #00aaaa; text-decoration: underline } /* Name.Namespace */
+.pygments_autumn .nt { color: #1e90ff; font-weight: bold } /* Name.Tag */
+.pygments_autumn .nv { color: #aa0000 } /* Name.Variable */
+.pygments_autumn .ow { color: #0000aa } /* Operator.Word */
+.pygments_autumn .w { color: #bbbbbb } /* Text.Whitespace */
+.pygments_autumn .mf { color: #009999 } /* Literal.Number.Float */
+.pygments_autumn .mh { color: #009999 } /* Literal.Number.Hex */
+.pygments_autumn .mi { color: #009999 } /* Literal.Number.Integer */
+.pygments_autumn .mo { color: #009999 } /* Literal.Number.Oct */
+.pygments_autumn .sb { color: #aa5500 } /* Literal.String.Backtick */
+.pygments_autumn .sc { color: #aa5500 } /* Literal.String.Char */
+.pygments_autumn .sd { color: #aa5500 } /* Literal.String.Doc */
+.pygments_autumn .s2 { color: #aa5500 } /* Literal.String.Double */
+.pygments_autumn .se { color: #aa5500 } /* Literal.String.Escape */
+.pygments_autumn .sh { color: #aa5500 } /* Literal.String.Heredoc */
+.pygments_autumn .si { color: #aa5500 } /* Literal.String.Interpol */
+.pygments_autumn .sx { color: #aa5500 } /* Literal.String.Other */
+.pygments_autumn .sr { color: #009999 } /* Literal.String.Regex */
+.pygments_autumn .s1 { color: #aa5500 } /* Literal.String.Single */
+.pygments_autumn .ss { color: #0000aa } /* Literal.String.Symbol */
+.pygments_autumn .bp { color: #00aaaa } /* Name.Builtin.Pseudo */
+.pygments_autumn .vc { color: #aa0000 } /* Name.Variable.Class */
+.pygments_autumn .vg { color: #aa0000 } /* Name.Variable.Global */
+.pygments_autumn .vi { color: #aa0000 } /* Name.Variable.Instance */
+.pygments_autumn .il { color: #009999 } /* Literal.Number.Integer.Long */

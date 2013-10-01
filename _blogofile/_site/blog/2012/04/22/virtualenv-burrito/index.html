@@ -13,7 +13,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -116,25 +116,25 @@ href="/blog/feed/atom" />
   <p><img alt="python" src="/images/python-logo.gif" /></p>
 <p>pythonではvirtualenvというユーティリティを使って複数の環境を切り替えることができます。しかしvirtualenvはセットアップがちょっとわかりにくかったりバージョンによってはこけたりしていまいち使いこなせていませんでした。久し振りにブログを書くついでにpython環境を再構築しようと思って調べたところ、<a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a> というのが使いやすかったので紹介します。これを使えば非常に簡単にpython環境を整えることができます。</p>
 <h1 id="_1">インストール</h1>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
 </pre></div>
 
 <p>として再ログインするだけです。勝手にパスやシェルの補完設定もしてくれます。</p>
 <h1 id="_2">使い方</h1>
 <p>新しい環境の構築は、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>mkvirtualenv newname
+<div class="pygments_borland"><pre><span class="nv">$ </span>mkvirtualenv newname
 </pre></div>
 
 <p><br></p>
 <p>環境の切り替えは、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>workon newname
+<div class="pygments_borland"><pre><span class="nv">$ </span>workon newname
 <span class="nv">$ </span><span class="c"># or</span>
 <span class="nv">$ </span>workon 2.7
 </pre></div>
 
 <p><br></p>
 <p>不要な環境の削除は、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>rmvirtualenv newname
+<div class="pygments_borland"><pre><span class="nv">$ </span>rmvirtualenv newname
 </pre></div>
 
 <p><br></p>
@@ -147,7 +147,7 @@ href="/blog/feed/atom" />
 <li>python3だとうごきません。python3環境が作れないという意味ではなく、デフォルトパスのpythonバージョンが3だとvirtualenv-burritoのセットアップ途中でこけます。その場合はpython2系をつかってください。</li>
 <li>pipのインストールでこける場合があります。その場合は以下のようなコマンドで回避できます。 <a href="https://github.com/brainsik/virtualenv-burrito/issues/16">(参考)</a></li>
 </ul>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
+<div class="pygments_borland"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
 <span class="nv">$ </span>mkvirtualenv -p <span class="k">$(</span>which python3.2<span class="k">)</span> --distribute py32
 </pre></div>
 

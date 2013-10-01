@@ -41,7 +41,7 @@
 <h2 id="_1">インストール</h2>
 <p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
 <p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
-<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
+<div class="pygments_borland"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
 git clone https://github.com/taksatou/cl-gearman.git
 </pre></div>
 
@@ -49,7 +49,7 @@ git clone https://github.com/taksatou/cl-gearman.git
 <p>以下サンプルコードです</p>
 <h3 id="client">client</h3>
 <p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+<div class="pygments_borland"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
            (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
            (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
 hello
@@ -59,7 +59,7 @@ NIL
 
 <p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
 そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+<div class="pygments_borland"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
            (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
                   (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
                   (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
@@ -91,7 +91,7 @@ NIL
 <p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
 ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
 返り値はprincでフォーマットした文字列としてclientに渡されます。workを実行するとジョブが割り当てられるまでブロックし、1つのジョブの実行が完了すると戻ります。</p>
-<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
+<div class="pygments_borland"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
   (cl-gearman:add-ability worker &quot;hello&quot;
                           #&#39;(lambda (arg job) &quot;hello&quot;))
 
@@ -110,7 +110,7 @@ NIL
 <p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
 workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
 <p>例えば、</p>
-<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
+<div class="pygments_borland"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
   (cl-gearman:add-ability worker &quot;error&quot;
                           #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
 

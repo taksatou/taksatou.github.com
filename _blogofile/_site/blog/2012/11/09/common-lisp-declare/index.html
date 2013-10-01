@@ -13,7 +13,7 @@ Common Lispのdeclareについて
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -117,18 +117,18 @@ href="/blog/feed/atom" />
 <p>Common Lispのdeclareについて調べた。
 変数の型や式に関することをコンパイラに伝えてやるために使うものらしい。</p>
 <p>例えば、</p>
-<div class="pygments_murphy"><pre>(defun add (x y) (+ x y))
+<div class="pygments_borland"><pre>(defun add (x y) (+ x y))
 </pre></div>
 
 <p>は</p>
-<div class="pygments_murphy"><pre>(defun add (x y)
+<div class="pygments_borland"><pre>(defun add (x y)
   (declare (fixnum x y))
   (the fixnum (+ x y)))
 </pre></div>
 
 <p>とすれば、引数と戻り値の型を指定できる。</p>
 <p>さらに、</p>
-<div class="pygments_murphy"><pre>(defun add (x y)
+<div class="pygments_borland"><pre>(defun add (x y)
   (declare (optimize (speed 3) (safety 0)))
   (declare (fixnum x y))
   (the fixnum (+ x y)))
@@ -138,7 +138,7 @@ href="/blog/feed/atom" />
 <p>ためしにdisassembleしてみた。処理系はsbcl 1.0.55.0。</p>
 <p>最初のバージョンは以下のようになった。すでにある程度最適化されてる？
 LEA(load effective address)命令は、srcオペランドのアドレスを計算し、そのアドレスをdestオペランドにロードするというものらしい。<a href="http://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/%E3%83%87%E3%83%BC%E3%82%BF%E8%BB%A2%E9%80%81%E5%91%BD%E4%BB%A4">(参考)</a></p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y) (+ x y))
+<div class="pygments_borland"><pre>CL-USER&gt; (defun add (x y) (+ x y))
 
 CL-USER&gt; (disassemble #&#39;add)
 ; disassembly for ADD
@@ -158,7 +158,7 @@ CL-USER&gt; (disassemble #&#39;add)
 </pre></div>
 
 <p>2番目の、型だけを宣言したものは以下のようになった。うーむ、確かに型チェックっぽいコードは増えてるが速くなってるわけではなさそうな感じ。あとで調べる。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
+<div class="pygments_borland"><pre>CL-USER&gt; (defun add (x y)
            (declare (fixnum x y))
            (the fixnum (+ x y)))
 
@@ -204,7 +204,7 @@ CL-USER&gt; (disassemble #&#39;add)
 </pre></div>
 
 <p>最後の最適化の宣言をつけたものは以下のようになった。たしかに速そうにはなった。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
+<div class="pygments_borland"><pre>CL-USER&gt; (defun add (x y)
            (declare (optimize (speed 3) (safety 0)))
            (declare (fixnum x y))
            (the fixnum (+ x y)))
@@ -219,13 +219,13 @@ CL-USER&gt; (disassemble #&#39;add)
 </pre></div>
 
 <p>ついでにCで書いた以下の関数もdisassebleしてみた。</p>
-<div class="pygments_murphy"><pre><span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+<div class="pygments_borland"><pre><span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 
 <p><code>cc -c a.c &amp;&amp; objdump -d a.o</code> とすると、</p>
-<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
+<div class="pygments_borland"><pre>a.o:     file format elf64-x86-64
 
 Disassembly of section .text:
 
@@ -242,7 +242,7 @@ Disassembly of section .text:
 </pre></div>
 
 <p><code>cc -O3 -c a.c &amp;&amp; objdump -d a.o</code> なら、</p>
-<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
+<div class="pygments_borland"><pre>a.o:     file format elf64-x86-64
 
 Disassembly of section .text:
 

@@ -32,12 +32,12 @@
 <p><a href="http://ltsv.org/">http://ltsv.org/</a></p>
 <h3 id="_1">インストール</h3>
 <p>現在(2013-02-18) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
-<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-ltsv)
+<div class="pygments_borland"><pre>(ql:quickload &#39;cl-ltsv)
 </pre></div>
 
 <h3 id="_2">使い方</h3>
 <p>以下のように使います。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (cl-ltsv:parse-line &quot;host:127.0.0.1    ident:- user:frank&quot;)
+<div class="pygments_borland"><pre>CL-USER&gt; (cl-ltsv:parse-line &quot;host:127.0.0.1    ident:- user:frank&quot;)
 ((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;frank&quot;))
 
 CL-USER&gt; (with-input-from-string (ss &quot;host:127.0.0.1    ident:- user:frank

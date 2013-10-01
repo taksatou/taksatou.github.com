@@ -50,7 +50,7 @@
     <category scheme="http://mojavy.com/blog" term="ruby" />
     <summary type="html"><![CDATA[chef soloでAuthenticationFailedといわれたときの対応]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/"><![CDATA[<p>公開鍵認証なホストに対してパスフレーズ入力無しでsshログインができるにもかかわらず、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>knife solo cook myhost
+<div class="pygments_borland"><pre><span class="nv">$ </span>knife solo cook myhost
 Running Chef on myhost...
 Checking Chef version...
 Enter the password <span class="k">for </span>username@myhost:
@@ -67,7 +67,7 @@ ERROR: Net::SSH::AuthenticationFailed: username
 <p>それなのに<code>AuthenticationFailed</code>失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
 これを回避するには、ssh_configで<code>PubkeyAuthentication yes</code>を明示すればよい。</p>
 <p>なお、<code>Net::SSH</code>がどのような動きをしているかは以下のスニペットを試すとよい。</p>
-<div class="pygments_murphy"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
+<div class="pygments_borland"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
 <span class="no">Net</span><span class="o">::</span><span class="no">SSH</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s2">&quot;myhost&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="ss">:verbose</span> <span class="o">=&gt;</span> <span class="ss">:debug</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">p</span> <span class="n">x</span> <span class="p">}</span>
 </pre></div>
 

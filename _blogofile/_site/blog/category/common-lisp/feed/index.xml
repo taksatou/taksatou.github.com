@@ -29,12 +29,12 @@
 これを使うとターミナルの出力を簡単に色付けできます。</p>
 <h3 id="_1">インストール</h3>
 <p>現在(2013-02-19) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
-<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-rainbow)
+<div class="pygments_borland"><pre>(ql:quickload &#39;cl-rainbow)
 </pre></div>
 
 <h3 id="_2">使い方</h3>
 <p>以下のように使います。</p>
-<div class="pygments_murphy"><pre>(setf cl-rainbow:*enabled* t)
+<div class="pygments_borland"><pre>(setf cl-rainbow:*enabled* t)
 (print (cl-rainbow:color :red &quot;red string&quot;))
 (print (cl-rainbow:color #x5599ff &quot;rgb color code&quot;))
 (loop for c across &quot;RAINBOW&quot; do (format t &quot;~A&quot; (cl-rainbow:color (random #xffffff) c)))
@@ -62,12 +62,12 @@
 <p><a href="http://ltsv.org/">http://ltsv.org/</a></p>
 <h3 id="_1">インストール</h3>
 <p>現在(2013-02-18) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
-<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-ltsv)
+<div class="pygments_borland"><pre>(ql:quickload &#39;cl-ltsv)
 </pre></div>
 
 <h3 id="_2">使い方</h3>
 <p>以下のように使います。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (cl-ltsv:parse-line &quot;host:127.0.0.1    ident:- user:frank&quot;)
+<div class="pygments_borland"><pre>CL-USER&gt; (cl-ltsv:parse-line &quot;host:127.0.0.1    ident:- user:frank&quot;)
 ((&quot;host&quot; . &quot;127.0.0.1&quot;) (&quot;ident&quot; . &quot;-&quot;) (&quot;user&quot; . &quot;frank&quot;))
 
 CL-USER&gt; (with-input-from-string (ss &quot;host:127.0.0.1    ident:- user:frank
@@ -103,7 +103,7 @@ CL-USER&gt; (cl-ltsv:alist-ltsv &#39;((&quot;host&quot; . &quot;127.0.0.1&quot;)
       <description>common lispのdefconstantについての注意点</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-warinig-150.png" /></p>
 <p>sbclでdefconstantすると以下のようなエラーがおきたりおきなかったりして不思議に思っていた。</p>
-<div class="pygments_murphy"><pre>The constant CL-GEARMAN::+REQUEST-MAGIC+ is being redefined
+<div class="pygments_borland"><pre>The constant CL-GEARMAN::+REQUEST-MAGIC+ is being redefined
 (from #(0 82 69 81) to #(0 82 69 81))
    [Condition of type DEFCONSTANT-UNEQL]
 See also:
@@ -175,7 +175,7 @@ each time -- so you can't use VECTOR or #(...) for the value).</p>
 <h2 id="_1">インストール</h2>
 <p>まだquicklispに登録されていないので、githubからソースコードをダウンロードして下さい。(後日申請予定)</p>
 <p><a href="https://github.com/taksatou/cl-gearman">https://github.com/taksatou/cl-gearman</a></p>
-<div class="pygments_murphy"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
+<div class="pygments_borland"><pre><span class="nb">cd</span> ~/quicklisp/local-projects
 git clone https://github.com/taksatou/cl-gearman.git
 </pre></div>
 
@@ -183,7 +183,7 @@ git clone https://github.com/taksatou/cl-gearman.git
 <p>以下サンプルコードです</p>
 <h3 id="client">client</h3>
 <p>submit-jobはjob serverにジョブを送信し、workerがそれを完了するまで待機します。workerが処理を完了するとその返り値が文字列で返されます。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+<div class="pygments_borland"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
            (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;hello&quot;))
            (format t &quot;~a~%&quot; (cl-gearman:submit-job client &quot;echo&quot; :arg &quot;foo)))
 hello
@@ -193,7 +193,7 @@ NIL
 
 <p>以下のようにしてバックグランドでジョブを実行することもできます。バックグランドでジョブを実行するとjobオブジェクトが即座に返されます。
 そのjobオブジェクトをつかって、ジョブのステータスを取得することができます。以下の例では見辛いですが、priorityを付けることでジョブの実行順を多少は制御できます。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
+<div class="pygments_borland"><pre>CL-USER&gt; (cl-gearman:with-client (client &quot;localhost:4730&quot;)
            (let* ((job1 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot;))
                   (job2 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :low))
                   (job3 (cl-gearman:submit-background-job client &quot;sleep&quot; :arg &quot;1&quot; :priority :high))
@@ -225,7 +225,7 @@ NIL
 <p>workerはadd-abilityで実行できるジョブとそのハンドラをあらかじめ登録する必要があります。
 ハンドラは2つの引数をとる関数で、第一引数はclientからのデータ、第二引数はjobオブジェクトです。
 返り値はprincでフォーマットした文字列としてclientに渡されます。workを実行するとジョブが割り当てられるまでブロックし、1つのジョブの実行が完了すると戻ります。</p>
-<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
+<div class="pygments_borland"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;)
   (cl-gearman:add-ability worker &quot;hello&quot;
                           #&#39;(lambda (arg job) &quot;hello&quot;))
 
@@ -244,7 +244,7 @@ NIL
 <p>ジョブキューを使う上で悩ましいことの一つはエラー処理だと思いますが、Common Lispのコンディションシステムを使えば柔軟に対応できます。
 workerのハンドラでは、skip-job, abort-job, retry-job の3パターンのリトライをサポートしています。</p>
 <p>例えば、</p>
-<div class="pygments_murphy"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
+<div class="pygments_borland"><pre>(cl-gearman:with-worker (worker &quot;localhost:4730&quot;) 
   (cl-gearman:add-ability worker &quot;error&quot;
                           #&#39;(lambda (arg job) (error &quot;something wrong&quot;)))
 
@@ -293,18 +293,18 @@ abort-jobはclientに失敗を通知します。retry-jobは名前の通りハ�
 <p>Common Lispのdeclareについて調べた。
 変数の型や式に関することをコンパイラに伝えてやるために使うものらしい。</p>
 <p>例えば、</p>
-<div class="pygments_murphy"><pre>(defun add (x y) (+ x y))
+<div class="pygments_borland"><pre>(defun add (x y) (+ x y))
 </pre></div>
 
 <p>は</p>
-<div class="pygments_murphy"><pre>(defun add (x y)
+<div class="pygments_borland"><pre>(defun add (x y)
   (declare (fixnum x y))
   (the fixnum (+ x y)))
 </pre></div>
 
 <p>とすれば、引数と戻り値の型を指定できる。</p>
 <p>さらに、</p>
-<div class="pygments_murphy"><pre>(defun add (x y)
+<div class="pygments_borland"><pre>(defun add (x y)
   (declare (optimize (speed 3) (safety 0)))
   (declare (fixnum x y))
   (the fixnum (+ x y)))
@@ -314,7 +314,7 @@ abort-jobはclientに失敗を通知します。retry-jobは名前の通りハ�
 <p>ためしにdisassembleしてみた。処理系はsbcl 1.0.55.0。</p>
 <p>最初のバージョンは以下のようになった。すでにある程度最適化されてる？
 LEA(load effective address)命令は、srcオペランドのアドレスを計算し、そのアドレスをdestオペランドにロードするというものらしい。<a href="http://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/%E3%83%87%E3%83%BC%E3%82%BF%E8%BB%A2%E9%80%81%E5%91%BD%E4%BB%A4">(参考)</a></p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y) (+ x y))
+<div class="pygments_borland"><pre>CL-USER&gt; (defun add (x y) (+ x y))
 
 CL-USER&gt; (disassemble #&#39;add)
 ; disassembly for ADD
@@ -334,7 +334,7 @@ CL-USER&gt; (disassemble #&#39;add)
 </pre></div>
 
 <p>2番目の、型だけを宣言したものは以下のようになった。うーむ、確かに型チェックっぽいコードは増えてるが速くなってるわけではなさそうな感じ。あとで調べる。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
+<div class="pygments_borland"><pre>CL-USER&gt; (defun add (x y)
            (declare (fixnum x y))
            (the fixnum (+ x y)))
 
@@ -380,7 +380,7 @@ CL-USER&gt; (disassemble #&#39;add)
 </pre></div>
 
 <p>最後の最適化の宣言をつけたものは以下のようになった。たしかに速そうにはなった。</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (defun add (x y)
+<div class="pygments_borland"><pre>CL-USER&gt; (defun add (x y)
            (declare (optimize (speed 3) (safety 0)))
            (declare (fixnum x y))
            (the fixnum (+ x y)))
@@ -395,13 +395,13 @@ CL-USER&gt; (disassemble #&#39;add)
 </pre></div>
 
 <p>ついでにCで書いた以下の関数もdisassebleしてみた。</p>
-<div class="pygments_murphy"><pre><span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+<div class="pygments_borland"><pre><span class="kt">int</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 
 <p><code>cc -c a.c &amp;&amp; objdump -d a.o</code> とすると、</p>
-<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
+<div class="pygments_borland"><pre>a.o:     file format elf64-x86-64
 
 Disassembly of section .text:
 
@@ -418,7 +418,7 @@ Disassembly of section .text:
 </pre></div>
 
 <p><code>cc -O3 -c a.c &amp;&amp; objdump -d a.o</code> なら、</p>
-<div class="pygments_murphy"><pre>a.o:     file format elf64-x86-64
+<div class="pygments_borland"><pre>a.o:     file format elf64-x86-64
 
 Disassembly of section .text:
 
@@ -444,7 +444,7 @@ Disassembly of section .text:
 <p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
 <p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
 <p>最初は以下のように書いて、</p>
-<div class="pygments_murphy"><pre>(let ((_n (parse-integer (read-line)))
+<div class="pygments_borland"><pre>(let ((_n (parse-integer (read-line)))
       (lis ()))
   (dotimes (i _n)
     (push (parse-integer (read-line)) lis))
@@ -453,14 +453,14 @@ Disassembly of section .text:
 </pre></div>
 
 <p>以下の用にして時間を測ったところ</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.19s user 0.01s system 91% cpu 1.311 total
 sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938 total
 </pre></div>
 
 <p>ローカルだと3.42s程度だった。codechef上での制限は5secなのでセーフかと思ったけどTime Limit Exceededだった。</p>
 <p>そこで、vectorを使うように改良</p>
-<div class="pygments_murphy"><pre>(let* ((_n (parse-integer (read-line)))
+<div class="pygments_borland"><pre>(let* ((_n (parse-integer (read-line)))
        (lis (make-array _n :fill-pointer 0)))
   (dotimes (i _n)
     (vector-push (parse-integer (read-line)) lis))
@@ -468,14 +468,14 @@ sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938
   (loop for i across lis do (format t &quot;~a~%&quot; i)))
 </pre></div>
 
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.21s user 0.01s system 94% cpu 1.289 total
 sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137 total
 </pre></div>
 
 <p>若干改善されたが、まだTime Limit Exceededだった。</p>
 <p>read-sequenceで読み込んだほうが早いかと思って以下のように書いてみた。</p>
-<div class="pygments_murphy"><pre>(defun parse-input (str)
+<div class="pygments_borland"><pre>(defun parse-input (str)
   (loop
      for i = 0 then (+ 1 j)
      as j = (position #\Newline str :start i)
@@ -493,7 +493,7 @@ sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137
   (loop for i in nums do (format t &quot;~a~%&quot; i)))
 </pre></div>
 
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.13s user 0.01s system 97% cpu 1.159 total
 sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297 total
 </pre></div>
@@ -502,7 +502,7 @@ sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297
 あと、<code>#'(lambda (x y) (&lt; x y))</code>の部分を <code>#'&lt;</code>にするとなぜか遅くなる。</p>
 <p><a href="http://www.codechef.com/status/TSORT?language=31&amp;status=All&amp;handle=&amp;sort_by=All&amp;sorting_order=asc&amp;Submit=GO">まだ誰もlispではパスしてない模様。</a>こういうのをもっと高速に書く方法あるのだろうか。</p>
 <p>ちなみにCだと余裕。ローカルだと0.2秒くらいだけどリモートでは3秒くらいかかってた。そもそもCodeChefの実行環境がしょぼすぎる疑惑が。。</p>
-<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
 <span class="cp">#include &lt;stdlib.h&gt;</span>
 
 <span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
@@ -523,7 +523,7 @@ sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297
     <span class="p">}</span>
 </pre></div>
 
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  0.99s user 0.01s system 99% cpu 1.006 total
 ./a.out &gt; /dev/null  0.18s user 0.01s system 17% cpu 1.116 total
 </pre></div>]]></content:encoded>
@@ -546,7 +546,7 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
 <script src="https://gist.github.com/3899653.js"> </script>
 
 <p>これをZeroMQのtarを展開してできたディレクトリにbuild.shとかで保存して実行すると、armv7とi386に対応したlibzmq.aができる。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
+<div class="pygments_borland"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
 <span class="nv">$ </span><span class="nb">cd </span>zeromq-2.2.0
 <span class="nv">$ </span>./build.sh
 <span class="nv">$ </span>file libzmq.a
@@ -562,7 +562,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 チャットでの発言はREQ/REPを用いてアプリ→サーバに渡し、PUB/SUBを用いてサーバ→アプリにブロードキャストする。</p>
 <h2 id="_1">サーバ側</h2>
 <p>サーバ側はCommon Lispで実装した。単に、rep-sockから発言を受け取ってpub-sockにそのまま流すだけ。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
 (defun pull-and-publish ()
@@ -587,7 +587,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <h2 id="_2">アプリ側</h2>
 <p><a href="https://github.com/jeremy-w/objc-zmq">objective-c版ZeroMQ</a>もあるけど、今回はそのままCのAPIを利用した。
 以下はソースの抜粋。</p>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
 <span class="cp">#import &quot;include/zmq.h&quot;</span>
 
 <span class="k">@interface</span> <span class="nc">ChatViewController</span> <span class="p">()</span> <span class="p">{</span>
@@ -714,7 +714,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <li>上記ソースはUITableViewControllerで発言を表示する想定になっているが、UIまわりのコードは省略</li>
 </ul>
 <h2 id="common-lisp">オマケ(Common Lisp版コマンドライン用チャットクライアント)</h2>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 (ql:quickload :bordeaux-threads)
 
@@ -778,7 +778,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <li><a href="http://www.quicklisp.org/beta/">Quicklisp</a></li>
 <li><a href="http://modern-cl.blogspot.jp/2011/03/quicklisp.html">第2回 Quicklispによるライブラリ環境</a></li>
 </ul>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
+<div class="pygments_borland"><pre><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
 <span class="nv">$ </span>sbcl
 <span class="o">(</span>load <span class="s2">&quot;quicklisp.lisp&quot;</span><span class="o">)</span>
 <span class="o">(</span>quicklisp-quickstart:install :path <span class="s2">&quot;.quicklisp/&quot;</span><span class="o">)</span>
@@ -787,11 +787,11 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 
 <p>※ (quicklisp-quickstart:install :path ".quicklisp/") のパスで最後のスラッシュは省略不可</p>
 <h1 id="2-cl-zmq">2. cl-zmqのインストール</h1>
-<div class="pygments_murphy"><pre>(ql:quickload :zeromq)
+<div class="pygments_borland"><pre>(ql:quickload :zeromq)
 </pre></div>
 
 <p>ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。ld.so.confにzeromqをインストールしたディレクトリがはいってることを確認して、sudo ldconfig すればちゃんとロードされるはず。</p>
-<div class="pygments_murphy"><pre>debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread
+<div class="pygments_borland"><pre>debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread
 <span class="c">#&lt;THREAD &quot;initial thread&quot; RUNNING {10029990A3}&gt;:</span>
   Unable to load any of the alternatives:
    <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">)</span>
@@ -817,13 +817,13 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
 </pre></div>
 
 <p>以下のようにしてライブラリのパスを設定してやっても回避はできるがおすすめしない。</p>
-<div class="pygments_murphy"><pre>(pushnew &quot;/path/to/lib/&quot; *foreign-library-directories*)
+<div class="pygments_borland"><pre>(pushnew &quot;/path/to/lib/&quot; *foreign-library-directories*)
 </pre></div>
 
 <p><a href="http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html">http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html</a></p>
 <h1 id="3">3. サーバ側起動</h1>
 <p><a href="http://www.cliki.net/cl-zmq">cl-zmq</a> のサンプルコード参考に以下のようなエコーサーバを書いた。これをserver.lispに保存して、 sbcl --script server.lisp で実行。ちなみに、127.0.0.1:5555 の部分をlocalhost:5555のように書くとNo such deviceといわれる。 (参考 <a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a> )</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
 (defun server ()
@@ -842,7 +842,7 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
 
 <h1 id="4">4. クライアント側起動</h1>
 <p>こちらも同様に以下をclient.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
 (defun client ()
@@ -879,7 +879,7 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
       <description>sbclでクラスのスロット一覧を取得する方法</description>
       <content:encoded><![CDATA[<p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
 <p>メモメモ</p>
-<div class="pygments_murphy"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
+<div class="pygments_borland"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
 (#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;
  #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::INO&gt;
  #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::DEV&gt;

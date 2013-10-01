@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -121,7 +121,7 @@ href="/blog/feed/atom" />
 <script src="https://gist.github.com/3899653.js"> </script>
 
 <p>これをZeroMQのtarを展開してできたディレクトリにbuild.shとかで保存して実行すると、armv7とi386に対応したlibzmq.aができる。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
+<div class="pygments_borland"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
 <span class="nv">$ </span><span class="nb">cd </span>zeromq-2.2.0
 <span class="nv">$ </span>./build.sh
 <span class="nv">$ </span>file libzmq.a
@@ -137,7 +137,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 チャットでの発言はREQ/REPを用いてアプリ→サーバに渡し、PUB/SUBを用いてサーバ→アプリにブロードキャストする。</p>
 <h2 id="_1">サーバ側</h2>
 <p>サーバ側はCommon Lispで実装した。単に、rep-sockから発言を受け取ってpub-sockにそのまま流すだけ。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
 (defun pull-and-publish ()
@@ -162,7 +162,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <h2 id="_2">アプリ側</h2>
 <p><a href="https://github.com/jeremy-w/objc-zmq">objective-c版ZeroMQ</a>もあるけど、今回はそのままCのAPIを利用した。
 以下はソースの抜粋。</p>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
 <span class="cp">#import &quot;include/zmq.h&quot;</span>
 
 <span class="k">@interface</span> <span class="nc">ChatViewController</span> <span class="p">()</span> <span class="p">{</span>
@@ -289,7 +289,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <li>上記ソースはUITableViewControllerで発言を表示する想定になっているが、UIまわりのコードは省略</li>
 </ul>
 <h2 id="common-lisp">オマケ(Common Lisp版コマンドライン用チャットクライアント)</h2>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 (ql:quickload :bordeaux-threads)
 
@@ -378,7 +378,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <li><a href="http://www.quicklisp.org/beta/">Quicklisp</a></li>
 <li><a href="http://modern-cl.blogspot.jp/2011/03/quicklisp.html">第2回 Quicklispによるライブラリ環境</a></li>
 </ul>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
+<div class="pygments_borland"><pre><span class="nv">$ </span>curl -O http://beta.quicklisp.org/quicklisp.lisp
 <span class="nv">$ </span>sbcl
 <span class="o">(</span>load <span class="s2">&quot;quicklisp.lisp&quot;</span><span class="o">)</span>
 <span class="o">(</span>quicklisp-quickstart:install :path <span class="s2">&quot;.quicklisp/&quot;</span><span class="o">)</span>
@@ -387,11 +387,11 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 
 <p>※ (quicklisp-quickstart:install :path ".quicklisp/") のパスで最後のスラッシュは省略不可</p>
 <h1 id="2-cl-zmq">2. cl-zmqのインストール</h1>
-<div class="pygments_murphy"><pre>(ql:quickload :zeromq)
+<div class="pygments_borland"><pre>(ql:quickload :zeromq)
 </pre></div>
 
 <p>ここで以下のようなエラーがでる場合はzeromqのインストールができていないか、ld.so.confに問題がある。ld.so.confにzeromqをインストールしたディレクトリがはいってることを確認して、sudo ldconfig すればちゃんとロードされるはず。</p>
-<div class="pygments_murphy"><pre>debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread
+<div class="pygments_borland"><pre>debugger invoked on a LOAD-FOREIGN-LIBRARY-ERROR in thread
 <span class="c">#&lt;THREAD &quot;initial thread&quot; RUNNING {10029990A3}&gt;:</span>
   Unable to load any of the alternatives:
    <span class="o">(</span><span class="s2">&quot;libzmq.so.0.0.0&quot;</span> <span class="s2">&quot;libzmq.so&quot;</span><span class="o">)</span>
@@ -417,13 +417,13 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
 </pre></div>
 
 <p>以下のようにしてライブラリのパスを設定してやっても回避はできるがおすすめしない。</p>
-<div class="pygments_murphy"><pre>(pushnew &quot;/path/to/lib/&quot; *foreign-library-directories*)
+<div class="pygments_borland"><pre>(pushnew &quot;/path/to/lib/&quot; *foreign-library-directories*)
 </pre></div>
 
 <p><a href="http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html">http://common-lisp.net/project/cffi/manual/html_node/_002aforeign_002dlibrary_002ddirectories_002a.html</a></p>
 <h1 id="3">3. サーバ側起動</h1>
 <p><a href="http://www.cliki.net/cl-zmq">cl-zmq</a> のサンプルコード参考に以下のようなエコーサーバを書いた。これをserver.lispに保存して、 sbcl --script server.lisp で実行。ちなみに、127.0.0.1:5555 の部分をlocalhost:5555のように書くとNo such deviceといわれる。 (参考 <a href="http://stackoverflow.com/questions/6024003/why-doesnt-zeromq-work-on-localhost">Why doesn't zeromq work on localhost?</a> )</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
 (defun server ()
@@ -442,7 +442,7 @@ restarts <span class="o">(</span>invokable by number or by possibly-abbreviated 
 
 <h1 id="4">4. クライアント側起動</h1>
 <p>こちらも同様に以下をclient.lispに保存して、sbcl --script client.lispで実行。うまくいけばサーバ側からレスポンスが返ってくる。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
 (defun client ()

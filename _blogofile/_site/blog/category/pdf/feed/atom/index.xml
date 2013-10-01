@@ -29,7 +29,7 @@
     <summary type="html"><![CDATA[UbuntuでPDFの日本語フォントが表示できないときの対処メモ]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/"><![CDATA[<p><img alt="ubuntu" src="/images/ubuntu-logo.png" /></p>
 <p>Ubuntu 12.04 で日本語フォントのはいったpdfを開くと、日本語の部分が空白になって以下のようなエラーログが表示されてしまっていた。</p>
-<div class="pygments_murphy"><pre>Error <span class="o">(</span>13373<span class="o">)</span>: No font in show/space
+<div class="pygments_borland"><pre>Error <span class="o">(</span>13373<span class="o">)</span>: No font in show/space
 Error <span class="o">(</span>13412<span class="o">)</span>: No font in show/space
 Error <span class="o">(</span>13497<span class="o">)</span>: No font in show/space
 Error <span class="o">(</span>13515<span class="o">)</span>: No font in show
@@ -50,7 +50,7 @@ Error: Unknown font tag <span class="s1">&#39;C0_1&#39;</span>
 
 <p>pdfビューワはDocument Viewerでもokularでも同様だった。</p>
 <p>そこで、<a href="https://forums.ubuntulinux.jp/viewtopic.php?id=8281">このあたり</a>を参考に、</p>
-<div class="pygments_murphy"><pre>sudo apt-get install poppler-data
+<div class="pygments_borland"><pre>sudo apt-get install poppler-data
 </pre></div>
 
 <p>としたらちゃんと表示されるようになった。</p>]]></content>

@@ -24,7 +24,7 @@
       <description>C言語でtuple</description>
       <content:encoded><![CDATA[<p>Cをつかってるとtupleっぽいものがあれば便利なのに、と思うときが時々あります。</p>
 <p>別にtupleなんてなくても</p>
-<div class="pygments_murphy"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+<div class="pygments_borland"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
    <span class="kt">int</span> <span class="o">*</span><span class="n">i</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">tuple</span><span class="p">;</span>
@@ -33,7 +33,7 @@
 <p>のようにして構造体をつかえばいいのですが、必要になるたびにこれをするのはちょっとめんどくさいですよね。</p>
 <p>というわけで色々試行錯誤してみたところ、以下のようにしてunionの配列にするというのがそこそこ便利だったので紹介します。</p>
 <p>以下は使用例です。</p>
-<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
 
 <span class="k">typedef</span> <span class="k">union</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
@@ -65,7 +65,7 @@
       <content:encoded><![CDATA[<p><img alt="gopher" src="/images/gopherbw-250.png" /> </p>
 <p>Goの練習がてら<a href="http://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%A9%E3%83%88%E3%82%B9%E3%83%86%E3%83%8D%E3%82%B9%E3%81%AE%E7%AF%A9">エラトステネスの篩</a> を実装してみた。</p>
 <p><a href="http://projecteuler.net/problem=7">Project Eulerにちょうどいい問題(10001st prime)</a> があったので、まずは単なるクロージャで書いてみる。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
@@ -103,7 +103,7 @@
 </pre></div>
 
 <p>これをGoroutineで書き換えるのは簡単で、返り値のかわりにチャネルをつかうようにするだけ。</p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="s">&quot;fmt&quot;</span>
 
@@ -143,7 +143,7 @@
 </pre></div>
 
 <p>pが素数のときp〜2*pの区間に少なくとも一つの素数が存在する、という前提<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> をつかって↑を並列化させた。<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
@@ -256,7 +256,7 @@
       <description>人気プログラミング言語ランキング(stackoverflow調べ)</description>
       <content:encoded><![CDATA[<p><img alt="stack" src="/images/stackoverflow-200.png" /></p>
 <p>なんとなく気になったのでstackoverflowのでの人気プログラミング言語ランキングをつくってみました。(2013-02-05現在)</p>
-<div class="pygments_murphy"><pre>1.   c#              411382pt
+<div class="pygments_borland"><pre>1.   c#              411382pt
 2.   java            361120pt
 3.   php             337941pt
 4.   javascript      321791pt
@@ -348,23 +348,23 @@ d          877pt
 <hr>
 
 <p>Cで文字列を初期化するときは以下のように書く。</p>
-<div class="pygments_murphy"><pre>char str[] = &quot;xyz&quot;;
+<div class="pygments_borland"><pre>char str[] = &quot;xyz&quot;;
 </pre></div>
 
 <p>こう書けばNULL終わりのchar配列としてスタックに格納してくれるので、以下のように書くのと同じことになる。</p>
-<div class="pygments_murphy"><pre>char str1[4] = &quot;xyz&quot;;
+<div class="pygments_borland"><pre>char str1[4] = &quot;xyz&quot;;
 char str2[4] = {&#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;\0&#39;};
 </pre></div>
 
 <p>文字列はcharのポインタで扱うからといって、</p>
-<div class="pygments_murphy"><pre>char *str = &quot;xyz&quot;;
+<div class="pygments_borland"><pre>char *str = &quot;xyz&quot;;
 </pre></div>
 
 <p>のように書くと違う意味になる。
 こう書くと"xyz"が格納されているアドレスでポインタを初期化する。文字列リテラルで宣言したデータが格納される領域は通常はread onlyなので<code>*str='X'</code>などとするとセグフォするが、通常の代入と同じ意味なので違和感はない。</p>
 <p>でも、<code>char str[] = "xyz";</code> のほうはは冷静に考えると気持ち悪い。初期化と代入は違うといってしまえばそれまでだけど、この式だけみても予備知識がないとなにがおこるのかわからないと思う。</p>
 <p>以下のような挙動も合理的とは思えない。そもそもCに配列なんて必要なかったのではないか。</p>
-<div class="pygments_murphy"><pre>void f1(char s[]) {
+<div class="pygments_borland"><pre>void f1(char s[]) {
     /* 意味はないけどエラーでもない */
     s = &quot;baz&quot;;
 }
@@ -392,7 +392,7 @@ void f2(void) {
 <p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
 <p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
 <p>最初は以下のように書いて、</p>
-<div class="pygments_murphy"><pre>(let ((_n (parse-integer (read-line)))
+<div class="pygments_borland"><pre>(let ((_n (parse-integer (read-line)))
       (lis ()))
   (dotimes (i _n)
     (push (parse-integer (read-line)) lis))
@@ -401,14 +401,14 @@ void f2(void) {
 </pre></div>
 
 <p>以下の用にして時間を測ったところ</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.19s user 0.01s system 91% cpu 1.311 total
 sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938 total
 </pre></div>
 
 <p>ローカルだと3.42s程度だった。codechef上での制限は5secなのでセーフかと思ったけどTime Limit Exceededだった。</p>
 <p>そこで、vectorを使うように改良</p>
-<div class="pygments_murphy"><pre>(let* ((_n (parse-integer (read-line)))
+<div class="pygments_borland"><pre>(let* ((_n (parse-integer (read-line)))
        (lis (make-array _n :fill-pointer 0)))
   (dotimes (i _n)
     (vector-push (parse-integer (read-line)) lis))
@@ -416,14 +416,14 @@ sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938
   (loop for i across lis do (format t &quot;~a~%&quot; i)))
 </pre></div>
 
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.21s user 0.01s system 94% cpu 1.289 total
 sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137 total
 </pre></div>
 
 <p>若干改善されたが、まだTime Limit Exceededだった。</p>
 <p>read-sequenceで読み込んだほうが早いかと思って以下のように書いてみた。</p>
-<div class="pygments_murphy"><pre>(defun parse-input (str)
+<div class="pygments_borland"><pre>(defun parse-input (str)
   (loop
      for i = 0 then (+ 1 j)
      as j = (position #\Newline str :start i)
@@ -441,7 +441,7 @@ sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137
   (loop for i in nums do (format t &quot;~a~%&quot; i)))
 </pre></div>
 
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.13s user 0.01s system 97% cpu 1.159 total
 sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297 total
 </pre></div>
@@ -450,7 +450,7 @@ sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297
 あと、<code>#'(lambda (x y) (&lt; x y))</code>の部分を <code>#'&lt;</code>にするとなぜか遅くなる。</p>
 <p><a href="http://www.codechef.com/status/TSORT?language=31&amp;status=All&amp;handle=&amp;sort_by=All&amp;sorting_order=asc&amp;Submit=GO">まだ誰もlispではパスしてない模様。</a>こういうのをもっと高速に書く方法あるのだろうか。</p>
 <p>ちなみにCだと余裕。ローカルだと0.2秒くらいだけどリモートでは3秒くらいかかってた。そもそもCodeChefの実行環境がしょぼすぎる疑惑が。。</p>
-<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
 <span class="cp">#include &lt;stdlib.h&gt;</span>
 
 <span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
@@ -471,7 +471,7 @@ sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297
     <span class="p">}</span>
 </pre></div>
 
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
 ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  0.99s user 0.01s system 99% cpu 1.006 total
 ./a.out &gt; /dev/null  0.18s user 0.01s system 17% cpu 1.116 total
 </pre></div>]]></content:encoded>

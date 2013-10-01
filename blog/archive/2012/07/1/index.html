@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -117,7 +117,7 @@ href="/blog/feed/atom" />
 <p>タイトルの通りです。</p>
 <p>iosエミュレータで標準出力に書いたものはsystem.logに吐かれます。</p>
 <p>ちなみに最近のxcodeのiosプロジェクトは以下のようなコマンドでシンタックスチェックができます。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>clang -Wall -Wextra -Wno-unused-parameter -fsyntax-only  -miphoneos-version-min<span class="o">=</span>4.3 -xobjective-c -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk *.m
+<div class="pygments_borland"><pre><span class="nv">$ </span>clang -Wall -Wextra -Wno-unused-parameter -fsyntax-only  -miphoneos-version-min<span class="o">=</span>4.3 -xobjective-c -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk *.m
 </pre></div>
 
 <p>参考：　<a href="http://sakito.jp/emacs/emacsobjectivec.html">http://sakito.jp/emacs/emacsobjectivec.html</a></p>
@@ -198,7 +198,7 @@ href="/blog/feed/atom" />
   <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
 起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
+<div class="pygments_borland"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
 </pre></div>
 
 <p>デフォルトポートは8000ですが、引数で指定することもできます。
@@ -207,11 +207,11 @@ href="/blog/feed/atom" />
 <br>
 <br>
 でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
 <p>ポートを変更する場合は以下のようにします</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
 <h2 id="_1">参考</h2>
@@ -352,7 +352,7 @@ href="/blog/feed/atom" />
 </ul>
 <h2 id="_1">例</h2>
 <h3 id="myprotocolh">myProtocol.h</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 
 <span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
 
@@ -363,7 +363,7 @@ href="/blog/feed/atom" />
 </pre></div>
 
 <h3 id="myprotocolimplh">myProtocolImpl.h</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
 <span class="cp">#import &quot;myProtocol.h&quot;</span>
 
 <span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
@@ -375,7 +375,7 @@ href="/blog/feed/atom" />
 </pre></div>
 
 <h3 id="myprotocolimplm">myProtocolImpl.m</h3>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
 
 <span class="k">@implementation</span> <span class="nc">myProtocolImpl</span>
 

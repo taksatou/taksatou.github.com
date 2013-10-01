@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -120,12 +120,12 @@ href="/blog/feed/atom" />
 これを使うとターミナルの出力を簡単に色付けできます。</p>
 <h3 id="_1">インストール</h3>
 <p>現在(2013-02-19) quicklisp登録申請中です。登録されれば以下でインストールできます。</p>
-<div class="pygments_murphy"><pre>(ql:quickload &#39;cl-rainbow)
+<div class="pygments_borland"><pre>(ql:quickload &#39;cl-rainbow)
 </pre></div>
 
 <h3 id="_2">使い方</h3>
 <p>以下のように使います。</p>
-<div class="pygments_murphy"><pre>(setf cl-rainbow:*enabled* t)
+<div class="pygments_borland"><pre>(setf cl-rainbow:*enabled* t)
 (print (cl-rainbow:color :red &quot;red string&quot;))
 (print (cl-rainbow:color #x5599ff &quot;rgb color code&quot;))
 (loop for c across &quot;RAINBOW&quot; do (format t &quot;~A&quot; (cl-rainbow:color (random #xffffff) c)))
@@ -179,11 +179,11 @@ href="/blog/feed/atom" />
 これをつかってtmux上でalcの英単語を表示できるようにしたら思いの外便利だったので紹介します。</p>
 <p>まず、alcの検索結果をスクレイビングしていい感じに表示するコマンドをつくります。
 rubyのnokogiriとrainbowに依存してますが、ぼくがつくった適当なスクリプトでよければこれを使って下さい。</p>
-<div class="pygments_murphy"><pre><span class="c1"># 2013-01-15 削除しました</span>
+<div class="pygments_borland"><pre><span class="c1"># 2013-01-15 削除しました</span>
 </pre></div>
 
 <p>これをパスの通った場所にalcという名前で保存して、.tmux.confに以下の設定を追記します。</p>
-<div class="pygments_murphy"><pre>unbind C-a
+<div class="pygments_borland"><pre>unbind C-a
 <span class="nb">bind </span>C-a <span class="nb">command</span>-prompt <span class="s2">&quot;split-window -h &#39;alc %% | lv -c&#39;&quot;</span>
 </pre></div>
 
@@ -229,7 +229,7 @@ rainbowで色付けしてるのでエスケープシーケンスを解釈でき�
   <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
 起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
+<div class="pygments_borland"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
 </pre></div>
 
 <p>デフォルトポートは8000ですが、引数で指定することもできます。
@@ -238,11 +238,11 @@ rainbowで色付けしてるのでエスケープシーケンスを解釈でき�
 <br>
 <br>
 でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
 <p>ポートを変更する場合は以下のようにします</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
 <h2 id="_1">参考</h2>
@@ -287,23 +287,23 @@ rainbowで色付けしてるのでエスケープシーケンスを解釈でき�
   <p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <h1 id="_1">$.</h1>
 <p>現在の行番号を表します。awkでいうNRと同じです。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
+<div class="pygments_borland"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;puts &quot;#{$.},#{$_}&quot;&#39;</span>
 </pre></div>
 
 <h1 id="-i">$-i</h1>
 <p>この値を文字列で上書きするとin-place置換を行うようになります。オリジナルのファイルはここで指定した文字が拡張子についたファイルとして保存されます。オリジナルファイルが不要なら空文字を設定すればOKです。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+<div class="pygments_borland"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$-i=&quot;.old&quot;}; puts($_) if /foo/&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
 </pre></div>
 
 <h1 id="_2">$/</h1>
 <p>入力の区切り文字を表わす文字です。デフォルトは改行です。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
+<div class="pygments_borland"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$/=&quot;,&quot;}; p $_&#39;</span>
 </pre></div>
 
 <h1 id="_3">$, 、$;</h1>
 <p>$, はjoinのデフォルト区切り文字で、$; はsplitのデフォルト区切り文字です。
 ワンライナーではjoinとsplitをよく使うと思うので、BEGINで上書きしておけばワンライナーを多少短く書けます。</p>
-<div class="pygments_murphy"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
+<div class="pygments_borland"><pre><span class="n">ruby</span> <span class="o">-</span><span class="n">ne</span> <span class="s1">&#39;BEGIN{$,=&quot;\t&quot;;$;=&quot;,&quot;}; puts $_.split.join&#39;</span>
 </pre></div>
 
 <h1 id="_4">まとめ</h1>

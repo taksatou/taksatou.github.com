@@ -27,7 +27,7 @@
       <content:encoded><![CDATA[<p><img alt="matrix" src="/images/matrix3.png" /></p>
 <p>ライブラリの単体テストをするときとかに、実行プログラムがロードする共有ライブラリのパスを任意のディレクトリで上書きしたいときがある。</p>
 <p>例えば以下のようなディレクトリ構成で、<code>project/t/mytest</code>というバイナリをビルドするときに<code>project/src/libmy.so</code>をリンクするようにしておけば作業しやすい。</p>
-<div class="pygments_murphy"><pre>└── project
+<div class="pygments_borland"><pre>└── project
     ├── src
     │   ├── libmy.a
     │   ├── libmy.so -&gt; libmy.so.1
@@ -44,7 +44,7 @@
 </pre></div>
 
 <p>こういうときは、<code>mytest</code>をビルドするときに以下のようにしてrpathを相対パスで追加していた。</p>
-<div class="pygments_murphy"><pre>$ cc -I../src -L../src -Wl,-rpath=../src *.c -lmy -o mytest
+<div class="pygments_borland"><pre>$ cc -I../src -L../src -Wl,-rpath=../src *.c -lmy -o mytest
 $ readelf -d mytest
 Dynamic section at offset 0xe30 contains 22 entries:
   Tag        Type                         Name/Value
@@ -73,14 +73,14 @@ Dynamic section at offset 0xe30 contains 22 entries:
 </pre></div>
 
 <p>しかし、OSXの場合は上記のように単に実行バイナリ側にrpathを追加しただけだと、ローダがrpathを設定するコマンドより先にライブラリをロードするコマンドを実行しようとして該当ファイルがみつけられなくて以下のようなエラーになってしまう.</p>
-<div class="pygments_murphy"><pre>dyld: Library not loaded: libmy.1.dylib
+<div class="pygments_borland"><pre>dyld: Library not loaded: libmy.1.dylib
   Referenced from: /Users/path/to/project/t/./mytest
   Reason: image not found
 zsh: trace trap  ./mytest
 </pre></div>
 
 <p><code>otool -l &lt;executable file&gt;</code>でロードコマンドの詳細をみると以下のようなエントリがみつかるが、ここのnameの値はライブラリ側の<code>install_path</code>が設定される。</p>
-<div class="pygments_murphy"><pre>-- 中略
+<div class="pygments_borland"><pre>-- 中略
 Load command 11
           cmd LC_LOAD_DYLIB
       cmdsize 40

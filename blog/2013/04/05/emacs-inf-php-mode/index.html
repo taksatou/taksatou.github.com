@@ -13,7 +13,7 @@ emacsでphpのインタラクティブシェルを動かすinf-php.elを書い�
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -117,12 +117,12 @@ href="/blog/feed/atom" />
 <p>phper人口は多いはずなのになぜかどこにも見つからなかったので<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>emacsでphpのインタラクティブシェルを動かすための<a href="https://github.com/taksatou/inf-php">inf-php.el</a> を書いた。</p>
 <h4 id="install">install</h4>
 <p>auto-installがはいっていれば、<code>(auto-install-from-url "https://raw.github.com/taksatou/inf-php/master/inf-php.el")</code>で、はいってなければ <a href="https://raw.github.com/taksatou/inf-php/master/inf-php.el">inf-php.el</a> をダウンロードして適当にload-pathの通った場所に配置して、<code>.emacs</code>に以下を追記</p>
-<div class="pygments_murphy"><pre>(require &#39;inf-php)
+<div class="pygments_borland"><pre>(require &#39;inf-php)
 </pre></div>
 
 <h4 id="usage">usage</h4>
 <p>現状のキーバインドは以下の通り</p>
-<div class="pygments_murphy"><pre>(define-key php-mode-map &quot;\C-c\C-s&quot; &#39;inf-php)              ;; inf-phpを起動する
+<div class="pygments_borland"><pre>(define-key php-mode-map &quot;\C-c\C-s&quot; &#39;inf-php)              ;; inf-phpを起動する
 (define-key php-mode-map &quot;\C-c\C-z&quot; &#39;php-switch-to-inf)    ;; inf-rubyバッファに切り替える
 (define-key php-mode-map &quot;\M-\C-x&quot; &#39;php-send-definition)   ;; 現在カーソルがあるところの関数をinf-phpに送る
 (define-key php-mode-map &quot;\C-c\C-x&quot; &#39;php-send-definition)  ;; 同上

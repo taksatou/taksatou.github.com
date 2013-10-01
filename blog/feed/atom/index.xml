@@ -46,13 +46,13 @@
 <h2 id="_2">変数の展開</h2>
 <p><code>{{name}}</code>のように2つのブレースで囲ったタグは、<code>name</code>という名前のキーの値でおきかえられます。</p>
 <p>対応するキーが見つからなかった場合はデフォルトでは空文字になります。</p>
-<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Hello, {{world}}!&quot;</span><span class="p">,</span> <span class="n">world</span><span class="p">:</span> <span class="s2">&quot;mustache&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Hello, mustache!&quot;</span>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Hello, {{world}}!&quot;</span><span class="p">,</span> <span class="n">world</span><span class="p">:</span> <span class="s2">&quot;mustache&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Hello, mustache!&quot;</span>
 <span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{no_such_key}}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&quot;</span>
 </pre></div>
 
 <h2 id="_3">変数のエスケープ</h2>
 <p>デフォルトではHTMLエスケープが有効になります。アンエスケープされたHTMLが使いたい場合は<code>{{{name}}}</code>のように3つのブレースで囲います。</p>
-<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{html}}&quot;</span><span class="p">,</span>  <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&amp;lt;b&amp;gt;GitHub&amp;lt;/b&amp;gt;&quot;</span>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{html}}&quot;</span><span class="p">,</span>  <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&amp;lt;b&amp;gt;GitHub&amp;lt;/b&amp;gt;&quot;</span>
 <span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{{html}}}&quot;</span><span class="p">,</span> <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span>
 </pre></div>
 
@@ -60,7 +60,7 @@
 <p><code>{{#name}} ... {{/name}}</code>のように、2つのタグに<code>#</code>と<code>/</code>をそれぞれつけたタグで囲われたブロックはセクションといいます。</p>
 <p>セクションのキーに対応する値にbool値を渡せばif文のような使い方ができます。
 <code>#</code>のかわりに<code>^</code>をつかうと真偽を反転できます。</p>
-<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
 <span class="sh">{{#condition}}</span>
 <span class="sh">It is true.</span>
 <span class="sh">{{/condition}}</span>
@@ -74,7 +74,7 @@
 
 <h2 id="_5">ループ</h2>
 <p>セクションのキーに対応する値に配列を渡した場合は、それぞれの要素を引数として中のブロックが繰り返し評価されます。</p>
-<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
 <span class="sh">{{#animals}}</span>
 <span class="sh">{{name}}</span>
 <span class="sh">{{/animals}}</span>
@@ -85,7 +85,7 @@
 
 <h2 id="lambda">無名関数 (Lambda)</h2>
 <p>セクションのキーに対応する値に呼び出し可能なオブジェクトを渡した場合は、そのブロック内のテキストを引数として実行され、その返り値が結果として出力されます。</p>
-<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
 <span class="sh">{{#proc}}</span>
 <span class="sh">mojavy is bad</span>
 <span class="sh">{{/proc}}</span>
@@ -95,7 +95,7 @@
 
 <h2 id="_6">コメント</h2>
 <p><code>!</code>をつけるとコメントになります</p>
-<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Comment here: {{! ignore me }}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Comment here: &quot;</span>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Comment here: {{! ignore me }}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Comment here: &quot;</span>
 </pre></div>
 
 <h2 id="_7">まとめ</h2>
@@ -140,7 +140,7 @@
     <category scheme="http://mojavy.com/blog" term="ruby" />
     <summary type="html"><![CDATA[chef soloでAuthenticationFailedといわれたときの対応]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/"><![CDATA[<p>公開鍵認証なホストに対してパスフレーズ入力無しでsshログインができるにもかかわらず、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>knife solo cook myhost
+<div class="pygments_borland"><pre><span class="nv">$ </span>knife solo cook myhost
 Running Chef on myhost...
 Checking Chef version...
 Enter the password <span class="k">for </span>username@myhost:
@@ -157,7 +157,7 @@ ERROR: Net::SSH::AuthenticationFailed: username
 <p>それなのに<code>AuthenticationFailed</code>失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
 これを回避するには、ssh_configで<code>PubkeyAuthentication yes</code>を明示すればよい。</p>
 <p>なお、<code>Net::SSH</code>がどのような動きをしているかは以下のスニペットを試すとよい。</p>
-<div class="pygments_murphy"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
+<div class="pygments_borland"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
 <span class="no">Net</span><span class="o">::</span><span class="no">SSH</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s2">&quot;myhost&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="ss">:verbose</span> <span class="o">=&gt;</span> <span class="ss">:debug</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">p</span> <span class="n">x</span> <span class="p">}</span>
 </pre></div>
 
@@ -195,7 +195,7 @@ ERROR: Net::SSH::AuthenticationFailed: username
 例えば、うっかりscreenやtmuxの外で起動してしまった長い時間のかかるバッチ処理を、起動したままscreenの中にもってくることができます。</p>
 <p><a href="https://github.com/nelhage/reptyr">https://github.com/nelhage/reptyr</a> </p>
 <h2 id="_1">使い方</h2>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>reptyr PID
+<div class="pygments_borland"><pre><span class="nv">$ </span>reptyr PID
 </pre></div>
 
 <p>現在のターミナル内にもってきたいプロセスのpidを引数にします。
@@ -217,7 +217,7 @@ SolarisやBSDに移植することも技術的には可能ですが、現状は�
 <h2 id="ptrace_scope-on-ubuntu-maverick-and-up">ptrace_scope on Ubuntu Maverick and up</h2>
 <p>Ubuntu Maverick以降ではptraceの機能がデフォルトで無効になっています。
 以下コマンドで一時的に有効にできます。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
 </pre></div>
 
 <p>rootで<code>/etc/sysctl.d/10-ptrace.conf</code>を編集すると永続的に変更できます。また<code>ptrace_scope</code>に関する詳細な説明もここに書いてあります。</p>
@@ -271,7 +271,7 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
     <summary type="html"><![CDATA[C言語でtuple]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2013/07/10/c-tuple/"><![CDATA[<p>Cをつかってるとtupleっぽいものがあれば便利なのに、と思うときが時々あります。</p>
 <p>別にtupleなんてなくても</p>
-<div class="pygments_murphy"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+<div class="pygments_borland"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
    <span class="kt">int</span> <span class="o">*</span><span class="n">i</span><span class="p">;</span>
 <span class="p">}</span> <span class="n">tuple</span><span class="p">;</span>
@@ -280,7 +280,7 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
 <p>のようにして構造体をつかえばいいのですが、必要になるたびにこれをするのはちょっとめんどくさいですよね。</p>
 <p>というわけで色々試行錯誤してみたところ、以下のようにしてunionの配列にするというのがそこそこ便利だったので紹介します。</p>
 <p>以下は使用例です。</p>
-<div class="pygments_murphy"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
 
 <span class="k">typedef</span> <span class="k">union</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
@@ -317,7 +317,7 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
     <content type="html" xml:base="http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/"><![CDATA[<p><img alt="gopher" src="/images/gopherbw-250.png" /> </p>
 <p>Goの練習がてら<a href="http://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%A9%E3%83%88%E3%82%B9%E3%83%86%E3%83%8D%E3%82%B9%E3%81%AE%E7%AF%A9">エラトステネスの篩</a> を実装してみた。</p>
 <p><a href="http://projecteuler.net/problem=7">Project Eulerにちょうどいい問題(10001st prime)</a> があったので、まずは単なるクロージャで書いてみる。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
@@ -355,7 +355,7 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
 </pre></div>
 
 <p>これをGoroutineで書き換えるのは簡単で、返り値のかわりにチャネルをつかうようにするだけ。</p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="s">&quot;fmt&quot;</span>
 
@@ -395,7 +395,7 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
 </pre></div>
 
 <p>pが素数のときp〜2*pの区間に少なくとも一つの素数が存在する、という前提<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> をつかって↑を並列化させた。<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
@@ -657,7 +657,7 @@ CBCとはXORのタイミングが違うだけ。</p>
     <content type="html" xml:base="http://mojavy.com/blog/2013/05/17/mach-o-rpath/"><![CDATA[<p><img alt="matrix" src="/images/matrix3.png" /></p>
 <p>ライブラリの単体テストをするときとかに、実行プログラムがロードする共有ライブラリのパスを任意のディレクトリで上書きしたいときがある。</p>
 <p>例えば以下のようなディレクトリ構成で、<code>project/t/mytest</code>というバイナリをビルドするときに<code>project/src/libmy.so</code>をリンクするようにしておけば作業しやすい。</p>
-<div class="pygments_murphy"><pre>└── project
+<div class="pygments_borland"><pre>└── project
     ├── src
     │   ├── libmy.a
     │   ├── libmy.so -&gt; libmy.so.1
@@ -674,7 +674,7 @@ CBCとはXORのタイミングが違うだけ。</p>
 </pre></div>
 
 <p>こういうときは、<code>mytest</code>をビルドするときに以下のようにしてrpathを相対パスで追加していた。</p>
-<div class="pygments_murphy"><pre>$ cc -I../src -L../src -Wl,-rpath=../src *.c -lmy -o mytest
+<div class="pygments_borland"><pre>$ cc -I../src -L../src -Wl,-rpath=../src *.c -lmy -o mytest
 $ readelf -d mytest
 Dynamic section at offset 0xe30 contains 22 entries:
   Tag        Type                         Name/Value
@@ -703,14 +703,14 @@ Dynamic section at offset 0xe30 contains 22 entries:
 </pre></div>
 
 <p>しかし、OSXの場合は上記のように単に実行バイナリ側にrpathを追加しただけだと、ローダがrpathを設定するコマンドより先にライブラリをロードするコマンドを実行しようとして該当ファイルがみつけられなくて以下のようなエラーになってしまう.</p>
-<div class="pygments_murphy"><pre>dyld: Library not loaded: libmy.1.dylib
+<div class="pygments_borland"><pre>dyld: Library not loaded: libmy.1.dylib
   Referenced from: /Users/path/to/project/t/./mytest
   Reason: image not found
 zsh: trace trap  ./mytest
 </pre></div>
 
 <p><code>otool -l &lt;executable file&gt;</code>でロードコマンドの詳細をみると以下のようなエントリがみつかるが、ここのnameの値はライブラリ側の<code>install_path</code>が設定される。</p>
-<div class="pygments_murphy"><pre>-- 中略
+<div class="pygments_borland"><pre>-- 中略
 Load command 11
           cmd LC_LOAD_DYLIB
       cmdsize 40
@@ -760,7 +760,7 @@ compatibility version 0.0.0
 
 <p>wifiの設定はX Windowの設定画面からしました。<code>startx</code>でデスクトップを起動すると<code>WiFi Config</code>というアイコンがあるのでそこから設定できます。
 ターミナルで<code>ifconfig</code>を実行してwlan0にinet addrが割り当てられていることを確認できればOKです。</p>
-<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
+<div class="pygments_borland"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
 eth0      Link encap:Ethernet  HWaddr b8:27:eb:90:32:15
           UP BROADCAST MULTICAST  MTU:1500  Metric:1
           RX packets:0 errors:0 dropped:0 overruns:0 frame:0

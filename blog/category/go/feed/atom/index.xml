@@ -29,7 +29,7 @@
     <content type="html" xml:base="http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/"><![CDATA[<p><img alt="gopher" src="/images/gopherbw-250.png" /> </p>
 <p>Goの練習がてら<a href="http://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%A9%E3%83%88%E3%82%B9%E3%83%86%E3%83%8D%E3%82%B9%E3%81%AE%E7%AF%A9">エラトステネスの篩</a> を実装してみた。</p>
 <p><a href="http://projecteuler.net/problem=7">Project Eulerにちょうどいい問題(10001st prime)</a> があったので、まずは単なるクロージャで書いてみる。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
@@ -67,7 +67,7 @@
 </pre></div>
 
 <p>これをGoroutineで書き換えるのは簡単で、返り値のかわりにチャネルをつかうようにするだけ。</p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="s">&quot;fmt&quot;</span>
 
@@ -107,7 +107,7 @@
 </pre></div>
 
 <p>pが素数のときp〜2*pの区間に少なくとも一つの素数が存在する、という前提<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> をつかって↑を並列化させた。<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>

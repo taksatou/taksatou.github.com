@@ -54,7 +54,7 @@
 <h3 id="2-setuppy">2. setup.pyをかく</h3>
 <p><code>apt-get source python-xxx</code>で適当なパッケージのソースをダウンロードして参考にするとよい</p>
 <p>以下例</p>
-<div class="pygments_murphy"><pre><span class="c">#!/usr/bin/python</span>
+<div class="pygments_borland"><pre><span class="c">#!/usr/bin/python</span>
 
 <span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
 
@@ -134,7 +134,7 @@
       <content:encoded><![CDATA[<p><img alt="ruby" src="/images/ruby-logo.png" /></p>
 <p>とりあえずウェブサーバがたちあがりさえすればいいときは、pythonのSimpleHTTPServerを使うのが便利です。
 起動したカレントディレクトリ以下のファイルをブラウズできるので、テスト用のスタティックなスタブデータを一時的に配置したいときとかにも使えます。最近の一般的なlinuxディストリビューションであればデフォルトではいってるpythonで使えると思います。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
+<div class="pygments_borland"><pre><span class="nv">$ </span>python -mSimpleHTTPServer 3333
 </pre></div>
 
 <p>デフォルトポートは8000ですが、引数で指定することもできます。
@@ -143,11 +143,11 @@
 <br>
 <br>
 でもリクエストに応じたロジックを入れたい場合はrubyのsinatraの方が便利です。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
 <p>ポートを変更する場合は以下のようにします</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>ruby -rsinatra -e <span class="s1">&#39;set :port,3333; get(&quot;/&quot;){sleep 3}&#39;</span>
 </pre></div>
 
 <h2 id="_1">参考</h2>
@@ -167,7 +167,7 @@
 それに伴いlennyのリポジトリもoldstable扱いとなりパスが変わったため、デフォルトのsources.listでは404 Not Foundとなってパッケージがインストールできなくなってしまいました。
 早めにアップデートしたほうが好ましいですが、そのまま引き続きlennyを使いたい場合もあると思います。
 そのような場合は以下のようにsources.listを変更してやれば今までどおりパッケージをとれるようになります。</p>
-<div class="pygments_murphy"><pre>deb http://archive.debian.org/debian-security/ lenny/updates main
+<div class="pygments_borland"><pre>deb http://archive.debian.org/debian-security/ lenny/updates main
 deb-src http://archive.debian.org/debian-security/ lenny/updates main
 
 deb http://archive.debian.org/debian/ lenny main
@@ -193,25 +193,25 @@ deb-src http://archive.debian.org/debian/ lenny main
       <content:encoded><![CDATA[<p><img alt="python" src="/images/python-logo.gif" /></p>
 <p>pythonではvirtualenvというユーティリティを使って複数の環境を切り替えることができます。しかしvirtualenvはセットアップがちょっとわかりにくかったりバージョンによってはこけたりしていまいち使いこなせていませんでした。久し振りにブログを書くついでにpython環境を再構築しようと思って調べたところ、<a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a> というのが使いやすかったので紹介します。これを使えば非常に簡単にpython環境を整えることができます。</p>
 <h1 id="_1">インストール</h1>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
+<div class="pygments_borland"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
 </pre></div>
 
 <p>として再ログインするだけです。勝手にパスやシェルの補完設定もしてくれます。</p>
 <h1 id="_2">使い方</h1>
 <p>新しい環境の構築は、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>mkvirtualenv newname
+<div class="pygments_borland"><pre><span class="nv">$ </span>mkvirtualenv newname
 </pre></div>
 
 <p><br></p>
 <p>環境の切り替えは、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>workon newname
+<div class="pygments_borland"><pre><span class="nv">$ </span>workon newname
 <span class="nv">$ </span><span class="c"># or</span>
 <span class="nv">$ </span>workon 2.7
 </pre></div>
 
 <p><br></p>
 <p>不要な環境の削除は、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>rmvirtualenv newname
+<div class="pygments_borland"><pre><span class="nv">$ </span>rmvirtualenv newname
 </pre></div>
 
 <p><br></p>
@@ -224,7 +224,7 @@ deb-src http://archive.debian.org/debian/ lenny main
 <li>python3だとうごきません。python3環境が作れないという意味ではなく、デフォルトパスのpythonバージョンが3だとvirtualenv-burritoのセットアップ途中でこけます。その場合はpython2系をつかってください。</li>
 <li>pipのインストールでこける場合があります。その場合は以下のようなコマンドで回避できます。 <a href="https://github.com/brainsik/virtualenv-burrito/issues/16">(参考)</a></li>
 </ul>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
+<div class="pygments_borland"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
 <span class="nv">$ </span>mkvirtualenv -p <span class="k">$(</span>which python3.2<span class="k">)</span> --distribute py32
 </pre></div>
 
@@ -253,7 +253,7 @@ deb-src http://archive.debian.org/debian/ lenny main
 <a href="http://mojavy.com">http://mojavy.com</a>
 のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
 <p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
-<div class="pygments_murphy"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<div class="pygments_borland"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
 <span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
          self.slug = None
          self.draft = False
@@ -264,7 +264,7 @@ deb-src http://archive.debian.org/debian/ lenny main
 </pre></div>
 
 <p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
-<div class="pygments_murphy"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
+<div class="pygments_borland"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
 <span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
 <span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
 <span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>

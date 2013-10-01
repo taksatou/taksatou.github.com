@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -116,7 +116,7 @@ href="/blog/feed/atom" />
   <p><img alt="gopher" src="/images/gopherbw-250.png" /> </p>
 <p>Goの練習がてら<a href="http://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%A9%E3%83%88%E3%82%B9%E3%83%86%E3%83%8D%E3%82%B9%E3%81%AE%E7%AF%A9">エラトステネスの篩</a> を実装してみた。</p>
 <p><a href="http://projecteuler.net/problem=7">Project Eulerにちょうどいい問題(10001st prime)</a> があったので、まずは単なるクロージャで書いてみる。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
@@ -154,7 +154,7 @@ href="/blog/feed/atom" />
 </pre></div>
 
 <p>これをGoroutineで書き換えるのは簡単で、返り値のかわりにチャネルをつかうようにするだけ。</p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="s">&quot;fmt&quot;</span>
 
@@ -194,7 +194,7 @@ href="/blog/feed/atom" />
 </pre></div>
 
 <p>pが素数のときp〜2*pの区間に少なくとも一つの素数が存在する、という前提<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> をつかって↑を並列化させた。<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
-<div class="pygments_murphy"><pre><span class="k">package</span> <span class="n">main</span>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
 
 <span class="k">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
@@ -519,7 +519,7 @@ CBCとはXORのタイミングが違うだけ。</p>
   <p><img alt="matrix" src="/images/matrix3.png" /></p>
 <p>ライブラリの単体テストをするときとかに、実行プログラムがロードする共有ライブラリのパスを任意のディレクトリで上書きしたいときがある。</p>
 <p>例えば以下のようなディレクトリ構成で、<code>project/t/mytest</code>というバイナリをビルドするときに<code>project/src/libmy.so</code>をリンクするようにしておけば作業しやすい。</p>
-<div class="pygments_murphy"><pre>└── project
+<div class="pygments_borland"><pre>└── project
     ├── src
     │   ├── libmy.a
     │   ├── libmy.so -&gt; libmy.so.1
@@ -536,7 +536,7 @@ CBCとはXORのタイミングが違うだけ。</p>
 </pre></div>
 
 <p>こういうときは、<code>mytest</code>をビルドするときに以下のようにしてrpathを相対パスで追加していた。</p>
-<div class="pygments_murphy"><pre>$ cc -I../src -L../src -Wl,-rpath=../src *.c -lmy -o mytest
+<div class="pygments_borland"><pre>$ cc -I../src -L../src -Wl,-rpath=../src *.c -lmy -o mytest
 $ readelf -d mytest
 Dynamic section at offset 0xe30 contains 22 entries:
   Tag        Type                         Name/Value
@@ -565,14 +565,14 @@ Dynamic section at offset 0xe30 contains 22 entries:
 </pre></div>
 
 <p>しかし、OSXの場合は上記のように単に実行バイナリ側にrpathを追加しただけだと、ローダがrpathを設定するコマンドより先にライブラリをロードするコマンドを実行しようとして該当ファイルがみつけられなくて以下のようなエラーになってしまう.</p>
-<div class="pygments_murphy"><pre>dyld: Library not loaded: libmy.1.dylib
+<div class="pygments_borland"><pre>dyld: Library not loaded: libmy.1.dylib
   Referenced from: /Users/path/to/project/t/./mytest
   Reason: image not found
 zsh: trace trap  ./mytest
 </pre></div>
 
 <p><code>otool -l &lt;executable file&gt;</code>でロードコマンドの詳細をみると以下のようなエントリがみつかるが、ここのnameの値はライブラリ側の<code>install_path</code>が設定される。</p>
-<div class="pygments_murphy"><pre>-- 中略
+<div class="pygments_borland"><pre>-- 中略
 Load command 11
           cmd LC_LOAD_DYLIB
       cmdsize 40
@@ -644,7 +644,7 @@ compatibility version 0.0.0
 
 <p>wifiの設定はX Windowの設定画面からしました。<code>startx</code>でデスクトップを起動すると<code>WiFi Config</code>というアイコンがあるのでそこから設定できます。
 ターミナルで<code>ifconfig</code>を実行してwlan0にinet addrが割り当てられていることを確認できればOKです。</p>
-<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
+<div class="pygments_borland"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
 eth0      Link encap:Ethernet  HWaddr b8:27:eb:90:32:15
           UP BROADCAST MULTICAST  MTU:1500  Metric:1
           RX packets:0 errors:0 dropped:0 overruns:0 frame:0

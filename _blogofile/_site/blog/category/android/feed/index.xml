@@ -35,13 +35,13 @@
 <p>Rubotoをつかえばこのあたりの面倒をみてくれるので、ほとんどjavaを書く必要がなくなります。Ruboto自体は結構前からありますが、ここ1年くらいでもろもろの機能が充実してきて大分実用的になってきた感があります。</p>
 <p>以下Rubotoの使用方法について簡単に紹介します。</p>
 <h2 id="_1">インストール</h2>
-<div class="pygments_murphy"><pre>gem install ruboto
+<div class="pygments_borland"><pre>gem install ruboto
 gem install jruby-jars
 </pre></div>
 
 <p>また、<code>ANDROID_HOME</code>環境変数の設定と、android sdkの <code>tools/</code> と <code>platform-tools/</code>にはあらかじめパスをとおしておきます</p>
 <h2 id="_2">雛形の生成</h2>
-<div class="pygments_murphy"><pre>ruboto gen app --package org.rubyandroid.new_demo
+<div class="pygments_borland"><pre>ruboto gen app --package org.rubyandroid.new_demo
 
 # 以下のようにしてより詳細に設定することもできます
 # ruboto gen app --package org.rubyandroid.new_demo --path ./myapp --name MyApp --target android-17 --min-sdk android-10 --activity MainActivityName
@@ -50,7 +50,7 @@ gem install jruby-jars
 <h2 id="_3">ビルドとインストール</h2>
 <p>rakeからビルドできるようになっています。また、rubyスクリプトの更新はコンパイル不要で反映できます。
 あとは普通にrubyを書くだけです。</p>
-<div class="pygments_murphy"><pre>cd new_demo
+<div class="pygments_borland"><pre>cd new_demo
 rake
 rake install
 
@@ -188,7 +188,7 @@ iOSならBundleという仕組みがあります。</p>
 <ul>
 <li>.classpath</li>
 </ul>
-<div class="pygments_murphy"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;classpath&gt;</span>
         <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;src/main/java&quot;</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;gen&quot;</span><span class="nt">/&gt;</span>
@@ -201,7 +201,7 @@ iOSならBundleという仕組みがあります。</p>
 <ul>
 <li>.project</li>
 </ul>
-<div class="pygments_murphy"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<div class="pygments_borland"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;projectDescription&gt;</span>
         <span class="nt">&lt;name&gt;</span>project-name<span class="nt">&lt;/name&gt;</span>
         <span class="nt">&lt;comment&gt;&lt;/comment&gt;</span>
@@ -239,7 +239,7 @@ iOSならBundleという仕組みがあります。</p>
 <ul>
 <li>project.properties</li>
 </ul>
-<div class="pygments_murphy"><pre><span class="c"># Project target.</span>
+<div class="pygments_borland"><pre><span class="c"># Project target.</span>
 <span class="na">target</span><span class="o">=</span><span class="s">android-10</span>
 
 <span class="c"># if it is a library</span>

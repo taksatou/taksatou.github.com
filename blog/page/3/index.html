@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -117,7 +117,7 @@ href="/blog/feed/atom" />
 <p>前々から気になってたRaspberry Piを手に入れました。</p>
 <p>最終的にはセンサーとかいろいろつけてインタラクティブなおもちゃをつくりたいですが、当面の目標は秋月電子で調達してきたLCDディスプレイに文字を表示させるためのドライバを書くことにしようと思います。</p>
 <p>Raspberry Piのセットアップ手順はぐぐればすぐでてくるので割愛しますが、そのままだとsdcardの空き領域がつかえないので起動時にマウントできるようにするまでの手順だけメモしときます。</p>
-<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ sudo fdisk /dev/mmcblk0
+<div class="pygments_borland"><pre>pi@raspberrypi ~ $ sudo fdisk /dev/mmcblk0
 
 Command (m for help): p
 
@@ -195,10 +195,10 @@ Writing superblocks and filesystem accounting information: done
 
 <p>上記のように、<code>fdisk</code>でパーティションをきってrebootしたあと、<code>mkfs.ext4</code>でフォーマットします。
 最後に<code>/etc/fstab</code>に以下を追記してもう一度再起動して完了です。 マウントするディレクトリ(以下だと<code>/home</code>)は適当にかえてください。/homeにマウントする場合はpiユーザのホームディレクトリをコピーしておくといいと思います。</p>
-<div class="pygments_murphy"><pre>/dev/mmcblk0p3 /home            ext4    defaults,noatime  0       2
+<div class="pygments_borland"><pre>/dev/mmcblk0p3 /home            ext4    defaults,noatime  0       2
 </pre></div>
 
-<div class="pygments_murphy"><pre>pi@raspberrypi ~ $ df -h
+<div class="pygments_borland"><pre>pi@raspberrypi ~ $ df -h
 Filesystem      Size  Used Avail Use% Mounted on
 rootfs          1.8G  1.4G  246M  86% /
 /dev/root       1.8G  1.4G  246M  86% /
@@ -266,7 +266,7 @@ tmpfs            88M     0   88M   0% /run/shm
 言語によっては複数の実装が存在するものもありますが、とりあえずはgithub上でのstarの数が一番多いものから試すといいと思います。</p>
 <p>わざわざ説明するほどの内容でもないですが、ここでは一応rubyでの使い方を紹介します。
 <code>gem install toml</code>でインストールして、以下のようにするだけです。YAMLの場合と大体同じですね。</p>
-<div class="pygments_murphy"><pre><span class="nb">require</span> <span class="s1">&#39;toml&#39;</span>
+<div class="pygments_borland"><pre><span class="nb">require</span> <span class="s1">&#39;toml&#39;</span>
 
 <span class="no">TOML</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;thing = 9&quot;</span><span class="p">)</span>
 <span class="c1"># =&gt; {&quot;thing&quot; =&gt; 9}</span>
@@ -488,12 +488,12 @@ rubyのコードをllvmベースのマシン語にコンパイルするので高
 <p>phper人口は多いはずなのになぜかどこにも見つからなかったので<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>emacsでphpのインタラクティブシェルを動かすための<a href="https://github.com/taksatou/inf-php">inf-php.el</a> を書いた。</p>
 <h4 id="install">install</h4>
 <p>auto-installがはいっていれば、<code>(auto-install-from-url "https://raw.github.com/taksatou/inf-php/master/inf-php.el")</code>で、はいってなければ <a href="https://raw.github.com/taksatou/inf-php/master/inf-php.el">inf-php.el</a> をダウンロードして適当にload-pathの通った場所に配置して、<code>.emacs</code>に以下を追記</p>
-<div class="pygments_murphy"><pre>(require &#39;inf-php)
+<div class="pygments_borland"><pre>(require &#39;inf-php)
 </pre></div>
 
 <h4 id="usage">usage</h4>
 <p>現状のキーバインドは以下の通り</p>
-<div class="pygments_murphy"><pre>(define-key php-mode-map &quot;\C-c\C-s&quot; &#39;inf-php)              ;; inf-phpを起動する
+<div class="pygments_borland"><pre>(define-key php-mode-map &quot;\C-c\C-s&quot; &#39;inf-php)              ;; inf-phpを起動する
 (define-key php-mode-map &quot;\C-c\C-z&quot; &#39;php-switch-to-inf)    ;; inf-rubyバッファに切り替える
 (define-key php-mode-map &quot;\M-\C-x&quot; &#39;php-send-definition)   ;; 現在カーソルがあるところの関数をinf-phpに送る
 (define-key php-mode-map &quot;\C-c\C-x&quot; &#39;php-send-definition)  ;; 同上

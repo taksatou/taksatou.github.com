@@ -36,7 +36,7 @@
 <script src="https://gist.github.com/3899653.js"> </script>
 
 <p>これをZeroMQのtarを展開してできたディレクトリにbuild.shとかで保存して実行すると、armv7とi386に対応したlibzmq.aができる。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
+<div class="pygments_borland"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
 <span class="nv">$ </span><span class="nb">cd </span>zeromq-2.2.0
 <span class="nv">$ </span>./build.sh
 <span class="nv">$ </span>file libzmq.a
@@ -52,7 +52,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 チャットでの発言はREQ/REPを用いてアプリ→サーバに渡し、PUB/SUBを用いてサーバ→アプリにブロードキャストする。</p>
 <h2 id="_1">サーバ側</h2>
 <p>サーバ側はCommon Lispで実装した。単に、rep-sockから発言を受け取ってpub-sockにそのまま流すだけ。</p>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 
 (defun pull-and-publish ()
@@ -77,7 +77,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <h2 id="_2">アプリ側</h2>
 <p><a href="https://github.com/jeremy-w/objc-zmq">objective-c版ZeroMQ</a>もあるけど、今回はそのままCのAPIを利用した。
 以下はソースの抜粋。</p>
-<div class="pygments_murphy"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
+<div class="pygments_borland"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
 <span class="cp">#import &quot;include/zmq.h&quot;</span>
 
 <span class="k">@interface</span> <span class="nc">ChatViewController</span> <span class="p">()</span> <span class="p">{</span>
@@ -204,7 +204,7 @@ libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<sp
 <li>上記ソースはUITableViewControllerで発言を表示する想定になっているが、UIまわりのコードは省略</li>
 </ul>
 <h2 id="common-lisp">オマケ(Common Lisp版コマンドライン用チャットクライアント)</h2>
-<div class="pygments_murphy"><pre>(load &quot;~/.sbclrc&quot;)
+<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
 (ql:quickload :zeromq)
 (ql:quickload :bordeaux-threads)
 
@@ -281,7 +281,7 @@ xcodeでipaファイルをビルドする方法はすぐにでてくると思う
 <h3 id="jenkins">jenkinsのセットアップ</h3>
 <p>jenkinsを用意します。ビルド専用macが用意できない場合でも、開発に用いているmacをJNLP経由でそのままスレーブとして使うことができます。</p>
 <p>jenkins自体の細かいセットアップ方法は割愛しますが、JNLP経由でスレーブを起動する場合は以下のようなスクリプトをバックグランドで起動するようにしておくと便利です。</p>
-<div class="pygments_murphy"><pre><span class="c">#!/bin/sh</span>
+<div class="pygments_borland"><pre><span class="c">#!/bin/sh</span>
 
 <span class="nb">eval</span> <span class="sb">`</span>ssh-agent<span class="sb">`</span>
 ssh-add ~/.ssh/id_rsa
@@ -297,7 +297,7 @@ java -jar slave.jar -jnlpUrl http://jenkins.example.com/computer/mac1/slave-agen
 <p>以下のようなmakefileをxcodeプロジェクトのトップディレクトリに配置します。
 (お好みのビルドツールを利用してください)</p>
 <p>ソースコードのコンパイルはxcodebuild, ipaファイルの生成はxcrunというコマンドを使います。</p>
-<div class="pygments_murphy"><pre><span class="nv">APP_NAME</span> <span class="o">=</span> MyApp
+<div class="pygments_borland"><pre><span class="nv">APP_NAME</span> <span class="o">=</span> MyApp
 <span class="nv">SRCTOP</span> <span class="o">=</span> <span class="k">$(</span>shell <span class="nb">pwd</span><span class="k">)</span>
 <span class="nv">RELEASE_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>SRCTOP<span class="k">)</span>/build/Release-iphoneos
 <span class="nv">BUILD_HISTORY_DIR</span> <span class="o">=</span> <span class="k">$(</span>SRCTOP<span class="k">)</span>/build
@@ -319,7 +319,7 @@ clean:
 </pre></div>
 
 <p>配布用のplistとhtmlを生成するスクリプト(gen_dist_page.sh)は以下のようになります。(BUILD_NUMBERなどの変数はjenkinsの環境変数から取得できます)</p>
-<div class="pygments_murphy"><pre><span class="nv">PACKAGE_NAME</span><span class="o">=</span>MyApp
+<div class="pygments_borland"><pre><span class="nv">PACKAGE_NAME</span><span class="o">=</span>MyApp
 
 <span class="nv">PLIST</span><span class="o">=</span>build/<span class="k">${</span><span class="nv">PACKAGE_NAME</span><span class="k">}</span>.plist
 <span class="nv">INSTALL_PAGE</span><span class="o">=</span>build/<span class="k">${</span><span class="nv">PACKAGE_NAME</span><span class="k">}</span>.html
@@ -396,7 +396,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <p>参考:  <a href="https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf">https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf</a></p>
 <h3 id="jenkinsjob">jenkinsのjob作成</h3>
 <p>通常通りjenkinsのjobを作ります。適切にソースコードをチェックアウトして、ビルドフェーズで上記スクリプトを実行するようにします。</p>
-<div class="pygments_murphy"><pre>make clean <span class="o">&amp;&amp;</span> make <span class="nv">DIST_URL</span><span class="o">=</span><span class="k">${</span><span class="nv">BUILD_URL</span><span class="k">}</span>artifact
+<div class="pygments_borland"><pre>make clean <span class="o">&amp;&amp;</span> make <span class="nv">DIST_URL</span><span class="o">=</span><span class="k">${</span><span class="nv">BUILD_URL</span><span class="k">}</span>artifact
 </pre></div>
 
 <p>ビルドに成功するとipa, html, plistファイルが生成されるので、これらを成果物として保存します。
@@ -435,7 +435,7 @@ cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
 <p>タイトルの通りです。</p>
 <p>iosエミュレータで標準出力に書いたものはsystem.logに吐かれます。</p>
 <p>ちなみに最近のxcodeのiosプロジェクトは以下のようなコマンドでシンタックスチェックができます。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>clang -Wall -Wextra -Wno-unused-parameter -fsyntax-only  -miphoneos-version-min<span class="o">=</span>4.3 -xobjective-c -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk *.m
+<div class="pygments_borland"><pre><span class="nv">$ </span>clang -Wall -Wextra -Wno-unused-parameter -fsyntax-only  -miphoneos-version-min<span class="o">=</span>4.3 -xobjective-c -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.1.sdk *.m
 </pre></div>
 
 <p>参考：　<a href="http://sakito.jp/emacs/emacsobjectivec.html">http://sakito.jp/emacs/emacsobjectivec.html</a></p>]]></content>

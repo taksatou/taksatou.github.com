@@ -13,7 +13,7 @@ mojavy.com
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
 <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
 href="/blog/feed/atom" />
-<link rel='stylesheet' href='/css/pygments_murphy.css' type='text/css' />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
 
 
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
@@ -133,13 +133,13 @@ href="/blog/feed/atom" />
 <h2 id="_2">変数の展開</h2>
 <p><code>{{name}}</code>のように2つのブレースで囲ったタグは、<code>name</code>という名前のキーの値でおきかえられます。</p>
 <p>対応するキーが見つからなかった場合はデフォルトでは空文字になります。</p>
-<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Hello, {{world}}!&quot;</span><span class="p">,</span> <span class="n">world</span><span class="p">:</span> <span class="s2">&quot;mustache&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Hello, mustache!&quot;</span>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Hello, {{world}}!&quot;</span><span class="p">,</span> <span class="n">world</span><span class="p">:</span> <span class="s2">&quot;mustache&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Hello, mustache!&quot;</span>
 <span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{no_such_key}}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&quot;</span>
 </pre></div>
 
 <h2 id="_3">変数のエスケープ</h2>
 <p>デフォルトではHTMLエスケープが有効になります。アンエスケープされたHTMLが使いたい場合は<code>{{{name}}}</code>のように3つのブレースで囲います。</p>
-<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{html}}&quot;</span><span class="p">,</span>  <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&amp;lt;b&amp;gt;GitHub&amp;lt;/b&amp;gt;&quot;</span>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{html}}&quot;</span><span class="p">,</span>  <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&amp;lt;b&amp;gt;GitHub&amp;lt;/b&amp;gt;&quot;</span>
 <span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{{html}}}&quot;</span><span class="p">,</span> <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span>
 </pre></div>
 
@@ -147,7 +147,7 @@ href="/blog/feed/atom" />
 <p><code>{{#name}} ... {{/name}}</code>のように、2つのタグに<code>#</code>と<code>/</code>をそれぞれつけたタグで囲われたブロックはセクションといいます。</p>
 <p>セクションのキーに対応する値にbool値を渡せばif文のような使い方ができます。
 <code>#</code>のかわりに<code>^</code>をつかうと真偽を反転できます。</p>
-<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
 <span class="sh">{{#condition}}</span>
 <span class="sh">It is true.</span>
 <span class="sh">{{/condition}}</span>
@@ -161,7 +161,7 @@ href="/blog/feed/atom" />
 
 <h2 id="_5">ループ</h2>
 <p>セクションのキーに対応する値に配列を渡した場合は、それぞれの要素を引数として中のブロックが繰り返し評価されます。</p>
-<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
 <span class="sh">{{#animals}}</span>
 <span class="sh">{{name}}</span>
 <span class="sh">{{/animals}}</span>
@@ -172,7 +172,7 @@ href="/blog/feed/atom" />
 
 <h2 id="lambda">無名関数 (Lambda)</h2>
 <p>セクションのキーに対応する値に呼び出し可能なオブジェクトを渡した場合は、そのブロック内のテキストを引数として実行され、その返り値が結果として出力されます。</p>
-<div class="pygments_murphy"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
 <span class="sh">{{#proc}}</span>
 <span class="sh">mojavy is bad</span>
 <span class="sh">{{/proc}}</span>
@@ -182,7 +182,7 @@ href="/blog/feed/atom" />
 
 <h2 id="_6">コメント</h2>
 <p><code>!</code>をつけるとコメントになります</p>
-<div class="pygments_murphy"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Comment here: {{! ignore me }}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Comment here: &quot;</span>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Comment here: {{! ignore me }}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Comment here: &quot;</span>
 </pre></div>
 
 <h2 id="_7">まとめ</h2>
@@ -266,7 +266,7 @@ href="/blog/feed/atom" />
     
 <div class="blogbody">
   <p>公開鍵認証なホストに対してパスフレーズ入力無しでsshログインができるにもかかわらず、</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>knife solo cook myhost
+<div class="pygments_borland"><pre><span class="nv">$ </span>knife solo cook myhost
 Running Chef on myhost...
 Checking Chef version...
 Enter the password <span class="k">for </span>username@myhost:
@@ -283,7 +283,7 @@ ERROR: Net::SSH::AuthenticationFailed: username
 <p>それなのに<code>AuthenticationFailed</code>失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
 これを回避するには、ssh_configで<code>PubkeyAuthentication yes</code>を明示すればよい。</p>
 <p>なお、<code>Net::SSH</code>がどのような動きをしているかは以下のスニペットを試すとよい。</p>
-<div class="pygments_murphy"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
+<div class="pygments_borland"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
 <span class="no">Net</span><span class="o">::</span><span class="no">SSH</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s2">&quot;myhost&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="ss">:verbose</span> <span class="o">=&gt;</span> <span class="ss">:debug</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">p</span> <span class="n">x</span> <span class="p">}</span>
 </pre></div>
 
@@ -349,13 +349,13 @@ ERROR: Net::SSH::AuthenticationFailed: username
 <p>Rubotoをつかえばこのあたりの面倒をみてくれるので、ほとんどjavaを書く必要がなくなります。Ruboto自体は結構前からありますが、ここ1年くらいでもろもろの機能が充実してきて大分実用的になってきた感があります。</p>
 <p>以下Rubotoの使用方法について簡単に紹介します。</p>
 <h2 id="_1">インストール</h2>
-<div class="pygments_murphy"><pre>gem install ruboto
+<div class="pygments_borland"><pre>gem install ruboto
 gem install jruby-jars
 </pre></div>
 
 <p>また、<code>ANDROID_HOME</code>環境変数の設定と、android sdkの <code>tools/</code> と <code>platform-tools/</code>にはあらかじめパスをとおしておきます</p>
 <h2 id="_2">雛形の生成</h2>
-<div class="pygments_murphy"><pre>ruboto gen app --package org.rubyandroid.new_demo
+<div class="pygments_borland"><pre>ruboto gen app --package org.rubyandroid.new_demo
 
 # 以下のようにしてより詳細に設定することもできます
 # ruboto gen app --package org.rubyandroid.new_demo --path ./myapp --name MyApp --target android-17 --min-sdk android-10 --activity MainActivityName
@@ -364,7 +364,7 @@ gem install jruby-jars
 <h2 id="_3">ビルドとインストール</h2>
 <p>rakeからビルドできるようになっています。また、rubyスクリプトの更新はコンパイル不要で反映できます。
 あとは普通にrubyを書くだけです。</p>
-<div class="pygments_murphy"><pre>cd new_demo
+<div class="pygments_borland"><pre>cd new_demo
 rake
 rake install
 
@@ -465,7 +465,7 @@ rake update_scripts
 <p>wikiで説明されているpluginの書き方を踏まえた上で、それを完全に無視する方法で実装した。
 Postクラスを拡張してhekyllにあうようにliquidに渡すデータを上書きしてるだけ。</p>
 <p>もっといい方法はあると思う。</p>
-<div class="pygments_murphy"><pre><span class="k">def</span> <span class="nf">once</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+<div class="pygments_borland"><pre><span class="k">def</span> <span class="nf">once</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
   <span class="k">unless</span> <span class="p">(</span><span class="vi">@__once_executed__</span> <span class="o">||=</span> <span class="o">[]</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span> <span class="n">tag</span>
     <span class="k">yield</span>
     <span class="vi">@__once_executed__</span> <span class="o">&lt;&lt;</span> <span class="n">tag</span>

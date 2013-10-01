@@ -32,7 +32,7 @@
 例えば、うっかりscreenやtmuxの外で起動してしまった長い時間のかかるバッチ処理を、起動したままscreenの中にもってくることができます。</p>
 <p><a href="https://github.com/nelhage/reptyr">https://github.com/nelhage/reptyr</a> </p>
 <h2 id="_1">使い方</h2>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>reptyr PID
+<div class="pygments_borland"><pre><span class="nv">$ </span>reptyr PID
 </pre></div>
 
 <p>現在のターミナル内にもってきたいプロセスのpidを引数にします。
@@ -54,7 +54,7 @@ SolarisやBSDに移植することも技術的には可能ですが、現状は�
 <h2 id="ptrace_scope-on-ubuntu-maverick-and-up">ptrace_scope on Ubuntu Maverick and up</h2>
 <p>Ubuntu Maverick以降ではptraceの機能がデフォルトで無効になっています。
 以下コマンドで一時的に有効にできます。</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
+<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
 </pre></div>
 
 <p>rootで<code>/etc/sysctl.d/10-ptrace.conf</code>を編集すると永続的に変更できます。また<code>ptrace_scope</code>に関する詳細な説明もここに書いてあります。</p>
@@ -138,7 +138,7 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
 <h3 id="2-setuppy">2. setup.pyをかく</h3>
 <p><code>apt-get source python-xxx</code>で適当なパッケージのソースをダウンロードして参考にするとよい</p>
 <p>以下例</p>
-<div class="pygments_murphy"><pre><span class="c">#!/usr/bin/python</span>
+<div class="pygments_borland"><pre><span class="c">#!/usr/bin/python</span>
 
 <span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">Extension</span>
 
@@ -229,7 +229,7 @@ cronに登録するほどでもない単発のコマンドを実行したいと�
 ちなみにteatimeは午後4時。
 出力先を指定しなければコマンドの出力はcronと同じようにメールにとぶ。$TTYにリダイレクトしてやればコマンドを実行した端末に表示させることもできる。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre>echo &quot;echo おやつの時間です &gt; $TTY&quot;| at teatime
+<div class="pygments_borland"><pre>echo &quot;echo おやつの時間です &gt; $TTY&quot;| at teatime
 echo &quot;echo はろー &gt; $TTY&quot; | at now + 3 minute
 </pre></div>
 
@@ -237,14 +237,14 @@ echo &quot;echo はろー &gt; $TTY&quot; | at now + 3 minute
 <p>tracerouteとpingをあわせたようなもの。tracerouteより表示がみやすい。
 ネットワークのどこで時間がかかってるのか一目でわかる。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre>mtr mojavy.com
+<div class="pygments_borland"><pre>mtr mojavy.com
 </pre></div>
 
 <h2 id="column">column</h2>
 <p>入力テキストをいい感じのカラム表示にフォーマットしてくれる。
 縦に長い出力するコマンドとか、そのままだと出力がみづらいときとかにつかう。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre>gem list | column
+<div class="pygments_borland"><pre>gem list | column
 mount | column -t
 grep -v &#39;^#&#39; /etc/apt/sources.list | column -t
 </pre></div>
@@ -255,7 +255,7 @@ grep -v &#39;^#&#39; /etc/apt/sources.list | column -t
 <h2 id="sshfs">sshfs</h2>
 <p>ssh経由でリモートのファイルシステムをマウントできる。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre>sshfs name@server:/path/to/dir /path/to/mount/point
+<div class="pygments_borland"><pre>sshfs name@server:/path/to/dir /path/to/mount/point
 fusermount -u /path/to/mount/point  # unmount
 </pre></div>
 
@@ -266,7 +266,7 @@ fusermount -u /path/to/mount/point  # unmount
 <h3 id="dig-short-txt-wzxhzdk5wpdgcx">dig +short txt <keyword>.wp.dg.cx</h3>
 <p>dnsクエリでwikipediaのエントリーがみれる。</p>
 <p>例</p>
-<div class="pygments_murphy"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
+<div class="pygments_borland"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
 <span class="s2">&quot;Banana is the common name for herbaceous plants of the genus Musa and for the fruit they produce. It is one of the oldest cultivated plants. They are native to tropical South and Southeast Asia, and are likely to have been first domesticated in Papua New &quot;</span> <span class="s2">&quot;Guinea. Today, they are cultivated throughout the tropics. They are grown in at least 107 countries, primarily for their... http://en.wikipedia.org/wiki/Banana&quot;</span>
 </pre></div>]]></content>
   </entry>
@@ -285,13 +285,13 @@ fusermount -u /path/to/mount/point  # unmount
     <summary type="html"><![CDATA[pacoを導入]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2012/10/16/paco/"><![CDATA[<p>今さらだけどpacoを導入した。</p>
 <p><a href="http://sourceforge.net/projects/paco/files/paco/2.0.9/">http://sourceforge.net/projects/paco/files/paco/2.0.9/</a> から最新のパッケージをダウンロード、展開して以下コマンドでインストール。gpacoは使わないと思うので--disable-gpacoした。</p>
-<div class="pygments_murphy"><pre>./configure --disable-gpaco
+<div class="pygments_borland"><pre>./configure --disable-gpaco
 make <span class="o">&amp;&amp;</span> sudo make install
 sudo make logme
 </pre></div>
 
 <p>何かをインストールする際は以下のようにする。</p>
-<div class="pygments_murphy"><pre>sudo paco -D make install
+<div class="pygments_borland"><pre>sudo paco -D make install
 </pre></div>
 
 <p>make install の部分は、bash install.shとかなんでもいい。</p>
