@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2013-10-17T21:13:58Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[オーバーフローしにくいCombination組み合わせの数の計算方法]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/10/17/calculate-combinations/" />
+    <id>http://mojavy.com/blog/2013/10/17/calculate-combinations/</id>
+    <updated>2013-10-17T21:13:58Z</updated>
+    <published>2013-10-17T21:13:58Z</published>
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <category scheme="http://mojavy.com/blog" term="algorithm" />
+    <summary type="html"><![CDATA[オーバーフローしにくいCombination組み合わせの数の計算方法]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/10/17/calculate-combinations/"><![CDATA[<p>Cで組み合わせの数を計算するときに数式通り計算するとすぐにオーバーフローしてしまう、という問題がある。
+例えば以下のような実装だと、<img src="/images/cca79b0e713c769c64899333d0fe43e6.png"> 程度でも結果がおかしくなってしまう。</p>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">uint64_t</span> <span class="n">fac</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">uint64_t</span> <span class="n">combinations</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">fac</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 10</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 252</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 184756</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 0 !?</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>とりあえず素因数分解してやれば解決するのでいままでそうしてたのだけど、もっとかっこいい方法がないものかと思って探してみたらKnuth先生の本で以下のようなアルゴリズムが紹介されているらしい。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
+これはかっこいい。</p>
+<div class="pygments_borland"><pre><span class="n">uint64_t</span> <span class="n">combinations2</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">uint64_t</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">uint64_t</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">d</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">r</span> <span class="o">*=</span> <span class="n">n</span><span class="o">--</span><span class="p">;</span>
+        <span class="n">r</span> <span class="o">/=</span> <span class="n">d</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>結果の値が範囲内ならオーバーフローしないのか、というとそういうわけではないけどナイーブな実装に比べるとずっと計算できる範囲が広いので、値のレンジがあらかじめわかっているのであればこれで十分ですね。</p>
+<div class="pygments_borland"><pre><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 155117520</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 118264581564861424</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// これはオーバーフローする</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=4756145434" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="http://stackoverflow.com/questions/1838368/calculating-the-amount-of-combinations">http://stackoverflow.com/questions/1838368/calculating-the-amount-of-combinations</a>   残念ながらvol2は手元にはない&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content>
+  </entry>
+</feed>

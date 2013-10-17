@@ -7,12 +7,83 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-07-10T21:02:39Z</updated>
+  <updated>2013-10-17T21:13:58Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[オーバーフローしにくいCombination組み合わせの数の計算方法]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/10/17/calculate-combinations/" />
+    <id>http://mojavy.com/blog/2013/10/17/calculate-combinations/</id>
+    <updated>2013-10-17T21:13:58Z</updated>
+    <published>2013-10-17T21:13:58Z</published>
+    <category scheme="http://mojavy.com/blog" term="algorithms" />
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <summary type="html"><![CDATA[オーバーフローしにくいCombination組み合わせの数の計算方法]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/10/17/calculate-combinations/"><![CDATA[<p>Cで組み合わせの数を計算するときに定義通り計算するとすぐにオーバーフローしてしまう、という問題がある。
+例えば以下のような実装だと、<img src="/images/cca79b0e713c769c64899333d0fe43e6.png"> 程度でも結果がおかしくなってしまう。</p>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;iostream&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">uint64_t</span> <span class="n">fac</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">uint64_t</span> <span class="n">combinations</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">fac</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 10</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 252</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 184756</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 0 !?</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>とりあえず素因数分解してやれば解決するのでいままでそうしてたのだけど、もっとかっこいい方法がないものかと思って探してみたらKnuth先生の本で以下のようなアルゴリズムが紹介されているらしい。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
+これはかっこいい。</p>
+<div class="pygments_borland"><pre><span class="n">uint64_t</span> <span class="n">combinations2</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">uint64_t</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">uint64_t</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">d</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">r</span> <span class="o">*=</span> <span class="n">n</span><span class="o">--</span><span class="p">;</span>
+        <span class="n">r</span> <span class="o">/=</span> <span class="n">d</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 155117520</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 118264581564861424</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// これはオーバーフローする</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>結果の値が範囲内ならオーバーフローしないのか、というとそういうわけではないけどナイーブな実装に比べるとずっと計算できる範囲が広いので、値のレンジがあらかじめわかっているのであればこれで十分ですね。</p>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=4756145434" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="http://stackoverflow.com/questions/1838368/calculating-the-amount-of-combinations">http://stackoverflow.com/questions/1838368/calculating-the-amount-of-combinations</a>   残念ながらvol2は手元にはない&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -57,187 +128,6 @@
 
 <p>C99のdesignated initializerをつかえば初期化もまあそこそこ書きやすいし、型の組み合わせもある程度柔軟にできます。</p>
 <p>C++ではなくあえてCをつかうような人の多くは独自のコンテナライブラリのようなものをもってると思いますが、上記のようなtupleがあれば便利な場面は結構あるのではないかと思います。</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[GoroutineでConcurrentにエラトステネスの篩を計算する]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/" />
-    <id>http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/</id>
-    <updated>2013-06-28T20:45:36Z</updated>
-    <published>2013-06-28T20:45:36Z</published>
-    <category scheme="http://mojavy.com/blog" term="go" />
-    <category scheme="http://mojavy.com/blog" term="programming" />
-    <summary type="html"><![CDATA[GoroutineでConcurrentにエラトステネスの篩を計算する]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/06/28/goroutine-concurrent-sieve-of-eratosthenes/"><![CDATA[<p><img alt="gopher" src="/images/gopherbw-250.png" /> </p>
-<p>Goの練習がてら<a href="http://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%A9%E3%83%88%E3%82%B9%E3%83%86%E3%83%8D%E3%82%B9%E3%81%AE%E7%AF%A9">エラトステネスの篩</a> を実装してみた。</p>
-<p><a href="http://projecteuler.net/problem=7">Project Eulerにちょうどいい問題(10001st prime)</a> があったので、まずは単なるクロージャで書いてみる。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
-<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
-
-<span class="k">import</span> <span class="p">(</span>
-    <span class="s">&quot;fmt&quot;</span>
-<span class="p">)</span>
-
-<span class="k">var</span> <span class="p">(</span>
-    <span class="n">lim</span> <span class="p">=</span> <span class="mi">10000000</span>
-    <span class="n">tgt</span> <span class="p">=</span> <span class="mi">100001</span>
-<span class="p">)</span>
-
-<span class="k">func</span> <span class="n">GetPrimes</span><span class="p">()</span> <span class="k">func</span><span class="p">()</span> <span class="nb">int</span> <span class="p">{</span>
-    <span class="n">sieve</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="n">bool</span><span class="p">,</span> <span class="n">lim</span><span class="p">)</span>
-    <span class="n">p</span> <span class="p">:=</span> <span class="mi">2</span>
-
-    <span class="k">return</span> <span class="k">func</span><span class="p">()</span> <span class="nb">int</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="p">*</span> <span class="n">p</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
-            <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">*</span><span class="n">p</span><span class="p">]</span> <span class="p">=</span> <span class="n">true</span>
-        <span class="p">}</span>
-        <span class="n">ret</span> <span class="p">:=</span> <span class="n">p</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="n">p</span> <span class="p">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="n">false</span> <span class="p">{</span>
-                <span class="n">p</span> <span class="p">=</span> <span class="n">i</span>
-                <span class="k">break</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">ret</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">p</span> <span class="p">:=</span> <span class="n">GetPrimes</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">tgt</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span> <span class="n">p</span><span class="p">()</span> <span class="p">}</span>
-    <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">&quot;&gt;&gt; &quot;</span><span class="p">,</span> <span class="n">p</span><span class="p">())</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>これをGoroutineで書き換えるのは簡単で、返り値のかわりにチャネルをつかうようにするだけ。</p>
-<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
-
-<span class="k">import</span> <span class="s">&quot;fmt&quot;</span>
-
-<span class="k">var</span> <span class="p">(</span>
-    <span class="n">lim</span> <span class="p">=</span> <span class="mi">10000000</span>
-    <span class="n">tgt</span> <span class="p">=</span> <span class="mi">100001</span>
-    <span class="n">buf</span> <span class="p">=</span> <span class="mi">100</span>
-<span class="p">)</span>
-
-<span class="k">func</span> <span class="n">GetPrimes2</span><span class="p">(</span><span class="n">lim</span> <span class="nb">int</span><span class="p">)</span> <span class="k">chan</span> <span class="nb">int</span> <span class="p">{</span>
-    <span class="n">sieve</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="n">bool</span><span class="p">,</span> <span class="n">lim</span><span class="p">)</span>
-    <span class="n">primes</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="nb">int</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
-    <span class="n">p</span> <span class="p">:=</span> <span class="mi">2</span>
-
-    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="p">*</span> <span class="n">p</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
-                <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">*</span><span class="n">p</span><span class="p">]</span> <span class="p">=</span> <span class="n">true</span>
-            <span class="p">}</span>
-            <span class="n">primes</span> <span class="p">&lt;-</span> <span class="n">p</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="n">p</span> <span class="p">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="n">false</span> <span class="p">{</span>
-                    <span class="n">p</span> <span class="p">=</span> <span class="n">i</span>
-                    <span class="k">break</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}()</span>
-    <span class="k">return</span> <span class="n">primes</span>
-<span class="p">}</span>
-
-<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">c</span> <span class="p">:=</span> <span class="n">GetPrimes2</span><span class="p">(</span><span class="n">lim</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">tgt</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span> <span class="p">&lt;-</span><span class="n">c</span> <span class="p">}</span>
-    <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">&quot;&gt;&gt; &quot;</span><span class="p">,</span> <span class="p">&lt;-</span><span class="n">c</span><span class="p">)</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>pが素数のときp〜2*pの区間に少なくとも一つの素数が存在する、という前提<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> をつかって↑を並列化させた。<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
-<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
-
-<span class="k">import</span> <span class="p">(</span>
-    <span class="s">&quot;fmt&quot;</span>
-    <span class="s">&quot;runtime&quot;</span>
-<span class="p">)</span>
-
-<span class="k">var</span> <span class="p">(</span>
-    <span class="n">lim</span> <span class="p">=</span> <span class="mi">10000000</span>
-    <span class="n">tgt</span> <span class="p">=</span> <span class="mi">100001</span>
-    <span class="n">buf</span> <span class="p">=</span> <span class="mi">100</span>
-    <span class="n">concurrency</span> <span class="p">=</span> <span class="mi">8</span>
-<span class="p">)</span>
-
-<span class="k">func</span> <span class="n">GetPrimes3</span><span class="p">()</span> <span class="k">chan</span> <span class="nb">int</span> <span class="p">{</span>
-    <span class="n">sieve</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="n">bool</span><span class="p">,</span> <span class="n">lim</span><span class="p">)</span>
-    <span class="n">primes</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="nb">int</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
-    <span class="n">primes2</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="nb">int</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
-    <span class="n">wait_next</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">bool</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
-
-    <span class="n">primes</span> <span class="p">&lt;-</span> <span class="mi">2</span>
-    <span class="n">primes2</span> <span class="p">&lt;-</span> <span class="mi">2</span>
-
-    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">p</span> <span class="p">:=</span> <span class="mi">2</span>
-        <span class="k">for</span> <span class="p">{</span>
-            <span class="p">&lt;-</span> <span class="n">wait_next</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="n">p</span> <span class="p">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
-                <span class="k">if</span> <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">==</span> <span class="n">false</span> <span class="p">{</span>
-                    <span class="n">primes</span> <span class="p">&lt;-</span> <span class="n">p</span>
-                    <span class="n">primes2</span> <span class="p">&lt;-</span> <span class="n">p</span>
-                    <span class="n">p</span> <span class="p">=</span> <span class="n">i</span>
-                    <span class="k">break</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-        <span class="p">}</span>
-    <span class="p">}()</span>
-
-    <span class="k">for</span> <span class="n">n</span> <span class="p">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n</span> <span class="p">&lt;</span> <span class="n">concurrency</span><span class="p">;</span> <span class="n">n</span><span class="p">++</span> <span class="p">{</span>
-        <span class="k">go</span> <span class="k">func</span><span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">{</span>
-                <span class="n">p</span> <span class="p">:=</span> <span class="p">&lt;-</span> <span class="n">primes2</span>
-                <span class="n">sieve</span><span class="p">[</span><span class="mi">2</span><span class="p">*</span><span class="n">p</span><span class="p">]</span> <span class="p">=</span> <span class="n">true</span>
-                <span class="n">wait_next</span> <span class="p">&lt;-</span> <span class="n">true</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span> <span class="p">*</span> <span class="n">p</span> <span class="p">&lt;</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
-                    <span class="n">sieve</span><span class="p">[</span><span class="n">i</span><span class="p">*</span><span class="n">p</span><span class="p">]</span> <span class="p">=</span> <span class="n">true</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">}(</span><span class="n">n</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="n">primes</span>
-<span class="p">}</span>
-
-<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">runtime</span><span class="p">.</span><span class="n">GOMAXPROCS</span><span class="p">(</span><span class="n">concurrency</span><span class="p">)</span>
-    <span class="n">c</span> <span class="p">:=</span> <span class="n">GetPrimes3</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">tgt</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span> <span class="p">&lt;-</span><span class="n">c</span> <span class="p">}</span>
-    <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">&quot;&gt;&gt; &quot;</span><span class="p">,</span> <span class="p">&lt;-</span><span class="n">c</span><span class="p">)</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>篩をうめるときは最初の数(ある素数の2倍の数)をうめた時点で次の素数が決定できるのでそこのループを並列化できるかと思ったけど、残念ながら速度は体感でわかるほど遅くなってしまった。<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> </p>
-<p>今度スケジューラとかgoroutineまわりのソースを読んでみようと思う。</p>
-<h4 id="_1">参考</h4>
-<ul>
-<li><a href="https://gist.github.com/methane/5377227#file-goscheduler-md">https://gist.github.com/methane/5377227#file-goscheduler-md</a> </li>
-</ul>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>ある程度処理に時間がかかるように定数は適当にかえてます&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="http://ja.wikipedia.org/wiki/%E3%83%99%E3%83%AB%E3%83%88%E3%83%A9%E3%83%B3%E3%81%AE%E4%BB%AE%E8%AA%AC">チェビシェフの定理</a>&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-<li id="fn:3">
-<p>呼び出し側に素数を渡すためのチャネルと篩をうめるgoroutineに素数を渡すためのチャネルの2本をつかってるのがださい&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-<li id="fn:4">
-<p>8コアのlinuxマシンで実行しています&#160;<a href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>]]></content>
   </entry>
   <entry>
     <author>

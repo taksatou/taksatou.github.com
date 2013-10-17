@@ -62,7 +62,7 @@ def render_tex_to_png(latex_block, png_location):
         p.wait()
         #Generate the .png
         p = subprocess.Popen(shlex.split(
-                'convert -density 120 -trim -transparent'
+                'convert -density 135 -trim -transparent'
                 ' "#FFFFFF" source.ps rendered.png'),stdout=subprocess.PIPE)
         p.wait()
         #Copy the .png to the png_location
