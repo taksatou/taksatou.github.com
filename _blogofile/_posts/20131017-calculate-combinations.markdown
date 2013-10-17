@@ -1,7 +1,7 @@
 ---
 categories: programming, algorithms
 date: 2013/10/17 21:13:58
-title: オーバーフローしにくいCombination組み合わせの数の計算方法
+title: オーバーフローしにくい組み合わせの数の計算方法
 filter: latex, syntax_highlight, markdown
 ---
 

@@ -15,13 +15,13 @@
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
-      <title>オーバーフローしにくいCombination組み合わせの数の計算方法</title>
+      <title>オーバーフローしにくい組み合わせの数の計算方法</title>
       <link>http://mojavy.com/blog/2013/10/17/calculate-combinations/</link>
       <pubDate>Thu, 17 Oct 2013 21:13:58 JST</pubDate>
       <category><![CDATA[algorithms]]></category>
       <category><![CDATA[programming]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2013/10/17/calculate-combinations/</guid>
-      <description>オーバーフローしにくいCombination組み合わせの数の計算方法</description>
+      <description>オーバーフローしにくい組み合わせの数の計算方法</description>
       <content:encoded><![CDATA[<p>Cで組み合わせの数を計算するときに定義通り計算するとすぐにオーバーフローしてしまう、という問題がある。
 例えば以下のような実装だと、<img src="/images/cca79b0e713c769c64899333d0fe43e6.png"> 程度でも結果がおかしくなってしまう。</p>
 <div class="pygments_borland"><pre><span class="cp">#include &lt;iostream&gt;</span>

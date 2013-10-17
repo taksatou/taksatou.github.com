@@ -18,14 +18,14 @@
       <name></name>
       <uri>http://mojavy.com/blog</uri>
     </author>
-    <title type="html"><![CDATA[オーバーフローしにくいCombination組み合わせの数の計算方法]]></title>
+    <title type="html"><![CDATA[オーバーフローしにくい組み合わせの数の計算方法]]></title>
     <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/10/17/calculate-combinations/" />
     <id>http://mojavy.com/blog/2013/10/17/calculate-combinations/</id>
     <updated>2013-10-17T21:13:58Z</updated>
     <published>2013-10-17T21:13:58Z</published>
     <category scheme="http://mojavy.com/blog" term="algorithms" />
     <category scheme="http://mojavy.com/blog" term="programming" />
-    <summary type="html"><![CDATA[オーバーフローしにくいCombination組み合わせの数の計算方法]]></summary>
+    <summary type="html"><![CDATA[オーバーフローしにくい組み合わせの数の計算方法]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2013/10/17/calculate-combinations/"><![CDATA[<p>Cで組み合わせの数を計算するときに定義通り計算するとすぐにオーバーフローしてしまう、という問題がある。
 例えば以下のような実装だと、<img src="/images/cca79b0e713c769c64899333d0fe43e6.png"> 程度でも結果がおかしくなってしまう。</p>
 <div class="pygments_borland"><pre><span class="cp">#include &lt;iostream&gt;</span>
