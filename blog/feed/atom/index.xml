@@ -53,7 +53,7 @@
 <li><a href="http://jaspervdj.be/hakyll/">http://jaspervdj.be/hakyll/</a> </li>
 </ul>
 <h3 id="_3">やり方</h3>
-<p>reveal.jsのmarkdown埋め込み機能をつかうだけです。reveal.jsのREADMEを読むとめんどうなように見えますが、 <a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a>  のようにテンプレートを書くだけ。</p>
+<p>reveal.jsのmarkdown埋め込み機能をつかうだけです。reveal.jsのREADMEを読むとめんどうなように見えますが、 <a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a>  のようにテンプレートを書くだけ。とはいえ多少のコーディングが必要です。</p>
 <p>詳細は以下のソースをみてください。</p>
 <ul>
 <li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a> </li>
@@ -98,7 +98,7 @@
 <h3 id="_6">まとめ</h3>
 <ul>
 <li class="fragment">blogofileにreveal.jsを組み込んだ話を紹介しました</li>
-<li class="fragment">組み込むために多少コーディングが必要です</li>
+<li class="fragment">reveal.jsかっこいいです</li>
 </ul>]]></content>
   </entry>
   <entry>
