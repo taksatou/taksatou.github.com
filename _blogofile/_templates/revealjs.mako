@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+		<title>${post.title}</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -35,6 +35,9 @@
 		<div class="reveal">
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
+              <section>
+                <h2>${post.title}</h2>
+              </section>
               <section data-markdown data-separator="^\n\n\n" data-vertical="^\n\n">
                 <script type="text/template">
                   ${markdown_src}

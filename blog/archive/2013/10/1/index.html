@@ -102,6 +102,112 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="reveal.js-をつかってブログ記事からスライドを生成する"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/18/revealjs/" rel="bookmark" title="Permanent Link to reveal.js をつかってブログ記事からスライドを生成する">reveal.js をつかってブログ記事からスライドを生成する</a></h2>
+  <small>October 18, 2013 at 10:00 PM | categories:
+
+<a href='/blog/category/blog'>blog</a>, <a href='/blog/category/reveal.js'>reveal.js</a>, <a href='/blog/category/blogofile'>blogofile</a>
+ | <a href="http://mojavy.com/blog/2013/10/18/revealjs/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <h3 id="_1">はじめに</h3>
+<p>これは以下のような人を対象にしたポストです</p>
+<ul>
+<li class="fragment">スライドをmarkdownでつくりたい</li>
+<li class="fragment">ブログはmarkdownでかいている</li>
+<li class="fragment">ずぼらするためには努力を惜しまない</li>
+</ul>
+
+<h3 id="_2">デモ</h3>
+<p>とりあえず以下のスライドをみてください。</p>
+<ul>
+<li><a href="/slide/2013/10/18/revealjs/">/slide/2013/10/18/revealjs/</a> </li>
+</ul>
+<h3 id="revealjs">reveal.jsとは</h3>
+<p>HTMLでかけるプレゼンツールです。詳細は以下等を参照してください。</p>
+<ul>
+<li><a href="http://lab.hakim.se/reveal-js">http://lab.hakim.se/reveal-js/</a> </li>
+</ul>
+<h3 id="static-cms">static CMS</h3>
+<p>説明は省略します。このブログはblogofileでできていますが、jekyllやhakyllのようなものでもほぼ同等なことができます。</p>
+<ul>
+<li><a href="http://jekyllrb.com/">http://jekyllrb.com/</a> </li>
+<li><a href="http://www.blogofile.com/">http://www.blogofile.com/</a> </li>
+<li><a href="http://jaspervdj.be/hakyll/">http://jaspervdj.be/hakyll/</a> </li>
+</ul>
+<h3 id="_3">やり方</h3>
+<p>reveal.jsのmarkdown埋め込み機能をつかうだけです。reveal.jsのREADMEを読むとめんどうなように見えますが、 <a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a>  のようにテンプレートを書くだけ。</p>
+<p>詳細は以下のソースをみてください。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a> </li>
+<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_controllers/blog/slide.py">slide.py</a> </li>
+</ul>
+<h2 id="code-highlight">code highlight</h2>
+<p>コードハイライトつかえます。</p>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="c1">// highlight test</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="fragment">fragment</h3>
+<p>fragmentもつかえます。</p>
+<p class="fragment">... to step through ...</p>
+
+<ol>
+<li class="fragment"><code>any type</code></li>
+<li class="fragment"><em>of view</em></li>
+<li class="fragment"><strong>fragments</strong></li>
+</ol>
+
+<h3 id="_4">長所</h3>
+<ul>
+<li class="fragment">ブログ書くついてでにスライドもできる</li>
+<li class="fragment">スライドの共有が簡単</li>
+<li class="fragment">パワポ不要</li>
+<li class="fragment">さりげなくギークっぽさがアピールできる</li>
+</ul>
+
+<h3 id="_5">短所</h3>
+<ul>
+<li class="fragment">ブログとスライドのそれぞれの完成度を両立した記事にまとめるのは難しい</li>
+<li class="fragment">多少はhtmlを書く必要があるときもある</li>
+</ul>
+
+<h3 id="_6">まとめ</h3>
+<ul>
+<li class="fragment">blogofileにreveal.jsを組み込んだ話を紹介しました</li>
+<li class="fragment">組み込むために多少コーディングが必要です</li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/10/17/calculate-combinations/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/10/18/revealjs/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/10/18/revealjs/" class="hatena-bookmark-button" data-hatena-bookmark-title="reveal.js をつかってブログ記事からスライドを生成する" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/10/18/revealjs/" data-text="reveal.js をつかってブログ記事からスライドを生成する">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/10/18/revealjs/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="オーバーフローしにくい組み合わせの数の計算方法"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/17/calculate-combinations/" rel="bookmark" title="Permanent Link to オーバーフローしにくい組み合わせの数の計算方法">オーバーフローしにくい組み合わせの数の計算方法</a></h2>
   <small>October 17, 2013 at 09:13 PM | categories:
@@ -180,6 +286,8 @@ href="/blog/feed/atom" />
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/10/01/mustache-quick-master/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/10/18/revealjs/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -327,6 +435,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/10/17/calculate-combinations/" title="オーバーフローしにくい組み合わせの数の計算方法"><p>オーバーフローしにくい組み合わせの数の計算方法</a><span style="font-size: 80%;">(October 17, 2013 at 09:13 PM)</span></li>
       <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
       <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
@@ -334,7 +443,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
       <li><a href="/blog/2013/07/10/c-tuple/" title="C言語でtuple"><p>C言語でtuple</a><span style="font-size: 80%;">(July 10, 2013 at 09:02 PM)</span></li>
       <li><a href="/blog/2013/06/15/quicklinks6/" title="Quicklinks 6"><p>Quicklinks 6</a><span style="font-size: 80%;">(June 15, 2013 at 11:20 PM)</span></li>
-      <li><a href="/blog/2013/06/12/block-cipher-modes-of-operation/" title="暗号利用モードについて"><p>暗号利用モードについて</a><span style="font-size: 80%;">(June 12, 2013 at 08:36 AM)</span></li>
     </ul>
   </div>
 
@@ -376,8 +484,8 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
@@ -409,6 +517,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/reveal.js">reveal.js</a> (<a href="/blog/category/reveal.js/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (9)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
@@ -430,7 +539,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(2)</li>

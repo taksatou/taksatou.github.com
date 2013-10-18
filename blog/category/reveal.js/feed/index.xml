@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Fri, 18 Oct 2013 22:00:24 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>reveal.js をつかってブログ記事からスライドを生成する</title>
+      <link>http://mojavy.com/blog/2013/10/18/revealjs/</link>
+      <pubDate>Fri, 18 Oct 2013 22:00:24 JST</pubDate>
+      <category><![CDATA[blog]]></category>
+      <category><![CDATA[reveal.js]]></category>
+      <category><![CDATA[blogofile]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/10/18/revealjs/</guid>
+      <description>reveal.js をつかってブログ記事からスライドを生成する</description>
+      <content:encoded><![CDATA[<h3 id="_1">はじめに</h3>
+<p>これは以下のような人を対象にしたポストです</p>
+<ul>
+<li class="fragment">スライドをmarkdownでつくりたい</li>
+<li class="fragment">ブログはmarkdownでかいている</li>
+<li class="fragment">ずぼらするためには努力を惜しまない</li>
+</ul>
+
+<h3 id="_2">デモ</h3>
+<p>とりあえず以下のスライドをみてください。</p>
+<ul>
+<li><a href="/slide/2013/10/18/revealjs/">/slide/2013/10/18/revealjs/</a> </li>
+</ul>
+<h3 id="revealjs">reveal.jsとは</h3>
+<p>HTMLでかけるプレゼンツールです。詳細は以下等を参照してください。</p>
+<ul>
+<li><a href="http://lab.hakim.se/reveal-js">http://lab.hakim.se/reveal-js/</a> </li>
+</ul>
+<h3 id="static-cms">static CMS</h3>
+<p>説明は省略します。このブログはblogofileでできていますが、jekyllやhakyllのようなものでもほぼ同等なことができます。</p>
+<ul>
+<li><a href="http://jekyllrb.com/">http://jekyllrb.com/</a> </li>
+<li><a href="http://www.blogofile.com/">http://www.blogofile.com/</a> </li>
+<li><a href="http://jaspervdj.be/hakyll/">http://jaspervdj.be/hakyll/</a> </li>
+</ul>
+<h3 id="_3">やり方</h3>
+<p>reveal.jsのmarkdown埋め込み機能をつかうだけです。reveal.jsのREADMEを読むとめんどうなように見えますが、 <a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a>  のようにテンプレートを書くだけ。</p>
+<p>詳細は以下のソースをみてください。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a> </li>
+<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_controllers/blog/slide.py">slide.py</a> </li>
+</ul>
+<h2 id="code-highlight">code highlight</h2>
+<p>コードハイライトつかえます。</p>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="c1">// highlight test</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="fragment">fragment</h3>
+<p>fragmentもつかえます。</p>
+<p class="fragment">... to step through ...</p>
+
+<ol>
+<li class="fragment"><code>any type</code></li>
+<li class="fragment"><em>of view</em></li>
+<li class="fragment"><strong>fragments</strong></li>
+</ol>
+
+<h3 id="_4">長所</h3>
+<ul>
+<li class="fragment">ブログ書くついてでにスライドもできる</li>
+<li class="fragment">スライドの共有が簡単</li>
+<li class="fragment">パワポ不要</li>
+<li class="fragment">さりげなくギークっぽさがアピールできる</li>
+</ul>
+
+<h3 id="_5">短所</h3>
+<ul>
+<li class="fragment">ブログとスライドのそれぞれの完成度を両立した記事にまとめるのは難しい</li>
+<li class="fragment">多少はhtmlを書く必要があるときもある</li>
+</ul>
+
+<h3 id="_6">まとめ</h3>
+<ul>
+<li class="fragment">blogofileにreveal.jsを組み込んだ話を紹介しました</li>
+<li class="fragment">組み込むために多少コーディングが必要です</li>
+</ul>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

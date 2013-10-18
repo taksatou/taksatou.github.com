@@ -21,6 +21,7 @@ def write_permapages():
         path = blog_re.sub(blog.revealjs.slidepath, post.permalink)
         path = site_re.sub("", path)
         src = code_re.sub("```", post.post_src)
+
         env = {
             "post": post,
             "markdown_src": src

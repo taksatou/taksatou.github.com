@@ -1,0 +1,115 @@
+---
+categories: reveal.js, blog, blogofile
+date: 2013/10/18 22:00:24
+title: reveal.js をつかってブログ記事からスライドを生成する
+slide: True
+
+---
+
+### はじめに
+
+これは以下のような人を対象にしたポストです
+
+<ul>
+<li class="fragment">スライドをmarkdownでつくりたい</li>
+<li class="fragment">ブログはmarkdownでかいている</li>
+<li class="fragment">ずぼらするためには努力を惜しまない</li>
+</ul>
+
+
+
+### デモ
+
+とりあえず以下のスライドをみてください。
+
+* [/slide/2013/10/18/revealjs/](/slide/2013/10/18/revealjs/ ) 
+
+
+
+### reveal.jsとは
+
+HTMLでかけるプレゼンツールです。詳細は以下等を参照してください。
+
+* [http://lab.hakim.se/reveal-js/](http://lab.hakim.se/reveal-js ) 
+
+
+
+
+### static CMS
+
+説明は省略します。このブログはblogofileでできていますが、jekyllやhakyllのようなものでもほぼ同等なことができます。
+
+* [http://jekyllrb.com/](http://jekyllrb.com/ ) 
+* [http://www.blogofile.com/](http://www.blogofile.com/ ) 
+* [http://jaspervdj.be/hakyll/](http://jaspervdj.be/hakyll/ ) 
+
+
+
+### やり方
+
+reveal.jsのmarkdown埋め込み機能をつかうだけです。reveal.jsのREADMEを読むとめんどうなように見えますが、 [revealjs.mako](https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako )  のようにテンプレートを書くだけ。
+
+詳細は以下のソースをみてください。
+
+* [revealjs.mako](https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako ) 
+* [slide.py](https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_controllers/blog/slide.py ) 
+
+
+
+
+## code highlight
+
+コードハイライトつかえます。
+
+$$code(lang=cpp)
+#include <stdio.h>
+
+// highlight test
+
+int main(int argc, char *argv[]) {
+    printf("hello, world!\n");
+    return 0;
+}
+$$/code
+
+
+
+### fragment
+
+fragmentもつかえます。
+
+<p class="fragment">... to step through ...</p>
+<ol>
+<li class="fragment"><code>any type</code></li>
+<li class="fragment"><em>of view</em></li>
+<li class="fragment"><strong>fragments</strong></li>
+</ol>
+
+
+
+### 長所
+
+<ul>
+<li class="fragment">ブログ書くついてでにスライドもできる</li>
+<li class="fragment">スライドの共有が簡単</li>
+<li class="fragment">パワポ不要</li>
+<li class="fragment">さりげなくギークっぽさがアピールできる</li>
+</ul>
+
+
+
+### 短所
+
+<ul>
+<li class="fragment">ブログとスライドのそれぞれの完成度を両立した記事にまとめるのは難しい</li>
+<li class="fragment">多少はhtmlを書く必要があるときもある</li>
+</ul>
+
+
+
+### まとめ
+
+<ul>
+<li class="fragment">blogofileにreveal.jsを組み込んだ話を紹介しました</li>
+<li class="fragment">組み込むために多少コーディングが必要です</li>
+</ul>

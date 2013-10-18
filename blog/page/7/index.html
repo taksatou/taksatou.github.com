@@ -102,6 +102,90 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="おやつの時間をお知らせしてくれるunixコマンド：at-teatime-(他...)"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" rel="bookmark" title="Permanent Link to おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a></h2>
+  <small>January 08, 2013 at 08:30 PM | categories:
+
+<a href='/blog/category/unix'>unix</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/linux'>linux</a>
+ | <a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="banana" src="/images/banana-200.png" /></p>
+<p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
+<h2 id="at">at</h2>
+<p>入力されたコマンドを指定されたタイミングで実行するようにスケジュールする。
+cronに登録するほどでもない単発のコマンドを実行したいときとかにつかう。
+時間の指定には現在の時刻からの経過時間や絶対時間の他にteatimeやmidnightといった文字列もつかえる。
+ちなみにteatimeは午後4時。
+出力先を指定しなければコマンドの出力はcronと同じようにメールにとぶ。$TTYにリダイレクトしてやればコマンドを実行した端末に表示させることもできる。</p>
+<p>例</p>
+<div class="pygments_borland"><pre>echo &quot;echo おやつの時間です &gt; $TTY&quot;| at teatime
+echo &quot;echo はろー &gt; $TTY&quot; | at now + 3 minute
+</pre></div>
+
+<h2 id="mtr">mtr</h2>
+<p>tracerouteとpingをあわせたようなもの。tracerouteより表示がみやすい。
+ネットワークのどこで時間がかかってるのか一目でわかる。</p>
+<p>例</p>
+<div class="pygments_borland"><pre>mtr mojavy.com
+</pre></div>
+
+<h2 id="column">column</h2>
+<p>入力テキストをいい感じのカラム表示にフォーマットしてくれる。
+縦に長い出力するコマンドとか、そのままだと出力がみづらいときとかにつかう。</p>
+<p>例</p>
+<div class="pygments_borland"><pre>gem list | column
+mount | column -t
+grep -v &#39;^#&#39; /etc/apt/sources.list | column -t
+</pre></div>
+
+<h2 id="reset">reset</h2>
+<p>端末をリセットする。
+うっかりバイナリファイルをcatとかしてしまって端末が壊れてしまった場合に端末を閉じずに復帰できる。</p>
+<h2 id="sshfs">sshfs</h2>
+<p>ssh経由でリモートのファイルシステムをマウントできる。</p>
+<p>例</p>
+<div class="pygments_borland"><pre>sshfs name@server:/path/to/dir /path/to/mount/point
+fusermount -u /path/to/mount/point  # unmount
+</pre></div>
+
+<h2 id="_1">その他</h2>
+<p>以下はコマンド自体の機能ではないけど覚えておくと便利かもしれないもの</p>
+<h3 id="curl-ifconfigme">curl ifconfig.me</h3>
+<p>ifconfig.meというサイトがある。自分のグローバルIPがわかる。</p>
+<h3 id="dig-short-txt-wzxhzdk5wpdgcx">dig +short txt <keyword>.wp.dg.cx</h3>
+<p>dnsクエリでwikipediaのエントリーがみれる。</p>
+<p>例</p>
+<div class="pygments_borland"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
+<span class="s2">&quot;Banana is the common name for herbaceous plants of the genus Musa and for the fruit they produce. It is one of the oldest cultivated plants. They are native to tropical South and Southeast Asia, and are likely to have been first domesticated in Papua New &quot;</span> <span class="s2">&quot;Guinea. Today, they are cultivated throughout the tropics. They are grown in at least 107 countries, primarily for their... http://en.wikipedia.org/wiki/Banana&quot;</span>
+</pre></div>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/01/08/2012-summary/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/favorite-linux-command/" class="hatena-bookmark-button" data-hatena-bookmark-title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" data-text="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="2012年の振り返りと2013年の抱負"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/08/2012-summary/" rel="bookmark" title="Permanent Link to 2012年の振り返りと2013年の抱負">2012年の振り返りと2013年の抱負</a></h2>
   <small>January 08, 2013 at 12:30 AM | categories:
@@ -489,48 +573,6 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="cl-frontcodingをつくってみた"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/11/10/cl-frontcoding/" rel="bookmark" title="Permanent Link to cl-frontcodingをつくってみた">cl-frontcodingをつくってみた</a></h2>
-  <small>November 10, 2012 at 08:30 PM | categories:
-
-<a href='/blog/category/algorithms'>algorithms</a>, <a href='/blog/category/common-lisp'>common lisp</a>
- | <a href="http://mojavy.com/blog/2012/11/10/cl-frontcoding/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="lisp" src="/images/lisplogo_flag2_256.png" /></p>
-<p><a href="http://mojavy.com/blog/2012/10/31/quick-links/">先週くらい</a>に読んだWEB+DB PRESS Vol.42 に載っていた<a href="http://en.wikipedia.org/wiki/Incremental_encoding">Front Coding</a> という圧縮アルゴリズムを実装してみました。</p>
-<p><a href="http://d.hatena.ne.jp/naoya/20080914/1221382329">http://d.hatena.ne.jp/naoya/20080914/1221382329</a> のパクりです。</p>
-<p>ソースは<a href="https://github.com/taksatou/cl-frontcoding">https://github.com/taksatou/cl-frontcoding</a>です。</p>
-<p>学習目的でつくったので実用的なライブラリではないですが、CLOSやマクロを使いつつパッケージ作成〜テストまで一通りやりました。</p>
-<p>CLOSもマクロも基本的な使い方をするだけなら意外と簡単でした。</p>
-<p>CLOSとかマクロは本を読んでもいまいちよくわからない上に、深淵なイメージが膨らんで心理的ハードルがあがってしまうだけなので、よくわからないなりになにか作ってみると理解が進んでいいと思います。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/11/09/common-lisp-declare/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/11/14/quicklinks3/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/11/10/cl-frontcoding/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/10/cl-frontcoding/" class="hatena-bookmark-button" data-hatena-bookmark-title="cl-frontcodingをつくってみた" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/11/10/cl-frontcoding/" data-text="cl-frontcodingをつくってみた">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/11/10/cl-frontcoding/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../6">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -560,6 +602,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/10/17/calculate-combinations/" title="オーバーフローしにくい組み合わせの数の計算方法"><p>オーバーフローしにくい組み合わせの数の計算方法</a><span style="font-size: 80%;">(October 17, 2013 at 09:13 PM)</span></li>
       <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
       <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
@@ -567,7 +610,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
       <li><a href="/blog/2013/07/10/c-tuple/" title="C言語でtuple"><p>C言語でtuple</a><span style="font-size: 80%;">(July 10, 2013 at 09:02 PM)</span></li>
       <li><a href="/blog/2013/06/15/quicklinks6/" title="Quicklinks 6"><p>Quicklinks 6</a><span style="font-size: 80%;">(June 15, 2013 at 11:20 PM)</span></li>
-      <li><a href="/blog/2013/06/12/block-cipher-modes-of-operation/" title="暗号利用モードについて"><p>暗号利用モードについて</a><span style="font-size: 80%;">(June 12, 2013 at 08:36 AM)</span></li>
     </ul>
   </div>
 
@@ -609,8 +651,8 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
@@ -642,6 +684,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/reveal.js">reveal.js</a> (<a href="/blog/category/reveal.js/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (9)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
@@ -663,7 +706,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(2)</li>

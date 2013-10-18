@@ -10,10 +10,93 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Thu, 17 Oct 2013 21:13:58 GMT</pubDate>
+    <pubDate>Fri, 18 Oct 2013 22:00:24 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>reveal.js をつかってブログ記事からスライドを生成する</title>
+      <link>http://mojavy.com/blog/2013/10/18/revealjs/</link>
+      <pubDate>Fri, 18 Oct 2013 22:00:24 JST</pubDate>
+      <category><![CDATA[blog]]></category>
+      <category><![CDATA[reveal.js]]></category>
+      <category><![CDATA[blogofile]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/10/18/revealjs/</guid>
+      <description>reveal.js をつかってブログ記事からスライドを生成する</description>
+      <content:encoded><![CDATA[<h3 id="_1">はじめに</h3>
+<p>これは以下のような人を対象にしたポストです</p>
+<ul>
+<li class="fragment">スライドをmarkdownでつくりたい</li>
+<li class="fragment">ブログはmarkdownでかいている</li>
+<li class="fragment">ずぼらするためには努力を惜しまない</li>
+</ul>
+
+<h3 id="_2">デモ</h3>
+<p>とりあえず以下のスライドをみてください。</p>
+<ul>
+<li><a href="/slide/2013/10/18/revealjs/">/slide/2013/10/18/revealjs/</a> </li>
+</ul>
+<h3 id="revealjs">reveal.jsとは</h3>
+<p>HTMLでかけるプレゼンツールです。詳細は以下等を参照してください。</p>
+<ul>
+<li><a href="http://lab.hakim.se/reveal-js">http://lab.hakim.se/reveal-js/</a> </li>
+</ul>
+<h3 id="static-cms">static CMS</h3>
+<p>説明は省略します。このブログはblogofileでできていますが、jekyllやhakyllのようなものでもほぼ同等なことができます。</p>
+<ul>
+<li><a href="http://jekyllrb.com/">http://jekyllrb.com/</a> </li>
+<li><a href="http://www.blogofile.com/">http://www.blogofile.com/</a> </li>
+<li><a href="http://jaspervdj.be/hakyll/">http://jaspervdj.be/hakyll/</a> </li>
+</ul>
+<h3 id="_3">やり方</h3>
+<p>reveal.jsのmarkdown埋め込み機能をつかうだけです。reveal.jsのREADMEを読むとめんどうなように見えますが、 <a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a>  のようにテンプレートを書くだけ。</p>
+<p>詳細は以下のソースをみてください。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a> </li>
+<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_controllers/blog/slide.py">slide.py</a> </li>
+</ul>
+<h2 id="code-highlight">code highlight</h2>
+<p>コードハイライトつかえます。</p>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="c1">// highlight test</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="fragment">fragment</h3>
+<p>fragmentもつかえます。</p>
+<p class="fragment">... to step through ...</p>
+
+<ol>
+<li class="fragment"><code>any type</code></li>
+<li class="fragment"><em>of view</em></li>
+<li class="fragment"><strong>fragments</strong></li>
+</ol>
+
+<h3 id="_4">長所</h3>
+<ul>
+<li class="fragment">ブログ書くついてでにスライドもできる</li>
+<li class="fragment">スライドの共有が簡単</li>
+<li class="fragment">パワポ不要</li>
+<li class="fragment">さりげなくギークっぽさがアピールできる</li>
+</ul>
+
+<h3 id="_5">短所</h3>
+<ul>
+<li class="fragment">ブログとスライドのそれぞれの完成度を両立した記事にまとめるのは難しい</li>
+<li class="fragment">多少はhtmlを書く必要があるときもある</li>
+</ul>
+
+<h3 id="_6">まとめ</h3>
+<ul>
+<li class="fragment">blogofileにreveal.jsを組み込んだ話を紹介しました</li>
+<li class="fragment">組み込むために多少コーディングが必要です</li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>オーバーフローしにくい組み合わせの数の計算方法</title>
       <link>http://mojavy.com/blog/2013/10/17/calculate-combinations/</link>
@@ -578,55 +661,6 @@ compatibility version 0.0.0
 <li><a href="https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath">@executable_path, @load_path and @rpath </a> </li>
 <li><a href="https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/DynamicLibraryDesignGuidelines.html">DynamicLibraryDesignGuidelines</a> </li>
 </ul>]]></content:encoded>
-    </item>
-    <item>
-      <title>ワイヤレスなRaspberry Pi環境をつくる</title>
-      <link>http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/</link>
-      <pubDate>Sun, 28 Apr 2013 01:54:53 JST</pubDate>
-      <category><![CDATA[raspberry pi]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/</guid>
-      <description>ワイヤレスなRaspberry Pi環境をつくる</description>
-      <content:encoded><![CDATA[<p><img alt="raspberry" src="/images/raspberry-pi-150.png" /></p>
-<p>Raspberry Pi遊ぶからにはその小ささを生かしたことがしたいですよね。
-というわけで手始めにワイヤレス化しました。手順は非常に簡単で、ほぼAmazonで買ったパーツを差すだけで達成できました。</p>
-<p>Raspberry Piを標準的な構成でうごかすとLANケーブル、電源、 キーボード、ディスプレイの4本コードがのびることになりますが、sshで接続できればディスプレイもキーボードも不要なのであと必要なのはネットワーク環境と電源だけです。</p>
-<p>電源は 5V 700mA なので、普通のスマートフォン用バッテリーがそのまま使えます。
-5V 700mAを越えていれば何でもいいと思いますが、今回は以下をつかいました。</p>
-<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B0067TQQI8" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-
-<p><br></p>
-<p>ネットワークはUSBの無線LAN受信機を使います。
-これも何でもいいと思いますが、あまり最新のモデルだとドライバが対応してないかもしれないのでちょっと古めのもののほうが無難です。以下の商品は問題なく動きました。</p>
-<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B003NSAMW2" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-
-<p>wifiの設定はX Windowの設定画面からしました。<code>startx</code>でデスクトップを起動すると<code>WiFi Config</code>というアイコンがあるのでそこから設定できます。
-ターミナルで<code>ifconfig</code>を実行してwlan0にinet addrが割り当てられていることを確認できればOKです。</p>
-<div class="pygments_borland"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
-eth0      Link encap:Ethernet  HWaddr b8:27:eb:90:32:15
-          UP BROADCAST MULTICAST  MTU:1500  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-
-lo        Link encap:Local Loopback
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          UP LOOPBACK RUNNING  MTU:16436  Metric:1
-          RX packets:8 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0
-          RX bytes:1104 (1.0 KiB)  TX bytes:1104 (1.0 KiB)
-
-wlan0     Link encap:Ethernet  HWaddr 10:6f:3f:ec:5f:b8
-          inet addr:192.168.1.13  Bcast:192.168.1.255  Mask:255.255.255.0
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:4285 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:673 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000
-          RX bytes:937903 (915.9 KiB)  TX bytes:81630 (79.7 KiB)
-</pre></div>
-
-<p>ここで確認したIPアドレスにsshしてつながれば完了です。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
