@@ -56,6 +56,10 @@ blog.auto_permalink.enabled = True
 
 blog.auto_permalink.path = ":blog_path/:year/:month/:day/:filename/"
 
+## revealjs 
+blog.revealjs.path = '/revealjs/current'
+blog.revealjs.slidepath = '/slide'
+
 import mimetypes
 mimetypes.types_map['.svg'] = 'image/svg+xml'
 
@@ -80,3 +84,5 @@ def post_build():
         subprocess.call("cp -r _site/* ../", shell=True)
     else:
         logging.error("build failed. because _site dir not exists.")
+
+

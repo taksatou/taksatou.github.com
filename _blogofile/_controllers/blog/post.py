@@ -97,6 +97,7 @@ class Post(object):
         self.image = None
         self.next_post = None
         self.prev_post = None
+        self.post_src = ""
         self.__parse()
         self.__post_process()
 
@@ -115,6 +116,8 @@ class Post(object):
             #Extract the yaml at the top
             self.__parse_yaml(content_parts[1])
             post_src = content_parts[2]
+            self.post_src = post_src
+
         self.__apply_filters(post_src)
         #Do post excerpting
         self.__parse_post_excerpting()

@@ -8,6 +8,7 @@ import chronological
 import feed
 import permapage
 import post
+import slide
 
 config = {
         "name": "Blog",
@@ -40,4 +41,5 @@ def run():
     archives.run()
     categories.run()
     feed.run()
+    slide.run()
 
