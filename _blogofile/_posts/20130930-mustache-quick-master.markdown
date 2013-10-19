@@ -3,6 +3,7 @@ categories: ruby, mustache
 date: 2013/10/01 00:08:09
 title: mustache基礎文法最速マスター
 image: /images/mustache-logo-250.png
+slide: True
 ---
 
 ![mustache](/images/mustache-logo-250.png ) 
@@ -12,9 +13,13 @@ mustacheはシンプルなテンプレートエンジンなので本家の英語
 以下の内容はrubygemの`mustache-0.99.4`で確認しています。
 他の言語の場合は適宜置きかえてください。
 
+
+
+
 ## 目次
 
 [TOC]
+
 
 
 ## 変数の展開
@@ -29,6 +34,8 @@ Mustache.render("Hello, {{world}}!", world: "mustache") # => "Hello, mustache!"
 Mustache.render("{{no_such_key}}") # => ""
 $$/code
 
+
+
 ## 変数のエスケープ
 
 デフォルトではHTMLエスケープが有効になります。アンエスケープされたHTMLが使いたい場合は`{{{name}}}`のように3つのブレースで囲います。
@@ -37,6 +44,8 @@ $$code(lang=ruby)
 Mustache.render("{{html}}",  html: "<b>GitHub</b>") # => "&lt;b&gt;GitHub&lt;/b&gt;"
 Mustache.render("{{{html}}}", html: "<b>GitHub</b>") # => "<b>GitHub</b>"
 $$/code
+
+
 
 ## 条件分岐
 
@@ -59,6 +68,8 @@ Mustache.render(template, condition: true) # => "It is true.\n"
 Mustache.render(template, condition: false) # => "No not true.\n"
 $$/code
 
+
+
 ## ループ
 
 セクションのキーに対応する値に配列を渡した場合は、それぞれの要素を引数として中のブロックが繰り返し評価されます。
@@ -73,6 +84,8 @@ data = {animals: [{name: "cat"}, {name: "dog"}, {name: "pig"}]}
 Mustache.render(template, data) # => "cat\ndog\npig\n"
 $$/code
 
+
+
 ## 無名関数 (Lambda)
 
 セクションのキーに対応する値に呼び出し可能なオブジェクトを渡した場合は、そのブロック内のテキストを引数として実行され、その返り値が結果として出力されます。
@@ -86,6 +99,8 @@ DOC
 Mustache.render(template, proc: ->text{text.gsub(/bad/, 'nice')}) # => "mojavy is nice\n"
 $$/code
 
+
+
 ## コメント
 
 `!`をつけるとコメントになります
@@ -93,6 +108,8 @@ $$/code
 $$code(lang=ruby)
 Mustache.render("Comment here: {{! ignore me }}") # => "Comment here: "
 $$/code
+
+
 
 ## まとめ
 

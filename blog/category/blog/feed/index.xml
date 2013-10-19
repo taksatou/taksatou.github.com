@@ -10,10 +10,22 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Fri, 18 Oct 2013 22:00:24 GMT</pubDate>
+    <pubDate>Sun, 20 Oct 2013 02:32:40 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>趣味ブログ初めました</title>
+      <link>http://mojavy.com/blog/2013/10/20/start-hobby-blog/</link>
+      <pubDate>Sun, 20 Oct 2013 02:32:40 JST</pubDate>
+      <category><![CDATA[blog]]></category>
+      <category><![CDATA[hobby]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/10/20/start-hobby-blog/</guid>
+      <description>趣味ブログ初めました</description>
+      <content:encoded><![CDATA[<p>なんとなく気が向いたので趣味ブログをはじめました。</p>
+<p><a href="http://mojavy.tumblr.com/">http://mojavy.tumblr.com/</a> </p>
+<p>誰の役にもたたなそうなことをだらだら書こうと思います。</p>]]></content:encoded>
+    </item>
     <item>
       <title>reveal.js をつかってブログ記事からスライドを生成する</title>
       <link>http://mojavy.com/blog/2013/10/18/revealjs/</link>
