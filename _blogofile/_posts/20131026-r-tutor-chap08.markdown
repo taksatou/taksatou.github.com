@@ -1,0 +1,170 @@
+---
+categories: R, note
+date: 2013/10/26 17:42:11
+title: R Tutorial Part2 Chapter08 (Numerical Measures)
+slide: True
+---
+
+詳細は以下参照
+
+[http://www.r-tutor.com/elementary-statistics/numerical-measures](http://www.r-tutor.com/elementary-statistics/numerical-measures )
+
+
+
+
+### mean, median
+
+* mean: 平均
+* median: 中央値、中間値。データ数が偶数個の場合は前後の2つの数の平均。
+
+$$code(lang=R)
+> library(MASS)
+> mean(faithful$eruption)
+[1] 3.487783
+> median(faithful$eruption)
+[1] 4
+$$/code
+
+
+
+### quartile, quantile, percentile
+
+* first quartile, lower quartile: ソートされたデータの数を１：３に分ける位置の値。 第１四分位
+* second quartile, median: 中間値
+* third quartile, upper quartile: 第３四分位
+* quantile: 変位値
+* percentile: 百分位数
+
+$$code(lang=R)
+> quantile(faithful$eruption)
+     0%     25%     50%     75%    100% 
+1.60000 2.16275 4.00000 4.45425 5.10000 
+> x = sort(faithful$eruption)
+> x[1+floor((length(x) - 1)/4)] + (x[1+ceiling((length(x) - 1)/4)] - x[1+floor((length(x) - 1)/4)]) * 3 / 4
+[1] 2.16275
+> quantile(faithful$eruption, c(.32, .57, .98))
+    32%     57%     98% 
+2.39524 4.13300 4.93300 
+$$/code
+
+
+
+
+### max, min, range
+
+$$code(lang=R)
+> max(faithful$eruption)
+[1] 5.1
+> min(faithful$eruption)
+[1] 1.6
+> max(faithful$eruption) - min(faithful$eruption)
+[1] 3.5
+$$/code
+
+
+
+### interquartile range
+
+* interquartile range: 四分位範囲, upper quartile - lower quartile
+
+$$code(lang=$)
+> IQR(faithful$eruption)
+[1] 2.2915
+> x = quantile(faithful$eruption)
+> x[4] - x[2]
+   75% 
+2.2915 
+$$/code
+
+
+
+### box plot
+
+* boxplot: 箱ひげ図
+
+$$code(lang=R)
+> boxplot(faithful$eruption, horizontal=TRUE)
+$$/code
+
+![boxplot](http://www.r-tutor.com/sites/default/files/images/numerical-measures4x.png ) 
+
+※ 箱のなかの線はmedian
+
+
+
+### variance, standard deviation
+
+* variance: 分散。Rのvar関数は[不偏分散](http://www.sist.ac.jp/~kanakubo/research/statistic/fuhenbunsan.html) 
+* standard deviation: 標準偏差
+
+$$code(lang=R)
+> var(faithful$eruption)
+[1] 1.302728
+> sd(faithful$eruption)
+[1] 1.141371
+
+> var2 <- function(x) { sum((x - mean(x)) ^ 2) / length(x) }   # 普通の分散
+> var2(faithful$eruption)
+[1] 1.297939
+$$/code
+
+
+
+### covariance, correlation coefficient
+
+* covariance: 共分散。2 組の対応するデータ間での、平均からの偏差の積の平均値。
+* correlation coefficient: 相関係数。共分散をそれぞれのデータの標準偏差の積で割ったもの。
+
+$$code(lang=R)
+> cov(faithful$eruption, faithful$waiting)
+[1] 13.97781
+> cor(faithful$eruption, faithful$waiting)
+[1] 0.9008112
+$$/code
+
+correlation coefficientが1に近いほど正の相関があるといえる
+
+
+
+### e1071
+
+> Functions for latent class analysis, short time Fourier transform, fuzzy clustering, support vector machines, shortest path computation, bagged clustering, naive Bayes classifier
+
+$$code(lang=R)
+> install.packages('e1071')
+$$/code
+
+[http://cran.r-project.org/web/packages/e1071/index.html](http://cran.r-project.org/web/packages/e1071/index.html ) 
+
+
+
+### central moment
+
+* central moment： 中心積率。標本分散は2次のcentral moment
+
+$$code(lang=R)
+> library(e1071)
+> moment(faithful$eruption, order=3, center=TRUE)
+[1] -0.6149059
+$$/code
+
+
+
+### skewness, kurtosis
+
+* skewness: 歪度。対象性の度合いの指標。一般に、skewness < 0 ならばmean < median でそのデータの分散はleft skewed という。skewness > 0 ならばmean > median でright skewed という。
+* kurtosis: 尖度。分布の尖り具合の指標。kurtosis < 0 ならフラットな分布になりplatykurtic(緩尖な)という。kurtosis > 0ならとがった分布になりleptokurticという。正規分布の場合は0になりmesokurticという。
+
+$$code(lang=R)
+> skewness(faithful$eruption)
+[1] -0.4135498
+> kurtosis(faithful$eruption)
+[1] -1.511605
+$$/code
+
+
+
+
+### link
+
+* [slide](/slide/2013/10/26/r-tutor-chap08/ ) 
