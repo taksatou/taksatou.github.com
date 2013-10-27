@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>R Tutorial Part2 Chapter08 (Numerical Measures)</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="/revealjs/current/css/reveal.min.css">
+		<link rel="stylesheet" href="/revealjs/current/css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="/revealjs/current/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="/revealjs/current/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="/revealjs/current/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+              <section>
+                <h2>R Tutorial Part2 Chapter08 (Numerical Measures)</h2>
+              </section>
+              <section data-markdown data-separator="^\n\n\n" data-vertical="^\n\n">
+                <script type="text/template">
+                  
+
+これは[R Tutorial Part2 Chapter08 (Numerical Measures)](http://www.r-tutor.com/elementary-statistics/numerical-measures ) のノートです。
+[slideはこちら](/slide/2013/10/26/r-tutor-chap08/ ) 。
+
+
+
+
+### mean, median
+
+* mean: 平均
+* median: 中央値、中間値。データ数が偶数個の場合は前後の2つの数の平均。
+
+```
+> library(MASS)
+> mean(faithful$eruption)
+[1] 3.487783
+> median(faithful$eruption)
+[1] 4
+```
+
+
+
+### quartile, quantile, percentile
+
+* first quartile, lower quartile: ソートされたデータの数を１：３に分ける位置の値。 第１四分位
+* second quartile, median: 中間値
+* third quartile, upper quartile: 第３四分位
+* quantile: 変位値
+* percentile: 百分位数
+
+```
+> quantile(faithful$eruption)
+     0%     25%     50%     75%    100% 
+1.60000 2.16275 4.00000 4.45425 5.10000 
+> x = sort(faithful$eruption)
+> x[1+floor((length(x) - 1)/4)] + (x[1+ceiling((length(x) - 1)/4)] - x[1+floor((length(x) - 1)/4)]) * 3 / 4
+[1] 2.16275
+> quantile(faithful$eruption, c(.32, .57, .98))
+    32%     57%     98% 
+2.39524 4.13300 4.93300 
+```
+
+
+
+
+### max, min, range
+
+```
+> max(faithful$eruption)
+[1] 5.1
+> min(faithful$eruption)
+[1] 1.6
+> max(faithful$eruption) - min(faithful$eruption)
+[1] 3.5
+```
+
+
+
+### interquartile range
+
+* interquartile range: 四分位範囲, upper quartile - lower quartile
+
+```
+> IQR(faithful$eruption)
+[1] 2.2915
+> x = quantile(faithful$eruption)
+> x[4] - x[2]
+   75% 
+2.2915 
+```
+
+
+
+### box plot
+
+* boxplot: 箱ひげ図
+
+```
+> boxplot(faithful$eruption, horizontal=TRUE)
+```
+
+![boxplot](/images/numerical-measures4x.png) 
+
+※ 箱のなかの線はmedian
+
+
+
+### variance, standard deviation
+
+* variance: 分散。Rのvar関数は[不偏分散](http://www.sist.ac.jp/~kanakubo/research/statistic/fuhenbunsan.html) 
+* standard deviation: 標準偏差
+
+```
+> var(faithful$eruption)
+[1] 1.302728
+> sd(faithful$eruption)
+[1] 1.141371
+
+> var2 <- function(x) { sum((x - mean(x)) ^ 2) / length(x) }   # 普通の分散
+> var2(faithful$eruption)
+[1] 1.297939
+```
+
+
+
+### covariance, correlation coefficient
+
+* covariance: 共分散。2 組の対応するデータ間での、平均からの偏差の積の平均値。
+* correlation coefficient: 相関係数。共分散をそれぞれのデータの標準偏差の積で割ったもの。
+
+```
+> cov(faithful$eruption, faithful$waiting)
+[1] 13.97781
+> cor(faithful$eruption, faithful$waiting)
+[1] 0.9008112
+```
+
+correlation coefficientが1に近いほど正の相関があるといえる
+
+
+
+### e1071
+
+> Functions for latent class analysis, short time Fourier transform, fuzzy clustering, support vector machines, shortest path computation, bagged clustering, naive Bayes classifier
+
+```
+> install.packages('e1071')
+```
+
+[http://cran.r-project.org/web/packages/e1071/index.html](http://cran.r-project.org/web/packages/e1071/index.html ) 
+
+
+
+### central moment
+
+* central moment： 中心積率。標本分散は2次のcentral moment
+
+```
+> library(e1071)
+> moment(faithful$eruption, order=3, center=TRUE)
+[1] -0.6149059
+```
+
+
+
+### skewness, kurtosis
+
+* skewness: 歪度。対象性の度合いの指標。一般に、skewness < 0 ならばmean < median でそのデータの分散はleft skewed という。skewness > 0 ならばmean > median でright skewed という。
+* kurtosis: 尖度。分布の尖り具合の指標。kurtosis < 0 ならフラットな分布になりplatykurtic(緩尖な)という。kurtosis > 0ならとがった分布になりleptokurticという。正規分布の場合は0になりmesokurticという。
+
+```
+> skewness(faithful$eruption)
+[1] -0.4135498
+> kurtosis(faithful$eruption)
+[1] -1.511605
+```
+
+
+
+### misc
+
+* この項は統計でよくつかう関数のまとめになってます
+* 各関数の詳細はhelpを参照
+
+                </script>
+              </section>
+			</div>
+
+		</div>
+
+		<script src="/revealjs/current/lib/js/head.min.js"></script>
+		<script src="/revealjs/current/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '/revealjs/current/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '/revealjs/current/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '/revealjs/current/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '/revealjs/current/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '/revealjs/current/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '/revealjs/current/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
