@@ -10,10 +10,74 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Mon, 28 Oct 2013 02:11:53 GMT</pubDate>
+    <pubDate>Tue, 12 Nov 2013 03:01:16 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>ベイズの定理から見るガン検査</title>
+      <link>http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/</link>
+      <pubDate>Tue, 12 Nov 2013 03:01:16 JST</pubDate>
+      <category><![CDATA[statistics]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/</guid>
+      <description>ベイズの定理から見るガン検査</description>
+      <content:encoded><![CDATA[<p><a href="http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html">http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html</a> </p>
+<p>高校生がすい臓がん発見の画期的方法を開発したという記事が話題になってます。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
+<p>この検査法の改善が統計的にどういう意味をもつのか実際にベイズの定理をつかって計算してみます。</p>
+<p>ここでは以下のような問題を考えることとします。</p>
+<blockquote>
+<p>あるガン検査法は、被験者ががんの場合はp1の確率で陽性になり、被験者ががんでなければp2の確率で陰性になります。被験者ががん患者である確率がp3のとき、がん患者が検査の結果実際に陽性だと判定される確率を求めなさい。</p>
+</blockquote>
+<p>Xを被検査者はガンであるという事象、Yを検査の結果が被検査者はガンであると示す事象として、それぞれ以下のように置き換えることができます。</p>
+<p><img src="/images/874a5aeecf9b35cdbf1134ce65609eb8.png">
+</p>
+
+<p>
+ただし、<img src="/images/33690e97dbeaa68d615e68dba167db2a.png"> はBが起こったときにAが起こる確率(条件付き確率)、<img src="/images/f679168b61f35c21700eef5eb88dc82d.png"> はAが起こらないという事象(補事象)を表します。
+</p>
+
+<p>求めたい確率は<img src="/images/7082016653a57c45dae6f7d57ceea8ba.png"> なので、ベイズの定理より
+<p><img src="/images/227eb2fa21aa259a48119a03e888a78c.png">
+</p></p>
+<p>ここで<img src="/images/0c3d72395d7576ab13b9e9389f865960.png"> は検査結果が真陽性となる確率と偽陰性となる確率を足したものなので、
+<p><img src="/images/e2fb081253f2ada10b84e8c39da103d6.png">
+</p></p>
+<p>また、
+<p><img src="/images/18b3d7224708203cb4000f3539856aab.png"> 
+</p>
+なので、</p>
+<p><img src="/images/298c37b1f601ada40fbe0808816d66a3.png"> 
+</p>
+
+<p>となります。</p>
+<p>以上の結果に実際に値をあてはめてみます。</p>
+<p>2008年のすい臓がん推定患者数は29584 <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>、同年の人口は127692000 <sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>なので、<code>p3=0.23168 * 10^-3</code>。
+また、簡単のためにp1, p2をひとまとめに誤検出の確率と仮定して<code>p1=p2=q</code>おくと、P(Y|X)が70%となるようなqは、<strong>q=0.99990</strong>となります。</p>
+<p>このことから、99.99%の精度をもつ検出方法でも実際には30%も見逃してしまうということがわかります。</p>
+<p>さらに、「400倍の精度で検査できる」という部分を誤検出の確率が400分の1になったという意味だと解釈して、
+<code>q'=1-(1-q)/400</code>とおいてがん患者が検査の結果実際に陽性だと判定される確率を再度計算すると<strong>P(Y|X)=0.99892</strong>となります。</p>
+<p>つまり30%見逃していたのが1%程度まで減ったということです。
+これはすばらしい成果といえるのではないでしょうか。</p>
+<p>最初は30%も見逃すとかどんなひどい検査だったんだ、などと思ってしまうかもしれませんが、上記の計算で実際はそれほど単純な話ではないことがわかると思います。</p>
+<p><a href="http://www.amazon.co.jp/gp/product/4130420658/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeXSIN=4130420658&linkCode=as2&tag=armyofpigs-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4130420658&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=armyofpigs-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=4130420658" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> <sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> </p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>TEDの講演での、気が狂いそうになりながらも8000の候補の中から4000個くらい調べたところで目的のタンパク質をみつけた、というくだりを聞くと研究者の大変さに思いをはせずにはいられません&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>この問題は統計学入門の練習問題4.7を参考にしています。&#160;<a href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded>
+    </item>
     <item>
       <title>R Tutorial Part2 Chapter08 (Numerical Measures)</title>
       <link>http://mojavy.com/blog/2013/10/28/r-tutor-chap08/</link>
@@ -620,91 +684,6 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
 <li><a href="http://wired.jp/2013/06/11/nsa-leaker-outs-himself/">http://wired.jp/2013/06/11/nsa-leaker-outs-himself</a> </li>
 </ul>
 <p>一個人が天下のアンクル・サムさんに喧嘩を売るという映画のような展開で野次馬せずにはいられません。</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>暗号利用モードについて</title>
-      <link>http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/</link>
-      <pubDate>Wed, 12 Jun 2013 08:36:07 JST</pubDate>
-      <category><![CDATA[security]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/</guid>
-      <description>暗号利用モードについて</description>
-      <content:encoded><![CDATA[<p>AESを使おうと思ったけどどの暗号利用モードをつかえばいいかわからなかったので調べたことをまとめておきます。</p>
-<h2 id="_1">暗号利用モードとは</h2>
-<p><a href="http://ja.wikipedia.org/wiki/%E6%9A%97%E5%8F%B7%E5%88%A9%E7%94%A8%E3%83%A2%E3%83%BC%E3%83%89">Wikipedia/暗号利用モード</a></p>
-<blockquote>
-<p>暗号利用モード（あんごうりようモード、Block cipher modes of operation）とは、ブロック暗号を利用して、ブロック長よりも長いメッセージを暗号化するメカニズムのことである。
-<br>
-ECBモード（単純なブロック暗号の利用法）では、ある鍵で同一の平文を暗号化すると、同一の暗号文になる。したがって、長いメッセージ（画像データなど）のある部分が他の部分と同じであるかどうかが、暗号文の比較によって判断できてしまうので、他のモードが必要となった。
-<br>
-暗号利用モードには、秘匿用の利用モードと、認証用の利用モードとがある。
-<br>
-<br></p>
-</blockquote>
-<h2 id="_2">秘匿用利用モード</h2>
-<p><a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation">Wikipediaの図</a> も参考にするとわかりやすい。
-以下は概要だけ。</p>
-<h3 id="ecb">ECB</h3>
-<p>各ブロックを単純に一つずつ処理するだけ。暗号が一致したブロックは復号した平文も一致する。
-1つ以上のブロックを単一のパスワードで暗号化するのであれば使うべきではない。</p>
-<h3 id="cbc">CBC</h3>
-<p>直前の暗号テキストブロックを次の平文テキストブロックにXORしてからブロック暗号処理することを繰り返す。
-最初のブロックはIV(<a href="https://en.wikipedia.org/wiki/Initialization_vector">Initialization Vector</a>)をつかって暗号化する。</p>
-<p>暗号化は前から順番にする必要があるが、複合は1つ前のブロック前が分かればできるので並列化が可能。</p>
-<h3 id="cfb">CFB</h3>
-<p>CBCと似ているが、直前の暗号テキストブロックを再度ブロック暗号処理したものに次の平文テキストブロックをXORしたものを暗号テキストとする。
-最初のブロックはIVだけブロック暗号処理してXORする。
-CBCとはXORのタイミングが違うだけ。</p>
-<p>特徴もCBCと同じで、暗号化処理は並列化できないが複合は可能。</p>
-<h3 id="ofb">OFB</h3>
-<p>IVを繰り返しブロック暗号処理したものにそれぞれ平文ブロックをXORしていったものを暗号テキストとする。
-すべての操作で直前のものが必要となるので暗号化・復号の両方とも並列化はできないが、IVのブロック暗号処理は事前に計算することができる。</p>
-<h3 id="ctr-icm-sic">CTR (ICM, SIC)</h3>
-<p>OFBに似ているが、IVではなくカウンターの値をインクリメントしつつブロック暗号処理したものに平文ブロックをXORする。
-カウンターは十分に長い間繰り返しが発生しない一意な値を出力する任意の関数であれば何でもよいが、単に1ずつ増やすカウンターを使うことが多い。</p>
-<p>暗号・復号いずれも並列化が可能だが、入力に決定的な値を使うことについては議論の余地がある。</p>
-<h3 id="_3">ディスク用のもの</h3>
-<p>ディスクを暗号化するには特別な考慮が必要になるため専用のものがいくつか存在する。</p>
-<ul>
-<li>LRW</li>
-<li>XEX</li>
-<li>XTS</li>
-<li>CMC</li>
-</ul>
-<h4 id="_4">参考</h4>
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/Disk_encryption_theory">http://en.wikipedia.org/wiki/Disk_encryption_theory</a></li>
-<li><a href="http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf">http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf</a></li>
-<li><a href="http://axelkenzo.ru/downloads/1619-2007-NIST-Submission.pdf">http://axelkenzo.ru/downloads/1619-2007-NIST-Submission.pdf</a></li>
-</ul>
-<h2 id="_5">認証用の利用モード</h2>
-<p>秘匿化とあわせて認証とデータの完全性を保証するためのモード。
-通常はMAC(Massage Authentication Code, authentication tag)を組みあわせることで実現する。</p>
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/CCM_mode">CCM</a></li>
-<li><a href="http://en.wikipedia.org/wiki/CWC_mode">CWC</a></li>
-<li><a href="http://en.wikipedia.org/wiki/OCB_mode">OCB</a></li>
-<li><a href="http://en.wikipedia.org/wiki/EAX_mode">EAX</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM</a></li>
-</ul>
-<h2 id="_6">その他</h2>
-<ul>
-<li>上記では触れなかったが、並列化できるかどうかの他にもエラー検出が可能かどうかや組み合わせて使用するブロック暗号化方式の特徴なども考慮して選択する必要がある</li>
-<li>特許になっているものも多いので使用する際は要確認</li>
-<li>mysqlのaes_encrypt()ではECBをつかっているのでセキュリティ強度的にはあまりよろしくない</li>
-</ul>
-<h2 id="_7">参考</h2>
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation">http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Authenticated_encryption">http://en.wikipedia.org/wiki/Authenticated_encryption</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Message_authentication_code">http://en.wikipedia.org/wiki/Message_authentication_code</a></li>
-<li><a href="http://en.wikipedia.org/wiki/OCB_mode">http://en.wikipedia.org/wiki/OCB_mode</a></li>
-<li><a href="http://www.heliontech.com/aes_modes_basic.htm">http://www.heliontech.com/aes_modes_basic.htm</a></li>
-<li><a href="http://www.triplefalcon.com/Lexicon/Encryption-Block-Mode-1.htm">http://www.triplefalcon.com/Lexicon/Encryption-Block-Mode-1.htm</a></li>
-<li><a href="http://www.schneier.com/blog/archives/2009/07/another_new_aes.html">http://www.schneier.com/blog/archives/2009/07/another_new_aes.html</a></li>
-<li><a href="http://stackoverflow.com/questions/1220751/how-to-choose-an-aes-encryption-mode-cbc-ecb-ctr-ocb-cfb">http://stackoverflow.com/questions/1220751/how-to-choose-an-aes-encryption-mode-cbc-ecb-ctr-ocb-cfb</a></li>
-<li><a href="http://stackoverflow.com/questions/2797692/whats-the-best-way-to-store-sensitive-data-in-mysql">http://stackoverflow.com/questions/2797692/whats-the-best-way-to-store-sensitive-data-in-mysql</a></li>
-<li><a href="http://www.cs.ucdavis.edu/~rogaway/ocb/license.htm">http://www.cs.ucdavis.edu/~rogaway/ocb/license.htm</a></li>
-</ul>]]></content:encoded>
     </item>
   </channel>
 </rss>

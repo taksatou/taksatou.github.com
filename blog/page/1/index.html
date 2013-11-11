@@ -102,6 +102,95 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="ベイズの定理から見るガン検査"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" rel="bookmark" title="Permanent Link to ベイズの定理から見るガン検査">ベイズの定理から見るガン検査</a></h2>
+  <small>November 12, 2013 at 03:01 AM | categories:
+
+<a href='/blog/category/statistics'>statistics</a>
+ | <a href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><a href="http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html">http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html</a> </p>
+<p>高校生がすい臓がん発見の画期的方法を開発したという記事が話題になってます。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
+<p>この検査法の改善が統計的にどういう意味をもつのか実際にベイズの定理をつかって計算してみます。</p>
+<p>ここでは以下のような問題を考えることとします。</p>
+<blockquote>
+<p>あるガン検査法は、被験者ががんの場合はp1の確率で陽性になり、被験者ががんでなければp2の確率で陰性になります。被験者ががん患者である確率がp3のとき、がん患者が検査の結果実際に陽性だと判定される確率を求めなさい。</p>
+</blockquote>
+<p>Xを被検査者はガンであるという事象、Yを検査の結果が被検査者はガンであると示す事象として、それぞれ以下のように置き換えることができます。</p>
+<p><img src="/images/874a5aeecf9b35cdbf1134ce65609eb8.png">
+</p>
+
+<p>
+ただし、<img src="/images/33690e97dbeaa68d615e68dba167db2a.png"> はBが起こったときにAが起こる確率(条件付き確率)、<img src="/images/f679168b61f35c21700eef5eb88dc82d.png"> はAが起こらないという事象(補事象)を表します。
+</p>
+
+<p>求めたい確率は<img src="/images/7082016653a57c45dae6f7d57ceea8ba.png"> なので、ベイズの定理より
+<p><img src="/images/227eb2fa21aa259a48119a03e888a78c.png">
+</p></p>
+<p>ここで<img src="/images/0c3d72395d7576ab13b9e9389f865960.png"> は検査結果が真陽性となる確率と偽陰性となる確率を足したものなので、
+<p><img src="/images/e2fb081253f2ada10b84e8c39da103d6.png">
+</p></p>
+<p>また、
+<p><img src="/images/18b3d7224708203cb4000f3539856aab.png"> 
+</p>
+なので、</p>
+<p><img src="/images/298c37b1f601ada40fbe0808816d66a3.png"> 
+</p>
+
+<p>となります。</p>
+<p>以上の結果に実際に値をあてはめてみます。</p>
+<p>2008年のすい臓がん推定患者数は29584 <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>、同年の人口は127692000 <sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>なので、<code>p3=0.23168 * 10^-3</code>。
+また、簡単のためにp1, p2をひとまとめに誤検出の確率と仮定して<code>p1=p2=q</code>おくと、P(Y|X)が70%となるようなqは、<strong>q=0.99990</strong>となります。</p>
+<p>このことから、99.99%の精度をもつ検出方法でも実際には30%も見逃してしまうということがわかります。</p>
+<p>さらに、「400倍の精度で検査できる」という部分を誤検出の確率が400分の1になったという意味だと解釈して、
+<code>q'=1-(1-q)/400</code>とおいてがん患者が検査の結果実際に陽性だと判定される確率を再度計算すると<strong>P(Y|X)=0.99892</strong>となります。</p>
+<p>つまり30%見逃していたのが1%程度まで減ったということです。
+これはすばらしい成果といえるのではないでしょうか。</p>
+<p>最初は30%も見逃すとかどんなひどい検査だったんだ、などと思ってしまうかもしれませんが、上記の計算で実際はそれほど単純な話ではないことがわかると思います。</p>
+<p><a href="http://www.amazon.co.jp/gp/product/4130420658/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeXSIN=4130420658&linkCode=as2&tag=armyofpigs-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4130420658&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=armyofpigs-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=4130420658" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> <sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> </p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>TEDの講演での、気が狂いそうになりながらも8000の候補の中から4000個くらい調べたところで目的のタンパク質をみつけた、というくだりを聞くと研究者の大変さに思いをはせずにはいられません&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>この問題は統計学入門の練習問題4.7を参考にしています。&#160;<a href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" class="hatena-bookmark-button" data-hatena-bookmark-title="ベイズの定理から見るガン検査" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" data-text="ベイズの定理から見るガン検査">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="r-tutorial-part2-chapter08-(numerical-measures)"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" rel="bookmark" title="Permanent Link to R Tutorial Part2 Chapter08 (Numerical Measures)">R Tutorial Part2 Chapter08 (Numerical Measures)</a></h2>
   <small>October 28, 2013 at 02:11 AM | categories:
@@ -246,6 +335,8 @@ href="/blog/feed/atom" />
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/10/18/revealjs/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -567,49 +658,6 @@ href="/blog/feed/atom" />
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="debianパッケージをchefで削除する場合はpurgeを使う方がよい"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/" rel="bookmark" title="Permanent Link to debianパッケージをchefで削除する場合はpurgeを使う方がよい">debianパッケージをchefで削除する場合はpurgeを使う方がよい</a></h2>
-  <small>September 10, 2013 at 07:39 PM | categories:
-
-<a href='/blog/category/chef'>chef</a>, <a href='/blog/category/ruby'>ruby</a>, <a href='/blog/category/debian'>debian</a>
- | <a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>apt-getコマンドにはパッケージを削除するためのコマンドが2種類ある</p>
-<ul>
-<li>remove: パッケージを削除するが設定ファイルはそのまま残す</li>
-<li>purge: パッケージを削除するとき設定ファイルも削除する</li>
-</ul>
-<p>chefをつかっているということは設定ファイルもchefで管理しているはずなので、設定ファイルを残す必要はない。
-さらに、依存で入ったパッケージも一緒に削除されるように、<code>options "--auto-remove"</code>などとしてやるとよい。</p>
-<p>ゴミは混乱の元なので早めに消すべし。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/10/01/mustache-quick-master/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/09/10/chef-purge-package/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/09/10/chef-purge-package/" class="hatena-bookmark-button" data-hatena-bookmark-title="debianパッケージをchefで削除する場合はpurgeを使う方がよい" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/09/10/chef-purge-package/" data-text="debianパッケージをchefで削除する場合はpurgeを使う方がよい">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/09/10/chef-purge-package/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../2">Next »</a>
 </div>
@@ -637,6 +685,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
       <li><a href="/blog/2013/10/28/r-tutor-chap08/" title="R Tutorial Part2 Chapter08 (Numerical Measures)"><p>R Tutorial Part2 Chapter08 (Numerical Measures)</a><span style="font-size: 80%;">(October 28, 2013 at 02:11 AM)</span></li>
       <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/10/17/calculate-combinations/" title="オーバーフローしにくい組み合わせの数の計算方法"><p>オーバーフローしにくい組み合わせの数の計算方法</a><span style="font-size: 80%;">(October 17, 2013 at 09:13 PM)</span></li>
@@ -644,7 +693,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
       <li><a href="/blog/2013/09/09/chef-solo-ssh-config/" title="chef soloでAuthenticationFailedといわれたときの対応"><p>chef soloでAuthenticationFailedといわれたときの対応</a><span style="font-size: 80%;">(September 09, 2013 at 08:43 PM)</span></li>
       <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
-      <li><a href="/blog/2013/07/10/c-tuple/" title="C言語でtuple"><p>C言語でtuple</a><span style="font-size: 80%;">(July 10, 2013 at 09:02 PM)</span></li>
     </ul>
   </div>
 
@@ -727,7 +775,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
@@ -744,6 +792,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>

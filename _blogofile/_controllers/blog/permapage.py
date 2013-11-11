@@ -34,6 +34,6 @@ def write_permapages():
         if i > 0:
             env['next_post'] = blog.posts[i - 1]
 
-        print bf.writer.materialize_template
+#        print bf.writer.materialize_template
         bf.writer.materialize_template(
                 "permapage.mako", bf.util.path_join(path, "index.html"), env)

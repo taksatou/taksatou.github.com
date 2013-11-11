@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2013-11-11T23:04:10Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[ベイズの定理から見るガン検査]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/11/11/bayes-theorem-and-detecting-cancer/" />
+    <id>http://mojavy.com/blog/2013/11/11/bayes-theorem-and-detecting-cancer/</id>
+    <updated>2013-11-11T23:04:10Z</updated>
+    <published>2013-11-11T23:04:10Z</published>
+    <category scheme="http://mojavy.com/blog" term="statistics" />
+    <category scheme="http://mojavy.com/blog" term="bayse" />
+    <summary type="html"><![CDATA[ベイズの定理から見るガン検査]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/11/11/bayes-theorem-and-detecting-cancer/"><![CDATA[<p><a href="http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html">http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html</a> </p>
+<p>15歳ですい臓がん発見の画期的方法を開発したという記事が話題になってます。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
+<p>この検査法の改善が統計的にどういう意味をもつのか実際にベイズの定理をつかって計算してみます。</p>
+<p>ここでは以下のような問題を考えることとします。</p>
+<blockquote>
+<p>あるガン検査法は、被験者ががんの場合はp1の確率で陽性になり、被験者ががんでなければp2の確率で陰性になります。被験者ががん患者である確率がp3のとき、がん患者が検査の結果実際に陽性だと判定される確率を求めなさい。</p>
+</blockquote>
+<p>Xを被検査者はガンであるという事象、Yを検査の結果が被検査者はガンであると示す事象として、それぞれ以下のように置き換えることができます。</p>
+<p><img src="/images/874a5aeecf9b35cdbf1134ce65609eb8.png">
+</p>
+
+<p>
+ただし、<img src="/images/33690e97dbeaa68d615e68dba167db2a.png"> はBが起こったときにAが起こる確率(条件付き確率)、<img src="/images/f679168b61f35c21700eef5eb88dc82d.png"> はAが起こらないという事象(補事象)を表します。
+</p>
+
+<p>求めたい確率は<img src="/images/7082016653a57c45dae6f7d57ceea8ba.png"> なので、ベイズの定理より
+<p><img src="/images/227eb2fa21aa259a48119a03e888a78c.png">
+</p></p>
+<p>ここで<img src="/images/0c3d72395d7576ab13b9e9389f865960.png"> は検査結果が真陽性となる確率と偽陰性となる確率を足したものなので、
+<p><img src="/images/e2fb081253f2ada10b84e8c39da103d6.png">
+</p></p>
+<p>また、
+<p><img src="/images/18b3d7224708203cb4000f3539856aab.png"> 
+</p>
+なので、</p>
+<p><img src="/images/298c37b1f601ada40fbe0808816d66a3.png"> 
+</p>
+
+<p>となります。</p>
+<p>以上の結果に実際に値をあてはめてみます。</p>
+<p>2008年のすい臓がん推定患者数は29584 <sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>、同年の人口は127692000 <sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>なので、<code>p3=0.23168 * 10^-3</code>。
+また、簡単のためにp1, p2をひとまとめに誤検出の確率として<code>p1=p2=q</code>と仮定して、P(Y|X)が70%となるようなqを計算すると、<strong>q=0.99990</strong>となります。</p>
+<p>このことから、99.99%の精度をもつ検出方法でも実際には30%も見逃してしまうということがわかります。</p>
+<p>さらに、「400倍の精度で検査できる」という部分を誤検出の確率が400分の1になったという意味だと解釈して、
+<code>q'=1-(1-q)/400</code>とおいてがん患者が検査の結果実際に陽性だと判定される確率を再度計算すると<strong>P(Y|X)=0.99892</strong>となります。</p>
+<p>つまり30%見逃していたのが1%程度まで減ったということです。
+これはすばらしい成果といえるのではないでしょうか。</p>
+<p><a href="http://www.amazon.co.jp/gp/product/4130420658/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeXSIN=4130420658&linkCode=as2&tag=armyofpigs-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4130420658&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=armyofpigs-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=4130420658" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>TEDの講演での、気が狂いそうになりながらも8000の候補の中から4000個くらい調べたところで目的のタンパク質をみつけた、というくだりを聞くと研究者の大変さに思いをはせずにはいられません&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>この問題は統計学入門の練習問題4.7を参考にしたものです&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002&#160;<a href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content>
+  </entry>
+</feed>
