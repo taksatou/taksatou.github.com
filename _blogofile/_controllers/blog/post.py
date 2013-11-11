@@ -334,7 +334,7 @@ def parse_posts(directory):
         #reverting to regular open and decode:
         try:
             src = open(post_path, "r").read().decode(
-                    bf.config.controllers.blog.post_encoding)
+                bf.config.controllers.blog.post_encoding)
         except:
             logger.exception(u"Error reading post: {0}".format(post_path))
             raise

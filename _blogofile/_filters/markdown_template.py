@@ -1,6 +1,12 @@
 import markdown
 import logging
 
+import sys
+import os
+
+# work around for importing
+sys.path.append(os.path.dirname(__file__))
+
 import markdown_ext_toc
 
 config = {

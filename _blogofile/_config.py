@@ -56,6 +56,8 @@ blog.auto_permalink.enabled = True
 
 blog.auto_permalink.path = ":blog_path/:year/:month/:day/:filename/"
 
+blog.post_encoding = 'utf-8'
+
 ## revealjs 
 blog.revealjs.path = '/revealjs/current'
 blog.revealjs.slidepath = '/slide'
