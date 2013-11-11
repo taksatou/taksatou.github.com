@@ -89,6 +89,6 @@ $
 
 
 [^1]: TEDの講演での、気が狂いそうになりながらも8000の候補の中から4000個くらい調べたところで目的のタンパク質をみつけた、というくだりを聞くと研究者の大変さに思いをはせずにはいられません
-[^2]: 国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html
-[^3]: http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002
+[^2]: [国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html](http://ganjoho.jp/professional/statistics/statistics.html ) 
+[^3]: [http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002](http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002 ) 
 [^4]: この問題は統計学入門の練習問題4.7を参考にしています。
