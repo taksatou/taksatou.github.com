@@ -1,0 +1,110 @@
+---
+categories: golang
+date: 2013/11/17 00:30:57
+title: GoConveyでGoプロジェクトをブラウザからテストする
+---
+
+[GoConvey](http://smartystreets.github.io/goconvey/) を試してみたらなかなかよかったので紹介します。
+
+## 目次
+
+[TOC]
+
+## goconveyとは
+
+gopherのためのかっこいいテストツールです。以下のような特徴があります。
+
+* `go test`をそのまま実行できる
+* リグレッションテストのための一式
+* 見やすく色付けされた出力
+* 完全に自動化されたWeb UI
+* テストコードジェネレータ
+* デスクトップ通知
+* ターミナル上で動く自動テストスクリプト
+* Sublime Textとの連携
+
+
+## クイックスタート
+
+$$code(lang=shell)
+$ go get github.com/smartystreets/goconvey # install
+$ $GOPATH/bin/goconvey
+$$/code
+
+上記コマンドを実行して `http://localhost:8080` にブラウザからWeb UIアクセスすると、goconveyを起動したディレクトリ以下のファイルの更新を自動的に検知してテストを起動してくれます。
+
+Web UIの右上にあるベルのアイコンをクリックすると、デスクトップ通知も有効にできます。
+
+また、テストが失敗した場合はその部分をクリックすることで、Sublime Textで直接そこにジャンプできます。[^1]
+
+特定のディレクトリ以下のテストを実行しないようにすることもできます。テストに時間がかかるような大きなプロジェクトでも適当に必要なところだけ有効にできるので、ストレスがたまりにくいと思います。
+
+## テストを書く
+
+goconveyのWeb UIは`go test`で起動できるテストならなんにでも使えますが[^2] 、goconveyのテスティングフレームワークをつかうとさらにわかりやすい結果を出力できます。
+
+$$code(lang=go)
+package goconveytest
+
+import (
+	. "github.com/smartystreets/goconvey/convey"
+	"testing"
+)
+
+func TestSpec(t *testing.T) {
+	var x int
+
+	// Only pass t into top-level Convey calls
+	Convey("Given some integer with a starting value", t, func() {
+		x = 1
+
+		Convey("When the integer is incremented", func() {
+			x++
+
+			Convey("The value should be greater by one", func() {
+				So(x, ShouldEqual, 1)
+			})
+		})
+	})
+}
+$$/code
+
+Web UIから文章を入力することでテストコードをある程度自動生成することもできます。
+
+BDDスタイルはあんまり得意ではないので詳細は省略します。
+
+
+
+## ターミナルから自動テスト
+
+ブラウザなんて立ちあげたくない硬派な人向けにターミナルでファイル監視してテストを起動できるスクリプトも提供されています。
+emacsのロックファイルがあると落ちてしまう問題があったのですが、さっきpull requestだしたらすぐマージしてくれました。 [https://github.com/smartystreets/goconvey/pull/88](https://github.com/smartystreets/goconvey/pull/88 ) 
+
+$$code(lang=shell)
+$GOPATH/src/github.com/smartystreets/goconvey/scripts/idle.py -v
+$$/code
+
+
+## tips
+
+* `localhost:8080/latest`にアクセスするとjsonでテスト結果がとれます
+* goconveyのWeb UIは`GOPATH`以下のパッケージのディレクトリで起動する必要があります (例えば、`$GOPATH/src/github.com/yourname/packagename`)
+
+
+
+## まとめ
+
+goconveyを簡単に紹介しました。Web UIだけでも試す価値はあると思います。
+
+ビデオでの解説もあります。ぶっちゃけこの記事を読むより動画を見たほうが早いです。
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/vL_UD1oAF0E" frameborder="0" allowfullscreen></iframe>
+
+
+## その他参考
+
+* [http://qiita.com/takuan_osho/items/51c8856a3d28145d87bc](http://qiita.com/takuan_osho/items/51c8856a3d28145d87bc ) 
+* [http://blog.satotaichi.info/testingframeworks-for-golang](http://blog.satotaichi.info/testingframeworks-for-golang ) 
+
+[^1]: 残念なことにemacsやvimには対応していない
+[^2]: ginkgoやtestifyのテストも実行できます。ただし、ginkgoのテスト結果はデフォルトだとエスケープシーケンスがそのまま表示されてしまいます

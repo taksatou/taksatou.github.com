@@ -102,6 +102,135 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="goconveyでgoプロジェクトをブラウザからテストする"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/11/17/goconvey/" rel="bookmark" title="Permanent Link to GoConveyでGoプロジェクトをブラウザからテストする">GoConveyでGoプロジェクトをブラウザからテストする</a></h2>
+  <small>November 17, 2013 at 12:30 AM | categories:
+
+<a href='/blog/category/golang'>golang</a>
+ | <a href="http://mojavy.com/blog/2013/11/17/goconvey/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><a href="http://smartystreets.github.io/goconvey/">GoConvey</a> を試してみたらなかなかよかったので紹介します。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#goconvey">goconveyとは</a></li>
+<li><a href="#_2">クイックスタート</a></li>
+<li><a href="#_3">テストを書く</a></li>
+<li><a href="#_4">ターミナルから自動テスト</a></li>
+<li><a href="#tips">tips</a></li>
+<li><a href="#_5">まとめ</a></li>
+<li><a href="#_6">その他参考</a></li>
+</ul>
+</div>
+<h2 id="goconvey">goconveyとは</h2>
+<p>gopherのためのかっこいいテストツールです。以下のような特徴があります。</p>
+<ul>
+<li><code>go test</code>をそのまま実行できる</li>
+<li>リグレッションテストのための一式</li>
+<li>見やすく色付けされた出力</li>
+<li>完全に自動化されたWeb UI</li>
+<li>テストコードジェネレータ</li>
+<li>デスクトップ通知</li>
+<li>ターミナル上で動く自動テストスクリプト</li>
+<li>Sublime Textとの連携</li>
+</ul>
+<h2 id="_2">クイックスタート</h2>
+<div class="pygments_borland"><pre>$ go get github.com/smartystreets/goconvey # install
+$ $GOPATH/bin/goconvey
+</pre></div>
+
+<p>上記コマンドを実行して <code>http://localhost:8080</code> にブラウザからWeb UIアクセスすると、goconveyを起動したディレクトリ以下のファイルの更新を自動的に検知してテストを起動してくれます。</p>
+<p>Web UIの右上にあるベルのアイコンをクリックすると、デスクトップ通知も有効にできます。</p>
+<p>また、テストが失敗した場合はその部分をクリックすることで、Sublime Textで直接そこにジャンプできます。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+<p>特定のディレクトリ以下のテストを実行しないようにすることもできます。テストに時間がかかるような大きなプロジェクトでも適当に必要なところだけ有効にできるので、ストレスがたまりにくいと思います。</p>
+<h2 id="_3">テストを書く</h2>
+<p>goconveyのWeb UIは<code>go test</code>で起動できるテストならなんにでも使えますが<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> 、goconveyのテスティングフレームワークをつかうとさらにわかりやすい結果を出力できます。</p>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">goconveytest</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="p">.</span> <span class="s">&quot;github.com/smartystreets/goconvey/convey&quot;</span>
+    <span class="s">&quot;testing&quot;</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">TestSpec</span><span class="p">(</span><span class="n">t</span> <span class="p">*</span><span class="n">testing</span><span class="p">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="n">x</span> <span class="nb">int</span>
+
+    <span class="c1">// Only pass t into top-level Convey calls</span>
+    <span class="n">Convey</span><span class="p">(</span><span class="s">&quot;Given some integer with a starting value&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="p">=</span> <span class="mi">1</span>
+
+        <span class="n">Convey</span><span class="p">(</span><span class="s">&quot;When the integer is incremented&quot;</span><span class="p">,</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">x</span><span class="p">++</span>
+
+            <span class="n">Convey</span><span class="p">(</span><span class="s">&quot;The value should be greater by one&quot;</span><span class="p">,</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">So</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ShouldEqual</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="p">})</span>
+        <span class="p">})</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Web UIから文章を入力することでテストコードをある程度自動生成することもできます。</p>
+<p>BDDスタイルはあんまり得意ではないので詳細は省略します。</p>
+<h2 id="_4">ターミナルから自動テスト</h2>
+<p>ブラウザなんて立ちあげたくない硬派な人向けにターミナルでファイル監視してテストを起動できるスクリプトも提供されています。
+emacsのロックファイルがあると落ちてしまう問題があったのですが、さっきpull requestだしたらすぐマージしてくれました。 <a href="https://github.com/smartystreets/goconvey/pull/88">https://github.com/smartystreets/goconvey/pull/88</a> </p>
+<div class="pygments_borland"><pre>$GOPATH/src/github.com/smartystreets/goconvey/scripts/idle.py -v
+</pre></div>
+
+<h2 id="tips">tips</h2>
+<ul>
+<li><code>localhost:8080/latest</code>にアクセスするとjsonでテスト結果がとれます</li>
+<li>goconveyのWeb UIは<code>GOPATH</code>以下のパッケージのディレクトリで起動する必要があります (例えば、<code>$GOPATH/src/github.com/yourname/packagename</code>)</li>
+</ul>
+<h2 id="_5">まとめ</h2>
+<p>goconveyを簡単に紹介しました。Web UIだけでも試す価値はあると思います。</p>
+<p>ビデオでの解説もあります。ぶっちゃけこの記事を読むより動画を見たほうが早いです。</p>
+<iframe width="420" height="315" src="//www.youtube.com/embed/vL_UD1oAF0E" frameborder="0" allowfullscreen></iframe>
+
+<h2 id="_6">その他参考</h2>
+<ul>
+<li><a href="http://qiita.com/takuan_osho/items/51c8856a3d28145d87bc">http://qiita.com/takuan_osho/items/51c8856a3d28145d87bc</a> </li>
+<li><a href="http://blog.satotaichi.info/testingframeworks-for-golang">http://blog.satotaichi.info/testingframeworks-for-golang</a> </li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>残念なことにemacsやvimには対応していない&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>ginkgoやtestifyのテストも実行できます。ただし、ginkgoのテスト結果はデフォルトだとエスケープシーケンスがそのまま表示されてしまいます&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/11/17/goconvey/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/11/17/goconvey/" class="hatena-bookmark-button" data-hatena-bookmark-title="GoConveyでGoプロジェクトをブラウザからテストする" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/11/17/goconvey/" data-text="GoConveyでGoプロジェクトをブラウザからテストする">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/11/17/goconvey/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ベイズの定理から見るガン検査"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" rel="bookmark" title="Permanent Link to ベイズの定理から見るガン検査">ベイズの定理から見るガン検査</a></h2>
   <small>November 12, 2013 at 03:01 AM | categories:
@@ -114,7 +243,7 @@ href="/blog/feed/atom" />
     
 <div class="blogbody">
   <p><a href="http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html">http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html</a> </p>
-<p>高校生がすい臓がん発見の画期的方法を開発したという記事が話題になってます。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
+<p>高校生がすい臓がん発見の画期的方法を開発したという記事が話題になってます。</p>
 <p>この検査法の改善が統計的にどういう意味をもつのか実際にベイズの定理をつかって計算してみます。</p>
 <p>ここでは以下のような問題を考えることとします。</p>
 <blockquote>
@@ -143,7 +272,7 @@ href="/blog/feed/atom" />
 
 <p>となります。</p>
 <p>以上の結果に実際に値をあてはめてみます。</p>
-<p>2008年のすい臓がん推定患者数は29584 <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>、同年の人口は127692000 <sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>なので、<code>p3=0.23168 * 10^-3</code>。
+<p>2008年のすい臓がん推定患者数は29584 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>、同年の人口は127692000 <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>なので、<code>p3=0.23168 * 10^-3</code>。
 また、簡単のためにp1, p2をひとまとめに誤検出の確率と仮定して<code>p1=p2=q</code>おくと、P(Y|X)が70%となるようなqは、<strong>q=0.99990</strong>となります。</p>
 <p>このことから、99.99%の精度をもつ検出方法でも実際には30%も見逃してしまうということがわかります。</p>
 <p>さらに、「400倍の精度で検査できる」という部分を誤検出の確率が400分の1になったという意味だと解釈して、
@@ -151,21 +280,18 @@ href="/blog/feed/atom" />
 <p>つまり30%見逃していたのが1%程度まで減ったということです。
 これはすばらしい成果といえるのではないでしょうか。</p>
 <p>最初は30%も見逃すとかどんなひどい検査だったんだ、などと思ってしまうかもしれませんが、上記の計算で実際はそれほど単純な話ではないことがわかると思います。</p>
-<p><a href="http://www.amazon.co.jp/gp/product/4130420658/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeXSIN=4130420658&linkCode=as2&tag=armyofpigs-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4130420658&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=armyofpigs-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=4130420658" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> <sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> </p>
+<p><a href="http://www.amazon.co.jp/gp/product/4130420658/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeXSIN=4130420658&linkCode=as2&tag=armyofpigs-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4130420658&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=armyofpigs-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=4130420658" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> <sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p>TEDの講演での、気が狂いそうになりながらも8000の候補の中から4000個くらい調べたところで目的のタンパク質をみつけた、というくだりを聞くと研究者の大変さに思いをはせずにはいられません&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p><a href="http://ganjoho.jp/professional/statistics/statistics.html">国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html</a> &#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p><a href="http://ganjoho.jp/professional/statistics/statistics.html">国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html</a> &#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><a href="http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002">http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002</a> &#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:3">
-<p><a href="http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002">http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002</a> &#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-<li id="fn:4">
-<p>この問題は統計学入門の練習問題4.7を参考にしています。&#160;<a href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>この問題は統計学入門の練習問題4.7を参考にしています。&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
@@ -179,6 +305,8 @@ href="/blog/feed/atom" />
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/11/17/goconvey/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -215,6 +343,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
       <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
       <li><a href="/blog/2013/10/28/r-tutor-chap08/" title="R Tutorial Part2 Chapter08 (Numerical Measures)"><p>R Tutorial Part2 Chapter08 (Numerical Measures)</a><span style="font-size: 80%;">(October 28, 2013 at 02:11 AM)</span></li>
       <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
@@ -222,7 +351,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
       <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
       <li><a href="/blog/2013/09/09/chef-solo-ssh-config/" title="chef soloでAuthenticationFailedといわれたときの対応"><p>chef soloでAuthenticationFailedといわれたときの対応</a><span style="font-size: 80%;">(September 09, 2013 at 08:43 PM)</span></li>
-      <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
     </ul>
   </div>
 
@@ -275,6 +403,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
@@ -322,7 +451,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>

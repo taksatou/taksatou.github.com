@@ -102,6 +102,70 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="objective-cのカテゴリついてのメモ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/13/objective-c-memo/" rel="bookmark" title="Permanent Link to objective-cのカテゴリついてのメモ">objective-cのカテゴリついてのメモ</a></h2>
+  <small>July 13, 2012 at 06:30 PM | categories:
+
+<a href='/blog/category/objective-c'>objective-c</a>
+ | <a href="http://mojavy.com/blog/2012/07/13/objective-c-memo/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<ul>
+<li>objective-cではカテゴリという機能を使ってクラスの拡張ができる。</li>
+<li>javascriptのprototypeのようなもの。</li>
+<li>一旦上書きしたメソッドにアクセスする方法はない。メソッドを上書きする必要がある場合はサブクラスとして実装するべき。</li>
+<li>プライベートメソッドは無名カテゴリを使って実装できる。</li>
+<li>別の名前のカテゴリでもメソッド名は一意にしなければならない。</li>
+<li>別のカテゴリとの間にメソッド名でコンフリクトが発生した場合、どちらが呼ばれるかは未定義。</li>
+<li>カテゴリ名自体にソースコード上での可読性以上の実質的な意味は無いらしい。</li>
+</ul>
+<h2 id="_1">例</h2>
+<div class="pygments_borland"><pre><span class="k">@interface</span> <span class="nc">NSObject</span> <span class="nl">(MyExt)</span>
+<span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">doit:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">NSObject</span> <span class="nl">(MyExt)</span>
+<span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">doit:</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="n">arg</span>
+<span class="p">{</span>
+   <span class="c1">// do something</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</pre></div>
+
+<h2 id="_2">参考</h2>
+<ul>
+<li><a href="http://stackoverflow.com/questions/5689088/do-objective-c-category-names-do-anything">http://stackoverflow.com/questions/5689088/do-objective-c-category-names-do-anything</a></li>
+</ul>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/13/objective-c-memo/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/13/objective-c-memo/" class="hatena-bookmark-button" data-hatena-bookmark-title="objective-cのカテゴリついてのメモ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/13/objective-c-memo/" data-text="objective-cのカテゴリついてのメモ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/13/objective-c-memo/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="xcodeのキーバインディングをもっとemacsっぽくする"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/12/xcode-emacs-like-keybindings/" rel="bookmark" title="Permanent Link to Xcodeのキーバインディングをもっとemacsっぽくする">Xcodeのキーバインディングをもっとemacsっぽくする</a></h2>
   <small>July 12, 2012 at 12:30 PM | categories:
@@ -312,88 +376,6 @@ deb-src http://archive.debian.org/debian/ lenny main
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="1分でpython環境を整える方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito/" rel="bookmark" title="Permanent Link to 1分でpython環境を整える方法">1分でpython環境を整える方法</a></h2>
-  <small>April 22, 2012 at 05:30 PM | categories:
-
-<a href='/blog/category/python'>python</a>
- | <a href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="python" src="/images/python-logo.gif" /></p>
-<p>pythonではvirtualenvというユーティリティを使って複数の環境を切り替えることができます。しかしvirtualenvはセットアップがちょっとわかりにくかったりバージョンによってはこけたりしていまいち使いこなせていませんでした。久し振りにブログを書くついでにpython環境を再構築しようと思って調べたところ、<a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a> というのが使いやすかったので紹介します。これを使えば非常に簡単にpython環境を整えることができます。</p>
-<h1 id="_1">インストール</h1>
-<div class="pygments_borland"><pre><span class="nv">$ </span>curl -s https://raw.github.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | <span class="nv">$SHELL</span>
-</pre></div>
-
-<p>として再ログインするだけです。勝手にパスやシェルの補完設定もしてくれます。</p>
-<h1 id="_2">使い方</h1>
-<p>新しい環境の構築は、</p>
-<div class="pygments_borland"><pre><span class="nv">$ </span>mkvirtualenv newname
-</pre></div>
-
-<p><br></p>
-<p>環境の切り替えは、</p>
-<div class="pygments_borland"><pre><span class="nv">$ </span>workon newname
-<span class="nv">$ </span><span class="c"># or</span>
-<span class="nv">$ </span>workon 2.7
-</pre></div>
-
-<p><br></p>
-<p>不要な環境の削除は、</p>
-<div class="pygments_borland"><pre><span class="nv">$ </span>rmvirtualenv newname
-</pre></div>
-
-<p><br></p>
-<p>以上が基本的な使い方です。さらに詳しい使い方は<a href="http://www.doughellmann.com/docs/virtualenvwrapper/command_ref.html">virtualenvwrapperのコマンドリファレンス</a>等をみてください。</p>
-<h1 id="_3">解説</h1>
-<p>virtualenv-burrito自体はvirtualenv+virtualenvwrapperの環境を構築するだけなので、本格的に使いたい場合はvirtualenvについての理解が必要です。ただ、ほとんどの場合は単にバージョンとパッケージが切り替えられればいいと思うので、mkvirtualenvとworkonさえ覚えておけば十分です。
-いくつか注意点もあります。</p>
-<ul>
-<li>pythonのバイナリはあらかじめインストールされている必要があります。</li>
-<li>python3だとうごきません。python3環境が作れないという意味ではなく、デフォルトパスのpythonバージョンが3だとvirtualenv-burritoのセットアップ途中でこけます。その場合はpython2系をつかってください。</li>
-<li>pipのインストールでこける場合があります。その場合は以下のようなコマンドで回避できます。 <a href="https://github.com/brainsik/virtualenv-burrito/issues/16">(参考)</a></li>
-</ul>
-<div class="pygments_borland"><pre><span class="nv">$ </span>rm -Rf ~/.venvburrito/lib/python/distribute-0.6.24-py2.7.egg
-<span class="nv">$ </span>mkvirtualenv -p <span class="k">$(</span>which python3.2<span class="k">)</span> --distribute py32
-</pre></div>
-
-<h1 id="_4">まとめ</h1>
-<p>いまからpython環境を構築するならvirtualenv-burritoつかっとくと、virtualenvとvirtualenvwrapperをセットアップするまでの手間が省けていいと思います</p>
-<h1 id="_5">関連リンク</h1>
-<ul>
-<li><a href="https://github.com/brainsik/virtualenv-burrito">virtualenv-burrito</a></li>
-<li><a href="http://pypi.python.org/pypi/virtualenv">virtualenv</a></li>
-<li><a href="http://www.doughellmann.com/docs/virtualenvwrapper/">virtualenvwrapper</a>
-<br></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2011/12/13/tmux_advent_calendar_2_2011/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/04/22/virtualenv-burrito/" class="hatena-bookmark-button" data-hatena-bookmark-title="1分でpython環境を整える方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/04/22/virtualenv-burrito/" data-text="1分でpython環境を整える方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../11">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -423,6 +405,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
       <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
       <li><a href="/blog/2013/10/28/r-tutor-chap08/" title="R Tutorial Part2 Chapter08 (Numerical Measures)"><p>R Tutorial Part2 Chapter08 (Numerical Measures)</a><span style="font-size: 80%;">(October 28, 2013 at 02:11 AM)</span></li>
       <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
@@ -430,7 +413,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
       <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
       <li><a href="/blog/2013/09/09/chef-solo-ssh-config/" title="chef soloでAuthenticationFailedといわれたときの対応"><p>chef soloでAuthenticationFailedといわれたときの対応</a><span style="font-size: 80%;">(September 09, 2013 at 08:43 PM)</span></li>
-      <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
     </ul>
   </div>
 
@@ -483,6 +465,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
@@ -530,7 +513,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>

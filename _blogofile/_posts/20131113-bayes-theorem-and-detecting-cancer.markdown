@@ -7,7 +7,7 @@ filter: latex, syntax_highlight, markdown
 
 [http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html](http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html) 
 
-高校生がすい臓がん発見の画期的方法を開発したという記事が話題になってます。[^1] 
+高校生がすい臓がん発見の画期的方法を開発したという記事が話題になってます。
 
 この検査法の改善が統計的にどういう意味をもつのか実際にベイズの定理をつかって計算してみます。
 
@@ -67,7 +67,7 @@ $
 
 以上の結果に実際に値をあてはめてみます。
 
-2008年のすい臓がん推定患者数は29584 [^2]、同年の人口は127692000 [^3]なので、`p3=0.23168 * 10^-3`。
+2008年のすい臓がん推定患者数は29584 [^1]、同年の人口は127692000 [^2]なので、`p3=0.23168 * 10^-3`。
 また、簡単のためにp1, p2をひとまとめに誤検出の確率と仮定して`p1=p2=q`おくと、P(Y|X)が70%となるようなqは、**q=0.99990**となります。
 
 このことから、99.99%の精度をもつ検出方法でも実際には30%も見逃してしまうということがわかります。
@@ -83,12 +83,11 @@ $
 
 
 
-<a href="http://www.amazon.co.jp/gp/product/4130420658/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeXSIN=4130420658&linkCode=as2&tag=armyofpigs-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4130420658&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=armyofpigs-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=4130420658" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> [^4] 
+<a href="http://www.amazon.co.jp/gp/product/4130420658/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeXSIN=4130420658&linkCode=as2&tag=armyofpigs-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4130420658&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=armyofpigs-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=4130420658" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> [^3] 
 
 
 
 
-[^1]: TEDの講演での、気が狂いそうになりながらも8000の候補の中から4000個くらい調べたところで目的のタンパク質をみつけた、というくだりを聞くと研究者の大変さに思いをはせずにはいられません
-[^2]: [国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html](http://ganjoho.jp/professional/statistics/statistics.html ) 
-[^3]: [http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002](http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002 ) 
-[^4]: この問題は統計学入門の練習問題4.7を参考にしています。
+[^1]: [国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html](http://ganjoho.jp/professional/statistics/statistics.html ) 
+[^2]: [http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002](http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002 ) 
+[^3]: この問題は統計学入門の練習問題4.7を参考にしています。

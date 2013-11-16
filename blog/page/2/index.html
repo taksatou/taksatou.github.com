@@ -102,6 +102,117 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="mustache基礎文法最速マスター"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/01/mustache-quick-master/" rel="bookmark" title="Permanent Link to mustache基礎文法最速マスター">mustache基礎文法最速マスター</a></h2>
+  <small>October 01, 2013 at 12:08 AM | categories:
+
+<a href='/blog/category/ruby'>ruby</a>, <a href='/blog/category/mustache'>mustache</a>
+ | <a href="http://mojavy.com/blog/2013/10/01/mustache-quick-master/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="mustache" src="/images/mustache-logo-250.png" /> </p>
+<p>mustacheはシンプルなテンプレートエンジンなので本家の英語マニュアル <a href="http://mustache.github.io/mustache.5.html">mustache(5)</a> を見ても大したことはないですが、日本語情報の需要もそれなりにあると思うのでまとめておきます。</p>
+<p>以下の内容はrubygemの<code>mustache-0.99.4</code>で確認しています。
+他の言語の場合は適宜置きかえてください。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#_2">変数の展開</a></li>
+<li><a href="#_3">変数のエスケープ</a></li>
+<li><a href="#_4">条件分岐</a></li>
+<li><a href="#_5">ループ</a></li>
+<li><a href="#lambda">無名関数 (Lambda)</a></li>
+<li><a href="#_6">コメント</a></li>
+<li><a href="#_7">まとめ</a></li>
+</ul>
+</div>
+<h2 id="_2">変数の展開</h2>
+<p><code>{{name}}</code>のように2つのブレースで囲ったタグは、<code>name</code>という名前のキーの値でおきかえられます。</p>
+<p>対応するキーが見つからなかった場合はデフォルトでは空文字になります。</p>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Hello, {{world}}!&quot;</span><span class="p">,</span> <span class="n">world</span><span class="p">:</span> <span class="s2">&quot;mustache&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Hello, mustache!&quot;</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{no_such_key}}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&quot;</span>
+</pre></div>
+
+<h2 id="_3">変数のエスケープ</h2>
+<p>デフォルトではHTMLエスケープが有効になります。アンエスケープされたHTMLが使いたい場合は<code>{{{name}}}</code>のように3つのブレースで囲います。</p>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{html}}&quot;</span><span class="p">,</span>  <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&amp;lt;b&amp;gt;GitHub&amp;lt;/b&amp;gt;&quot;</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;{{{html}}}&quot;</span><span class="p">,</span> <span class="n">html</span><span class="p">:</span> <span class="s2">&quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;&lt;b&gt;GitHub&lt;/b&gt;&quot;</span>
+</pre></div>
+
+<h2 id="_4">条件分岐</h2>
+<p><code>{{#name}} ... {{/name}}</code>のように、2つのタグに<code>#</code>と<code>/</code>をそれぞれつけたタグで囲われたブロックはセクションといいます。</p>
+<p>セクションのキーに対応する値にbool値を渡せばif文のような使い方ができます。
+<code>#</code>のかわりに<code>^</code>をつかうと真偽を反転できます。</p>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<span class="sh">{{#condition}}</span>
+<span class="sh">It is true.</span>
+<span class="sh">{{/condition}}</span>
+<span class="sh">{{^condition}}</span>
+<span class="sh">No not true.</span>
+<span class="sh">{{/condition}}</span>
+<span class="no">DOC</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span> <span class="c1"># =&gt; &quot;It is true.\n&quot;</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="kp">false</span><span class="p">)</span> <span class="c1"># =&gt; &quot;No not true.\n&quot;</span>
+</pre></div>
+
+<h2 id="_5">ループ</h2>
+<p>セクションのキーに対応する値に配列を渡した場合は、それぞれの要素を引数として中のブロックが繰り返し評価されます。</p>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<span class="sh">{{#animals}}</span>
+<span class="sh">{{name}}</span>
+<span class="sh">{{/animals}}</span>
+<span class="no">DOC</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">animals</span><span class="p">:</span> <span class="o">[</span><span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;cat&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;dog&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;pig&quot;</span><span class="p">}</span><span class="o">]</span><span class="p">}</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="c1"># =&gt; &quot;cat\ndog\npig\n&quot;</span>
+</pre></div>
+
+<h2 id="lambda">無名関数 (Lambda)</h2>
+<p>セクションのキーに対応する値に呼び出し可能なオブジェクトを渡した場合は、そのブロック内のテキストを引数として実行され、その返り値が結果として出力されます。</p>
+<div class="pygments_borland"><pre><span class="n">template</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">DOC</span>
+<span class="sh">{{#proc}}</span>
+<span class="sh">mojavy is bad</span>
+<span class="sh">{{/proc}}</span>
+<span class="no">DOC</span>
+<span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="nb">proc</span><span class="p">:</span> <span class="o">-&gt;</span><span class="n">text</span><span class="p">{</span><span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/bad/</span><span class="p">,</span> <span class="s1">&#39;nice&#39;</span><span class="p">)})</span> <span class="c1"># =&gt; &quot;mojavy is nice\n&quot;</span>
+</pre></div>
+
+<h2 id="_6">コメント</h2>
+<p><code>!</code>をつけるとコメントになります</p>
+<div class="pygments_borland"><pre><span class="no">Mustache</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;Comment here: {{! ignore me }}&quot;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Comment here: &quot;</span>
+</pre></div>
+
+<h2 id="_7">まとめ</h2>
+<p>mustacheの基本的な機能について簡単なサンプルコードとともに解説しました。
+ここではrubyのmustacheを使用しましたが、他の言語でも同様の機能が使えます。
+一部の機能については省略しているので、より詳細な情報については本家ドキュメントを参照してください。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/10/17/calculate-combinations/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/10/01/mustache-quick-master/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/10/01/mustache-quick-master/" class="hatena-bookmark-button" data-hatena-bookmark-title="mustache基礎文法最速マスター" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/10/01/mustache-quick-master/" data-text="mustache基礎文法最速マスター">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/10/01/mustache-quick-master/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="debianパッケージをchefで削除する場合はpurgeを使う方がよい"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/" rel="bookmark" title="Permanent Link to debianパッケージをchefで削除する場合はpurgeを使う方がよい">debianパッケージをchefで削除する場合はpurgeを使う方がよい</a></h2>
   <small>September 10, 2013 at 07:39 PM | categories:
@@ -381,95 +492,6 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="quicklinks-6"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/06/15/quicklinks6/" rel="bookmark" title="Permanent Link to Quicklinks 6">Quicklinks 6</a></h2>
-  <small>June 15, 2013 at 11:20 PM | categories:
-
-<a href='/blog/category/quicklinks'>quicklinks</a>
- | <a href="http://mojavy.com/blog/2013/06/15/quicklinks6/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="leaf" src="/images/leaf.jpg" /> </p>
-<p>最近道端の植物を観察するのがマイブームです。
-写真は六本木ヒルズにあるミニ庭園っぽいとこに植えてあった草。名前はわからない。
-おもしろい植物があってもなかなか名前を同定するところまで到達できないのがつらいところ。</p>
-<h3 id="go">Go</h3>
-<ul>
-<li><a href="http://ukai-go-talks.appspot.com/2013/gocon.slide">http://ukai-go-talks.appspot.com/2013/gocon.slide</a> </li>
-<li><a href="http://blogger.ukai.org/2013/04/go-conference-2013-spring.html">http://blogger.ukai.org/2013/04/go-conference-2013-spring.html</a> </li>
-<li><a href="http://talks.golang.org/2012/splash.article">http://talks.golang.org/2012/splash.article</a></li>
-<li><a href="http://golang.jp/">http://golang.jp/</a> </li>
-<li><a href="http://d.hatena.ne.jp/Jxck/20130530/1369928762">http://d.hatena.ne.jp/Jxck/20130530/1369928762</a> </li>
-</ul>
-<p>最近まわりで評判がよくて久々試してみたら思いの外よかったので真面目にやってみようかという気になりました。
-勝手なイメージでは、ErlangとCとJavascriptのいいとこ取りしてる感じ。</p>
-<p>Race Detectorなんてものもあるらしい。すごい。</p>
-<h3 id="trick-2013">TRICK 2013</h3>
-<ul>
-<li><a href="https://sites.google.com/site/trickcontest2013/home/ja">https://sites.google.com/site/trickcontest2013/home/ja</a> </li>
-<li><a href="https://github.com/tric/trick2013">https://github.com/tric/trick2013</a> </li>
-</ul>
-<p>これに入賞するにはプログラミングスキルだけじゃなくてセンスと教養と変態性が必要だと感じました。</p>
-<h2 id="_1">電王戦</h2>
-<ul>
-<li><a href="http://ex.nicovideo.jp/denousen2013/">http://ex.nicovideo.jp/denousen2013/</a> </li>
-<li><a href="http://www.tanaka.ecc.u-tokyo.ac.jp/~ktanaka/denou2/">http://www.tanaka.ecc.u-tokyo.ac.jp/~ktanaka/denou2/</a> </li>
-</ul>
-<p>人同士が対戦してるのを見るのは別のおもしろさがあるので人間が負けたからといってどうということもないとは思いますが、
-実際コンピュータが勝ってしまうとちょっと寂しくも感じてしまいますね。</p>
-<p>ちなみに将棋の探索木データは一部公開されているようです。
-今のところ使い道は特に思いうかびませんが、こういうものの存在を覚えておくとAIとかを書きたくなったときとかに参考にできるかも。</p>
-<h3 id="ternjs">ternjs</h3>
-<ul>
-<li><a href="http://ternjs.net/">http://ternjs.net/</a> </li>
-</ul>
-<p>IDEでのJavaやC#みたいなインテリジェントなエディタサポートをJavascriptでもできるようにするためのものです。普通に便利ですね。</p>
-<h3 id="xbox-one-ps4">Xbox One, PS4</h3>
-<ul>
-<li><a href="http://www.xbox.com/en-US/xboxone/meet-xbox-one">http://www.xbox.com/en-US/xboxone/meet-xbox-one</a> </li>
-<li><a href="http://www.jp.playstation.com/ps4/">http://www.jp.playstation.com/ps4/</a> </li>
-<li><a href="http://youtu.be/pGQXdEHc3LY">http://youtu.be/pGQXdEHc3LY</a> </li>
-<li><a href="http://youtu.be/njfj6KwEAfg">http://youtu.be/njfj6KwEAfg</a> </li>
-</ul>
-<p>もはやぱっと見では実写と見分けがつかないです。</p>
-<h3 id="haswell">Haswell</h3>
-<ul>
-<li><a href="http://www.intel.com/content/www/us/en/processors/core/4th-gen-core-family-desktop-vol-1-datasheet.html">http://www.intel.com/content/www/us/en/processors/core/4th-gen-core-family-desktop-vol-1-datasheet.html</a> </li>
-<li><a href="http://ascii.jp/elem/000/000/726/726151/">http://ascii.jp/elem/000/000/726/726151/</a> </li>
-</ul>
-<p>何やらおもしろそうな新機能が導入されたようです。</p>
-<h3 id="nsa">NSAのリークの話</h3>
-<ul>
-<li><a href="http://wired.jp/2013/06/11/nsa-leaker-outs-himself/">http://wired.jp/2013/06/11/nsa-leaker-outs-himself</a> </li>
-</ul>
-<p>一個人が天下のアンクル・サムさんに喧嘩を売るという映画のような展開で野次馬せずにはいられません。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/07/10/c-tuple/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-3px;" class="fb-like" data-href="http://mojavy.com/blog/2013/06/15/quicklinks6/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/06/15/quicklinks6/" class="hatena-bookmark-button" data-hatena-bookmark-title="Quicklinks 6" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/06/15/quicklinks6/" data-text="Quicklinks 6">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/06/15/quicklinks6/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../1">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -499,6 +521,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
       <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
       <li><a href="/blog/2013/10/28/r-tutor-chap08/" title="R Tutorial Part2 Chapter08 (Numerical Measures)"><p>R Tutorial Part2 Chapter08 (Numerical Measures)</a><span style="font-size: 80%;">(October 28, 2013 at 02:11 AM)</span></li>
       <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
@@ -506,7 +529,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
       <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
       <li><a href="/blog/2013/09/09/chef-solo-ssh-config/" title="chef soloでAuthenticationFailedといわれたときの対応"><p>chef soloでAuthenticationFailedといわれたときの対応</a><span style="font-size: 80%;">(September 09, 2013 at 08:43 PM)</span></li>
-      <li><a href="/blog/2013/07/12/reptyr/" title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"><p>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a><span style="font-size: 80%;">(July 12, 2013 at 07:15 PM)</span></li>
     </ul>
   </div>
 
@@ -559,6 +581,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
@@ -606,7 +629,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>
