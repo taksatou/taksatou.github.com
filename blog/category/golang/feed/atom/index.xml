@@ -25,7 +25,7 @@
     <published>2013-11-19T19:19:57Z</published>
     <category scheme="http://mojavy.com/blog" term="golang" />
     <summary type="html"><![CDATA[Goのtemplateパッケージ簡易チートシート]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/11/19/go-template/"><![CDATA[<p>goに標準でついてるtemplateパッケージは便利なのだけど、マニュアルが長すぎるのでよく使う機能だけまとめておく。</p>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/11/19/go-template/"><![CDATA[<p>goに標準でついてるtemplateパッケージは便利なのだけど、<a href="http://golang.org/pkg/text/template/">マニュアル</a>が長すぎるのでよく使う機能だけまとめておく。</p>
 <p>そろそろだれかテンプレートエンジンを標準化してほしい。</p>
 <div class="toc">
 <ul>
