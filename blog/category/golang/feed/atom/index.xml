@@ -7,12 +7,114 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-11-17T00:30:57Z</updated>
+  <updated>2013-11-19T19:19:57Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Goのtemplateパッケージ簡易チートシート]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/11/19/go-template/" />
+    <id>http://mojavy.com/blog/2013/11/19/go-template/</id>
+    <updated>2013-11-19T19:19:57Z</updated>
+    <published>2013-11-19T19:19:57Z</published>
+    <category scheme="http://mojavy.com/blog" term="golang" />
+    <summary type="html"><![CDATA[Goのtemplateパッケージ簡易チートシート]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2013/11/19/go-template/"><![CDATA[<p>goに標準でついてるtemplateパッケージは便利なのだけど、マニュアルが長すぎるのでよく使う機能だけまとめておく。</p>
+<p>そろそろだれかテンプレートエンジンを標準化してほしい。</p>
+<div class="toc">
+<ul>
+<li><a href="#_1">基本</a></li>
+<li><a href="#_2">変数展開</a></li>
+<li><a href="#_3">関数呼び出し</a></li>
+<li><a href="#_4">ループ</a></li>
+<li><a href="#_5">組み込み関数</a></li>
+</ul>
+</div>
+<h2 id="_1">基本</h2>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;text/template&quot;</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">tmpl</span> <span class="p">:=</span> <span class="s">&quot;Hello, {{.template}}!&quot;</span>
+    <span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+    <span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+    <span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="k">map</span><span class="p">[</span><span class="nb">string</span><span class="p">]</span><span class="nb">string</span><span class="p">{</span><span class="s">&quot;template&quot;</span><span class="p">:</span> <span class="s">&quot;World&quot;</span><span class="p">})</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>ちなみに、<code>template.Must(t.Parse(tmpl))</code>は以下のショートカット</p>
+<div class="pygments_borland"><pre><span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="p">:=</span> <span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">err</span> <span class="p">!=</span> <span class="n">nil</span> <span class="p">{</span>
+    <span class="n">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="_2">変数展開</h2>
+<p>通常はmapのキーかstructのメンバを<code>.Key</code>のようにドット付きで指定するとでその値が展開される。
+ただし、該当するキーが見つからなかった場合、mapでは<code>&lt;no value&gt;</code>という文字列が出力されるが、structではエラーになる。</p>
+<div class="pygments_borland"><pre><span class="k">type</span> <span class="n">T</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">Name</span> <span class="nb">string</span>
+<span class="p">}</span>
+
+<span class="n">tmpl</span> <span class="p">:=</span> <span class="s">&quot;Hello, {{.Name}}!\n&quot;</span>
+<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="k">map</span><span class="p">[</span><span class="nb">string</span><span class="p">]</span><span class="nb">string</span><span class="p">{</span><span class="s">&quot;Name&quot;</span><span class="p">:</span> <span class="s">&quot;map&quot;</span><span class="p">})</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="n">T</span><span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;struct&quot;</span><span class="p">})</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="p">&amp;</span><span class="n">T</span><span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;struct reference&quot;</span><span class="p">})</span>
+</pre></div>
+
+<p><code>.</code>のようにドットだけを渡すと変数それ自体が展開される。</p>
+<div class="pygments_borland"><pre><span class="n">tmpl</span> <span class="p">:=</span> <span class="s">&quot;Hello, {{.}}!\n&quot;</span>
+<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="s">&quot;World&quot;</span><span class="p">)</span>
+</pre></div>
+
+<h2 id="_3">関数呼び出し</h2>
+<p>関数はシェルのパイプのように連結させて呼びだせる。テンプレート内で呼ぶ関数は<code>template.FuncMap</code>で渡す。</p>
+<div class="pygments_borland"><pre><span class="n">tmpl</span> <span class="p">:=</span> <span class="s">`Now {{now}}, {{&quot;hello&quot; | toupper}}`</span>
+<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Funcs</span><span class="p">(</span><span class="n">template</span><span class="p">.</span><span class="n">FuncMap</span><span class="p">{</span>
+    <span class="s">&quot;now&quot;</span><span class="p">:</span>     <span class="k">func</span><span class="p">()</span> <span class="nb">string</span> <span class="p">{</span> <span class="k">return</span> <span class="n">time</span><span class="p">.</span><span class="n">Now</span><span class="p">().</span><span class="n">String</span><span class="p">()</span> <span class="p">},</span>
+    <span class="s">&quot;toupper&quot;</span><span class="p">:</span> <span class="n">strings</span><span class="p">.</span><span class="n">ToUpper</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="n">nil</span><span class="p">)</span> <span class="c1">// =&gt; Now 2013-11-19 19:17:51.378063751 +0900 JST, HELLO</span>
+</pre></div>
+
+<h2 id="_4">ループ</h2>
+<p>組み込みの<code>range</code> Actionをつかえばよい。</p>
+<div class="pygments_borland"><pre><span class="k">type</span> <span class="n">T</span> <span class="k">struct</span><span class="p">{</span> <span class="n">Name</span> <span class="nb">string</span> <span class="p">}</span>
+<span class="n">tmpl</span> <span class="p">:=</span> <span class="s">`</span>
+<span class="s">{{range .}}- {{.Name}}</span>
+<span class="s">{{end}}</span>
+<span class="s">`</span>
+<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="p">[]</span><span class="n">T</span><span class="p">{</span>
+    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Alice&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Bob&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Charlie&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Dave&quot;</span><span class="p">},</span>
+<span class="p">})</span>
+</pre></div>
+
+<p>その他、条件分岐等のActionは <a href="http://golang.org/pkg/text/template/#hdr-Actions">マニュアルのActionsの</a> 参照</p>
+<h2 id="_5">組み込み関数</h2>
+<p>こちらも <a href="http://golang.org/pkg/text/template/#hdr-Functions">マニュアルのFunctionsの項</a> を参照</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
