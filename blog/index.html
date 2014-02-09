@@ -102,6 +102,176 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="全文検索システムの比較---elasticsearch-vs-solr-vs-amazon-cloudsearch"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/" rel="bookmark" title="Permanent Link to 全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch">全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</a></h2>
+  <small>February 10, 2014 at 01:05 AM | categories:
+
+<a href='/blog/category/elastic-search'>elastic search</a>, <a href='/blog/category/aws'>aws</a>, <a href='/blog/category/solr'>solr</a>, <a href='/blog/category/web'>web</a>
+ | <a href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>ElasticSearch、Solr、及び Amazon CloudSearchの比較検討を行った。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#_2">候補の選定方法</a></li>
+<li><a href="#solr">Solr</a><ul>
+<li><a href="#_3">長所</a></li>
+<li><a href="#_4">短所</a></li>
+</ul>
+</li>
+<li><a href="#elasticsearch">ElasticSearch</a><ul>
+<li><a href="#_5">長所</a></li>
+<li><a href="#_6">短所</a></li>
+</ul>
+</li>
+<li><a href="#amazon-cloudsearch">Amazon CloudSearch</a><ul>
+<li><a href="#_7">長所</a></li>
+<li><a href="#_8">短所</a></li>
+</ul>
+</li>
+<li><a href="#_9">比較項目別のまとめ</a><ul>
+<li><a href="#_10">拡張性</a></li>
+<li><a href="#_11">性能</a></li>
+<li><a href="#_12">安定性</a></li>
+<li><a href="#_13">リアルタイムデータ更新</a></li>
+<li><a href="#_14">日本語対応</a></li>
+<li><a href="#_15">スケーラビリティ</a></li>
+</ul>
+</li>
+<li><a href="#_16">参考リンクまとめ</a></li>
+<li><a href="#_17">所感</a></li>
+</ul>
+</div>
+<h2 id="_2">候補の選定方法</h2>
+<p>候補を選定するにあたって、以下の特徴をもっていることを前提とした。
+LuceneやGroongaを使えば何でもできるが、ここでは対象としない。</p>
+<ul>
+<li>ウェブベースのインターフェースを持つ</li>
+<li>インデックスの更新はほぼリアルタイムに反映される</li>
+<li>スケールアウトが容易</li>
+</ul>
+<h2 id="solr">Solr</h2>
+<p><img alt="solr" src="/images/solr-150.png" /> </p>
+<p><a href="https://lucene.apache.org/solr/">https://lucene.apache.org/solr/</a> </p>
+<p>Luceneをバックエンドにした全文検索システム。バージョン4になってから大幅に機能が増強された。</p>
+<h3 id="_3">長所</h3>
+<ul>
+<li>実績が十分ある</li>
+<li>機能豊富</li>
+</ul>
+<h3 id="_4">短所</h3>
+<ul>
+<li>クラスタを構築して運用するには手間がかかりそう</li>
+<li>SolrCloudはzookeeperに依存するためサーバ台数もかさむ</li>
+</ul>
+<h2 id="elasticsearch">ElasticSearch</h2>
+<p><img alt="ElasticSearch" src="/images/elasticsearch-logo.png" /> </p>
+<p><a href="http://www.elasticsearch.org/">http://www.elasticsearch.org/</a> </p>
+<p>Solrと同じくLuceneをバックエンドにした全文検索システム。開発者の言<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>によると、Solrより洗練された分散モデルで<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> 、使いやすいAPIを備えている。 </p>
+<h3 id="_5">長所</h3>
+<ul>
+<li>アーキテクチャやUIが今風</li>
+<li>クラスタの構築が簡単</li>
+<li>KibanaやLogstashと連携できる</li>
+<li>Percolate APIというpush通知のような機能を簡単に実装するためのものがある</li>
+</ul>
+<h3 id="_6">短所</h3>
+<ul>
+<li>後発な分ノウハウの蓄積にやや不安が残る</li>
+<li>未実装機能がいくらかある(あった。現時点(2014-02-09)では機能的にはほぼ追いついているように見える  <a href="http://solr-vs-elasticsearch.com/">http://solr-vs-elasticsearch.com/</a>  )</li>
+</ul>
+<h2 id="amazon-cloudsearch">Amazon CloudSearch</h2>
+<p><img alt="amazon" src="/images/aws-logo-s.png" /> </p>
+<p><a href="http://aws.amazon.com/jp/cloudsearch/">http://aws.amazon.com/jp/cloudsearch/</a> </p>
+<p>AWS上で提供されている全文検索システム。EC2と同じく時間とトラフィックで課金される。現時点ではまだベータ。</p>
+<h3 id="_7">長所</h3>
+<ul>
+<li>自動的にスケーリングしてくれる(エントリ数、リクエスト数に応じてインスタンスが自動的に増える)</li>
+<li>pdfやdocをそのまま送るだけでも適当にうまくやってくれる</li>
+<li>DynamoDBのデータをそのまま流してインデックスできる</li>
+</ul>
+<h3 id="_8">短所</h3>
+<ul>
+<li>現状では東京リージョンがない</li>
+<li>テキスト解析のカスタマイズが限定的。現状、Stemming, Stopwords, Synonymsのみカスタム可能。</li>
+<li>N-gramとか形態素解析は自前で処理してからアップロードする必要がある</li>
+<li>ヒット位置を取る方法がない</li>
+<li>テキスト本文をインデックスと一緒に格納することはできない</li>
+</ul>
+<h2 id="_9">比較項目別のまとめ</h2>
+<h3 id="_10">拡張性</h3>
+<p>SolrもElasticSearchもLuceneをバックエンドにしているので、Luceneでできることは基本的にはどちらでもできるはず。
+Amazonは現状ではあまり拡張性はない。</p>
+<h3 id="_11">性能</h3>
+<p>基本性能はSolrもElasticSearchも大差はなさそう。
+Amazonは自動的に拡張されるので性能の問題はなさそう。ただし、ノードが自動追加された時の挙動は未確認。</p>
+<h3 id="_12">安定性</h3>
+<p>数年先行している分Solrがよいと思われるが、ElasticSearchも既に十分本番稼動実績はある。
+Amazonはベータなので未知数。</p>
+<h3 id="_13">リアルタイムデータ更新</h3>
+<p>いずれもほぼリアルタイムに更新できる。</p>
+<h3 id="_14">日本語対応</h3>
+<p>SolrとElasticSearchはほぼ同等。kuromojiやmecabをつかえば形態素解析もできる。
+Amazonはそれ自体では対応していないが、Luceneのtokenizer等を使って自前で前処理することで対応は可能。</p>
+<h3 id="_15">スケーラビリティ</h3>
+<p>Amazonは完全に自動的にスケールアウトしてくれる。
+ElasticSearchはインデックスのシャード数を作成時に決めておく必要があるが、スケールアウトは容易だと思われる。
+Solrはv4からはElasticSearchと大体同等のスケーラビリティを備えるようになった。</p>
+<h2 id="_16">参考リンクまとめ</h2>
+<ul>
+<li><a href="http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch">http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch</a> </li>
+<li><a href="http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage">http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage</a> </li>
+<li><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/</a> </li>
+<li><a href="https://github.com/atilika/kuromoji">https://github.com/atilika/kuromoji</a> </li>
+<li><a href="http://www.elasticsearch.org/blog/percolator/">http://www.elasticsearch.org/blog/percolator/</a> </li>
+<li><a href="http://blog.feedbin.me/2013/11/10/powering-actions-with-elasticsearch-percolate/">http://blog.feedbin.me/2013/11/10/powering-actions-with-elasticsearch-percolate/</a> </li>
+<li><a href="http://docs.aws.amazon.com/cloudsearch/latest/developerguide/text-processing.html">http://docs.aws.amazon.com/cloudsearch/latest/developerguide/text-processing.html</a> </li>
+<li><a href="http://blog.mikemccandless.com/2011/06/lucenes-near-real-time-search-is-fast.html">http://blog.mikemccandless.com/2011/06/lucenes-near-real-time-search-is-fast.html</a> </li>
+<li><a href="https://wiki.apache.org/solr/Solr4.0">https://wiki.apache.org/solr/Solr4.0</a> </li>
+<li><a href="http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch">http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch</a> </li>
+</ul>
+<h2 id="_17">所感</h2>
+<p>後発な分ElasticSearchが一番洗練されているように思います。
+Solrは無難に導入できそうですが、スケールアウトが必要になったとき手間がかかりそうです。
+Amazonはメリットも多いですが、現状では制限が多いので使いづらいと思います。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage">http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage</a> &#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>昔のSolrは単純なレプリケーションとシャーディングしかなかったので、クラスタを構築するのは大変だった&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/11/19/go-template/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-1pt; padding-right:2pt;" class="fb-like" data-href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/02/10/search-engine-comparison/" class="hatena-bookmark-button" data-hatena-bookmark-title="全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/02/10/search-engine-comparison/" data-text="全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="goのtemplateパッケージ簡易チートシート"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/11/19/go-template/" rel="bookmark" title="Permanent Link to Goのtemplateパッケージ簡易チートシート">Goのtemplateパッケージ簡易チートシート</a></h2>
   <small>November 19, 2013 at 07:19 PM | categories:
@@ -212,6 +382,8 @@ href="/blog/feed/atom" />
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2013/11/17/goconvey/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -599,114 +771,6 @@ emacsのロックファイルがあると落ちてしまう問題があったの
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="reveal.js-をつかってブログ記事からスライドを生成する"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/18/revealjs/" rel="bookmark" title="Permanent Link to reveal.js をつかってブログ記事からスライドを生成する">reveal.js をつかってブログ記事からスライドを生成する</a></h2>
-  <small>October 18, 2013 at 10:00 PM | categories:
-
-<a href='/blog/category/blog'>blog</a>, <a href='/blog/category/reveal.js'>reveal.js</a>, <a href='/blog/category/blogofile'>blogofile</a>
- | <a href="http://mojavy.com/blog/2013/10/18/revealjs/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <h3 id="_1">はじめに</h3>
-<p>これは以下のような人を対象にしたポストです</p>
-<ul>
-<li class="fragment">スライドをmarkdownでつくりたい</li>
-<li class="fragment">ブログはmarkdownでかいている</li>
-<li class="fragment">ずぼらするためには努力を惜しまない</li>
-</ul>
-
-<h3 id="_2">デモ</h3>
-<p>とりあえず以下のスライドをみてください。</p>
-<ul>
-<li><a href="/slide/2013/10/18/revealjs/">/slide/2013/10/18/revealjs/</a> </li>
-</ul>
-<h3 id="revealjs">reveal.jsとは</h3>
-<p>HTMLでかけるプレゼンツールです。詳細は以下等を参照してください。</p>
-<ul>
-<li><a href="http://lab.hakim.se/reveal-js">http://lab.hakim.se/reveal-js/</a> </li>
-</ul>
-<h3 id="static-cms">static CMS</h3>
-<p>説明は省略します。このブログはblogofileでできていますが、jekyllやhakyllのようなものでもほぼ同等なことができます。</p>
-<ul>
-<li><a href="http://jekyllrb.com/">http://jekyllrb.com/</a> </li>
-<li><a href="http://www.blogofile.com/">http://www.blogofile.com/</a> </li>
-<li><a href="http://jaspervdj.be/hakyll/">http://jaspervdj.be/hakyll/</a> </li>
-</ul>
-<h3 id="_3">やり方</h3>
-<p>reveal.jsのmarkdown埋め込み機能をつかうだけです。reveal.jsのREADMEを読むとめんどうなように見えますが、 <a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a>  のようにテンプレートを書くだけ。とはいえ多少のコーディングが必要です。</p>
-<p>詳細は以下のソースをみてください。</p>
-<ul>
-<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a> </li>
-<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_controllers/blog/slide.py">slide.py</a> </li>
-</ul>
-<h2 id="code-highlight">code highlight</h2>
-<p>コードハイライトつかえます。</p>
-<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
-
-<span class="c1">// highlight test</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3 id="fragment">fragment</h3>
-<p>fragmentもつかえます。</p>
-<p class="fragment">... to step through ...</p>
-
-<ol>
-<li class="fragment"><code>any type</code></li>
-<li class="fragment"><em>of view</em></li>
-<li class="fragment"><strong>fragments</strong></li>
-</ol>
-
-<h3 id="_4">長所</h3>
-<ul>
-<li class="fragment">ブログ書くついてでにスライドもできる</li>
-<li class="fragment">スライドの共有が簡単</li>
-<li class="fragment">パワポ不要</li>
-<li class="fragment">さりげなくギークっぽさがアピールできる</li>
-</ul>
-
-<h3 id="_5">短所</h3>
-<ul>
-<li class="fragment">ブログとスライドのそれぞれの完成度を両立した記事にまとめるのは難しい</li>
-<li class="fragment">多少はhtmlを書く必要があるときもある</li>
-</ul>
-
-<h3 id="_6">まとめ</h3>
-<ul>
-<li class="fragment">blogofileにreveal.jsを組み込んだ話を紹介しました</li>
-<li class="fragment">reveal.jsかっこいいです</li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/10/17/calculate-combinations/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-1pt; padding-right:2pt;" class="fb-like" data-href="http://mojavy.com/blog/2013/10/18/revealjs/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/10/18/revealjs/" class="hatena-bookmark-button" data-hatena-bookmark-title="reveal.js をつかってブログ記事からスライドを生成する" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/10/18/revealjs/" data-text="reveal.js をつかってブログ記事からスライドを生成する">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/10/18/revealjs/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/page/2">Next »</a>
 </div>
@@ -734,6 +798,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
       <li><a href="/blog/2013/11/19/go-template/" title="Goのtemplateパッケージ簡易チートシート"><p>Goのtemplateパッケージ簡易チートシート</a><span style="font-size: 80%;">(November 19, 2013 at 07:19 PM)</span></li>
       <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
       <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
@@ -741,7 +806,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/10/17/calculate-combinations/" title="オーバーフローしにくい組み合わせの数の計算方法"><p>オーバーフローしにくい組み合わせの数の計算方法</a><span style="font-size: 80%;">(October 17, 2013 at 09:13 PM)</span></li>
       <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
-      <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
     </ul>
   </div>
 
@@ -784,11 +848,13 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/elastic-search">elastic search</a> (<a href="/blog/category/elastic-search/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
@@ -825,6 +891,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
@@ -832,7 +899,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -842,6 +909,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>

@@ -102,6 +102,82 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="ワイヤレスなraspberry-pi環境をつくる"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" rel="bookmark" title="Permanent Link to ワイヤレスなRaspberry Pi環境をつくる">ワイヤレスなRaspberry Pi環境をつくる</a></h2>
+  <small>April 28, 2013 at 01:54 AM | categories:
+
+<a href='/blog/category/raspberry-pi'>raspberry pi</a>
+ | <a href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="raspberry" src="/images/raspberry-pi-150.png" /></p>
+<p>Raspberry Pi遊ぶからにはその小ささを生かしたことがしたいですよね。
+というわけで手始めにワイヤレス化しました。手順は非常に簡単で、ほぼAmazonで買ったパーツを差すだけで達成できました。</p>
+<p>Raspberry Piを標準的な構成でうごかすとLANケーブル、電源、 キーボード、ディスプレイの4本コードがのびることになりますが、sshで接続できればディスプレイもキーボードも不要なのであと必要なのはネットワーク環境と電源だけです。</p>
+<p>電源は 5V 700mA なので、普通のスマートフォン用バッテリーがそのまま使えます。
+5V 700mAを越えていれば何でもいいと思いますが、今回は以下をつかいました。</p>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B0067TQQI8" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p><br></p>
+<p>ネットワークはUSBの無線LAN受信機を使います。
+これも何でもいいと思いますが、あまり最新のモデルだとドライバが対応してないかもしれないのでちょっと古めのもののほうが無難です。以下の商品は問題なく動きました。</p>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=B003NSAMW2" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<p>wifiの設定はX Windowの設定画面からしました。<code>startx</code>でデスクトップを起動すると<code>WiFi Config</code>というアイコンがあるのでそこから設定できます。
+ターミナルで<code>ifconfig</code>を実行してwlan0にinet addrが割り当てられていることを確認できればOKです。</p>
+<div class="pygments_borland"><pre>pi@raspberrypi ~ $ /sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr b8:27:eb:90:32:15
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:1104 (1.0 KiB)  TX bytes:1104 (1.0 KiB)
+
+wlan0     Link encap:Ethernet  HWaddr 10:6f:3f:ec:5f:b8
+          inet addr:192.168.1.13  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4285 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:673 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:937903 (915.9 KiB)  TX bytes:81630 (79.7 KiB)
+</pre></div>
+
+<p>ここで確認したIPアドレスにsshしてつながれば完了です。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/04/28/raspberry-pi/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-1pt; padding-right:2pt;" class="fb-like" data-href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" class="hatena-bookmark-button" data-hatena-bookmark-title="ワイヤレスなRaspberry Pi環境をつくる" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/" data-text="ワイヤレスなRaspberry Pi環境をつくる">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="raspberry-pi-はじめました"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/28/raspberry-pi/" rel="bookmark" title="Permanent Link to Raspberry Pi はじめました">Raspberry Pi はじめました</a></h2>
   <small>April 28, 2013 at 01:30 AM | categories:
@@ -471,70 +547,6 @@ rubyのコードをllvmベースのマシン語にコンパイルするので高
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/" rel="bookmark" title="Permanent Link to emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた">emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた</a></h2>
-  <small>April 05, 2013 at 07:49 PM | categories:
-
-<a href='/blog/category/php'>php</a>, <a href='/blog/category/emacs'>emacs</a>
- | <a href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /> </p>
-<p>phper人口は多いはずなのになぜかどこにも見つからなかったので<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>emacsでphpのインタラクティブシェルを動かすための<a href="https://github.com/taksatou/inf-php">inf-php.el</a> を書いた。</p>
-<h4 id="install">install</h4>
-<p>auto-installがはいっていれば、<code>(auto-install-from-url "https://raw.github.com/taksatou/inf-php/master/inf-php.el")</code>で、はいってなければ <a href="https://raw.github.com/taksatou/inf-php/master/inf-php.el">inf-php.el</a> をダウンロードして適当にload-pathの通った場所に配置して、<code>.emacs</code>に以下を追記</p>
-<div class="pygments_borland"><pre>(require &#39;inf-php)
-</pre></div>
-
-<h4 id="usage">usage</h4>
-<p>現状のキーバインドは以下の通り</p>
-<div class="pygments_borland"><pre>(define-key php-mode-map &quot;\C-c\C-s&quot; &#39;inf-php)              ;; inf-phpを起動する
-(define-key php-mode-map &quot;\C-c\C-z&quot; &#39;php-switch-to-inf)    ;; inf-rubyバッファに切り替える
-(define-key php-mode-map &quot;\M-\C-x&quot; &#39;php-send-definition)   ;; 現在カーソルがあるところの関数をinf-phpに送る
-(define-key php-mode-map &quot;\C-c\C-x&quot; &#39;php-send-definition)  ;; 同上
-(define-key php-mode-map &quot;\C-c\M-x&quot; &#39;php-send-definition-and-go)  ;; 同上だが送った後バッファを切り替える
-(define-key php-mode-map &quot;\C-c\C-r&quot; &#39;php-send-region)             ;; 現在のregionを送る
-(define-key php-mode-map &quot;\C-c\M-r&quot; &#39;php-send-region-and-go)      ;; 同上だが送った後バッファを切り替える
-(define-key php-mode-map &quot;\C-x\C-e&quot; &#39;php-send-last-sexp)          ;; 直前のsexpをinf-phpに送る
-</pre></div>
-
-<h4 id="misc">misc</h4>
-<p>フィードバック、要望等ありましたらgithubからおねがいします。</p>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>と思ったら、<a href="https://github.com/ieure/php_repl">php_repl</a> なるものが存在していた。php_replのほうが機能的には充実してそう。inf-phpは依存がほぼないのでインストールが簡単という点がメリットなのでまあよしとします(2013/04/05 20:57:35 追記)&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/03/29/ruboto/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-1pt; padding-right:2pt;" class="fb-like" data-href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/" class="hatena-bookmark-button" data-hatena-bookmark-title="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/" data-text="emacsでphpのインタラクティブシェルを動かすinf-php.elを書いた">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/04/05/emacs-inf-php-mode/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../3">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -564,6 +576,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
       <li><a href="/blog/2013/11/19/go-template/" title="Goのtemplateパッケージ簡易チートシート"><p>Goのtemplateパッケージ簡易チートシート</a><span style="font-size: 80%;">(November 19, 2013 at 07:19 PM)</span></li>
       <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
       <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
@@ -571,7 +584,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/10/17/calculate-combinations/" title="オーバーフローしにくい組み合わせの数の計算方法"><p>オーバーフローしにくい組み合わせの数の計算方法</a><span style="font-size: 80%;">(October 17, 2013 at 09:13 PM)</span></li>
       <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
-      <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
     </ul>
   </div>
 
@@ -614,11 +626,13 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/elastic-search">elastic search</a> (<a href="/blog/category/elastic-search/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
@@ -655,6 +669,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
@@ -662,7 +677,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -672,6 +687,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>

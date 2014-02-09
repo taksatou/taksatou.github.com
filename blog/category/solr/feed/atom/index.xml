@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2014-02-10T01:05:25Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/" />
+    <id>http://mojavy.com/blog/2014/02/10/search-engine-comparison/</id>
+    <updated>2014-02-10T01:05:25Z</updated>
+    <published>2014-02-10T01:05:25Z</published>
+    <category scheme="http://mojavy.com/blog" term="elastic search" />
+    <category scheme="http://mojavy.com/blog" term="aws" />
+    <category scheme="http://mojavy.com/blog" term="solr" />
+    <category scheme="http://mojavy.com/blog" term="web" />
+    <summary type="html"><![CDATA[全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/02/10/search-engine-comparison/"><![CDATA[<p>ElasticSearch、Solr、及び Amazon CloudSearchの比較検討を行った。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#_2">候補の選定方法</a></li>
+<li><a href="#solr">Solr</a><ul>
+<li><a href="#_3">長所</a></li>
+<li><a href="#_4">短所</a></li>
+</ul>
+</li>
+<li><a href="#elasticsearch">ElasticSearch</a><ul>
+<li><a href="#_5">長所</a></li>
+<li><a href="#_6">短所</a></li>
+</ul>
+</li>
+<li><a href="#amazon-cloudsearch">Amazon CloudSearch</a><ul>
+<li><a href="#_7">長所</a></li>
+<li><a href="#_8">短所</a></li>
+</ul>
+</li>
+<li><a href="#_9">比較項目別のまとめ</a><ul>
+<li><a href="#_10">拡張性</a></li>
+<li><a href="#_11">性能</a></li>
+<li><a href="#_12">安定性</a></li>
+<li><a href="#_13">リアルタイムデータ更新</a></li>
+<li><a href="#_14">日本語対応</a></li>
+<li><a href="#_15">スケーラビリティ</a></li>
+</ul>
+</li>
+<li><a href="#_16">参考リンクまとめ</a></li>
+<li><a href="#_17">所感</a></li>
+</ul>
+</div>
+<h2 id="_2">候補の選定方法</h2>
+<p>候補を選定するにあたって、以下の特徴をもっていることを前提とした。
+LuceneやGroongaを使えば何でもできるが、ここでは対象としない。</p>
+<ul>
+<li>ウェブベースのインターフェースを持つ</li>
+<li>インデックスの更新はほぼリアルタイムに反映される</li>
+<li>スケールアウトが容易</li>
+</ul>
+<h2 id="solr">Solr</h2>
+<p><img alt="solr" src="/images/solr-150.png" /> </p>
+<p><a href="https://lucene.apache.org/solr/">https://lucene.apache.org/solr/</a> </p>
+<p>Luceneをバックエンドにした全文検索システム。バージョン4になってから大幅に機能が増強された。</p>
+<h3 id="_3">長所</h3>
+<ul>
+<li>実績が十分ある</li>
+<li>機能豊富</li>
+</ul>
+<h3 id="_4">短所</h3>
+<ul>
+<li>クラスタを構築して運用するには手間がかかりそう</li>
+<li>SolrCloudはzookeeperに依存するためサーバ台数もかさむ</li>
+</ul>
+<h2 id="elasticsearch">ElasticSearch</h2>
+<p><img alt="ElasticSearch" src="/images/elasticsearch-logo.png" /> </p>
+<p><a href="http://www.elasticsearch.org/">http://www.elasticsearch.org/</a> </p>
+<p>Solrと同じくLuceneをバックエンドにした全文検索システム。開発者の言<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>によると、Solrより洗練された分散モデルで<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> 、使いやすいAPIを備えている。 </p>
+<h3 id="_5">長所</h3>
+<ul>
+<li>アーキテクチャやUIが今風</li>
+<li>クラスタの構築が簡単</li>
+<li>KibanaやLogstashと連携できる</li>
+<li>Percolate APIというpush通知のような機能を簡単に実装するためのものがある</li>
+</ul>
+<h3 id="_6">短所</h3>
+<ul>
+<li>後発な分ノウハウの蓄積にやや不安が残る</li>
+<li>未実装機能がいくらかある(あった。現時点(2014-02-09)では機能的にはほぼ追いついているように見える  <a href="http://solr-vs-elasticsearch.com/">http://solr-vs-elasticsearch.com/</a>  )</li>
+</ul>
+<h2 id="amazon-cloudsearch">Amazon CloudSearch</h2>
+<p><img alt="amazon" src="/images/aws-logo-s.png" /> </p>
+<p><a href="http://aws.amazon.com/jp/cloudsearch/">http://aws.amazon.com/jp/cloudsearch/</a> </p>
+<p>AWS上で提供されている全文検索システム。EC2と同じく時間とトラフィックで課金される。現時点ではまだベータ。</p>
+<h3 id="_7">長所</h3>
+<ul>
+<li>自動的にスケーリングしてくれる(エントリ数、リクエスト数に応じてインスタンスが自動的に増える)</li>
+<li>pdfやdocをそのまま送るだけでも適当にうまくやってくれる</li>
+<li>DynamoDBのデータをそのまま流してインデックスできる</li>
+</ul>
+<h3 id="_8">短所</h3>
+<ul>
+<li>現状では東京リージョンがない</li>
+<li>テキスト解析のカスタマイズが限定的。現状、Stemming, Stopwords, Synonymsのみカスタム可能。</li>
+<li>N-gramとか形態素解析は自前で処理してからアップロードする必要がある</li>
+<li>ヒット位置を取る方法がない</li>
+<li>テキスト本文をインデックスと一緒に格納することはできない</li>
+</ul>
+<h2 id="_9">比較項目別のまとめ</h2>
+<h3 id="_10">拡張性</h3>
+<p>SolrもElasticSearchもLuceneをバックエンドにしているので、Luceneでできることは基本的にはどちらでもできるはず。
+Amazonは現状ではあまり拡張性はない。</p>
+<h3 id="_11">性能</h3>
+<p>基本性能はSolrもElasticSearchも大差はなさそう。
+Amazonは自動的に拡張されるので性能の問題はなさそう。ただし、ノードが自動追加された時の挙動は未確認。</p>
+<h3 id="_12">安定性</h3>
+<p>数年先行している分Solrがよいと思われるが、ElasticSearchも既に十分本番稼動実績はある。
+Amazonはベータなので未知数。</p>
+<h3 id="_13">リアルタイムデータ更新</h3>
+<p>いずれもほぼリアルタイムに更新できる。</p>
+<h3 id="_14">日本語対応</h3>
+<p>SolrとElasticSearchはほぼ同等。kuromojiやmecabをつかえば形態素解析もできる。
+Amazonはそれ自体では対応していないが、Luceneのtokenizer等を使って自前で前処理することで対応は可能。</p>
+<h3 id="_15">スケーラビリティ</h3>
+<p>Amazonは完全に自動的にスケールアウトしてくれる。
+ElasticSearchはインデックスのシャード数を作成時に決めておく必要があるが、スケールアウトは容易だと思われる。
+Solrはv4からはElasticSearchと大体同等のスケーラビリティを備えるようになった。</p>
+<h2 id="_16">参考リンクまとめ</h2>
+<ul>
+<li><a href="http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch">http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch</a> </li>
+<li><a href="http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage">http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage</a> </li>
+<li><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/</a> </li>
+<li><a href="https://github.com/atilika/kuromoji">https://github.com/atilika/kuromoji</a> </li>
+<li><a href="http://www.elasticsearch.org/blog/percolator/">http://www.elasticsearch.org/blog/percolator/</a> </li>
+<li><a href="http://blog.feedbin.me/2013/11/10/powering-actions-with-elasticsearch-percolate/">http://blog.feedbin.me/2013/11/10/powering-actions-with-elasticsearch-percolate/</a> </li>
+<li><a href="http://docs.aws.amazon.com/cloudsearch/latest/developerguide/text-processing.html">http://docs.aws.amazon.com/cloudsearch/latest/developerguide/text-processing.html</a> </li>
+<li><a href="http://blog.mikemccandless.com/2011/06/lucenes-near-real-time-search-is-fast.html">http://blog.mikemccandless.com/2011/06/lucenes-near-real-time-search-is-fast.html</a> </li>
+<li><a href="https://wiki.apache.org/solr/Solr4.0">https://wiki.apache.org/solr/Solr4.0</a> </li>
+<li><a href="http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch">http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch</a> </li>
+</ul>
+<h2 id="_17">所感</h2>
+<p>後発な分ElasticSearchが一番洗練されているように思います。
+Solrは無難に導入できそうですが、スケールアウトが必要になったとき手間がかかりそうです。
+Amazonはメリットも多いですが、現状では制限が多いので使いづらいと思います。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage">http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage</a> &#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>昔のSolrは単純なレプリケーションとシャーディングしかなかったので、クラスタを構築するのは大変だった&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content>
+  </entry>
+</feed>

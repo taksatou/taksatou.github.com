@@ -102,6 +102,68 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="blogofileでサムネイル画像を表示する方法"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/11/06/blofofile-test/" rel="bookmark" title="Permanent Link to blogofileでサムネイル画像を表示する方法">blogofileでサムネイル画像を表示する方法</a></h2>
+  <small>November 06, 2011 at 08:32 PM | categories:
+
+<a href='/blog/category/python'>python</a>, <a href='/blog/category/memo'>memo</a>, <a href='/blog/category/blogofile'>blogofile</a>
+ | <a href="http://mojavy.com/blog/2011/11/06/blofofile-test/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="rena" src="/images/rena.jpg" /></p>
+<p>こんな風にイメージ画像がある記事の場合は、一覧ページでもこの画像をサムネイルで表示させたい。</p>
+<p>例えば、
+<a href="http://mojavy.com">http://mojavy.com</a>
+のトップページ右カラムにある最近の記事一覧みたいに画像を表示できるようにする。</p>
+<p>これをするには、postオブジェクトにそういう属性をもたせればよいので、controllers/blog/post.pyに以下のように一行追加する。</p>
+<div class="pygments_borland"><pre><span class="gi">+++ b/_blogofile/_controllers/blog/post.py</span>
+<span class="gu">@@ -93,6 +93,7 @@ class Post(object):</span>
+         self.slug = None
+         self.draft = False
+         self.filters = None
+<span class="gi">+        self.image = None</span>
+         self.__parse()
+         self.__post_process()
+</pre></div>
+
+<p>そうしておくと、各記事のヘッダにあるyamlから勝手に読み込んでくれるので、</p>
+<div class="pygments_borland"><pre><span class="l-Scalar-Plain">categories</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2011/11/06 20:32:51</span>
+<span class="l-Scalar-Plain">title</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/images/rena.jpg</span>
+</pre></div>
+
+<p>のようにすれば${post.image}のようにして参照できる。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com">https://github.com/taksatou/taksatou.github.com</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2011/11/06/new_blog/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2011/12/06/tmux_advent_calendar_2011/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-1pt; padding-right:2pt;" class="fb-like" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2011/11/06/blofofile-test/" class="hatena-bookmark-button" data-hatena-bookmark-title="blogofileでサムネイル画像を表示する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2011/11/06/blofofile-test/" data-text="blogofileでサムネイル画像を表示する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2011/11/06/blofofile-test/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ブログ引越しました"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2011/11/06/new_blog/" rel="bookmark" title="Permanent Link to ブログ引越しました">ブログ引越しました</a></h2>
   <small>November 06, 2011 at 07:44 PM | categories:
@@ -173,6 +235,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
       <li><a href="/blog/2013/11/19/go-template/" title="Goのtemplateパッケージ簡易チートシート"><p>Goのtemplateパッケージ簡易チートシート</a><span style="font-size: 80%;">(November 19, 2013 at 07:19 PM)</span></li>
       <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
       <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
@@ -180,7 +243,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/10/17/calculate-combinations/" title="オーバーフローしにくい組み合わせの数の計算方法"><p>オーバーフローしにくい組み合わせの数の計算方法</a><span style="font-size: 80%;">(October 17, 2013 at 09:13 PM)</span></li>
       <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
-      <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
     </ul>
   </div>
 
@@ -223,11 +285,13 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/elastic-search">elastic search</a> (<a href="/blog/category/elastic-search/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
@@ -264,6 +328,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
@@ -271,7 +336,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -281,6 +346,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>

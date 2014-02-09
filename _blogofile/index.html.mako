@@ -1,7 +1,7 @@
 <%inherit file="_templates/site.mako" />
 <aside id="introduction" class="bodywidth">
   <div id="introleft">
-    <h2>Welcome to <span class="blue">mojavy.com</span></h2>
+    <h2>Welcome to <span>mojavy.com</span></h2>
     <p>
       <a href="/blog" title="Blog" class="findoutmore" style="margin: 0 10px 0 10px;">Blog</a>
       <a href="http://twitter.com/#!/taksatou" title="Twitter" class="findoutmore" style="margin: 0 10px 0 10px;">Twitter</a>

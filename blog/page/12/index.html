@@ -102,6 +102,85 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="objective-cのメモリマネージメントについて"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" rel="bookmark" title="Permanent Link to objective-cのメモリマネージメントについて">objective-cのメモリマネージメントについて</a></h2>
+  <small>July 18, 2012 at 11:30 AM | categories:
+
+<a href='/blog/category/objective-c'>objective-c</a>
+ | <a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<p>現在のところ3つの方法がある</p>
+<h2 id="1-gabage-collection">1. Gabage Collection</h2>
+<ul>
+<li>Objective-C 2.0から導入された。</li>
+<li>ただし、iOSの実行環境には含まれない。</li>
+<li>Max OS Xでなら使えるらしい。</li>
+</ul>
+<h2 id="2-manual-reference-counting">2. Manual Reference Counting</h2>
+<ul>
+<li>retainは参照カウントを1あげる。releaseは1さげる</li>
+<li>参照カウントが0でdeallocするとすぐに削除される</li>
+<li>NSMutableArrayのaddObjectやremoveObjectAtIndexなどはオブジェクトの参照カウントを増減させる。</li>
+<li>余分にreleaseしたりするとcrashする</li>
+</ul>
+<h2 id="3-automatic-reference-counting-arc">3. Automatic Reference Counting (ARC)</h2>
+<ul>
+<li>システムが自動的に参照カウントをしてくれる。</li>
+<li>強い変数と弱い変数がある</li>
+</ul>
+<h4 id="_1">強い変数</h4>
+<ul>
+<li>デフォルトでは、オブジェクトのポインタは強い変数。そのようなポインタにアサインした参照は自動的にretainされる。</li>
+<li>新しい参照をアサインする前に古い参照はreleaseされる</li>
+<li>_ _strong キーワードをつかって明示的に強い変数を宣言できる。</li>
+<li>プロパティはデフォルトではstrongではない</li>
+<li>C++のshared_ptrのようなもの？</li>
+</ul>
+<h4 id="_2">弱い変数</h4>
+<ul>
+<li>循環参照している場合や、しても開放されるようにするときに使える。</li>
+<li>親が子の強い参照を持っており、子が親の弱い参照を持っている場合、retainのサイクルが形成されなくなるのでオブジェクトを開放できる。</li>
+<li>_ _weakキーワードを使う。</li>
+<li>iOS4ではサポートされていない</li>
+<li>C++のweak_ptrのようなもの？</li>
+</ul>
+<h4 id="non-arc">Non-ARCのコード</h4>
+<ul>
+<li>init, alloc, copy, new, mutableCopyをprefixにもつメソッドはそのオブジェクトの所有権を返す、というネーミングコンベンションに従っている場合は自動的にARCが適用される。</li>
+<li>名前のコンベンションとは関係なしに、明示的にオブジェクトの所有権を返すメソッドをコンパイラに伝える方法もある。</li>
+</ul>
+<h2 id="_3">参考</h2>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/07/18/one-line-webserver/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-1pt; padding-right:2pt;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" class="hatena-bookmark-button" data-hatena-bookmark-title="objective-cのメモリマネージメントについて" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/" data-text="objective-cのメモリマネージメントについて">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="objective-cのプロトコルとデリゲーションについてのメモ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" rel="bookmark" title="Permanent Link to objective-cのプロトコルとデリゲーションについてのメモ">objective-cのプロトコルとデリゲーションについてのメモ</a></h2>
   <small>July 17, 2012 at 06:30 PM | categories:
@@ -370,55 +449,6 @@ xcodeのkey bindingsの設定に読ませることができると思います。
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="sbclでクラスのスロット一覧を取得する方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" rel="bookmark" title="Permanent Link to sbclでクラスのスロット一覧を取得する方法">sbclでクラスのスロット一覧を取得する方法</a></h2>
-  <small>July 06, 2012 at 06:30 PM | categories:
-
-<a href='/blog/category/memo'>memo</a>, <a href='/blog/category/sbcl'>sbcl</a>, <a href='/blog/category/common-lisp'>common lisp</a>
- | <a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="lisp" src="/images/lisp-logo.jpg" /></p>
-<p>メモメモ</p>
-<div class="pygments_borland"><pre>CL-USER&gt; (sb-mop:class-slots (find-class &#39;sb-posix:stat))
-(#&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MODE&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::INO&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::DEV&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::NLINK&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::UID&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::GID&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::SIZE&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::ATIME&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::MTIME&gt;
- #&lt;SB-MOP:STANDARD-EFFECTIVE-SLOT-DEFINITION SB-POSIX::CTIME&gt;)
-</pre></div>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/07/08/ruby-oneliner-special-variables/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-1pt; padding-right:2pt;" class="fb-like" data-href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" class="hatena-bookmark-button" data-hatena-bookmark-title="sbclでクラスのスロット一覧を取得する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/" data-text="sbclでクラスのスロット一覧を取得する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../11">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -448,6 +478,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
       <li><a href="/blog/2013/11/19/go-template/" title="Goのtemplateパッケージ簡易チートシート"><p>Goのtemplateパッケージ簡易チートシート</a><span style="font-size: 80%;">(November 19, 2013 at 07:19 PM)</span></li>
       <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
       <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
@@ -455,7 +486,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/10/17/calculate-combinations/" title="オーバーフローしにくい組み合わせの数の計算方法"><p>オーバーフローしにくい組み合わせの数の計算方法</a><span style="font-size: 80%;">(October 17, 2013 at 09:13 PM)</span></li>
       <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
-      <li><a href="/blog/2013/09/10/chef-purge-package/" title="debianパッケージをchefで削除する場合はpurgeを使う方がよい"><p>debianパッケージをchefで削除する場合はpurgeを使う方がよい</a><span style="font-size: 80%;">(September 10, 2013 at 07:39 PM)</span></li>
     </ul>
   </div>
 
@@ -498,11 +528,13 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/elastic-search">elastic search</a> (<a href="/blog/category/elastic-search/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
@@ -539,6 +571,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
@@ -546,7 +579,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -556,6 +589,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>

@@ -10,10 +10,158 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 19 Nov 2013 19:19:57 GMT</pubDate>
+    <pubDate>Mon, 10 Feb 2014 01:05:25 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</title>
+      <link>http://mojavy.com/blog/2014/02/10/search-engine-comparison/</link>
+      <pubDate>Mon, 10 Feb 2014 01:05:25 JST</pubDate>
+      <category><![CDATA[elastic search]]></category>
+      <category><![CDATA[aws]]></category>
+      <category><![CDATA[solr]]></category>
+      <category><![CDATA[web]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/02/10/search-engine-comparison/</guid>
+      <description>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</description>
+      <content:encoded><![CDATA[<p>ElasticSearch、Solr、及び Amazon CloudSearchの比較検討を行った。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#_2">候補の選定方法</a></li>
+<li><a href="#solr">Solr</a><ul>
+<li><a href="#_3">長所</a></li>
+<li><a href="#_4">短所</a></li>
+</ul>
+</li>
+<li><a href="#elasticsearch">ElasticSearch</a><ul>
+<li><a href="#_5">長所</a></li>
+<li><a href="#_6">短所</a></li>
+</ul>
+</li>
+<li><a href="#amazon-cloudsearch">Amazon CloudSearch</a><ul>
+<li><a href="#_7">長所</a></li>
+<li><a href="#_8">短所</a></li>
+</ul>
+</li>
+<li><a href="#_9">比較項目別のまとめ</a><ul>
+<li><a href="#_10">拡張性</a></li>
+<li><a href="#_11">性能</a></li>
+<li><a href="#_12">安定性</a></li>
+<li><a href="#_13">リアルタイムデータ更新</a></li>
+<li><a href="#_14">日本語対応</a></li>
+<li><a href="#_15">スケーラビリティ</a></li>
+</ul>
+</li>
+<li><a href="#_16">参考リンクまとめ</a></li>
+<li><a href="#_17">所感</a></li>
+</ul>
+</div>
+<h2 id="_2">候補の選定方法</h2>
+<p>候補を選定するにあたって、以下の特徴をもっていることを前提とした。
+LuceneやGroongaを使えば何でもできるが、ここでは対象としない。</p>
+<ul>
+<li>ウェブベースのインターフェースを持つ</li>
+<li>インデックスの更新はほぼリアルタイムに反映される</li>
+<li>スケールアウトが容易</li>
+</ul>
+<h2 id="solr">Solr</h2>
+<p><img alt="solr" src="/images/solr-150.png" /> </p>
+<p><a href="https://lucene.apache.org/solr/">https://lucene.apache.org/solr/</a> </p>
+<p>Luceneをバックエンドにした全文検索システム。バージョン4になってから大幅に機能が増強された。</p>
+<h3 id="_3">長所</h3>
+<ul>
+<li>実績が十分ある</li>
+<li>機能豊富</li>
+</ul>
+<h3 id="_4">短所</h3>
+<ul>
+<li>クラスタを構築して運用するには手間がかかりそう</li>
+<li>SolrCloudはzookeeperに依存するためサーバ台数もかさむ</li>
+</ul>
+<h2 id="elasticsearch">ElasticSearch</h2>
+<p><img alt="ElasticSearch" src="/images/elasticsearch-logo.png" /> </p>
+<p><a href="http://www.elasticsearch.org/">http://www.elasticsearch.org/</a> </p>
+<p>Solrと同じくLuceneをバックエンドにした全文検索システム。開発者の言<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>によると、Solrより洗練された分散モデルで<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> 、使いやすいAPIを備えている。 </p>
+<h3 id="_5">長所</h3>
+<ul>
+<li>アーキテクチャやUIが今風</li>
+<li>クラスタの構築が簡単</li>
+<li>KibanaやLogstashと連携できる</li>
+<li>Percolate APIというpush通知のような機能を簡単に実装するためのものがある</li>
+</ul>
+<h3 id="_6">短所</h3>
+<ul>
+<li>後発な分ノウハウの蓄積にやや不安が残る</li>
+<li>未実装機能がいくらかある(あった。現時点(2014-02-09)では機能的にはほぼ追いついているように見える  <a href="http://solr-vs-elasticsearch.com/">http://solr-vs-elasticsearch.com/</a>  )</li>
+</ul>
+<h2 id="amazon-cloudsearch">Amazon CloudSearch</h2>
+<p><img alt="amazon" src="/images/aws-logo-s.png" /> </p>
+<p><a href="http://aws.amazon.com/jp/cloudsearch/">http://aws.amazon.com/jp/cloudsearch/</a> </p>
+<p>AWS上で提供されている全文検索システム。EC2と同じく時間とトラフィックで課金される。現時点ではまだベータ。</p>
+<h3 id="_7">長所</h3>
+<ul>
+<li>自動的にスケーリングしてくれる(エントリ数、リクエスト数に応じてインスタンスが自動的に増える)</li>
+<li>pdfやdocをそのまま送るだけでも適当にうまくやってくれる</li>
+<li>DynamoDBのデータをそのまま流してインデックスできる</li>
+</ul>
+<h3 id="_8">短所</h3>
+<ul>
+<li>現状では東京リージョンがない</li>
+<li>テキスト解析のカスタマイズが限定的。現状、Stemming, Stopwords, Synonymsのみカスタム可能。</li>
+<li>N-gramとか形態素解析は自前で処理してからアップロードする必要がある</li>
+<li>ヒット位置を取る方法がない</li>
+<li>テキスト本文をインデックスと一緒に格納することはできない</li>
+</ul>
+<h2 id="_9">比較項目別のまとめ</h2>
+<h3 id="_10">拡張性</h3>
+<p>SolrもElasticSearchもLuceneをバックエンドにしているので、Luceneでできることは基本的にはどちらでもできるはず。
+Amazonは現状ではあまり拡張性はない。</p>
+<h3 id="_11">性能</h3>
+<p>基本性能はSolrもElasticSearchも大差はなさそう。
+Amazonは自動的に拡張されるので性能の問題はなさそう。ただし、ノードが自動追加された時の挙動は未確認。</p>
+<h3 id="_12">安定性</h3>
+<p>数年先行している分Solrがよいと思われるが、ElasticSearchも既に十分本番稼動実績はある。
+Amazonはベータなので未知数。</p>
+<h3 id="_13">リアルタイムデータ更新</h3>
+<p>いずれもほぼリアルタイムに更新できる。</p>
+<h3 id="_14">日本語対応</h3>
+<p>SolrとElasticSearchはほぼ同等。kuromojiやmecabをつかえば形態素解析もできる。
+Amazonはそれ自体では対応していないが、Luceneのtokenizer等を使って自前で前処理することで対応は可能。</p>
+<h3 id="_15">スケーラビリティ</h3>
+<p>Amazonは完全に自動的にスケールアウトしてくれる。
+ElasticSearchはインデックスのシャード数を作成時に決めておく必要があるが、スケールアウトは容易だと思われる。
+Solrはv4からはElasticSearchと大体同等のスケーラビリティを備えるようになった。</p>
+<h2 id="_16">参考リンクまとめ</h2>
+<ul>
+<li><a href="http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch">http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch</a> </li>
+<li><a href="http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage">http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage</a> </li>
+<li><a href="http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/">http://blog.kakipo.com/trouble-with-fluentd-and-elasticsearch/</a> </li>
+<li><a href="https://github.com/atilika/kuromoji">https://github.com/atilika/kuromoji</a> </li>
+<li><a href="http://www.elasticsearch.org/blog/percolator/">http://www.elasticsearch.org/blog/percolator/</a> </li>
+<li><a href="http://blog.feedbin.me/2013/11/10/powering-actions-with-elasticsearch-percolate/">http://blog.feedbin.me/2013/11/10/powering-actions-with-elasticsearch-percolate/</a> </li>
+<li><a href="http://docs.aws.amazon.com/cloudsearch/latest/developerguide/text-processing.html">http://docs.aws.amazon.com/cloudsearch/latest/developerguide/text-processing.html</a> </li>
+<li><a href="http://blog.mikemccandless.com/2011/06/lucenes-near-real-time-search-is-fast.html">http://blog.mikemccandless.com/2011/06/lucenes-near-real-time-search-is-fast.html</a> </li>
+<li><a href="https://wiki.apache.org/solr/Solr4.0">https://wiki.apache.org/solr/Solr4.0</a> </li>
+<li><a href="http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch">http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch</a> </li>
+</ul>
+<h2 id="_17">所感</h2>
+<p>後発な分ElasticSearchが一番洗練されているように思います。
+Solrは無難に導入できそうですが、スケールアウトが必要になったとき手間がかかりそうです。
+Amazonはメリットも多いですが、現状では制限が多いので使いづらいと思います。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage">http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage</a> &#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>昔のSolrは単純なレプリケーションとシャーディングしかなかったので、クラスタを構築するのは大変だった&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded>
+    </item>
     <item>
       <title>Goのtemplateパッケージ簡易チートシート</title>
       <link>http://mojavy.com/blog/2013/11/19/go-template/</link>
@@ -705,81 +853,6 @@ ERROR: Net::SSH::AuthenticationFailed: username
 </li>
 </ol>
 </div>]]></content:encoded>
-    </item>
-    <item>
-      <title>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</title>
-      <link>http://mojavy.com/blog/2013/07/12/reptyr/</link>
-      <pubDate>Fri, 12 Jul 2013 19:15:50 JST</pubDate>
-      <category><![CDATA[C]]></category>
-      <category><![CDATA[linux]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/07/12/reptyr/</guid>
-      <description>ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</description>
-      <content:encoded><![CDATA[<p>reptyrというおもしろいものをみつけたのでご紹介</p>
-<h2 id="reptyr">reptyr とは</h2>
-<p>reptyrとは"re-ptying"するためのプログラムで、起動中のプロセスを新しい別のターミナルにもってくることができます。
-例えば、うっかりscreenやtmuxの外で起動してしまった長い時間のかかるバッチ処理を、起動したままscreenの中にもってくることができます。</p>
-<p><a href="https://github.com/nelhage/reptyr">https://github.com/nelhage/reptyr</a> </p>
-<h2 id="_1">使い方</h2>
-<div class="pygments_borland"><pre><span class="nv">$ </span>reptyr PID
-</pre></div>
-
-<p>現在のターミナル内にもってきたいプロセスのpidを引数にします。
-attach後は、そのプロセスの入出力は^Cや^Zも含めて新しいターミナル側を向きます。</p>
-<h2 id="screenify">それscreenifyでできるよ</h2>
-<p>screenifyと呼ばれるスクリプトが昔からあって、それはgdbつかって似たようなことをやってるらしいです。
-でもreptyrならもっとうまくできます。</p>
-<p>例えば従来のscreenifyには以下のような問題がありました。</p>
-<ul>
-<li>screenifyでattachしたプロセスは、元のターミナルから入力をうけつけてしまう</li>
-<li>ncursesをつかってるプログラムをscreenifyすると、そのプログラムはwindowのリサイズがとれなくなる</li>
-<li>screenifyした新しいターミナルでは^Cがきかない</li>
-</ul>
-<p>reptyrはこういった問題を全部解決できます。</p>
-<h2 id="_2">移植性</h2>
-<p>reptyrは対象プロセスを操作するのにptraceをつかっているのでLinuxに強く依存しており、Linuxだけをサポートしています。
-SolarisやBSDに移植することも技術的には可能ですが、現状はプラットフォーム固有の部分を抽象化するようにはデザインされていないようです。</p>
-<p>reptyrは現状ではi386, x86_64, ARMをサポートしています。他のアーキテクチャへの対応はarch以下に対応コードを追加すれば比較的容易です。</p>
-<h2 id="ptrace_scope-on-ubuntu-maverick-and-up">ptrace_scope on Ubuntu Maverick and up</h2>
-<p>Ubuntu Maverick以降ではptraceの機能がデフォルトで無効になっています。
-以下コマンドで一時的に有効にできます。</p>
-<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
-</pre></div>
-
-<p>rootで<code>/etc/sysctl.d/10-ptrace.conf</code>を編集すると永続的に変更できます。また<code>ptrace_scope</code>に関する詳細な説明もここに書いてあります。</p>
-<h2 id="_3">どうやってるの？</h2>
-<p>ソースを追ってみたところ以下のような処理をしているようです。</p>
-<ol>
-<li>reptyrプロセス側でptyをつくる</li>
-<li>attach対象のプロセスのttyのtermios設定をptyにコピーする</li>
-<li>ptraceで対象プロセスをattachしてレジスタ内容を一旦退避</li>
-<li>attachしたプロセス側でmmapし、そこにreptyrプロセス側でつくったptyをコピー</li>
-<li>attachしたプロセス側でコピーしたptyをopenし、setsid〜ioctlでそこに制御端末を割り当てる</li>
-<li>attachしたプロセス側でdup2して入出力をttyに向ける</li>
-<li>レジスタ内容を復元、後始末してptraceをdetach</li>
-</ol>
-<p>reptyrのキモは5の制御端末をptyに割り当てるところで、これをすることによって従来のscreenifyの問題が回避できます。</p>
-<p>しかし、単に<code>ioctl</code>の<code>TIOCSCTTY</code>するだけではうまくいかないのでちょっとしたトリックが必要です。詳細は<a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> に解説があります。
-reptyrの作者は自力でこの方法を思いついたそうですが、同様のテクニックは <a href="https://github.com/ThomasHabets/injcode">injcode</a> や<a href="http://www.ohloh.net/p/neercs">neercs</a> でも使用されているそうです。</p>
-<h2 id="reptyr_1">reptyrってどう読むの？</h2>
-<p><code>repeater</code>のように発音してもいいけど曖昧なので<code>re-P-T-Y-er</code> (たぶんリ・ピーティーワイアー)のように発音してもよいそうです。</p>
-<h2 id="_4">制約</h2>
-<ul>
-<li>backgroundにしたときは前のターミナルでbgやfgを実行する必要があります。background制御はshellがやっているので、これを直すにはshell側に手をいれる必要があります。</li>
-<li>現状では子プロセスがあるプロセスはattachできません</li>
-</ul>
-<h2 id="_5">類似のもの</h2>
-<ul>
-<li><a href="https://github.com/ThomasHabets/injcode">injcode</a> </li>
-<li><a href="http://www.ohloh.net/p/neercs">neercs</a> </li>
-</ul>
-<h2 id="_6">参考</h2>
-<ul>
-<li><a href="http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/">http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/</a> </li>
-<li><a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> </li>
-<li><a href="http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal">http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal</a> </li>
-</ul>
-<h2 id="_7">まとめ</h2>
-<p>reptyrは1000行くらいの小さなプログラムですが、なかなかおもしろいハックだと思うので興味がある方はソースを読んでみて下さい。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
