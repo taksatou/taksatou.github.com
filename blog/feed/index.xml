@@ -10,21 +10,144 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Mon, 10 Feb 2014 01:05:25 GMT</pubDate>
+    <pubDate>Thu, 13 Feb 2014 09:10:00 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
-      <title>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</title>
+      <title>あなたのgithub pagesを無料で高速化する方法</title>
+      <link>http://mojavy.com/blog/2014/02/13/faster-github-pages/</link>
+      <pubDate>Thu, 13 Feb 2014 09:10:00 JST</pubDate>
+      <category><![CDATA[web]]></category>
+      <category><![CDATA[github]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/02/13/faster-github-pages/</guid>
+      <description>あなたのgithub pagesを無料で高速化する方法</description>
+      <content:encoded><![CDATA[<p><img alt="github" src="/images/github-logo-transparent-200.png" /> </p>
+<p>このブログはgithub pages上に構築していますが、github pagesに引きずられて自分のブログも重くなるということが時々ありました。</p>
+<p>がんばってブログを書いた次の日にアクセスできなくなってたりすると悲しいので何とか高速かつ安定した配信をする方法ないかなーと思って調べてみたところ、なんとgithub pagesに置いたコンテンツをCDNから配信させることができるようになったらしいです!</p>
+<p><a href="https://github.com/blog/1715-faster-more-awesome-github-pages">Faster, More Awesome GitHub Pages</a> </p>
+<p>どういうドメインでgithub pagesを配信しているかによって対応方法は違うので以下を読んで各自適切な設定をして下さい。</p>
+<p><strong>目次</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#github-pages-usernamegithubio">デフォルトのgithub pagesのドメイン( username.github.io ) を使用している場合</a></li>
+<li><a href="#wwwexamplecom">カスタムサブドメイン ( www.example.com ) を使用している場合</a></li>
+<li><a href="#apex-examplecom">Apexドメイン ( example.com ) を使用している場合</a><ul>
+<li><a href="#comdnsimple">お名前.comからDNSimpleに移行する場合</a><ul>
+<li><a href="#1-dnsimple">1. DNSimpleに登録する</a></li>
+<li><a href="#2-dnsimplegithub-pages">2. DNSimpleでgithub pagesとの連携を開始する</a></li>
+<li><a href="#3">3. ネームサーバの設定をする</a></li>
+<li><a href="#4-dns">4. dnsの更新を確認する</a></li>
+<li><a href="#5-cdn">5. CDNの確認</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_1">その他参考</a></li>
+<li><a href="#_2">まとめ</a></li>
+</ul>
+</div>
+<h2 id="github-pages-usernamegithubio">デフォルトのgithub pagesのドメイン( username.github.io ) を使用している場合</h2>
+<p>既に対応しています。
+なにもやる必要はありません。</p>
+<h2 id="wwwexamplecom">カスタムサブドメイン ( www.example.com ) を使用している場合</h2>
+<p>CNAMEの向き先をusername.github.io に向けるだけで対応できます。</p>
+<h2 id="apex-examplecom">Apexドメイン ( example.com ) を使用している場合</h2>
+<p>Apexドメインというのはサブドメインでない基本のドメイン部分のことで、そこを直接github pagesにIPに向くようにAレコードに設定している場合です。</p>
+<p>この場合はDNSのプロバイダがALIASレコードをサポートしていれば、ALIASが <code>username.github.io</code> を向くようにすることで対応できます。</p>
+<p>ALIASレコードに対応していない場合は残念ながらCDNを有効にできません。ちなみにお名前.comはALIASには対応していないので、その場合は他のDNSプロバイダに移行するしかありません。</p>
+<h3 id="comdnsimple">お名前.comからDNSimpleに移行する場合</h3>
+<p>このブログは残念ながらお名前.comでApexドメインをgithub pagesのIPに向けていたのでDNSimpleに移行することにしました。以下はお名前.comからDNSimpleに移行した際の手順です。</p>
+<p>なお、この場合はタイトルに反して無料ではありません。</p>
+<p>(ちなみにここではドメインの移管はせずに、DNSの設定だけをDNSimpleに移しました)</p>
+<h4 id="1-dnsimple">1. DNSimpleに登録する</h4>
+<p>DNSimpleはユーザビリティに主眼を置いたDNSサービスのようで<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 、APIでDNSレコードを更新したりAWSやHerokuやgithub pagesといったクラウドサービスとの連携が簡単にできます。</p>
+<p><a href="https://dnsimple.com/r/4388f43fedebae">
+<img alt="dnsimple" src="/images/dnsimple.png" /> </p>
+<p><strong>DNSimple</strong>
+</a></p>
+<p>登録時に対象ドメインを聞かれるので、そのとき移行したいドメインを入力します。</p>
+<p>ちなみに月額3ドルから<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> ですが30日は無料でつかえます。誰かを紹介すると、紹介した人とされた人の両方の無料期間が伸びます。上のリンクにはキャンペーンコードが埋め込まれているので、この記事を読んだ人はぜひ上のリンクから登録してください。</p>
+<p>登録が完了するだけで一通りのUIが使えるようになりますが、DNS機能が有効になるのは決済情報を入力してからです。</p>
+<h4 id="2-dnsimplegithub-pages">2. DNSimpleでgithub pagesとの連携を開始する</h4>
+<p><a href="https://dnsimple.com/domains">dnsimpleの管理画面</a> に行くとServicesというボタンがあるのでそこからgithub pagesと連携を開始します。</p>
+<h4 id="3">3. ネームサーバの設定をする</h4>
+<p>お名前.com の以下のページの「他のネームサーバーを利用」からDNSimpleのネームサーバを指定します。</p>
+<p><a href="https://www.onamae.com/domain/navi/ns_update/input?btn_id=navi_menu_domain_nsupdate_leftmenu_12">https://www.onamae.com/domain/navi/ns_update/input?btn_id=navi_menu_domain_nsupdate_leftmenu_12</a> </p>
+<p>登録するサーバは以下です。</p>
+<ul>
+<li>ns1.dnsimple.com</li>
+<li>ns2.dnsimple.com</li>
+<li>ns3.dnsimple.com</li>
+<li>ns4.dnsimple.com</li>
+</ul>
+<p><a href="http://support.dnsimple.com/articles/dnsimple-nameservers">参考 - DNSimple Name Servers</a> </p>
+<p>この段階ではお名前.com側で設定しているAレコードはそのまま残しておきます。変更するのはネームサーバのみです。
+そうしておかないと、ネームサーバの変更が伝搬するまでの間にお名前.comに問いあわせが来た場合NXDOMAIN扱いになってします。</p>
+<h4 id="4-dns">4. dnsの更新を確認する</h4>
+<p>更新前は以下</p>
+<div class="pygments_borland"><pre>% dig mojavy.com
+mojavy.com.             259     IN      A       207.97.227.245
+</pre></div>
+
+<p>もしくは以下</p>
+<div class="pygments_borland"><pre>% dig mojavy.com
+mojavy.com.             259     IN      A       204.232.175.78
+</pre></div>
+
+<p>のようになっていたはずですが、反映が完了すれば上記とは違うIPが返ってくるはずです。
+反映までには時間がかかるので気長に待ちます。完全に反映されるには3日ほどかかるようです。</p>
+<div class="pygments_borland"><pre>% dig mojavy.com
+mojavy.com.             3600    IN      A       103.245.222.133
+
+% dig taksatou.github.io
+taksatou.github.io.     2973    IN      CNAME   github.map.fastly.net.
+github.map.fastly.net.  15      IN      A       103.245.222.133
+</pre></div>
+
+<h4 id="5-cdn">5. CDNの確認</h4>
+<p><a href="http://www.webpagetest.org/">webpagetest</a> のような計測ツールを使ってもいいですが、CDNからのレスポンスは<code>X-xxx</code>のようなヘッダがつくようなのでcurlでも確認できます。</p>
+<div class="pygments_borland"><pre>% curl -v mojavy.com 2&gt;&amp;1  &gt; /dev/null  | grep &#39;X-&#39;
+&lt; X-Served-By: cache-ty67-TYO
+&lt; X-Cache: HIT
+&lt; X-Cache-Hits: 5
+&lt; X-Timer: S1392104522.668435574,VS0,VE0
+</pre></div>
+
+<p>もう完全に反映されたと思ったらお名前.com側で設定しているAレコードは無効にして大丈夫です。</p>
+<h2 id="_1">その他参考</h2>
+<ul>
+<li><a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">https://help.github.com/articles/setting-up-a-custom-domain-with-pages</a> </li>
+</ul>
+<h2 id="_2">まとめ</h2>
+<ul>
+<li>github pagesをつかえば無料でCDNから配信できる!</li>
+<li>Apexドメインは慎重に使うべきだったという教訓を得た</li>
+<li>DNSimple便利</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>The satisfaction of not having to use GoDaddy!  らしい&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>登録ドメイン数に応じて自動的にプランが切りかわるようです。&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded>
+    </item>
+    <item>
+      <title>全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch</title>
       <link>http://mojavy.com/blog/2014/02/10/search-engine-comparison/</link>
       <pubDate>Mon, 10 Feb 2014 01:05:25 JST</pubDate>
-      <category><![CDATA[elastic search]]></category>
-      <category><![CDATA[aws]]></category>
       <category><![CDATA[solr]]></category>
+      <category><![CDATA[aws]]></category>
+      <category><![CDATA[elasticsearch]]></category>
       <category><![CDATA[web]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2014/02/10/search-engine-comparison/</guid>
-      <description>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</description>
-      <content:encoded><![CDATA[<p>ElasticSearch、Solr、及び Amazon CloudSearchの比較検討を行った。</p>
+      <description>全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch</description>
+      <content:encoded><![CDATA[<p>Elasticsearch、Solr、及び Amazon CloudSearchの比較検討を行った。</p>
 <h2 id="_1">目次</h2>
 <div class="toc">
 <ul>
@@ -35,7 +158,7 @@
 <li><a href="#_4">短所</a></li>
 </ul>
 </li>
-<li><a href="#elasticsearch">ElasticSearch</a><ul>
+<li><a href="#elasticsearch">Elasticsearch</a><ul>
 <li><a href="#_5">長所</a></li>
 <li><a href="#_6">短所</a></li>
 </ul>
@@ -80,8 +203,8 @@ LuceneやGroongaを使えば何でもできるが、ここでは対象としな�
 <li>クラスタを構築して運用するには手間がかかりそう</li>
 <li>SolrCloudはzookeeperに依存するためサーバ台数もかさむ</li>
 </ul>
-<h2 id="elasticsearch">ElasticSearch</h2>
-<p><img alt="ElasticSearch" src="/images/elasticsearch-logo.png" /> </p>
+<h2 id="elasticsearch">Elasticsearch</h2>
+<p><img alt="Elasticsearch" src="/images/elasticsearch-logo.png" /> </p>
 <p><a href="http://www.elasticsearch.org/">http://www.elasticsearch.org/</a> </p>
 <p>Solrと同じくLuceneをバックエンドにした全文検索システム。開発者の言<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>によると、Solrより洗練された分散モデルで<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> 、使いやすいAPIを備えている。 </p>
 <h3 id="_5">長所</h3>
@@ -116,23 +239,23 @@ LuceneやGroongaを使えば何でもできるが、ここでは対象としな�
 </ul>
 <h2 id="_9">比較項目別のまとめ</h2>
 <h3 id="_10">拡張性</h3>
-<p>SolrもElasticSearchもLuceneをバックエンドにしているので、Luceneでできることは基本的にはどちらでもできるはず。
+<p>SolrもElasticsearchもLuceneをバックエンドにしているので、Luceneでできることは基本的にはどちらでもできるはず。
 Amazonは現状ではあまり拡張性はない。</p>
 <h3 id="_11">性能</h3>
-<p>基本性能はSolrもElasticSearchも大差はなさそう。
+<p>基本性能はSolrもElasticsearchも大差はなさそう。
 Amazonは自動的にノードが追加されるので性能の問題はなさそう。ただし、ノードが自動追加されるタイミングとその時の挙動は未確認。</p>
 <h3 id="_12">安定性</h3>
-<p>数年先行している分Solrがよいと思われるが、ElasticSearchも既に十分本番稼動実績はある。
+<p>数年先行している分Solrがよいと思われるが、Elasticsearchも既に十分本番稼動実績はある。
 Amazonはベータなので未知数。</p>
 <h3 id="_13">リアルタイムデータ更新</h3>
 <p>いずれもほぼリアルタイムに更新できる。</p>
 <h3 id="_14">日本語対応</h3>
-<p>SolrとElasticSearchはほぼ同等。kuromojiやmecabをつかえば形態素解析もできる。
+<p>SolrとElasticsearchはほぼ同等。kuromojiやmecabをつかえば形態素解析もできる。
 Amazonはそれ自体では対応していないが、Luceneのtokenizer等を使って自前で前処理することで対応は可能。</p>
 <h3 id="_15">スケーラビリティ</h3>
 <p>Amazonは完全に自動的にスケールアウトしてくれる。
-ElasticSearchはインデックスのシャード数を作成時に決めておく必要があるが、スケールアウトは容易だと思われる。
-Solrはv4からはElasticSearchと大体同等のスケーラビリティを備えるようになった。</p>
+Elasticsearchはインデックスのシャード数を作成時に決めておく必要があるが、スケールアウトは容易だと思われる。
+Solrはv4からはElasticsearchと大体同等のスケーラビリティを備えるようになった。</p>
 <h2 id="_16">参考リンクまとめ</h2>
 <ul>
 <li><a href="http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch">http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch</a> </li>
@@ -147,9 +270,13 @@ Solrはv4からはElasticSearchと大体同等のスケーラビリティを備�
 <li><a href="http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch">http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch</a> </li>
 </ul>
 <h2 id="_17">所感</h2>
-<p>後発な分ElasticSearchが一番洗練されているように思います。
+<p>後発な分Elasticsearchが一番洗練されているように思います。
 Solrは無難に導入できそうですが、スケールアウトが必要になったとき手間がかかりそうです。
 Amazonはメリットも多いですが、現状では制限が多いので使いづらいと思います。</p>
+<p><strong>追記</strong></p>
+<ul>
+<li>2014/02/12 23:59:13： ElasticSearch →  Elasticsearchに直しました</li>
+</ul>
 <div class="footnote">
 <hr />
 <ol>
@@ -808,51 +935,6 @@ emacsのロックファイルがあると落ちてしまう問題があったの
 <p>chefをつかっているということは設定ファイルもchefで管理しているはずなので、設定ファイルを残す必要はない。
 さらに、依存で入ったパッケージも一緒に削除されるように、<code>options "--auto-remove"</code>などとしてやるとよい。</p>
 <p>ゴミは混乱の元なので早めに消すべし。</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>chef soloでAuthenticationFailedといわれたときの対応</title>
-      <link>http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/</link>
-      <pubDate>Mon, 09 Sep 2013 20:43:04 JST</pubDate>
-      <category><![CDATA[chef]]></category>
-      <category><![CDATA[ruby]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/</guid>
-      <description>chef soloでAuthenticationFailedといわれたときの対応</description>
-      <content:encoded><![CDATA[<p>公開鍵認証なホストに対してパスフレーズ入力無しでsshログインができるにもかかわらず、</p>
-<div class="pygments_borland"><pre><span class="nv">$ </span>knife solo cook myhost
-Running Chef on myhost...
-Checking Chef version...
-Enter the password <span class="k">for </span>username@myhost:
-ERROR: Net::SSH::AuthenticationFailed: username
-</pre></div>
-
-<p>のようにいわれてchef soloの実行に失敗してしまうときがある。</p>
-<p>パスフレーズ入力無しでsshできたということは、普通は以下のうちの少くとも1つは満たされている。</p>
-<ol>
-<li>ssh-agentに対象の秘密鍵が登録されている</li>
-<li>デフォルトパス($HOME/.ssh/id_rsa とか)に対象のパスフレーズ無し秘密鍵が保存されている</li>
-<li>ssh_configでパスフレーズ無し秘密鍵を指定している</li>
-</ol>
-<p>それなのに<code>AuthenticationFailed</code>失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
-これを回避するには、ssh_configで<code>PubkeyAuthentication yes</code>を明示すればよい。</p>
-<p>なお、<code>Net::SSH</code>がどのような動きをしているかは以下のスニペットを試すとよい。</p>
-<div class="pygments_borland"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
-<span class="no">Net</span><span class="o">::</span><span class="no">SSH</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s2">&quot;myhost&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="ss">:verbose</span> <span class="o">=&gt;</span> <span class="ss">:debug</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">p</span> <span class="n">x</span> <span class="p">}</span>
-</pre></div>
-
-<h3 id="_1">備考</h3>
-<p>使ったのは以下のバージョン</p>
-<ul>
-<li>chef: 11.6.0</li>
-<li>knife-solo: 0.3.0</li>
-</ul>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>この挙動は<code>knife solo</code>コマンドに<code>-i</code>オプションを渡しても変わらなかった。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded>
     </item>
   </channel>
 </rss>

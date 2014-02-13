@@ -1,10 +1,10 @@
 ---
-categories: elastic search, solr, aws, web
+categories: elasticsearch, solr, aws, web
 date: 2014/02/10 01:05:25
-title: 全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch
+title: 全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch
 ---
 
-ElasticSearch、Solr、及び Amazon CloudSearchの比較検討を行った。
+Elasticsearch、Solr、及び Amazon CloudSearchの比較検討を行った。
 
 ## 目次
 
@@ -39,9 +39,9 @@ Luceneをバックエンドにした全文検索システム。バージョン4�
 * クラスタを構築して運用するには手間がかかりそう
 * SolrCloudはzookeeperに依存するためサーバ台数もかさむ
 
-## ElasticSearch
+## Elasticsearch
 
-![ElasticSearch](/images/elasticsearch-logo.png ) 
+![Elasticsearch](/images/elasticsearch-logo.png ) 
 
 [http://www.elasticsearch.org/](http://www.elasticsearch.org/ ) 
 
@@ -89,17 +89,17 @@ AWS上で提供されている全文検索システム。EC2と同じく時間�
 
 ### 拡張性
 
-SolrもElasticSearchもLuceneをバックエンドにしているので、Luceneでできることは基本的にはどちらでもできるはず。
+SolrもElasticsearchもLuceneをバックエンドにしているので、Luceneでできることは基本的にはどちらでもできるはず。
 Amazonは現状ではあまり拡張性はない。
 
 ### 性能
 
-基本性能はSolrもElasticSearchも大差はなさそう。
+基本性能はSolrもElasticsearchも大差はなさそう。
 Amazonは自動的にノードが追加されるので性能の問題はなさそう。ただし、ノードが自動追加されるタイミングとその時の挙動は未確認。
 
 ### 安定性
 
-数年先行している分Solrがよいと思われるが、ElasticSearchも既に十分本番稼動実績はある。
+数年先行している分Solrがよいと思われるが、Elasticsearchも既に十分本番稼動実績はある。
 Amazonはベータなので未知数。
 
 ### リアルタイムデータ更新
@@ -108,14 +108,14 @@ Amazonはベータなので未知数。
 
 ### 日本語対応
 
-SolrとElasticSearchはほぼ同等。kuromojiやmecabをつかえば形態素解析もできる。
+SolrとElasticsearchはほぼ同等。kuromojiやmecabをつかえば形態素解析もできる。
 Amazonはそれ自体では対応していないが、Luceneのtokenizer等を使って自前で前処理することで対応は可能。
 
 ### スケーラビリティ
 
 Amazonは完全に自動的にスケールアウトしてくれる。
-ElasticSearchはインデックスのシャード数を作成時に決めておく必要があるが、スケールアウトは容易だと思われる。
-Solrはv4からはElasticSearchと大体同等のスケーラビリティを備えるようになった。
+Elasticsearchはインデックスのシャード数を作成時に決めておく必要があるが、スケールアウトは容易だと思われる。
+Solrはv4からはElasticsearchと大体同等のスケーラビリティを備えるようになった。
 
 
 ## 参考リンクまとめ
@@ -133,10 +133,14 @@ Solrはv4からはElasticSearchと大体同等のスケーラビリティを備�
 
 ## 所感
 
-後発な分ElasticSearchが一番洗練されているように思います。
+後発な分Elasticsearchが一番洗練されているように思います。
 Solrは無難に導入できそうですが、スケールアウトが必要になったとき手間がかかりそうです。
 Amazonはメリットも多いですが、現状では制限が多いので使いづらいと思います。
 
+
+**追記**
+
+* 2014/02/12 23:59:13： ElasticSearch →  Elasticsearchに直しました
 
 
 [^1]: [http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage](http://stackoverflow.com/questions/2271600/elasticsearch-sphinx-lucene-solr-xapian-which-fits-for-which-usage ) 

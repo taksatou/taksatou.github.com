@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0"
-     xmlns:content="http://purl.org/rss/1.0/modules/content/"
-     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
-     xmlns:atom="http://www.w3.org/2005/Atom"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
-     >
-  <channel>
-    <title>mojavy.com</title>
-    <link>http://mojavy.com/blog</link>
-    <description></description>
-    <pubDate>Mon, 10 Feb 2014 01:05:25 GMT</pubDate>
-    <generator>Blogofile</generator>
-    <sy:updatePeriod>hourly</sy:updatePeriod>
-    <sy:updateFrequency>1</sy:updateFrequency>
-    <item>
-      <title>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</title>
-      <link>http://mojavy.com/blog/2014/02/10/search-engine-comparison/</link>
-      <pubDate>Mon, 10 Feb 2014 01:05:25 JST</pubDate>
-      <category><![CDATA[elastic search]]></category>
-      <category><![CDATA[aws]]></category>
-      <category><![CDATA[solr]]></category>
-      <category><![CDATA[web]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2014/02/10/search-engine-comparison/</guid>
-      <description>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</description>
-      <content:encoded><![CDATA[<p>ElasticSearch、Solr、及び Amazon CloudSearchの比較検討を行った。</p>
+<feed
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:thr="http://purl.org/syndication/thread/1.0"
+  xml:lang="en"
+   >
+  <title type="text">mojavy.com</title>
+  <subtitle type="text"></subtitle>
+
+  <updated>2014-02-10T01:05:25Z</updated>
+  <generator uri="http://blogofile.com/">Blogofile</generator>
+
+  <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
+  <id>http://mojavy.com/blog/feed/atom/</id>
+  <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/" />
+    <id>http://mojavy.com/blog/2014/02/10/search-engine-comparison/</id>
+    <updated>2014-02-10T01:05:25Z</updated>
+    <published>2014-02-10T01:05:25Z</published>
+    <category scheme="http://mojavy.com/blog" term="solr" />
+    <category scheme="http://mojavy.com/blog" term="aws" />
+    <category scheme="http://mojavy.com/blog" term="elasticsearch" />
+    <category scheme="http://mojavy.com/blog" term="web" />
+    <summary type="html"><![CDATA[全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/02/10/search-engine-comparison/"><![CDATA[<p>Elasticsearch、Solr、及び Amazon CloudSearchの比較検討を行った。</p>
 <h2 id="_1">目次</h2>
 <div class="toc">
 <ul>
@@ -35,7 +39,7 @@
 <li><a href="#_4">短所</a></li>
 </ul>
 </li>
-<li><a href="#elasticsearch">ElasticSearch</a><ul>
+<li><a href="#elasticsearch">Elasticsearch</a><ul>
 <li><a href="#_5">長所</a></li>
 <li><a href="#_6">短所</a></li>
 </ul>
@@ -80,8 +84,8 @@ LuceneやGroongaを使えば何でもできるが、ここでは対象としな�
 <li>クラスタを構築して運用するには手間がかかりそう</li>
 <li>SolrCloudはzookeeperに依存するためサーバ台数もかさむ</li>
 </ul>
-<h2 id="elasticsearch">ElasticSearch</h2>
-<p><img alt="ElasticSearch" src="/images/elasticsearch-logo.png" /> </p>
+<h2 id="elasticsearch">Elasticsearch</h2>
+<p><img alt="Elasticsearch" src="/images/elasticsearch-logo.png" /> </p>
 <p><a href="http://www.elasticsearch.org/">http://www.elasticsearch.org/</a> </p>
 <p>Solrと同じくLuceneをバックエンドにした全文検索システム。開発者の言<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>によると、Solrより洗練された分散モデルで<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> 、使いやすいAPIを備えている。 </p>
 <h3 id="_5">長所</h3>
@@ -116,23 +120,23 @@ LuceneやGroongaを使えば何でもできるが、ここでは対象としな�
 </ul>
 <h2 id="_9">比較項目別のまとめ</h2>
 <h3 id="_10">拡張性</h3>
-<p>SolrもElasticSearchもLuceneをバックエンドにしているので、Luceneでできることは基本的にはどちらでもできるはず。
+<p>SolrもElasticsearchもLuceneをバックエンドにしているので、Luceneでできることは基本的にはどちらでもできるはず。
 Amazonは現状ではあまり拡張性はない。</p>
 <h3 id="_11">性能</h3>
-<p>基本性能はSolrもElasticSearchも大差はなさそう。
+<p>基本性能はSolrもElasticsearchも大差はなさそう。
 Amazonは自動的にノードが追加されるので性能の問題はなさそう。ただし、ノードが自動追加されるタイミングとその時の挙動は未確認。</p>
 <h3 id="_12">安定性</h3>
-<p>数年先行している分Solrがよいと思われるが、ElasticSearchも既に十分本番稼動実績はある。
+<p>数年先行している分Solrがよいと思われるが、Elasticsearchも既に十分本番稼動実績はある。
 Amazonはベータなので未知数。</p>
 <h3 id="_13">リアルタイムデータ更新</h3>
 <p>いずれもほぼリアルタイムに更新できる。</p>
 <h3 id="_14">日本語対応</h3>
-<p>SolrとElasticSearchはほぼ同等。kuromojiやmecabをつかえば形態素解析もできる。
+<p>SolrとElasticsearchはほぼ同等。kuromojiやmecabをつかえば形態素解析もできる。
 Amazonはそれ自体では対応していないが、Luceneのtokenizer等を使って自前で前処理することで対応は可能。</p>
 <h3 id="_15">スケーラビリティ</h3>
 <p>Amazonは完全に自動的にスケールアウトしてくれる。
-ElasticSearchはインデックスのシャード数を作成時に決めておく必要があるが、スケールアウトは容易だと思われる。
-Solrはv4からはElasticSearchと大体同等のスケーラビリティを備えるようになった。</p>
+Elasticsearchはインデックスのシャード数を作成時に決めておく必要があるが、スケールアウトは容易だと思われる。
+Solrはv4からはElasticsearchと大体同等のスケーラビリティを備えるようになった。</p>
 <h2 id="_16">参考リンクまとめ</h2>
 <ul>
 <li><a href="http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch">http://stackoverflow.com/questions/10213009/solr-vs-elasticsearch</a> </li>
@@ -147,9 +151,13 @@ Solrはv4からはElasticSearchと大体同等のスケーラビリティを備�
 <li><a href="http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch">http://www.slideshare.net/kucrafal/battle-of-the-giants-apache-solr-vs-elasticsearch</a> </li>
 </ul>
 <h2 id="_17">所感</h2>
-<p>後発な分ElasticSearchが一番洗練されているように思います。
+<p>後発な分Elasticsearchが一番洗練されているように思います。
 Solrは無難に導入できそうですが、スケールアウトが必要になったとき手間がかかりそうです。
 Amazonはメリットも多いですが、現状では制限が多いので使いづらいと思います。</p>
+<p><strong>追記</strong></p>
+<ul>
+<li>2014/02/12 23:59:13： ElasticSearch →  Elasticsearchに直しました</li>
+</ul>
 <div class="footnote">
 <hr />
 <ol>
@@ -160,7 +168,6 @@ Amazonはメリットも多いですが、現状では制限が多いので使�
 <p>昔のSolrは単純なレプリケーションとシャーディングしかなかったので、クラスタを構築するのは大変だった&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
-</div>]]></content:encoded>
-    </item>
-  </channel>
-</rss>
+</div>]]></content>
+  </entry>
+</feed>

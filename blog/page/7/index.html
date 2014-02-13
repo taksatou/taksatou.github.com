@@ -102,6 +102,87 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="common-lispのdefconstantについての注意点"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" rel="bookmark" title="Permanent Link to common lispのdefconstantについての注意点">common lispのdefconstantについての注意点</a></h2>
+  <small>February 09, 2013 at 05:15 PM | categories:
+
+<a href='/blog/category/common-lisp'>common lisp</a>
+ | <a href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="lisp" src="/images/lisp-warinig-150.png" /></p>
+<p>sbclでdefconstantすると以下のようなエラーがおきたりおきなかったりして不思議に思っていた。</p>
+<div class="pygments_borland"><pre>The constant CL-GEARMAN::+REQUEST-MAGIC+ is being redefined
+(from #(0 82 69 81) to #(0 82 69 81))
+   [Condition of type DEFCONSTANT-UNEQL]
+See also:
+  Common Lisp Hyperspec, DEFCONSTANT [:macro]
+  SBCL Manual, Idiosyncrasies [:node]
+
+Restarts:
+ 0: [CONTINUE] Go ahead and change the value.
+ 1: [ABORT] Keep the old value.
+ 2: [TRY-RECOMPILING] Recompile protocol and try loading it again
+ 3: [RETRY] Retry loading FASL for #&lt;CL-SOURCE-FILE &quot;cl-gearman&quot; &quot;src&quot; &quot;protocol&quot;&gt;.
+ 4: [ACCEPT] Continue, treating loading FASL for #&lt;CL-SOURCE-FILE &quot;cl-gearman&quot; &quot;src&quot; &quot;protocol&quot;&gt; as having been successful.
+ 5: [ABORT] Give up on &quot;cl-gearman&quot;
+ --more--
+
+Backtrace:
+  0: (SB-C::%DEFCONSTANT ..)
+  1: (SB-FASL::LOAD-FASL-GROUP ..)
+  2: ((FLET SB-THREAD::WITH-RECURSIVE-LOCK-THUNK :IN SB-FASL::LOAD-AS-FASL))
+  3: ((FLET #:WITHOUT-INTERRUPTS-BODY-88874 :IN SB-THREAD::CALL-WITH-RECURSIVE-LOCK))
+  4: (SB-THREAD::CALL-WITH-RECURSIVE-LOCK ..)
+  5: (SB-FASL::LOAD-AS-FASL ..)
+  6: ((FLET SB-FASL::LOAD-STREAM :IN LOAD) ..)
+  7: (LOAD ..)
+  8: (SB-IMPL::%MAP-FOR-EFFECT-ARITY-1 ..)
+</pre></div>
+
+<p>先日公開したcl-gearmanでこれが発生していてしまい原因がわからずそのまま放置していたのだけど、以下のforumを発見した。</p>
+<p><a href="http://www.lispforum.com/viewtopic.php?f=33&amp;t=4088">http://www.lispforum.com/viewtopic.php?f=33&amp;t=4088</a></p>
+<blockquote>
+<p>It's not a bug (in SBCL). The value in a DEFCONSTANT form is restricted
+to being something that's EQL to itself each time it's evaluated (that's
+horrible phrasing, I know), so using a vector is illegal (that is, you
+can use a vector, but you have to make sure you return the same vector
+each time -- so you can't use VECTOR or #(...) for the value).</p>
+</blockquote>
+<p>DEFCONSTANTフォームの値はそれが何度評価されてもEQLになるようなものでなければならないらしい。
+なので、vectorをDEFCONSTANTでバインドすることは可能だけど、DEFCONSTANTフォームの値の場所にVECTOR や #(...)で記述したフォームを書くことはできない。</p>
+<p>CLtL2にもちゃんと書いてあった。</p>
+<blockquote>
+<p>defconstantはdefparameterに似ているが、名前の値が固定されていることを前提としており、コンパイラは、コンパイルされるプログラムでの値について仮定を置くことが許されている。 (...中略...) コンパイラは置き換えたオブジェクトのコピーが定数の実際の値とeqlになるように注意しなければならない。たとえば、コンパイラは数のコピーは自由に作ってもよいが、値がリストであるときは十分に注意しなければならない。</p>
+</blockquote>
+<p>なるほど。</p>
+</div>
+
+  </div>
+</div>
+
+<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/02/06/quicklinks4/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/02/18/ltsv-for-common-lisp/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div style="position:relative; top:-1pt; padding-right:2pt;" class="fb-like" data-href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" class="hatena-bookmark-button" data-hatena-bookmark-title="common lispのdefconstantについての注意点" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/" data-text="common lispのdefconstantについての注意点">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/"></div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="quicklinks-4"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/06/quicklinks4/" rel="bookmark" title="Permanent Link to Quicklinks 4">Quicklinks 4</a></h2>
   <small>February 06, 2013 at 09:50 PM | categories:
@@ -405,59 +486,6 @@ rainbowで色付けしてるのでエスケープシーケンスを解釈でき�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="yaml-modeを拡張してyamlを高速に編集する"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/" rel="bookmark" title="Permanent Link to yaml-modeを拡張してyamlを高速に編集する">yaml-modeを拡張してyamlを高速に編集する</a></h2>
-  <small>January 09, 2013 at 10:00 PM | categories:
-
-<a href='/blog/category/elisp'>elisp</a>, <a href='/blog/category/emacs'>emacs</a>
- | <a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="emacs" src="/images/carbon-emacs-icon-200.png" /></p>
-<p>とあるプロジェクトで巨大なyamlを編集しなければならない時があるのですが、素の<a href="https://github.com/yoshiki/yaml-mode">yaml-mode</a>だけだと非力に感じたので拡張するためのemacs lispを書きました。</p>
-<p>といっても、現状ではブロック単位で移動する関数を適当にyaml-mode-mapにバインドしているだけの単純なものです。</p>
-<p>使い方は、<a href="https://github.com/taksatou/yaml-mode-ext">https://github.com/taksatou/yaml-mode-ext</a>からおとしてきてloadするだけです。
-(yaml-modeはあらかじめインストールしておく必要があります)</p>
-<div class="pygments_borland"><pre>(load-file &quot;path/to/yaml-mode-ext.el&quot;)
-</pre></div>
-
-<p>以下のキーバインドが使えます。</p>
-<ul>
-<li>M-C-f  同じ階層の次のブロックへ移動</li>
-<li>M-C-b  同じ階層の前のブロックへ移動</li>
-<li>M-C-u  親ブロックの先頭へ移動</li>
-<li>M-C-e  親ブロックの末尾へ移動</li>
-<li>M-C-d  直下の子ブロックへ移動</li>
-</ul>
-<p>当初はyaml-modeをhideshow.elに対応させようと思ってたのですが、ブロック単位で移動ができるようになったところで満足してしまいました。</p>
-<p>なお、ブロックの境界はインデントレベルだけをみて判定しているのでyamlに限定する必要はなかった気はしますが、pythonとかhaskellとかでもつかいたくなってきたら書き直そうと思います。</p>
-</div>
-
-  </div>
-</div>
-
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/01/11/alc-nokogiri-tmux/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div style="position:relative; top:-1pt; padding-right:2pt;" class="fb-like" data-href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
-<a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/09/yaml-mode-ext/" class="hatena-bookmark-button" data-hatena-bookmark-title="yaml-modeを拡張してyamlを高速に編集する" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/" data-text="yaml-modeを拡張してyamlを高速に編集する">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-<div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/"></div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../6">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -487,14 +515,14 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
-      <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - ElasticSearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
+      <li><a href="/blog/2014/02/13/faster-github-pages/" title="あなたのgithub pagesを無料で高速化する方法"><p>あなたのgithub pagesを無料で高速化する方法</a><span style="font-size: 80%;">(February 13, 2014 at 09:10 AM)</span></li>
+      <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
       <li><a href="/blog/2013/11/19/go-template/" title="Goのtemplateパッケージ簡易チートシート"><p>Goのtemplateパッケージ簡易チートシート</a><span style="font-size: 80%;">(November 19, 2013 at 07:19 PM)</span></li>
       <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
       <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
       <li><a href="/blog/2013/10/28/r-tutor-chap08/" title="R Tutorial Part2 Chapter08 (Numerical Measures)"><p>R Tutorial Part2 Chapter08 (Numerical Measures)</a><span style="font-size: 80%;">(October 28, 2013 at 02:11 AM)</span></li>
       <li><a href="/blog/2013/10/18/revealjs/" title="reveal.js をつかってブログ記事からスライドを生成する"><p>reveal.js をつかってブログ記事からスライドを生成する</a><span style="font-size: 80%;">(October 18, 2013 at 10:00 PM)</span></li>
       <li><a href="/blog/2013/10/17/calculate-combinations/" title="オーバーフローしにくい組み合わせの数の計算方法"><p>オーバーフローしにくい組み合わせの数の計算方法</a><span style="font-size: 80%;">(October 17, 2013 at 09:13 PM)</span></li>
-      <li><a href="/blog/2013/10/01/mustache-quick-master/" title="mustache基礎文法最速マスター"><p>mustache基礎文法最速マスター</a><span style="font-size: 80%;">(October 01, 2013 at 12:08 AM)</span></li>
     </ul>
   </div>
 
@@ -543,12 +571,13 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/elastic-search">elastic search</a> (<a href="/blog/category/elastic-search/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/github">github</a> (<a href="/blog/category/github/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
@@ -588,7 +617,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -598,7 +627,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
