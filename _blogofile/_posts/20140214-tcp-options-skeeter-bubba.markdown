@@ -35,7 +35,7 @@ Bridghan[^2]とstevがけしかけたんだけど、アイディアはシンプ�
 * [Re: [tcpm] IANA TCP options registry ...](http://www.ietf.org/mail-archive/web/tcpm/current/msg05424.html ) 
 
 
-[^1]: Craig Partridge
+[^1]: Kastenholz, Frank
 [^2]: たぶんDave Bridgham のこと [http://en.wikipedia.org/wiki/FTP_Software](http://en.wikipedia.org/wiki/FTP_Software)
 [^3]: トンボのことらしい
 [^4]: でかい人のことらしい
