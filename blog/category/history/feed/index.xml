@@ -29,6 +29,8 @@
 <li><a href="http://mailman.postel.org/pipermail/internet-history/2001-November/000073.html">TCP options: Bubba and Skeeter</a> </li>
 </ul>
 <p>以下意訳です。</p>
+<hr>
+
 <p>あー、これは忘れられそうもないんだけど黒歴史だね。
 ben levyとstevと私<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> がFTPをやってたときにつくったものなんだ。
 Bridghan<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>とstevがけしかけたんだけど、アイディアはシンプルで、鍵管理システムなしに暗号化できるように、デフィー・ヘルマン鍵共有をtcpで直接するためのものだった。
