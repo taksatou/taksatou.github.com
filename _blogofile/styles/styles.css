@@ -253,3 +253,6 @@ a.readmore:hover						{ background-color: #2f2f2f; background-image: none; text-
 }
 
 .footnote { font-size: 80%; }
+
+.socialbuttons ul { list-style-type:none; }
+.socialbuttons li { float:left; padding-left:2px; }

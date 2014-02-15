@@ -23,7 +23,6 @@ ${", ".join(category_links)}
   </div>
 </div>
 
-<div class='shareaholic-canvas' data-shareaholic-widgets='recommendations'></div>
 
 <%def name="post_prose(post)">
 <div class="blogbody">
