@@ -2,10 +2,10 @@
 categories: history, web
 date: 2014/02/13 18:00:22
 title: TCPの黒歴史：謎のオプションskeeterとbubbaについて
-image: /images/netscape.png
+image: /images/netscape-150.png
 ---
 
-![ie](/images/netscape.png ) 
+![ns](/images/netscape-150.png ) 
 
 TCPについて調べてたら、`skeeter`と`bubba`という謎のオプションを見つけた。
 調べてみたところ、TCPを策定した人達の黒歴史らしい。

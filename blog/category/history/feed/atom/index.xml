@@ -26,7 +26,7 @@
     <category scheme="http://mojavy.com/blog" term="web" />
     <category scheme="http://mojavy.com/blog" term="history" />
     <summary type="html"><![CDATA[TCPの黒歴史：謎のオプションskeeterとbubbaについて]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/"><![CDATA[<p><img alt="ie" src="/images/netscape.png" /> </p>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/"><![CDATA[<p><img alt="ns" src="/images/netscape-150.png" /> </p>
 <p>TCPについて調べてたら、<code>skeeter</code>と<code>bubba</code>という謎のオプションを見つけた。
 調べてみたところ、TCPを策定した人達の黒歴史らしい。</p>
 <ul>

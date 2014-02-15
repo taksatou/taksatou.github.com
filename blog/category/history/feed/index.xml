@@ -22,7 +22,7 @@
       <category><![CDATA[history]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/</guid>
       <description>TCPの黒歴史：謎のオプションskeeterとbubbaについて</description>
-      <content:encoded><![CDATA[<p><img alt="ie" src="/images/netscape.png" /> </p>
+      <content:encoded><![CDATA[<p><img alt="ns" src="/images/netscape-150.png" /> </p>
 <p>TCPについて調べてたら、<code>skeeter</code>と<code>bubba</code>という謎のオプションを見つけた。
 調べてみたところ、TCPを策定した人達の黒歴史らしい。</p>
 <ul>
