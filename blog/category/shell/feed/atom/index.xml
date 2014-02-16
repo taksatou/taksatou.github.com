@@ -26,7 +26,7 @@
     <category scheme="http://mojavy.com/blog" term="unix" />
     <category scheme="http://mojavy.com/blog" term="shell" />
     <summary type="html"><![CDATA[シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/"><![CDATA[<p><code>fock(1)</code>を使うのが一番安全かつ簡単</p>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/"><![CDATA[<p><code>flock(1)</code>を使うのが一番安全かつ簡単</p>
 <div class="pygments_borland"><pre><span class="nv">LOCKFILE</span><span class="o">=</span>/tmp/my.lockfile
 
 <span class="o">(</span>
