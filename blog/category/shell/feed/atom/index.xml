@@ -7,12 +7,38 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-03-28T02:50:01Z</updated>
+  <updated>2014-02-16T18:35:51Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" />
+    <id>http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/</id>
+    <updated>2014-02-16T18:35:51Z</updated>
+    <published>2014-02-16T18:35:51Z</published>
+    <category scheme="http://mojavy.com/blog" term="unix" />
+    <category scheme="http://mojavy.com/blog" term="shell" />
+    <summary type="html"><![CDATA[シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/"><![CDATA[<p><code>fock(1)</code>を使うのが一番安全かつ簡単</p>
+<div class="pygments_borland"><pre><span class="nv">LOCKFILE</span><span class="o">=</span>/tmp/my.lockfile
+
+<span class="o">(</span>
+    flock -n 200 <span class="o">||</span> <span class="nb">exit </span>1
+
+    <span class="c"># do something</span>
+<span class="o">)</span> 200&gt;<span class="nv">$LOCKFILE</span>
+</pre></div>
+
+<p>タイムアウトを設定したければ<code>-w</code>オプションをつかえばよい。</p>
+<p>リードライトロックとしてつかえるので、更新系のスクリプトは1つしか起動したくないけど参照系は並列実行を許す、みたいなことも比較的簡単にできる。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

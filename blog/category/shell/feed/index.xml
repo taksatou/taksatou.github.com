@@ -10,10 +10,31 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Thu, 28 Mar 2013 02:50:01 GMT</pubDate>
+    <pubDate>Sun, 16 Feb 2014 18:35:51 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</title>
+      <link>http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/</link>
+      <pubDate>Sun, 16 Feb 2014 18:35:51 JST</pubDate>
+      <category><![CDATA[unix]]></category>
+      <category><![CDATA[shell]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/</guid>
+      <description>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</description>
+      <content:encoded><![CDATA[<p><code>fock(1)</code>を使うのが一番安全かつ簡単</p>
+<div class="pygments_borland"><pre><span class="nv">LOCKFILE</span><span class="o">=</span>/tmp/my.lockfile
+
+<span class="o">(</span>
+    flock -n 200 <span class="o">||</span> <span class="nb">exit </span>1
+
+    <span class="c"># do something</span>
+<span class="o">)</span> 200&gt;<span class="nv">$LOCKFILE</span>
+</pre></div>
+
+<p>タイムアウトを設定したければ<code>-w</code>オプションをつかえばよい。</p>
+<p>リードライトロックとしてつかえるので、更新系のスクリプトは1つしか起動したくないけど参照系は並列実行を許す、みたいなことも比較的簡単にできる。</p>]]></content:encoded>
+    </item>
     <item>
       <title>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</title>
       <link>http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/</link>
