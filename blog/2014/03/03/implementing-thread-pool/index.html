@@ -1,0 +1,566 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+  <title>
+スレッドプールの実装方法について
+</title>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
+<link rel="alternate" type="application/atom+xml" title="Atom 1.0"
+href="/blog/feed/atom" />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
+
+
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold' rel='stylesheet' type='text/css'>
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script><![endif]-->
+
+<link rel='stylesheet' href="/styles/styles.css" type='text/css' />
+<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/pepper-grinder/jquery-ui.css' type='text/css' />
+<script src="https://www.google.com/jsapi?key=ABQIAAAAcOj4HIzbhVG_glmoxqtIlhSZ8YWc9pfyrPx-qTk3ymJ7vBNWbhSCYgWPuVGOqTugaARvpRrNszeUJQ" type="text/javascript"></script>
+<script language="Javascript" type="text/javascript">
+  google.load("search", "1");
+  google.load("jquery", "1.6.4");
+  google.load("jqueryui", "1.8.16");
+
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26834066-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- coderwall -->
+<link href="http://coderwall.com/stylesheets/jquery.coderwall.css" media="all" rel="stylesheet" type="text/css">
+<script src="http://coderwall.com/javascripts/jquery.coderwall.js"></script>
+
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <rdf:Description rdf:about="http://mojavy.com/">
+    <foaf:maker rdf:parseType="Resource">
+      <foaf:holdsAccount>
+        <foaf:OnlineAccount foaf:accountName="armyofpigs">
+          <foaf:accountServiceHomepage rdf:resource="http://www.hatena.ne.jp/" />
+        </foaf:OnlineAccount>
+      </foaf:holdsAccount>
+    </foaf:maker>
+  </rdf:Description>
+</rdf:RDF>
+
+
+  </head>
+  <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=169540733170142";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <div id="content">
+      
+  <div id="headerwrap">
+  <header id="mainheader" class="bodywidth">
+    <hgroup id="websitetitle">
+      <h1><span class="bold"><a href="/">mojavy.com</a></h1>
+      <h2></h2>
+    </hgroup>
+    <nav>
+      <ul>
+        <li><a href="/" title="Home">Home</a></li>
+        <li><a href="/blog" title="Blog">Blog</a></li>
+        <li><a href="/apps.html" title="Apps">Apps</a></li>
+        <li><a href="http://twitter.com/#!/taksatou" title="Twitter">Twitter</a></li>
+        <li><a href="https://github.com/taksatou" title="github">github</a></li>
+        <li><a href="/about.html" title="About">About</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+
+      <div id="main_block">
+        <div id="prose_block">
+          
+<div id="maincontent2" class="bodywidth">
+<div id="blogleft">
+
+<div class="blog_post">
+  <a name="スレッドプールの実装方法について"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" rel="bookmark" title="Permanent Link to スレッドプールの実装方法について">スレッドプールの実装方法について</a></h2>
+  <small>March 03, 2014 at 08:58 PM | categories:
+
+<a href='/blog/category/unix'>unix</a>, <a href='/blog/category/programming'>programming</a>
+ | <a href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>スレッドプール(thread pool)を実装するには、暇なときはthreadを寝かせておいて必要なときに起こす、というイベント通知の仕組みが必要になる。
+UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通だと思われるが、適当なファイルディスクリプタをopenしておいてread等でブロックさせる方法でも実装できそう。</p>
+<p>どのようなやり方が一般的なのか、いくつか有名どころのOSSの実装を調べてみた。</p>
+<h3 id="libuv">libuvの場合</h3>
+<p><a href="https://github.com/joyent/libuv">https://github.com/joyent/libuv</a> </p>
+<p>単純に<code>pthread_cond_wait</code>をつかっている <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
+<div class="pygments_borland"><pre><span class="k">static</span> <span class="kt">void</span> <span class="nf">worker</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">struct</span> <span class="n">uv__work</span><span class="o">*</span> <span class="n">w</span><span class="p">;</span>
+  <span class="n">QUEUE</span><span class="o">*</span> <span class="n">q</span><span class="p">;</span>
+
+  <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">arg</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
+    <span class="n">uv_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">QUEUE_EMPTY</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wq</span><span class="p">))</span>
+      <span class="n">uv_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cond</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="n">QUEUE_HEAD</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wq</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">exit_message</span><span class="p">)</span>
+      <span class="n">uv_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cond</span><span class="p">);</span>
+    <span class="k">else</span> <span class="p">{</span>
+      <span class="n">QUEUE_REMOVE</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
+      <span class="n">QUEUE_INIT</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>  <span class="cm">/* Signal uv_cancel() that the work req is</span>
+<span class="cm">                             executing. */</span>
+    <span class="p">}</span>
+
+    <span class="n">uv_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">exit_message</span><span class="p">)</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">QUEUE_DATA</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="k">struct</span> <span class="n">uv__work</span><span class="p">,</span> <span class="n">wq</span><span class="p">);</span>
+    <span class="n">w</span><span class="o">-&gt;</span><span class="n">work</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+
+    <span class="n">uv_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq_mutex</span><span class="p">);</span>
+    <span class="n">w</span><span class="o">-&gt;</span><span class="n">work</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>  <span class="cm">/* Signal uv_cancel() that the work req is done</span>
+<span class="cm">                        executing. */</span>
+    <span class="n">QUEUE_INSERT_TAIL</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">wq</span><span class="p">);</span>
+    <span class="n">uv_async_send</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq_async</span><span class="p">);</span>
+    <span class="n">uv_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq_mutex</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="boostasio">Boost.Asioの場合</h3>
+<p><a href="http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio.html">http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio.html</a> </p>
+<p><code>Boost.Asio</code>にスレッドプールそのものは提供されてないが以下のようにして簡単に実装することができる</p>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;thread&gt;</span>
+<span class="cp">#include &lt;functional&gt;</span>
+<span class="cp">#include &lt;boost/asio.hpp&gt;</span>
+
+<span class="kt">int</span> <span class="n">main</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[]</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="n">asio</span><span class="o">::</span><span class="n">io_service</span> <span class="n">io_service</span><span class="p">;</span>
+    <span class="n">asio</span><span class="o">::</span><span class="n">io_service</span><span class="o">::</span><span class="n">work</span> <span class="n">work</span><span class="p">(</span><span class="n">io_service</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span> <span class="n">threadPool</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="n">size_t</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">::</span><span class="n">hardware_concurrency</span><span class="p">();</span> <span class="n">t</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">threadPool</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="kr">thread</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">asio</span><span class="o">::</span><span class="n">io_service</span><span class="o">::</span><span class="n">run</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">io_service</span><span class="p">)));</span>
+    <span class="p">}</span>
+
+    <span class="n">io_service</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">an_expensive_calculation</span><span class="p">,</span> <span class="mi">42</span><span class="p">));</span>
+    <span class="n">io_service</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">a_long_running_task</span><span class="p">,</span> <span class="mi">123</span><span class="p">));</span>
+
+    <span class="c1">//Do some things with the main thread</span>
+
+    <span class="n">io_service</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&amp;</span> <span class="n">t</span> <span class="o">:</span> <span class="n">threadPool</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><a href="http://stackoverflow.com/questions/14265676/using-boostasio-thread-pool-for-general-purpose-tasks">http://stackoverflow.com/questions/14265676/using-boostasio-thread-pool-for-general-purpose-tasks</a> </p>
+<p>長くなるのでコードは省略するが、<code>io_service::post</code>するとunixの場合は最終的には<code>task_io_service::wake_one_idle_thread_and_unlock</code>から<code>pthread_cond_signal</code>が呼ばれる。</p>
+<h3 id="memcached">memcachedの場合</h3>
+<p><a href="https://github.com/memcached/memcached">https://github.com/memcached/memcached</a> </p>
+<p><code>libevent</code>のイベント通知機能を利用して実装している。それぞれのthread初期化の際にpipeをつくって、そのfdをlibeventに渡す。 <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>  libevent内部でそのfdを<code>epoll</code>なり<code>kqueue</code>なりでブロックして待つ。</p>
+<div class="pygments_borland"><pre><span class="c1">//</span>
+<span class="c1">// memcached.c</span>
+<span class="c1">//</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">pthread_t</span> <span class="n">thread_id</span><span class="p">;</span>        <span class="cm">/* unique ID of this thread */</span>
+    <span class="k">struct</span> <span class="n">event_base</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>    <span class="cm">/* libevent handle this thread uses */</span>
+    <span class="k">struct</span> <span class="n">event</span> <span class="n">notify_event</span><span class="p">;</span>  <span class="cm">/* listen event for notify pipe */</span>
+    <span class="kt">int</span> <span class="n">notify_receive_fd</span><span class="p">;</span>      <span class="cm">/* receiving end of notify pipe */</span>
+    <span class="kt">int</span> <span class="n">notify_send_fd</span><span class="p">;</span>         <span class="cm">/* sending end of notify pipe */</span>
+    <span class="k">struct</span> <span class="n">thread_stats</span> <span class="n">stats</span><span class="p">;</span>  <span class="cm">/* Stats generated by this thread */</span>
+    <span class="k">struct</span> <span class="n">conn_queue</span> <span class="o">*</span><span class="n">new_conn_queue</span><span class="p">;</span> <span class="cm">/* queue of new connections to handle */</span>
+    <span class="n">cache_t</span> <span class="o">*</span><span class="n">suffix_cache</span><span class="p">;</span>      <span class="cm">/* suffix cache */</span>
+    <span class="kt">uint8_t</span> <span class="n">item_lock_type</span><span class="p">;</span>     <span class="cm">/* use fine-grained or global item lock */</span>
+<span class="p">}</span> <span class="n">LIBEVENT_THREAD</span><span class="p">;</span>
+
+<span class="c1">//</span>
+<span class="c1">// thread.c</span>
+<span class="c1">//</span>
+<span class="kt">void</span> <span class="nf">thread_init</span><span class="p">(</span><span class="kt">int</span> <span class="n">nthreads</span><span class="p">,</span> <span class="k">struct</span> <span class="n">event_base</span> <span class="o">*</span><span class="n">main_base</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//</span>
+<span class="c1">// 中略</span>
+<span class="c1">//</span>
+    <span class="n">threads</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="n">nthreads</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">LIBEVENT_THREAD</span><span class="p">));</span>
+<span class="c1">//</span>
+<span class="c1">// さらに中略</span>
+<span class="c1">//</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nthreads</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">fds</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">fds</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">&quot;Can&#39;t create notify pipe&quot;</span><span class="p">);</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">notify_receive_fd</span> <span class="o">=</span> <span class="n">fds</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">notify_send_fd</span> <span class="o">=</span> <span class="n">fds</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+        <span class="n">setup_thread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="cm">/* Reserve three fds for the libevent base, and two for the pipe */</span>
+        <span class="n">stats</span><span class="p">.</span><span class="n">reserved_fds</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* Create threads after we&#39;ve done all the libevent setup. */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nthreads</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">create_worker</span><span class="p">(</span><span class="n">worker_libevent</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* Wait for all the threads to set themselves up before returning. */</span>
+    <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">init_lock</span><span class="p">);</span>
+    <span class="n">wait_for_thread_registration</span><span class="p">(</span><span class="n">nthreads</span><span class="p">);</span>
+    <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">init_lock</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="pthread_cond_wait">pthread_cond_waitの実装</h3>
+<p>脱線するが、pthread_cond_waitがどのようにsleepにはいってるのか気になったので調べた。</p>
+<p><a href="https://sourceware.org/git/?p=glibc.git;a=tree;f=nptl;hb=HEAD">https://sourceware.org/git/?p=glibc.git;a=tree;f=nptl;hb=HEAD</a> </p>
+<p><code>pthread_cond_wait</code>のソースコードは<code>glibc</code>の<code>nptl</code>以下にある。
+<code>__pthread_cond_wait</code>が<code>lll_futex_wait</code>を呼んでおり、これは以下のように実装されている。(以下はx86_64のもの) </p>
+<div class="pygments_borland"><pre><span class="cp">#define lll_futex_wait(futex, val, private) \</span>
+<span class="cp">  lll_futex_timed_wait(futex, val, NULL, private)</span>
+
+<span class="cp">#define lll_futex_timed_wait(futex, val, timeout, private) \</span>
+<span class="cp">  ({                                         \</span>
+<span class="cp">    register const struct timespec *__to __asm (&quot;r10&quot;) = timeout;          \</span>
+<span class="cp">    int __status;                                \</span>
+<span class="cp">    register __typeof (val) _val __asm (&quot;edx&quot;) = (val);                \</span>
+<span class="cp">    __asm __volatile (&quot;syscall&quot;                            \</span>
+<span class="cp">             : &quot;=a&quot; (__status)                         \</span>
+<span class="cp">             : &quot;0&quot; (SYS_futex), &quot;D&quot; (futex),                 \</span>
+<span class="cp">           &quot;S&quot; (__lll_private_flag (FUTEX_WAIT, private)),         \</span>
+<span class="cp">           &quot;d&quot; (_val), &quot;r&quot; (__to)                    \</span>
+<span class="cp">             : &quot;memory&quot;, &quot;cc&quot;, &quot;r11&quot;, &quot;cx&quot;);                 \</span>
+<span class="cp">    __status;                                    \</span>
+<span class="cp">  })</span>
+</pre></div>
+
+<p>上記アセンブラは大体以下のような意味<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
+<div class="pygments_borland"><pre><span class="n">futex</span><span class="p">(</span><span class="n">futex</span><span class="p">,</span> <span class="n">FUTEX_WAIT</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>  <span class="c1">// 便宜上上記コードの引数の変数名をそのままつかっているが、</span>
+                                                  <span class="c1">// 1つめのfutexはシステムコールのfutexで、</span>
+                                                  <span class="c1">// 2つめは引数のpthread_cond_tの__futexメンバ変数のアドレス</span>
+</pre></div>
+
+<blockquote>
+<p>futex() システムコールは、 指定したアドレスの値が変更されるのをプログラムが待つ手段や 特定のアドレスに対して待機中のプロセスを wake (起床) させる手段を提供する </p>
+<p><a href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man2/futex.2.html">futex(2) http://linuxjm.sourceforge.jp/html/LDP_man-pages/man2/futex.2.html</a></p>
+</blockquote>
+<p>とのこと。</p>
+<h3 id="_1">まとめ</h3>
+<ul>
+<li>pthread_cond_waitをつかったもののほうが普通は高速なはず</li>
+<li>memcachedのようなやりかただとユーザプロセス側でスレッドプール管理のための排他制御はほとんど不要</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><code>pthread_cond_wait</code>はunixの場合。windowsの場合は<code>pSleepConditionVariableCS</code>、これが使えない場合は疑似的に同様の動作をするようなラッパを定義している。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>memcachedでは使用してないが、libeventはシグナルを通知する際もfdをつかう。Boost.Asioもシグナル通知はpipeを経由する。&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>厳密には違う。&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" class="hatena-bookmark-button" data-hatena-bookmark-title="スレッドプールの実装方法について" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" data-text="スレッドプールの実装方法について">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_url = "http://mojavy.com/blog/2014/03/03/implementing-thread-pool/";
+</script>
+<script type="text/javascript" src="http://disqus.com/forums/mojavy/embed.js"></script>
+<noscript><a href="http://mojavy.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+<section id="blogright">
+  <div id="aboutme">
+    <h1>About Me</h1>
+    <table>
+      <td>
+        <img src="http://www.gravatar.com/avatar/69238498491bce19f67cf79d528f08ee.png?s=150" alt="pic" />
+      </td><td>
+        <script>
+$(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
+        </script>
+        <h6>mojavy</h6>
+        <ul>
+          <li class="msg"></li>
+        </ul>
+      </td>
+    </table>
+  </div>
+
+<hr />
+  <div id="recent_posts">			
+    <h1>Recent posts</h1>
+    <ul>
+      <li><a href="/blog/2014/03/03/implementing-thread-pool/" title="スレッドプールの実装方法について"><p>スレッドプールの実装方法について</a><span style="font-size: 80%;">(March 03, 2014 at 08:58 PM)</span></li>
+      <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
+      <li><a href="/blog/2014/02/13/tcp-options-skeeter-bubba/" title="TCPの黒歴史：謎のオプションskeeterとbubbaについて"><p>TCPの黒歴史：謎のオプションskeeterとbubbaについて</a><span style="font-size: 80%;">(February 13, 2014 at 06:00 PM)</span></li>
+      <li><a href="/blog/2014/02/13/faster-github-pages/" title="あなたのgithub pagesを無料で高速化する方法"><p>あなたのgithub pagesを無料で高速化する方法</a><span style="font-size: 80%;">(February 13, 2014 at 09:10 AM)</span></li>
+      <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
+      <li><a href="/blog/2013/11/19/go-template/" title="Goのtemplateパッケージ簡易チートシート"><p>Goのtemplateパッケージ簡易チートシート</a><span style="font-size: 80%;">(November 19, 2013 at 07:19 PM)</span></li>
+      <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
+      <li><a href="/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" title="ベイズの定理から見るガン検査"><p>ベイズの定理から見るガン検査</a><span style="font-size: 80%;">(November 12, 2013 at 03:01 AM)</span></li>
+    </ul>
+  </div>
+
+<hr />
+  <div id="hatena_popular">
+    <h1>Recent Popular posts</h1>
+<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript">
+Hatena.BookmarkWidget.url   = "http://mojavy.com/";
+Hatena.BookmarkWidget.title = "";
+Hatena.BookmarkWidget.sort  = "";
+Hatena.BookmarkWidget.width = 0;
+Hatena.BookmarkWidget.num   = 5;
+Hatena.BookmarkWidget.theme = "hatenadiary";
+Hatena.BookmarkWidget.load();
+</script>
+  </div><br>
+
+<hr />
+<div id="hatena_popular">
+  <h1>Popular posts</h1>
+  <script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+  <script language="javascript" type="text/javascript">
+    Hatena.BookmarkWidget.url   = "http://mojavy.com/";
+    Hatena.BookmarkWidget.title = "";
+    Hatena.BookmarkWidget.sort  = "count";
+    Hatena.BookmarkWidget.width = 0;
+    Hatena.BookmarkWidget.num   = 5;
+    Hatena.BookmarkWidget.theme = "hatenadiary";
+    Hatena.BookmarkWidget.load();
+  </script>
+</div><br>
+
+<hr />
+  <div id="categories">
+    <h1>Categories</h1>
+    <ul>
+     <li><a href="/blog/category/c">C</a> (<a href="/blog/category/c/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/r">R</a> (<a href="/blog/category/r/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
+     <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/github">github</a> (<a href="/blog/category/github/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/history">history</a> (<a href="/blog/category/history/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/mach-o">mach-o</a> (<a href="/blog/category/mach-o/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/mustache">mustache</a> (<a href="/blog/category/mustache/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/note">note</a> (<a href="/blog/category/note/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/osx">osx</a> (<a href="/blog/category/osx/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/others">others</a> (<a href="/blog/category/others/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/reveal.js">reveal.js</a> (<a href="/blog/category/reveal.js/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
+     <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
+    </ul>
+  </div> 
+
+<hr />
+  <div id="archives">			
+    <h1>Archives</h1>
+    <ul>
+      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(6)</li>
+      <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
+      <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
+      <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
+      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
+      <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2011/11/1" title="November 2011">November 2011</a>&nbsp;(2)</li>
+    </ul>
+  </div>
+
+<hr />
+  <div id="coderwall">
+    <h1>Badges</h1>
+    <section class="coderwall" data-coderwall-username="taksatou" data-coderwall-orientation="vertical"></section>
+  </div><br>
+
+</section>
+</div>
+
+        </div><!-- End Prose Block -->
+      </div><!-- End Main Block -->
+      <div id="footer">
+        
+  <div id="feedicon">
+  <a href="/blog/feed"><img src="/images/rss_icon.png" alt="rss" /></a>
+  </div>
+
+<div id="footerwrap">
+  <script type="text/javascript">
+    (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+
+  <footer id="mainfooter" class="bodywidth">
+    
+    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>. </p>
+    
+
+  </footer>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+		var links = document.getElementsByTagName('a');
+		var query = '?';
+		for(var i = 0; i < links.length; i++) {
+			if(links[i].href.indexOf('#disqus_thread') >= 0) {
+				query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+			}
+		}
+		document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/mojavy/get_num_replies.js' + query + '"></' + 'script>');
+	})();
+//]]>
+</script>
+
+
+      </div> <!-- End Footer -->
+    </div> <!-- End Content -->
+
+  </body>
+</html>
+
+
+
+

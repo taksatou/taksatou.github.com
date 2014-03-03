@@ -10,10 +10,205 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sun, 16 Feb 2014 18:35:51 GMT</pubDate>
+    <pubDate>Mon, 03 Mar 2014 20:58:58 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>スレッドプールの実装方法について</title>
+      <link>http://mojavy.com/blog/2014/03/03/implementing-thread-pool/</link>
+      <pubDate>Mon, 03 Mar 2014 20:58:58 JST</pubDate>
+      <category><![CDATA[unix]]></category>
+      <category><![CDATA[programming]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/03/03/implementing-thread-pool/</guid>
+      <description>スレッドプールの実装方法について</description>
+      <content:encoded><![CDATA[<p>スレッドプール(thread pool)を実装するには、暇なときはthreadを寝かせておいて必要なときに起こす、というイベント通知の仕組みが必要になる。
+UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通だと思われるが、適当なファイルディスクリプタをopenしておいてread等でブロックさせる方法でも実装できそう。</p>
+<p>どのようなやり方が一般的なのか、いくつか有名どころのOSSの実装を調べてみた。</p>
+<h3 id="libuv">libuvの場合</h3>
+<p><a href="https://github.com/joyent/libuv">https://github.com/joyent/libuv</a> </p>
+<p>単純に<code>pthread_cond_wait</code>をつかっている <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
+<div class="pygments_borland"><pre><span class="k">static</span> <span class="kt">void</span> <span class="nf">worker</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">struct</span> <span class="n">uv__work</span><span class="o">*</span> <span class="n">w</span><span class="p">;</span>
+  <span class="n">QUEUE</span><span class="o">*</span> <span class="n">q</span><span class="p">;</span>
+
+  <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">arg</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
+    <span class="n">uv_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">QUEUE_EMPTY</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wq</span><span class="p">))</span>
+      <span class="n">uv_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cond</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="n">QUEUE_HEAD</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wq</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">exit_message</span><span class="p">)</span>
+      <span class="n">uv_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cond</span><span class="p">);</span>
+    <span class="k">else</span> <span class="p">{</span>
+      <span class="n">QUEUE_REMOVE</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
+      <span class="n">QUEUE_INIT</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>  <span class="cm">/* Signal uv_cancel() that the work req is</span>
+<span class="cm">                             executing. */</span>
+    <span class="p">}</span>
+
+    <span class="n">uv_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">exit_message</span><span class="p">)</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">QUEUE_DATA</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="k">struct</span> <span class="n">uv__work</span><span class="p">,</span> <span class="n">wq</span><span class="p">);</span>
+    <span class="n">w</span><span class="o">-&gt;</span><span class="n">work</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+
+    <span class="n">uv_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq_mutex</span><span class="p">);</span>
+    <span class="n">w</span><span class="o">-&gt;</span><span class="n">work</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>  <span class="cm">/* Signal uv_cancel() that the work req is done</span>
+<span class="cm">                        executing. */</span>
+    <span class="n">QUEUE_INSERT_TAIL</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">wq</span><span class="p">);</span>
+    <span class="n">uv_async_send</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq_async</span><span class="p">);</span>
+    <span class="n">uv_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq_mutex</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="boostasio">Boost.Asioの場合</h3>
+<p><a href="http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio.html">http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio.html</a> </p>
+<p><code>Boost.Asio</code>にスレッドプールそのものは提供されてないが以下のようにして簡単に実装することができる</p>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;thread&gt;</span>
+<span class="cp">#include &lt;functional&gt;</span>
+<span class="cp">#include &lt;boost/asio.hpp&gt;</span>
+
+<span class="kt">int</span> <span class="n">main</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[]</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="n">asio</span><span class="o">::</span><span class="n">io_service</span> <span class="n">io_service</span><span class="p">;</span>
+    <span class="n">asio</span><span class="o">::</span><span class="n">io_service</span><span class="o">::</span><span class="n">work</span> <span class="n">work</span><span class="p">(</span><span class="n">io_service</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span> <span class="n">threadPool</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="n">size_t</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">::</span><span class="n">hardware_concurrency</span><span class="p">();</span> <span class="n">t</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">threadPool</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="kr">thread</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">asio</span><span class="o">::</span><span class="n">io_service</span><span class="o">::</span><span class="n">run</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">io_service</span><span class="p">)));</span>
+    <span class="p">}</span>
+
+    <span class="n">io_service</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">an_expensive_calculation</span><span class="p">,</span> <span class="mi">42</span><span class="p">));</span>
+    <span class="n">io_service</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">a_long_running_task</span><span class="p">,</span> <span class="mi">123</span><span class="p">));</span>
+
+    <span class="c1">//Do some things with the main thread</span>
+
+    <span class="n">io_service</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&amp;</span> <span class="n">t</span> <span class="o">:</span> <span class="n">threadPool</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><a href="http://stackoverflow.com/questions/14265676/using-boostasio-thread-pool-for-general-purpose-tasks">http://stackoverflow.com/questions/14265676/using-boostasio-thread-pool-for-general-purpose-tasks</a> </p>
+<p>長くなるのでコードは省略するが、<code>io_service::post</code>するとunixの場合は最終的には<code>task_io_service::wake_one_idle_thread_and_unlock</code>から<code>pthread_cond_signal</code>が呼ばれる。</p>
+<h3 id="memcached">memcachedの場合</h3>
+<p><a href="https://github.com/memcached/memcached">https://github.com/memcached/memcached</a> </p>
+<p><code>libevent</code>のイベント通知機能を利用して実装している。それぞれのthread初期化の際にpipeをつくって、そのfdをlibeventに渡す。 <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>  libevent内部でそのfdを<code>epoll</code>なり<code>kqueue</code>なりでブロックして待つ。</p>
+<div class="pygments_borland"><pre><span class="c1">//</span>
+<span class="c1">// memcached.c</span>
+<span class="c1">//</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">pthread_t</span> <span class="n">thread_id</span><span class="p">;</span>        <span class="cm">/* unique ID of this thread */</span>
+    <span class="k">struct</span> <span class="n">event_base</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>    <span class="cm">/* libevent handle this thread uses */</span>
+    <span class="k">struct</span> <span class="n">event</span> <span class="n">notify_event</span><span class="p">;</span>  <span class="cm">/* listen event for notify pipe */</span>
+    <span class="kt">int</span> <span class="n">notify_receive_fd</span><span class="p">;</span>      <span class="cm">/* receiving end of notify pipe */</span>
+    <span class="kt">int</span> <span class="n">notify_send_fd</span><span class="p">;</span>         <span class="cm">/* sending end of notify pipe */</span>
+    <span class="k">struct</span> <span class="n">thread_stats</span> <span class="n">stats</span><span class="p">;</span>  <span class="cm">/* Stats generated by this thread */</span>
+    <span class="k">struct</span> <span class="n">conn_queue</span> <span class="o">*</span><span class="n">new_conn_queue</span><span class="p">;</span> <span class="cm">/* queue of new connections to handle */</span>
+    <span class="n">cache_t</span> <span class="o">*</span><span class="n">suffix_cache</span><span class="p">;</span>      <span class="cm">/* suffix cache */</span>
+    <span class="kt">uint8_t</span> <span class="n">item_lock_type</span><span class="p">;</span>     <span class="cm">/* use fine-grained or global item lock */</span>
+<span class="p">}</span> <span class="n">LIBEVENT_THREAD</span><span class="p">;</span>
+
+<span class="c1">//</span>
+<span class="c1">// thread.c</span>
+<span class="c1">//</span>
+<span class="kt">void</span> <span class="nf">thread_init</span><span class="p">(</span><span class="kt">int</span> <span class="n">nthreads</span><span class="p">,</span> <span class="k">struct</span> <span class="n">event_base</span> <span class="o">*</span><span class="n">main_base</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//</span>
+<span class="c1">// 中略</span>
+<span class="c1">//</span>
+    <span class="n">threads</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="n">nthreads</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">LIBEVENT_THREAD</span><span class="p">));</span>
+<span class="c1">//</span>
+<span class="c1">// さらに中略</span>
+<span class="c1">//</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nthreads</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">fds</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">fds</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">&quot;Can&#39;t create notify pipe&quot;</span><span class="p">);</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">notify_receive_fd</span> <span class="o">=</span> <span class="n">fds</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">notify_send_fd</span> <span class="o">=</span> <span class="n">fds</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+        <span class="n">setup_thread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="cm">/* Reserve three fds for the libevent base, and two for the pipe */</span>
+        <span class="n">stats</span><span class="p">.</span><span class="n">reserved_fds</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* Create threads after we&#39;ve done all the libevent setup. */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nthreads</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">create_worker</span><span class="p">(</span><span class="n">worker_libevent</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* Wait for all the threads to set themselves up before returning. */</span>
+    <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">init_lock</span><span class="p">);</span>
+    <span class="n">wait_for_thread_registration</span><span class="p">(</span><span class="n">nthreads</span><span class="p">);</span>
+    <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">init_lock</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="pthread_cond_wait">pthread_cond_waitの実装</h3>
+<p>脱線するが、pthread_cond_waitがどのようにsleepにはいってるのか気になったので調べた。</p>
+<p><a href="https://sourceware.org/git/?p=glibc.git;a=tree;f=nptl;hb=HEAD">https://sourceware.org/git/?p=glibc.git;a=tree;f=nptl;hb=HEAD</a> </p>
+<p><code>pthread_cond_wait</code>のソースコードは<code>glibc</code>の<code>nptl</code>以下にある。
+<code>__pthread_cond_wait</code>が<code>lll_futex_wait</code>を呼んでおり、これは以下のように実装されている。(以下はx86_64のもの) </p>
+<div class="pygments_borland"><pre><span class="cp">#define lll_futex_wait(futex, val, private) \</span>
+<span class="cp">  lll_futex_timed_wait(futex, val, NULL, private)</span>
+
+<span class="cp">#define lll_futex_timed_wait(futex, val, timeout, private) \</span>
+<span class="cp">  ({                                         \</span>
+<span class="cp">    register const struct timespec *__to __asm (&quot;r10&quot;) = timeout;          \</span>
+<span class="cp">    int __status;                                \</span>
+<span class="cp">    register __typeof (val) _val __asm (&quot;edx&quot;) = (val);                \</span>
+<span class="cp">    __asm __volatile (&quot;syscall&quot;                            \</span>
+<span class="cp">             : &quot;=a&quot; (__status)                         \</span>
+<span class="cp">             : &quot;0&quot; (SYS_futex), &quot;D&quot; (futex),                 \</span>
+<span class="cp">           &quot;S&quot; (__lll_private_flag (FUTEX_WAIT, private)),         \</span>
+<span class="cp">           &quot;d&quot; (_val), &quot;r&quot; (__to)                    \</span>
+<span class="cp">             : &quot;memory&quot;, &quot;cc&quot;, &quot;r11&quot;, &quot;cx&quot;);                 \</span>
+<span class="cp">    __status;                                    \</span>
+<span class="cp">  })</span>
+</pre></div>
+
+<p>上記アセンブラは大体以下のような意味<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
+<div class="pygments_borland"><pre><span class="n">futex</span><span class="p">(</span><span class="n">futex</span><span class="p">,</span> <span class="n">FUTEX_WAIT</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>  <span class="c1">// 便宜上上記コードの引数の変数名をそのままつかっているが、</span>
+                                                  <span class="c1">// 1つめのfutexはシステムコールのfutexで、</span>
+                                                  <span class="c1">// 2つめは引数のpthread_cond_tの__futexメンバ変数のアドレス</span>
+</pre></div>
+
+<blockquote>
+<p>futex() システムコールは、 指定したアドレスの値が変更されるのをプログラムが待つ手段や 特定のアドレスに対して待機中のプロセスを wake (起床) させる手段を提供する </p>
+<p><a href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man2/futex.2.html">futex(2) http://linuxjm.sourceforge.jp/html/LDP_man-pages/man2/futex.2.html</a></p>
+</blockquote>
+<p>とのこと。</p>
+<h3 id="_1">まとめ</h3>
+<ul>
+<li>pthread_cond_waitをつかったもののほうが普通は高速なはず</li>
+<li>memcachedのようなやりかただとユーザプロセス側でスレッドプール管理のための排他制御はほとんど不要</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><code>pthread_cond_wait</code>はunixの場合。windowsの場合は<code>pSleepConditionVariableCS</code>、これが使えない場合は疑似的に同様の動作をするようなラッパを定義している。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>memcachedでは使用してないが、libeventはシグナルを通知する際もfdをつかう。Boost.Asioもシグナル通知はpipeを経由する。&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>厳密には違う。&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>]]></content:encoded>
+    </item>
     <item>
       <title>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</title>
       <link>http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/</link>
@@ -836,72 +1031,6 @@ emacsのロックファイルがあると落ちてしまう問題があったの
 <li class="fragment">blogofileにreveal.jsを組み込んだ話を紹介しました</li>
 <li class="fragment">reveal.jsかっこいいです</li>
 </ul>]]></content:encoded>
-    </item>
-    <item>
-      <title>オーバーフローしにくい組み合わせの数の計算方法</title>
-      <link>http://mojavy.com/blog/2013/10/17/calculate-combinations/</link>
-      <pubDate>Thu, 17 Oct 2013 21:13:58 JST</pubDate>
-      <category><![CDATA[algorithms]]></category>
-      <category><![CDATA[programming]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/10/17/calculate-combinations/</guid>
-      <description>オーバーフローしにくい組み合わせの数の計算方法</description>
-      <content:encoded><![CDATA[<p>Cで組み合わせの数を計算するときに定義通り計算するとすぐにオーバーフローしてしまう。
-例えば以下のような実装だと、<img src="/images/cca79b0e713c769c64899333d0fe43e6.png"> 程度でも結果がおかしくなってしまう。</p>
-<div class="pygments_borland"><pre><span class="cp">#include &lt;iostream&gt;</span>
-
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="n">uint64_t</span> <span class="n">fac</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-    <span class="k">else</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">uint64_t</span> <span class="n">combinations</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">fac</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">));</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 10</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 252</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 184756</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 0 !?</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>とりあえず素因数分解してやれば解決するのでいままでそうしてたのだけど、もっとかっこいい方法がないものかと思って探してみたらKnuth先生の本で以下のようなアルゴリズムが紹介されているらしい。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
-これはかっこいい。</p>
-<div class="pygments_borland"><pre><span class="n">uint64_t</span> <span class="n">combinations2</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">uint64_t</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">uint64_t</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">d</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">d</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">r</span> <span class="o">*=</span> <span class="n">n</span><span class="o">--</span><span class="p">;</span>
-        <span class="n">r</span> <span class="o">/=</span> <span class="n">d</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 155117520</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 118264581564861424</span>
-
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// これはオーバーフローする</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>結果の値が範囲内ならオーバーフローしないのか、というとそういうわけではないけどナイーブな実装に比べるとずっと計算できる範囲が広いので、値のレンジがあらかじめわかっているのであればこれで十分ですね。</p>
-<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=4756145434" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p><a href="http://stackoverflow.com/questions/1838368/calculating-the-amount-of-combinations">http://stackoverflow.com/questions/1838368/calculating-the-amount-of-combinations</a>   残念ながらvol2は手元にはない&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded>
     </item>
   </channel>
 </rss>
