@@ -183,7 +183,7 @@ UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通�
 </pre></div>
 
 <p>上記アセンブラは大体以下のような意味<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
-<div class="pygments_borland"><pre><span class="n">futex</span><span class="p">(</span><span class="n">futex</span><span class="p">,</span> <span class="n">FUTEX_WAIT</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>  <span class="c1">// 便宜上上記コードの引数の変数名をそのままつかっているが、</span>
+<div class="pygments_borland"><pre><span class="n">futex</span><span class="p">(</span><span class="n">futex</span><span class="p">,</span> <span class="n">FUTEX_WAIT</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>  <span class="c1">// 便宜上、上記コードの引数の変数名をそのままつかっているが、</span>
                                                   <span class="c1">// 1つめのfutexはシステムコールのfutexで、</span>
                                                   <span class="c1">// 2つめは引数のpthread_cond_tの__futexメンバ変数のアドレス</span>
 </pre></div>
@@ -196,7 +196,7 @@ UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通�
 <h3 id="_1">まとめ</h3>
 <ul>
 <li>pthread_cond_waitをつかったもののほうが普通は高速なはず</li>
-<li>memcachedのようなやりかただとユーザプロセス側でスレッドプール管理のための排他制御はほとんど不要</li>
+<li>memcachedのようなやりかただとユーザプロセス側でスレッドプール管理のための排他制御がほとんど不要になるので多少実装が簡単か</li>
 </ul>
 <div class="footnote">
 <hr />

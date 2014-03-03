@@ -191,7 +191,7 @@ $$/code
 上記アセンブラは大体以下のような意味[^3] 
 
 $$code(lang=c)
-futex(futex, FUTEX_WAIT, val, timeout, NULL, 0);  // 便宜上上記コードの引数の変数名をそのままつかっているが、
+futex(futex, FUTEX_WAIT, val, timeout, NULL, 0);  // 便宜上、上記コードの引数の変数名をそのままつかっているが、
                                                   // 1つめのfutexはシステムコールのfutexで、
                                                   // 2つめは引数のpthread_cond_tの__futexメンバ変数のアドレス
 $$/code
@@ -205,7 +205,7 @@ $$/code
 ### まとめ
 
 * pthread_cond_waitをつかったもののほうが普通は高速なはず
-* memcachedのようなやりかただとユーザプロセス側でスレッドプール管理のための排他制御はほとんど不要
+* memcachedのようなやりかただとユーザプロセス側でスレッドプール管理のための排他制御がほとんど不要になるので多少実装が簡単か
 
 
 
