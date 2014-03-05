@@ -33,6 +33,6 @@ $$/code
 
 じゃあ`memset`のほうが遅いのかというと、コンパイラによってはアラインされていることを推測できる場合もあったり、callocはライブラリ関数なので移植性のために最適化しにくかったりするので、結局のところ微妙です。
 
-[http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc](http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc ) 
+参考： [http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc](http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc ) 
 
 

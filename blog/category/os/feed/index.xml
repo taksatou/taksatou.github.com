@@ -39,7 +39,7 @@
 <p>ちなみに、(カーネルではなく)<code>calloc</code>自身が0初期化する処理と、<code>memset</code>の処理は微妙に違います。
 なぜなら、<code>memset</code>は対象の領域がアラインされているかどうかについての情報なしに処理する必要があるので、境界部分は1byteずつやるしかありません。</p>
 <p>じゃあ<code>memset</code>のほうが遅いのかというと、コンパイラによってはアラインされていることを推測できる場合もあったり、callocはライブラリ関数なので移植性のために最適化しにくかったりするので、結局のところ微妙です。</p>
-<p><a href="http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc">http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc</a> </p>]]></content:encoded>
+<p>参考： <a href="http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc">http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc</a> </p>]]></content:encoded>
     </item>
   </channel>
 </rss>
