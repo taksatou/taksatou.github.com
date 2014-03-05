@@ -24,8 +24,8 @@ $$/code
 
 一方`memset`の場合は実際にメモリへの書込みが発生する上、ページの共有もできなくなるためswapする可能性もあります。
 
-<p>
-<p>
+<br>
+<br>
 
 
 ちなみに、(カーネルではなく)`calloc`自身が0初期化する処理と、`memset`の処理は微妙に違います。
@@ -33,5 +33,6 @@ $$/code
 
 じゃあ`memset`のほうが遅いのかというと、コンパイラによってはアラインされていることを推測できる場合もあったり、callocはライブラリ関数なので移植性のために最適化しにくかったりするので、結局のところ微妙です。
 
-
 [http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc](http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc ) 
+
+
