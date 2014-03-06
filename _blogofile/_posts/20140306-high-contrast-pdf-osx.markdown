@@ -1,7 +1,7 @@
 ---
 categories: mac, osx
 date: 2014/03/07 00:09:26
-title: 自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X
+title: 3clickくらいで自炊した書籍のpdfのコントラストを上げる on Mac OS X
 image: /images/20140307/preview200.png
 ---
 

@@ -18,14 +18,14 @@
       <name></name>
       <uri>http://mojavy.com/blog</uri>
     </author>
-    <title type="html"><![CDATA[自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X]]></title>
+    <title type="html"><![CDATA[3clickくらいで自炊した書籍のpdfのコントラストを上げる on Mac OS X]]></title>
     <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/" />
     <id>http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/</id>
     <updated>2014-03-07T00:09:26Z</updated>
     <published>2014-03-07T00:09:26Z</published>
     <category scheme="http://mojavy.com/blog" term="osx" />
     <category scheme="http://mojavy.com/blog" term="mac" />
-    <summary type="html"><![CDATA[自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X]]></summary>
+    <summary type="html"><![CDATA[3clickくらいで自炊した書籍のpdfのコントラストを上げる on Mac OS X]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"><![CDATA[<p><img alt="preview app" src="/images/20140307/preview200.png" /> </p>
 <p>自炊業者にやってもらったとしても、スキャンしたpdf書籍だとどうしても文字が薄くなってしまいます。
 業者によっては補正オプションがついてたりもしますが、<code>preview.app</code>のexport機能を使えば簡単にコントラストをあげられます。</p>
