@@ -15,13 +15,13 @@
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
     <item>
-      <title>3clickくらいで自炊した書籍のpdfのコントラストを上げる on Mac OS X</title>
+      <title>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</title>
       <link>http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/</link>
       <pubDate>Fri, 07 Mar 2014 00:09:26 JST</pubDate>
       <category><![CDATA[osx]]></category>
       <category><![CDATA[mac]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/</guid>
-      <description>3clickくらいで自炊した書籍のpdfのコントラストを上げる on Mac OS X</description>
+      <description>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</description>
       <content:encoded><![CDATA[<p><img alt="preview app" src="/images/20140307/preview200.png" /> </p>
 <p>自炊業者にやってもらったとしても、スキャンしたpdf書籍だとどうしても文字が薄くなってしまいます。
 業者によっては補正オプションがついてたりもしますが、<code>preview.app</code>のexport機能を使えば簡単にコントラストをあげられます。</p>
