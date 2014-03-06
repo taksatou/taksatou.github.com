@@ -5,6 +5,8 @@ title: 自炊した書籍のpdfのコントラストを上げる方法 on Mac OS
 image: /images/20140307/preview200.png
 ---
 
+![preview app](/images/20140307/preview200.png ) 
+
 自炊業者にやってもらったとしても、スキャンしたpdf書籍だとどうしても文字が薄くなってしまいます。
 業者によっては補正オプションがついてたりもしますが、`preview.app`のexport機能を使えば簡単にコントラストをあげられます。
 
