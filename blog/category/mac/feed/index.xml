@@ -23,7 +23,7 @@
       <guid isPermaLink="true">http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/</guid>
       <description>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</description>
       <content:encoded><![CDATA[<p><img alt="preview app" src="/images/20140307/preview200.png" /> </p>
-<p>自炊業者にやってもらったとしても、スキャンしたpdf書籍だとどうしても文字が薄くなってしまいます。
+<p>スキャンしたpdf書籍だと、自炊業者にやってもらったとしても、どうしても文字が薄くなってしまいます。
 業者によっては補正オプションがついてたりもしますが、<code>preview.app</code>のexport機能を使えば簡単にコントラストをあげられます。</p>
 <p>メニューバー ＞ ファイル ＞ 書き出す ＞ Quartzフィルタ ＞ Lightness Decrease</p>
 <p>で適当なところに保存。</p>
