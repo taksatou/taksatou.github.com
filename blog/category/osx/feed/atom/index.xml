@@ -7,12 +7,34 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-05-17T19:46:31Z</updated>
+  <updated>2014-03-07T00:09:26Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/" />
+    <id>http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/</id>
+    <updated>2014-03-07T00:09:26Z</updated>
+    <published>2014-03-07T00:09:26Z</published>
+    <category scheme="http://mojavy.com/blog" term="osx" />
+    <category scheme="http://mojavy.com/blog" term="mac" />
+    <summary type="html"><![CDATA[自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"><![CDATA[<p>自炊業者にやってもらったとしても、スキャンした画像だとどうしても文字が薄くなってしまいますが、<code>preview.app</code>のexport機能を使えば簡単にコントラストをあげられます。</p>
+<p>メニューバー ＞ ファイル ＞ 書き出す ＞ Quartzフィルタ ＞ Lightness Decrease</p>
+<p>で適当なところに保存。</p>
+<p><img alt="menu" src="/images/20140307/menu1.png" /> <img alt="menu2" src="/images/20140307/menu2.png" /> </p>
+<p>以下は実行前後のサンプル。これだけだとわかりにくいかもしれないけど、文字がぎっしりしたページだとコントラストが高い方が断然読みやすい。</p>
+<p><img alt="before" src="/images/20140307/before300.png" />  <img alt="after" src="/images/20140307/after300.png" /> </p>
+<p>大きいファイルサイズのpdfだとそれなりに時間(数分くらい)はかかるので注意。</p>
+<p>参考： <a href="http://osxdaily.com/2011/10/24/increase-the-contrast-of-a-pdf-to-sharpen-darken-text/">http://osxdaily.com/2011/10/24/increase-the-contrast-of-a-pdf-to-sharpen-darken-text/</a> </p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

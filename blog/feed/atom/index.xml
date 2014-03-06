@@ -7,12 +7,34 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2014-03-05T21:25:23Z</updated>
+  <updated>2014-03-07T00:09:26Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/" />
+    <id>http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/</id>
+    <updated>2014-03-07T00:09:26Z</updated>
+    <published>2014-03-07T00:09:26Z</published>
+    <category scheme="http://mojavy.com/blog" term="osx" />
+    <category scheme="http://mojavy.com/blog" term="mac" />
+    <summary type="html"><![CDATA[自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"><![CDATA[<p>自炊業者にやってもらったとしても、スキャンした画像だとどうしても文字が薄くなってしまいますが、<code>preview.app</code>のexport機能を使えば簡単にコントラストをあげられます。</p>
+<p>メニューバー ＞ ファイル ＞ 書き出す ＞ Quartzフィルタ ＞ Lightness Decrease</p>
+<p>で適当なところに保存。</p>
+<p><img alt="menu" src="/images/20140307/menu1.png" /> <img alt="menu2" src="/images/20140307/menu2.png" /> </p>
+<p>以下は実行前後のサンプル。これだけだとわかりにくいかもしれないけど、文字がぎっしりしたページだとコントラストが高い方が断然読みやすい。</p>
+<p><img alt="before" src="/images/20140307/before300.png" />  <img alt="after" src="/images/20140307/after300.png" /> </p>
+<p>大きいファイルサイズのpdfだとそれなりに時間(数分くらい)はかかるので注意。</p>
+<p>参考： <a href="http://osxdaily.com/2011/10/24/increase-the-contrast-of-a-pdf-to-sharpen-darken-text/">http://osxdaily.com/2011/10/24/increase-the-contrast-of-a-pdf-to-sharpen-darken-text/</a> </p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -886,143 +908,5 @@ emacsのロックファイルがあると落ちてしまう問題があったの
 </li>
 </ol>
 </div>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[R Tutorial Part2 Chapter08 (Numerical Measures)]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" />
-    <id>http://mojavy.com/blog/2013/10/28/r-tutor-chap08/</id>
-    <updated>2013-10-28T02:11:53Z</updated>
-    <published>2013-10-28T02:11:53Z</published>
-    <category scheme="http://mojavy.com/blog" term="note" />
-    <category scheme="http://mojavy.com/blog" term="statistics" />
-    <category scheme="http://mojavy.com/blog" term="R" />
-    <summary type="html"><![CDATA[R Tutorial Part2 Chapter08 (Numerical Measures)]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/"><![CDATA[<p>これは<a href="http://www.r-tutor.com/elementary-statistics/numerical-measures">R Tutorial Part2 Chapter08 (Numerical Measures)</a> のノートです。
-<a href="/slide/2013/10/26/r-tutor-chap08/">slideはこちら</a> 。</p>
-<h3 id="mean-median">mean, median</h3>
-<ul>
-<li>mean: 平均</li>
-<li>median: 中央値、中間値。データ数が偶数個の場合は前後の2つの数の平均。</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; library(MASS)
-&gt; mean(faithful$eruption)
-[1] 3.487783
-&gt; median(faithful$eruption)
-[1] 4
-</pre></div>
-
-<h3 id="quartile-quantile-percentile">quartile, quantile, percentile</h3>
-<ul>
-<li>first quartile, lower quartile: ソートされたデータの数を１：３に分ける位置の値。 第１四分位</li>
-<li>second quartile, median: 中間値</li>
-<li>third quartile, upper quartile: 第３四分位</li>
-<li>quantile: 変位値</li>
-<li>percentile: 百分位数</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; quantile(faithful$eruption)
-     0%     25%     50%     75%    100% 
-1.60000 2.16275 4.00000 4.45425 5.10000 
-&gt; x = sort(faithful$eruption)
-&gt; x[1+floor((length(x) - 1)/4)] + (x[1+ceiling((length(x) - 1)/4)] - x[1+floor((length(x) - 1)/4)]) * 3 / 4
-[1] 2.16275
-&gt; quantile(faithful$eruption, c(.32, .57, .98))
-    32%     57%     98% 
-2.39524 4.13300 4.93300 
-</pre></div>
-
-<h3 id="max-min-range">max, min, range</h3>
-<div class="pygments_borland"><pre>&gt; max(faithful$eruption)
-[1] 5.1
-&gt; min(faithful$eruption)
-[1] 1.6
-&gt; max(faithful$eruption) - min(faithful$eruption)
-[1] 3.5
-</pre></div>
-
-<h3 id="interquartile-range">interquartile range</h3>
-<ul>
-<li>interquartile range: 四分位範囲, upper quartile - lower quartile</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; IQR(faithful$eruption)
-[1] 2.2915
-&gt; x = quantile(faithful$eruption)
-&gt; x[4] - x[2]
-   75% 
-2.2915 
-</pre></div>
-
-<h3 id="box-plot">box plot</h3>
-<ul>
-<li>boxplot: 箱ひげ図</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; boxplot(faithful$eruption, horizontal=TRUE)
-</pre></div>
-
-<p><img alt="boxplot" src="/images/numerical-measures4x.png" /> </p>
-<p>※ 箱のなかの線はmedian</p>
-<h3 id="variance-standard-deviation">variance, standard deviation</h3>
-<ul>
-<li>variance: 分散。Rのvar関数は<a href="http://www.sist.ac.jp/~kanakubo/research/statistic/fuhenbunsan.html">不偏分散</a> </li>
-<li>standard deviation: 標準偏差</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; var(faithful$eruption)
-[1] 1.302728
-&gt; sd(faithful$eruption)
-[1] 1.141371
-
-&gt; var2 &lt;- function(x) { sum((x - mean(x)) ^ 2) / length(x) }   # 普通の分散
-&gt; var2(faithful$eruption)
-[1] 1.297939
-</pre></div>
-
-<h3 id="covariance-correlation-coefficient">covariance, correlation coefficient</h3>
-<ul>
-<li>covariance: 共分散。2 組の対応するデータ間での、平均からの偏差の積の平均値。</li>
-<li>correlation coefficient: 相関係数。共分散をそれぞれのデータの標準偏差の積で割ったもの。</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; cov(faithful$eruption, faithful$waiting)
-[1] 13.97781
-&gt; cor(faithful$eruption, faithful$waiting)
-[1] 0.9008112
-</pre></div>
-
-<p>correlation coefficientが1に近いほど正の相関があるといえる</p>
-<h3 id="e1071">e1071</h3>
-<blockquote>
-<p>Functions for latent class analysis, short time Fourier transform, fuzzy clustering, support vector machines, shortest path computation, bagged clustering, naive Bayes classifier</p>
-</blockquote>
-<div class="pygments_borland"><pre>&gt; install.packages(&#39;e1071&#39;)
-</pre></div>
-
-<p><a href="http://cran.r-project.org/web/packages/e1071/index.html">http://cran.r-project.org/web/packages/e1071/index.html</a> </p>
-<h3 id="central-moment">central moment</h3>
-<ul>
-<li>central moment： 中心積率。標本分散は2次のcentral moment</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; library(e1071)
-&gt; moment(faithful$eruption, order=3, center=TRUE)
-[1] -0.6149059
-</pre></div>
-
-<h3 id="skewness-kurtosis">skewness, kurtosis</h3>
-<ul>
-<li>skewness: 歪度。対象性の度合いの指標。一般に、skewness &lt; 0 ならばmean &lt; median でそのデータの分散はleft skewed という。skewness &gt; 0 ならばmean &gt; median でright skewed という。</li>
-<li>kurtosis: 尖度。分布の尖り具合の指標。kurtosis &lt; 0 ならフラットな分布になりplatykurtic(緩尖な)という。kurtosis &gt; 0ならとがった分布になりleptokurticという。正規分布の場合は0になりmesokurticという。</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; skewness(faithful$eruption)
-[1] -0.4135498
-&gt; kurtosis(faithful$eruption)
-[1] -1.511605
-</pre></div>
-
-<h3 id="misc">misc</h3>
-<ul>
-<li>この項は統計でよくつかう関数のまとめになってます</li>
-<li>各関数の詳細はhelpを参照</li>
-</ul>]]></content>
   </entry>
 </feed>

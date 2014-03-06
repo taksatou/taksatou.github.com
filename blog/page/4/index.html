@@ -102,6 +102,98 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="chef-soloでauthenticationfailedといわれたときの対応"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" rel="bookmark" title="Permanent Link to chef soloでAuthenticationFailedといわれたときの対応">chef soloでAuthenticationFailedといわれたときの対応</a></h2>
+  <small>September 09, 2013 at 08:43 PM | categories:
+
+<a href='/blog/category/chef'>chef</a>, <a href='/blog/category/ruby'>ruby</a>
+ | <a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>公開鍵認証なホストに対してパスフレーズ入力無しでsshログインができるにもかかわらず、</p>
+<div class="pygments_borland"><pre><span class="nv">$ </span>knife solo cook myhost
+Running Chef on myhost...
+Checking Chef version...
+Enter the password <span class="k">for </span>username@myhost:
+ERROR: Net::SSH::AuthenticationFailed: username
+</pre></div>
+
+<p>のようにいわれてchef soloの実行に失敗してしまうときがある。</p>
+<p>パスフレーズ入力無しでsshできたということは、普通は以下のうちの少くとも1つは満たされている。</p>
+<ol>
+<li>ssh-agentに対象の秘密鍵が登録されている</li>
+<li>デフォルトパス($HOME/.ssh/id_rsa とか)に対象のパスフレーズ無し秘密鍵が保存されている</li>
+<li>ssh_configでパスフレーズ無し秘密鍵を指定している</li>
+</ol>
+<p>それなのに<code>AuthenticationFailed</code>失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
+これを回避するには、ssh_configで<code>PubkeyAuthentication yes</code>を明示すればよい。</p>
+<p>なお、<code>Net::SSH</code>がどのような動きをしているかは以下のスニペットを試すとよい。</p>
+<div class="pygments_borland"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
+<span class="no">Net</span><span class="o">::</span><span class="no">SSH</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s2">&quot;myhost&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="ss">:verbose</span> <span class="o">=&gt;</span> <span class="ss">:debug</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">p</span> <span class="n">x</span> <span class="p">}</span>
+</pre></div>
+
+<h3 id="_1">備考</h3>
+<p>使ったのは以下のバージョン</p>
+<ul>
+<li>chef: 11.6.0</li>
+<li>knife-solo: 0.3.0</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>この挙動は<code>knife solo</code>コマンドに<code>-i</code>オプションを渡しても変わらなかった。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/07/12/reptyr/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" class="hatena-bookmark-button" data-hatena-bookmark-title="chef soloでAuthenticationFailedといわれたときの対応" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" data-text="chef soloでAuthenticationFailedといわれたときの対応">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/07/12/reptyr/" rel="bookmark" title="Permanent Link to ptraceを駆使してscreenifyっぽいことをするreptyrがすごい">ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a></h2>
   <small>July 12, 2013 at 07:15 PM | categories:
@@ -552,140 +644,6 @@ CBCとはXORのタイミングが違うだけ。</p>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="mach-oバイナリのライブラリロードパスをカスタマイズする方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/" rel="bookmark" title="Permanent Link to Mach-Oバイナリのライブラリロードパスをカスタマイズする方法">Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a></h2>
-  <small>May 17, 2013 at 07:46 PM | categories:
-
-<a href='/blog/category/osx'>osx</a>, <a href='/blog/category/unix'>unix</a>, <a href='/blog/category/elf'>elf</a>, <a href='/blog/category/mach-o'>mach-o</a>
- | <a href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="matrix" src="/images/matrix3.png" /></p>
-<p>ライブラリの単体テストをするときとかに、実行プログラムがロードする共有ライブラリのパスを任意のディレクトリで上書きしたいときがある。</p>
-<p>例えば以下のようなディレクトリ構成で、<code>project/t/mytest</code>というバイナリをビルドするときに<code>project/src/libmy.so</code>をリンクするようにしておけば作業しやすい。</p>
-<div class="pygments_borland"><pre>└── project
-    ├── src
-    │   ├── libmy.a
-    │   ├── libmy.so -&gt; libmy.so.1
-    │   ├── libmy.so.1
-    │   ├── Makefile
-    │   ├── mylib.c
-    │   ├── mylib.h
-    │   └── mylib.o
-    └── t
-        ├── Makefile
-        ├── mytest
-        ├── mytest.c
-        └── mytest.o
-</pre></div>
-
-<p>こういうときは、<code>mytest</code>をビルドするときに以下のようにしてrpathを相対パスで追加していた。</p>
-<div class="pygments_borland"><pre>$ cc -I../src -L../src -Wl,-rpath=../src *.c -lmy -o mytest
-$ readelf -d mytest
-Dynamic section at offset 0xe30 contains 22 entries:
-  Tag        Type                         Name/Value
- 0x0000000000000001 (NEEDED)             Shared library: [libmy.so.1]
- 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
- 0x000000000000000f (RPATH)              Library rpath: [../src]
- 0x000000000000000c (INIT)               0x4004c8
- 0x000000000000000d (FINI)               0x4006f8
- 0x000000006ffffef5 (GNU_HASH)           0x400298
- 0x0000000000000005 (STRTAB)             0x4003c0
- 0x0000000000000006 (SYMTAB)             0x4002d0
- 0x000000000000000a (STRSZ)              134 (bytes)
- 0x000000000000000b (SYMENT)             24 (bytes)
- 0x0000000000000015 (DEBUG)              0x0
- 0x0000000000000003 (PLTGOT)             0x600fe8
- 0x0000000000000002 (PLTRELSZ)           48 (bytes)
- 0x0000000000000014 (PLTREL)             RELA
- 0x0000000000000017 (JMPREL)             0x400498
- 0x0000000000000007 (RELA)               0x400480
- 0x0000000000000008 (RELASZ)             24 (bytes)
- 0x0000000000000009 (RELAENT)            24 (bytes)
- 0x000000006ffffffe (VERNEED)            0x400460
- 0x000000006fffffff (VERNEEDNUM)         1
- 0x000000006ffffff0 (VERSYM)             0x400446
- 0x0000000000000000 (NULL)               0x0
-</pre></div>
-
-<p>しかし、OSXの場合は上記のように単に実行バイナリ側にrpathを追加しただけだと、ローダがrpathを設定するコマンドより先にライブラリをロードするコマンドを実行しようとして該当ファイルがみつけられなくて以下のようなエラーになってしまう.</p>
-<div class="pygments_borland"><pre>dyld: Library not loaded: libmy.1.dylib
-  Referenced from: /Users/path/to/project/t/./mytest
-  Reason: image not found
-zsh: trace trap  ./mytest
-</pre></div>
-
-<p><code>otool -l &lt;executable file&gt;</code>でロードコマンドの詳細をみると以下のようなエントリがみつかるが、ここのnameの値はライブラリ側の<code>install_path</code>が設定される。</p>
-<div class="pygments_borland"><pre>-- 中略
-Load command 11
-          cmd LC_LOAD_DYLIB
-      cmdsize 40
-         name libmy.1.dylib (offset 24)
-   time stamp 2 Thu Jan  1 09:00:02 1970
-      current version 1.0.0
-compatibility version 0.0.0
-</pre></div>
-
-<p><code>install_path</code>は<code>soname</code>のかわりのようなもので、なにも指定しなければ出力ファイル名になる。
-ここに<code>@executable_path</code>や<code>@rpath</code>をつかうことによって、このダイナミックライブラリをリンクする側のバイナリに応じて挙動をかえることができる。
-これらの変数(?)の詳細は参考リンクに解説がある。</p>
-<p>要は、ELFのrpathとおなじような挙動にしたければ、 <code>-Wl,-install_name,@rpath/libmy.1.dylib</code> というようなオプション付きでライブラリをビルドすればよい。</p>
-<p>また、<code>-Wl,-install_name,@executable_path/../src/libmy.1.dylib</code>のようにすると実行ファイルからの相対パスにすることができる。</p>
-<p>この情報はリンクされる側のライブラリに埋めこまれている点に注意。</p>
-<p>ELFに比べると柔軟にロードパスを制御することができると思われるが、うまく活用するのはちょっと難しそう。</p>
-<h4 id="_1">参考リンク</h4>
-<ul>
-<li><a href="https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath">@executable_path, @load_path and @rpath </a> </li>
-<li><a href="https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/DynamicLibraries/100-Articles/DynamicLibraryDesignGuidelines.html">DynamicLibraryDesignGuidelines</a> </li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/04/28/wireless-raspberry-pi/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/05/17/mach-o-rpath/" class="hatena-bookmark-button" data-hatena-bookmark-title="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/05/17/mach-o-rpath/" data-text="Mach-Oバイナリのライブラリロードパスをカスタマイズする方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/05/17/mach-o-rpath/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../3">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -715,6 +673,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/05/difference-between-malloc-and-calloc/" title="malloc+memsetとcallocの違いについて"><p>malloc+memsetとcallocの違いについて</a><span style="font-size: 80%;">(March 05, 2014 at 09:25 PM)</span></li>
       <li><a href="/blog/2014/03/03/implementing-thread-pool/" title="スレッドプールの実装方法について"><p>スレッドプールの実装方法について</a><span style="font-size: 80%;">(March 03, 2014 at 08:58 PM)</span></li>
       <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
@@ -722,7 +681,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/02/13/faster-github-pages/" title="あなたのgithub pagesを無料で高速化する方法"><p>あなたのgithub pagesを無料で高速化する方法</a><span style="font-size: 80%;">(February 13, 2014 at 09:10 AM)</span></li>
       <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
       <li><a href="/blog/2013/11/19/go-template/" title="Goのtemplateパッケージ簡易チートシート"><p>Goのtemplateパッケージ簡易チートシート</a><span style="font-size: 80%;">(November 19, 2013 at 07:19 PM)</span></li>
-      <li><a href="/blog/2013/11/17/goconvey/" title="GoConveyでGoプロジェクトをブラウザからテストする"><p>GoConveyでGoプロジェクトをブラウザからテストする</a><span style="font-size: 80%;">(November 17, 2013 at 12:30 AM)</span></li>
     </ul>
   </div>
 
@@ -787,14 +745,14 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/mach-o">mach-o</a> (<a href="/blog/category/mach-o/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/mustache">mustache</a> (<a href="/blog/category/mustache/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/note">note</a> (<a href="/blog/category/note/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/os">os</a> (<a href="/blog/category/os/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/osx">osx</a> (<a href="/blog/category/osx/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/osx">osx</a> (<a href="/blog/category/osx/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/others">others</a> (<a href="/blog/category/others/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
@@ -829,7 +787,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>

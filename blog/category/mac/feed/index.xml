@@ -10,10 +10,27 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Thu, 28 Mar 2013 02:50:01 GMT</pubDate>
+    <pubDate>Fri, 07 Mar 2014 00:09:26 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X</title>
+      <link>http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/</link>
+      <pubDate>Fri, 07 Mar 2014 00:09:26 JST</pubDate>
+      <category><![CDATA[osx]]></category>
+      <category><![CDATA[mac]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/</guid>
+      <description>自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X</description>
+      <content:encoded><![CDATA[<p>自炊業者にやってもらったとしても、スキャンした画像だとどうしても文字が薄くなってしまいますが、<code>preview.app</code>のexport機能を使えば簡単にコントラストをあげられます。</p>
+<p>メニューバー ＞ ファイル ＞ 書き出す ＞ Quartzフィルタ ＞ Lightness Decrease</p>
+<p>で適当なところに保存。</p>
+<p><img alt="menu" src="/images/20140307/menu1.png" /> <img alt="menu2" src="/images/20140307/menu2.png" /> </p>
+<p>以下は実行前後のサンプル。これだけだとわかりにくいかもしれないけど、文字がぎっしりしたページだとコントラストが高い方が断然読みやすい。</p>
+<p><img alt="before" src="/images/20140307/before300.png" />  <img alt="after" src="/images/20140307/after300.png" /> </p>
+<p>大きいファイルサイズのpdfだとそれなりに時間(数分くらい)はかかるので注意。</p>
+<p>参考： <a href="http://osxdaily.com/2011/10/24/increase-the-contrast-of-a-pdf-to-sharpen-darken-text/">http://osxdaily.com/2011/10/24/increase-the-contrast-of-a-pdf-to-sharpen-darken-text/</a> </p>]]></content:encoded>
+    </item>
     <item>
       <title>Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</title>
       <link>http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/</link>
