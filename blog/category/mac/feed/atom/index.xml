@@ -26,7 +26,8 @@
     <category scheme="http://mojavy.com/blog" term="osx" />
     <category scheme="http://mojavy.com/blog" term="mac" />
     <summary type="html"><![CDATA[自炊した書籍のpdfのコントラストを上げる方法 on Mac OS X]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"><![CDATA[<p>自炊業者にやってもらったとしても、スキャンした画像だとどうしても文字が薄くなってしまいますが、<code>preview.app</code>のexport機能を使えば簡単にコントラストをあげられます。</p>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"><![CDATA[<p>自炊業者にやってもらったとしても、スキャンしたpdf書籍だとどうしても文字が薄くなってしまいます。
+業者によっては補正オプションがついてたりもしますが、<code>preview.app</code>のexport機能を使えば簡単にコントラストをあげられます。</p>
 <p>メニューバー ＞ ファイル ＞ 書き出す ＞ Quartzフィルタ ＞ Lightness Decrease</p>
 <p>で適当なところに保存。</p>
 <p><img alt="menu" src="/images/20140307/menu1.png" /> <img alt="menu2" src="/images/20140307/menu2.png" /> </p>
