@@ -10,10 +10,29 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 10 Sep 2013 19:39:49 GMT</pubDate>
+    <pubDate>Fri, 07 Mar 2014 00:09:26 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>chefを使うのを我慢したほうがいいとき</title>
+      <link>http://mojavy.com/blog/2014/03/07/dont-use-chef/</link>
+      <pubDate>Fri, 07 Mar 2014 00:09:26 JST</pubDate>
+      <category><![CDATA[chef]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/03/07/dont-use-chef/</guid>
+      <description>chefを使うのを我慢したほうがいいとき</description>
+      <content:encoded><![CDATA[<p>chefを使いはじめるとあらゆるもののセットアップをchefレシピ書かずにやるのが気持ち悪くなってしまうけど、chefでやらないほうがいいものって結構あると思う。</p>
+<ul>
+<li>redmine</li>
+<li>gitlab</li>
+<li>小規模なシステムのzabbixのマスター</li>
+<li>etc...</li>
+</ul>
+<p>この手のものは、実際に使いはじめると手作業での運用が必要になるので、誰かがつくったcookbookでいれてしまうよりかは手作業でいれてある程度どこになにがあるか把握しておいたほうがやりやすい。</p>
+<p>自前でレシピ書いてもいいけど、当面は1台あれば十分なのであれば単なる二度手間でしかないのでセットアップ手順をメモに残す程度で十分。</p>
+<p>ある程度運用経験があってとりあえずすぐに動く環境を作りたい、という場合のみ出来合いのcookbookをそのまま使えばいいと思う。</p>
+<p>などということを、1ヶ月くらいかけていろいろcookbook書いたあげく心が折れたときに感じた。</p>]]></content:encoded>
+    </item>
     <item>
       <title>debianパッケージをchefで削除する場合はpurgeを使う方がよい</title>
       <link>http://mojavy.com/blog/2013/09/10/chef-purge-package/</link>

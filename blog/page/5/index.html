@@ -102,6 +102,139 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="暗号利用モードについて"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" rel="bookmark" title="Permanent Link to 暗号利用モードについて">暗号利用モードについて</a></h2>
+  <small>June 12, 2013 at 08:36 AM | categories:
+
+<a href='/blog/category/security'>security</a>
+ | <a href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>AESを使おうと思ったけどどの暗号利用モードをつかえばいいかわからなかったので調べたことをまとめておきます。</p>
+<h2 id="_1">暗号利用モードとは</h2>
+<p><a href="http://ja.wikipedia.org/wiki/%E6%9A%97%E5%8F%B7%E5%88%A9%E7%94%A8%E3%83%A2%E3%83%BC%E3%83%89">Wikipedia/暗号利用モード</a></p>
+<blockquote>
+<p>暗号利用モード（あんごうりようモード、Block cipher modes of operation）とは、ブロック暗号を利用して、ブロック長よりも長いメッセージを暗号化するメカニズムのことである。
+<br>
+ECBモード（単純なブロック暗号の利用法）では、ある鍵で同一の平文を暗号化すると、同一の暗号文になる。したがって、長いメッセージ（画像データなど）のある部分が他の部分と同じであるかどうかが、暗号文の比較によって判断できてしまうので、他のモードが必要となった。
+<br>
+暗号利用モードには、秘匿用の利用モードと、認証用の利用モードとがある。
+<br>
+<br></p>
+</blockquote>
+<h2 id="_2">秘匿用利用モード</h2>
+<p><a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation">Wikipediaの図</a> も参考にするとわかりやすい。
+以下は概要だけ。</p>
+<h3 id="ecb">ECB</h3>
+<p>各ブロックを単純に一つずつ処理するだけ。暗号が一致したブロックは復号した平文も一致する。
+1つ以上のブロックを単一のパスワードで暗号化するのであれば使うべきではない。</p>
+<h3 id="cbc">CBC</h3>
+<p>直前の暗号テキストブロックを次の平文テキストブロックにXORしてからブロック暗号処理することを繰り返す。
+最初のブロックはIV(<a href="https://en.wikipedia.org/wiki/Initialization_vector">Initialization Vector</a>)をつかって暗号化する。</p>
+<p>暗号化は前から順番にする必要があるが、複合は1つ前のブロック前が分かればできるので並列化が可能。</p>
+<h3 id="cfb">CFB</h3>
+<p>CBCと似ているが、直前の暗号テキストブロックを再度ブロック暗号処理したものに次の平文テキストブロックをXORしたものを暗号テキストとする。
+最初のブロックはIVだけブロック暗号処理してXORする。
+CBCとはXORのタイミングが違うだけ。</p>
+<p>特徴もCBCと同じで、暗号化処理は並列化できないが複合は可能。</p>
+<h3 id="ofb">OFB</h3>
+<p>IVを繰り返しブロック暗号処理したものにそれぞれ平文ブロックをXORしていったものを暗号テキストとする。
+すべての操作で直前のものが必要となるので暗号化・復号の両方とも並列化はできないが、IVのブロック暗号処理は事前に計算することができる。</p>
+<h3 id="ctr-icm-sic">CTR (ICM, SIC)</h3>
+<p>OFBに似ているが、IVではなくカウンターの値をインクリメントしつつブロック暗号処理したものに平文ブロックをXORする。
+カウンターは十分に長い間繰り返しが発生しない一意な値を出力する任意の関数であれば何でもよいが、単に1ずつ増やすカウンターを使うことが多い。</p>
+<p>暗号・復号いずれも並列化が可能だが、入力に決定的な値を使うことについては議論の余地がある。</p>
+<h3 id="_3">ディスク用のもの</h3>
+<p>ディスクを暗号化するには特別な考慮が必要になるため専用のものがいくつか存在する。</p>
+<ul>
+<li>LRW</li>
+<li>XEX</li>
+<li>XTS</li>
+<li>CMC</li>
+</ul>
+<h4 id="_4">参考</h4>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Disk_encryption_theory">http://en.wikipedia.org/wiki/Disk_encryption_theory</a></li>
+<li><a href="http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf">http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf</a></li>
+<li><a href="http://axelkenzo.ru/downloads/1619-2007-NIST-Submission.pdf">http://axelkenzo.ru/downloads/1619-2007-NIST-Submission.pdf</a></li>
+</ul>
+<h2 id="_5">認証用の利用モード</h2>
+<p>秘匿化とあわせて認証とデータの完全性を保証するためのモード。
+通常はMAC(Massage Authentication Code, authentication tag)を組みあわせることで実現する。</p>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/CCM_mode">CCM</a></li>
+<li><a href="http://en.wikipedia.org/wiki/CWC_mode">CWC</a></li>
+<li><a href="http://en.wikipedia.org/wiki/OCB_mode">OCB</a></li>
+<li><a href="http://en.wikipedia.org/wiki/EAX_mode">EAX</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM</a></li>
+</ul>
+<h2 id="_6">その他</h2>
+<ul>
+<li>上記では触れなかったが、並列化できるかどうかの他にもエラー検出が可能かどうかや組み合わせて使用するブロック暗号化方式の特徴なども考慮して選択する必要がある</li>
+<li>特許になっているものも多いので使用する際は要確認</li>
+<li>mysqlのaes_encrypt()ではECBをつかっているのでセキュリティ強度的にはあまりよろしくない</li>
+</ul>
+<h2 id="_7">参考</h2>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation">http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Authenticated_encryption">http://en.wikipedia.org/wiki/Authenticated_encryption</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Message_authentication_code">http://en.wikipedia.org/wiki/Message_authentication_code</a></li>
+<li><a href="http://en.wikipedia.org/wiki/OCB_mode">http://en.wikipedia.org/wiki/OCB_mode</a></li>
+<li><a href="http://www.heliontech.com/aes_modes_basic.htm">http://www.heliontech.com/aes_modes_basic.htm</a></li>
+<li><a href="http://www.triplefalcon.com/Lexicon/Encryption-Block-Mode-1.htm">http://www.triplefalcon.com/Lexicon/Encryption-Block-Mode-1.htm</a></li>
+<li><a href="http://www.schneier.com/blog/archives/2009/07/another_new_aes.html">http://www.schneier.com/blog/archives/2009/07/another_new_aes.html</a></li>
+<li><a href="http://stackoverflow.com/questions/1220751/how-to-choose-an-aes-encryption-mode-cbc-ecb-ctr-ocb-cfb">http://stackoverflow.com/questions/1220751/how-to-choose-an-aes-encryption-mode-cbc-ecb-ctr-ocb-cfb</a></li>
+<li><a href="http://stackoverflow.com/questions/2797692/whats-the-best-way-to-store-sensitive-data-in-mysql">http://stackoverflow.com/questions/2797692/whats-the-best-way-to-store-sensitive-data-in-mysql</a></li>
+<li><a href="http://www.cs.ucdavis.edu/~rogaway/ocb/license.htm">http://www.cs.ucdavis.edu/~rogaway/ocb/license.htm</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/06/15/quicklinks6/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" class="hatena-bookmark-button" data-hatena-bookmark-title="暗号利用モードについて" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" data-text="暗号利用モードについて">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="mach-oバイナリのライブラリロードパスをカスタマイズする方法"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/" rel="bookmark" title="Permanent Link to Mach-Oバイナリのライブラリロードパスをカスタマイズする方法">Mach-Oバイナリのライブラリロードパスをカスタマイズする方法</a></h2>
   <small>May 17, 2013 at 07:46 PM | categories:
@@ -590,135 +723,6 @@ tmpfs            88M     0   88M   0% /run/shm
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="quicklinks-5"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/23/quicklinks5/" rel="bookmark" title="Permanent Link to Quicklinks 5">Quicklinks 5</a></h2>
-  <small>April 23, 2013 at 08:20 PM | categories:
-
-<a href='/blog/category/quicklinks'>quicklinks</a>
- | <a href="http://mojavy.com/blog/2013/04/23/quicklinks5/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="ruby" src="/images/ruby-logo.png" /> </p>
-<h3 id="messagepack">MessagePack</h3>
-<p><a href="https://github.com/msgpack/msgpack/issues/121">https://github.com/msgpack/msgpack/issues/121</a> </p>
-<p>盛り上がってたのはもう2か月くらい前ですが議論はまだ進行中のようです。
-技術的な面だけでなく日本のコミュニティの外国からの見えかたとか政治力とかといった点も興味深かったです。</p>
-<ul>
-<li><a href="http://www.geekpage.jp/blog/?id=2013/2/26/1">http://www.geekpage.jp/blog/?id=2013/2/26/1</a> </li>
-</ul>
-<h3 id="toml">toml</h3>
-<p><a href="https://github.com/mojombo/toml">https://github.com/mojombo/toml</a> </p>
-<p>日本でLTSVが流行ってたくらいの時期にtomlというミニ言語も流行っていたらしいです。
-あらゆる設定ファイルはこのフォーマットになればいいと思います。</p>
-<h3 id="rubymotion">RubyMotion</h3>
-<p><a href="http://www.rubymotion.com/">http://www.rubymotion.com/</a></p>
-<p>rubyをつかったiOSアプリのためのツールチェイン。
-rubyのコードをllvmベースのマシン語にコンパイルするので高速に実行できるとのこと。
-既存のrubyコードがすべてそのまま動くというわけではないみたいですが、XCodeとObjective-C使わなくていいというのは魅力的ですね。</p>
-<ul>
-<li><a href="http://rubysource.com/getting-to-know-rubymotion-with-laurent-sansonetti/">http://rubysource.com/getting-to-know-rubymotion-with-laurent-sansonetti/</a> </li>
-<li><a href="http://d.hatena.ne.jp/naoya/20120831/1346409758">http://d.hatena.ne.jp/naoya/20120831/1346409758</a> </li>
-</ul>
-<h3 id="mobiruby">MobiRuby</h3>
-<p><a href="http://mobiruby.org/">http://mobiruby.org/</a> </p>
-<p>これもrubyでiOSアプリをつくるためのものですが、こちらはmrubyをベースにしたruby実行環境をiOSの上に構築するので既存のrubyのコードがほとんどそのまま動くそうです。</p>
-<h3 id="ruboto">Ruboto</h3>
-<p><a href="http://ruboto.org/">http://ruboto.org/</a> </p>
-<p>こっちはrubyでAndroidアプリをつくるためのもの。jrubyベース。
-これに関しては<a href="http://mojavy.com/blog/2013/03/29/ruboto/">別途記事書きました</a></p>
-<h3 id="genome-compiler">genome compiler</h3>
-<p><a href="http://www.genomecompiler.com">http://www.genomecompiler.com</a> </p>
-<p>塩基配列をリッチなUIでデザインするためのエディタ的なもの。
-ゲノムをソースコードのアナロジーでつかうならコンパイルは遺伝子発現だと思うけど、これで実際にできるのはデザインした配列を生合成業者に注文するところまで。</p>
-<h3 id="_1">七葉院まゆせ</h3>
-<p><a href="http://shichihain.com/">http://shichihain.com/</a> </p>
-<p>CVは金元寿子さんだそうです。帰省の際は両備バス利用したいと思います。</p>
-<ul>
-<li><a href="http://rocketnews24.com/2013/03/12/303309/">http://rocketnews24.com/2013/03/12/303309/</a></li>
-</ul>
-<h3 id="_2">その他</h3>
-<p>つかれてきたので以下簡易版</p>
-<ul>
-<li>gadget
-<ul></li>
-<li><a href="http://www.raspberrypi.org/">Raspberry Pi</a> : ついに実機ゲットしました</li>
-<li><a href="http://www.google.com/glass/">Google Glass</a> : ほしい</li>
-<li><a href="http://compressorheadband.com/">Compressorhead</a>  : リアルにメタルでできたメタルバンド
-<ul></li>
-<li><a href="http://www.youtube.com/watch?v=3RBSkq-_St8">http://www.youtube.com/watch?v=3RBSkq-_St8</a>
-</ul>
-</ul></li>
-<li>フロントエンド関係
-<ul></li>
-<li><a href="http://www.createjs.com/#!/EaselJS">EaselJS</a> : 便利</li>
-<li><a href="http://appkitbox.com/testkit">Remote TestKit for Android</a> : 便利</li>
-<li><a href="http://peerjs.com/">peerjs</a> 
-<ul></li>
-<li><a href="http://www.infoq.com/jp/news/2013/03/peerjs-0.1.7-released">http://www.infoq.com/jp/news/2013/03/peerjs-0.1.7-released</a> </li>
-<li><a href="http://blog.livedoor.jp/kotesaki/archives/1794148.html">http://blog.livedoor.jp/kotesaki/archives/1794148.html</a> 
-</ul>
-</ul></li>
-<li>ruby
-<ul></li>
-<li><a href="http://www.ruby-lang.org/ja/news/2013/02/24/ruby-2-0-0-p0-is-released/">ruby 2.0</a> </li>
-<li><a href="http://weblog.rubyonrails.org/2013/2/25/Rails-4-0-beta1/">rails 4</a>
-</ul></li>
-<li>misc
-<ul></li>
-<li><a href="http://podcast.bulknews.net/">Tatsuhiko Miyagawa's Podcast</a> </li>
-<li><a href="http://quickdocs.org/">Quickdocs</a> </li>
-<li><a href="https://github.com/rui314/8cc">toy compiler</a> : コンパイラの学習によい</li>
-<li><a href="https://github.com/twitter/fatcache">fatcache</a> : SSDのせたマシンでRedis走らせればいいんじゃないかと思ってしまう
-</ul></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/04/26/toml/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/04/23/quicklinks5/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/04/23/quicklinks5/" class="hatena-bookmark-button" data-hatena-bookmark-title="Quicklinks 5" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/04/23/quicklinks5/" data-text="Quicklinks 5">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/04/23/quicklinks5/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/04/23/quicklinks5/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../4">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -748,6 +752,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/05/difference-between-malloc-and-calloc/" title="malloc+memsetとcallocの違いについて"><p>malloc+memsetとcallocの違いについて</a><span style="font-size: 80%;">(March 05, 2014 at 09:25 PM)</span></li>
       <li><a href="/blog/2014/03/03/implementing-thread-pool/" title="スレッドプールの実装方法について"><p>スレッドプールの実装方法について</a><span style="font-size: 80%;">(March 03, 2014 at 08:58 PM)</span></li>
@@ -755,7 +760,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/02/13/tcp-options-skeeter-bubba/" title="TCPの黒歴史：謎のオプションskeeterとbubbaについて"><p>TCPの黒歴史：謎のオプションskeeterとbubbaについて</a><span style="font-size: 80%;">(February 13, 2014 at 06:00 PM)</span></li>
       <li><a href="/blog/2014/02/13/faster-github-pages/" title="あなたのgithub pagesを無料で高速化する方法"><p>あなたのgithub pagesを無料で高速化する方法</a><span style="font-size: 80%;">(February 13, 2014 at 09:10 AM)</span></li>
       <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
-      <li><a href="/blog/2013/11/19/go-template/" title="Goのtemplateパッケージ簡易チートシート"><p>Goのtemplateパッケージ簡易チートシート</a><span style="font-size: 80%;">(November 19, 2013 at 07:19 PM)</span></li>
     </ul>
   </div>
 
@@ -801,7 +805,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
-     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
@@ -862,7 +866,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>

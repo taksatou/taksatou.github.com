@@ -7,12 +7,36 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2013-09-10T19:39:49Z</updated>
+  <updated>2014-03-07T00:09:26Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[chefを使うのを我慢したほうがいいとき]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/03/07/dont-use-chef/" />
+    <id>http://mojavy.com/blog/2014/03/07/dont-use-chef/</id>
+    <updated>2014-03-07T00:09:26Z</updated>
+    <published>2014-03-07T00:09:26Z</published>
+    <category scheme="http://mojavy.com/blog" term="chef" />
+    <summary type="html"><![CDATA[chefを使うのを我慢したほうがいいとき]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/03/07/dont-use-chef/"><![CDATA[<p>chefを使いはじめるとあらゆるもののセットアップをchefレシピ書かずにやるのが気持ち悪くなってしまうけど、chefでやらないほうがいいものって結構あると思う。</p>
+<ul>
+<li>redmine</li>
+<li>gitlab</li>
+<li>小規模なシステムのzabbixのマスター</li>
+<li>etc...</li>
+</ul>
+<p>この手のものは、実際に使いはじめると手作業での運用が必要になるので、誰かがつくったcookbookでいれてしまうよりかは手作業でいれてある程度どこになにがあるか把握しておいたほうがやりやすい。</p>
+<p>自前でレシピ書いてもいいけど、当面は1台あれば十分なのであれば単なる二度手間でしかないのでセットアップ手順をメモに残す程度で十分。</p>
+<p>ある程度運用経験があってとりあえずすぐに動く環境を作りたい、という場合のみ出来合いのcookbookをそのまま使えばいいと思う。</p>
+<p>などということを、1ヶ月くらいかけていろいろcookbook書いたあげく心が折れたときに感じた。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
