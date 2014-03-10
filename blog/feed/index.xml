@@ -10,10 +10,94 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Fri, 07 Mar 2014 00:09:26 GMT</pubDate>
+    <pubDate>Tue, 11 Mar 2014 02:08:20 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>gitlab 6.6.4 CE のゆるふわセットアップ</title>
+      <link>http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/</link>
+      <pubDate>Tue, 11 Mar 2014 02:08:20 JST</pubDate>
+      <category><![CDATA[chef]]></category>
+      <category><![CDATA[git]]></category>
+      <category><![CDATA[tips]]></category>
+      <category><![CDATA[gitlab]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/</guid>
+      <description>gitlab 6.6.4 CE のゆるふわセットアップ</description>
+      <content:encoded><![CDATA[<p>gitlabもCentOSとUbuntuにはパッケージが提供されるようになったので、大分インストールが簡単になりました。</p>
+<p>とはいえ、このパッケージはgitlab専用のマシンにインストールすることを前提にしているのか、小規模プロジェクトのために軽く使いたいよう場合ではつらいデフォルト設定となっています。安いvpsとかだと確実にメモリ不足でまともに動きません。</p>
+<p>以下はとりあえずプライベートgitリポジトリが欲しいだけのような人のためのgitlabの設定の紹介です。</p>
+<h2 id="_1">準備</h2>
+<p><a href="https://www.gitlab.com/downloads/">https://www.gitlab.com/downloads/</a> </p>
+<p>ここからgitlabのパッケージをダウンロードします。
+<a href="https://github.com/opscode/omnibus-ruby">omnibus-ruby</a> でつくられた全部入りパッケージなのでインストールでのコンフリクトは発生しないはずですが、既に稼動中のサービス(apache等)のことはあまり考慮されてないので使用するポートについては個別対応が必要です。</p>
+<p>特に以下は注意が必要です。</p>
+<ul>
+<li>nginx</li>
+<li>redis</li>
+<li>postgresql</li>
+</ul>
+<p>ここでは、apacheが稼動しているubuntuにインストールします。</p>
+<h2 id="_2">インストール</h2>
+<p>普通にインストールします。</p>
+<div class="pygments_borland"><pre>$ sudo dpkg -i gitlab_6.6.4-omnibus-1.ubuntu.12.04_amd64.deb 
+$ sudo gitlab-ctl reconfigure
+</pre></div>
+
+<p>ちなみにgitユーザが既に存在しているとこけるので消しておきます</p>
+<p><code>$ sudo userdel -r git</code></p>
+<h2 id="gitlab">gitlabの設定</h2>
+<p>gitlabの設定は /etc/gitlab/gitlab.rb に設定をかいて、chefで設定します。</p>
+<div class="pygments_borland"><pre>$ cat /etc/gitlab/gitlab.rb
+external_url &quot;http://gitlab.example.com:8081&quot;
+unicorn[&quot;worker_processes&quot;] = 1
+postgresql[&quot;shared_buffers&quot;] = &quot;128MB&quot;
+postgresql[&quot;effective_cache_size&quot;] = &quot;32MB&quot;
+</pre></div>
+
+<p>とりあえずpostgresqlがメモリを大量に食うので適当に減らします。</p>
+<p>unicornもメモリ食いがちなので1プロセスにします。</p>
+<p><code>external_url</code>にポートも含めたURLをかきます。apacheが80番で起動してるとnginxが起動できないので適当にはずします。ちなみに8080はデフォルトだとgitlabのunicornがつかっています。</p>
+<p>このあたりは環境に応じて適当に設定してください。</p>
+<p><code>gitlab-ctl reconfigure</code> すると設定が反映されます。</p>
+<p>その他の設定できる項目は <code>/opt/gitlab/embedded/cookbooks/gitlab</code> 以下の<code>cookbook</code>をみるといいです。</p>
+<h2 id="web">webサーバの設定</h2>
+<p>80番で起動しているapacheがいる場合はnginxにproxyします。</p>
+<div class="pygments_borland"><pre>&lt;VirtualHost *:80&gt;
+  ServerName gitlab.example.com
+
+  DocumentRoot /opt/gitlab/embedded/service/gitlab-rails/public
+
+  CustomLog  /var/log/apache2/gitlab_access.log combined
+  ErrorLog   /var/log/apache2/gitlab_error.log
+
+  ErrorDocument 502 /502.html
+
+  &lt;Directory &quot;/opt/gitlab/embedded/service/gitlab-rails/public&quot;&gt;
+    Options FollowSymLinks
+  &lt;/Directory&gt;
+
+  &lt;Proxy *&gt;
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  &lt;/Proxy&gt;
+
+  ProxyVia On
+  ProxyPreserveHost On
+
+  ProxyRequests Off
+  ProxyPass /assets/ !
+  ProxyPass /uploads/      !
+
+  ProxyPass / http://localhost:8081/ retry=1
+  ProxyPassReverse / http://localhost:8081/
+
+&lt;/VirtualHost&gt;
+</pre></div>
+
+<p>以上ができたらapache再起動して、 http://gitlab.example.com にアクセスしてみてうまく表示できれば完了です。</p>]]></content:encoded>
+    </item>
     <item>
       <title>chefを使うのを我慢したほうがいいとき</title>
       <link>http://mojavy.com/blog/2014/03/07/dont-use-chef/</link>
@@ -723,110 +807,6 @@ Amazonはメリットも多いですが、現状では制限が多いので使�
 <p>その他、条件分岐等のActionは <a href="http://golang.org/pkg/text/template/#hdr-Actions">マニュアルのActionsの</a> 参照</p>
 <h2 id="_5">組み込み関数</h2>
 <p>こちらも <a href="http://golang.org/pkg/text/template/#hdr-Functions">マニュアルのFunctionsの項</a> を参照</p>]]></content:encoded>
-    </item>
-    <item>
-      <title>GoConveyでGoプロジェクトをブラウザからテストする</title>
-      <link>http://mojavy.com/blog/2013/11/17/goconvey/</link>
-      <pubDate>Sun, 17 Nov 2013 00:30:57 JST</pubDate>
-      <category><![CDATA[golang]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/11/17/goconvey/</guid>
-      <description>GoConveyでGoプロジェクトをブラウザからテストする</description>
-      <content:encoded><![CDATA[<p><a href="http://smartystreets.github.io/goconvey/">GoConvey</a> を試してみたらなかなかよかったので紹介します。</p>
-<h2 id="_1">目次</h2>
-<div class="toc">
-<ul>
-<li><a href="#_1">目次</a></li>
-<li><a href="#goconvey">goconveyとは</a></li>
-<li><a href="#_2">クイックスタート</a></li>
-<li><a href="#_3">テストを書く</a></li>
-<li><a href="#_4">ターミナルから自動テスト</a></li>
-<li><a href="#tips">tips</a></li>
-<li><a href="#_5">まとめ</a></li>
-<li><a href="#_6">その他参考</a></li>
-</ul>
-</div>
-<h2 id="goconvey">goconveyとは</h2>
-<p>gopherのためのかっこいいテストツールです。以下のような特徴があります。</p>
-<ul>
-<li><code>go test</code>をそのまま実行できる</li>
-<li>リグレッションテストのための一式</li>
-<li>見やすく色付けされた出力</li>
-<li>完全に自動化されたWeb UI</li>
-<li>テストコードジェネレータ</li>
-<li>デスクトップ通知</li>
-<li>ターミナル上で動く自動テストスクリプト</li>
-<li>Sublime Textとの連携</li>
-</ul>
-<h2 id="_2">クイックスタート</h2>
-<div class="pygments_borland"><pre>$ go get github.com/smartystreets/goconvey # install
-$ $GOPATH/bin/goconvey
-</pre></div>
-
-<p>上記コマンドを実行して <code>http://localhost:8080</code> にブラウザからWeb UIアクセスすると、goconveyを起動したディレクトリ以下のファイルの更新を自動的に検知してテストを起動してくれます。</p>
-<p>Web UIの右上にあるベルのアイコンをクリックすると、デスクトップ通知も有効にできます。</p>
-<p>また、テストが失敗した場合はその部分をクリックすることで、Sublime Textで直接そこにジャンプできます。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
-<p>特定のディレクトリ以下のテストを実行しないようにすることもできます。テストに時間がかかるような大きなプロジェクトでも適当に必要なところだけ有効にできるので、ストレスがたまりにくいと思います。</p>
-<h2 id="_3">テストを書く</h2>
-<p>goconveyのWeb UIは<code>go test</code>で起動できるテストならなんにでも使えますが<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> 、goconveyのテスティングフレームワークをつかうとさらにわかりやすい結果を出力できます。</p>
-<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">goconveytest</span>
-
-<span class="k">import</span> <span class="p">(</span>
-    <span class="p">.</span> <span class="s">&quot;github.com/smartystreets/goconvey/convey&quot;</span>
-    <span class="s">&quot;testing&quot;</span>
-<span class="p">)</span>
-
-<span class="k">func</span> <span class="n">TestSpec</span><span class="p">(</span><span class="n">t</span> <span class="p">*</span><span class="n">testing</span><span class="p">.</span><span class="n">T</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">var</span> <span class="n">x</span> <span class="nb">int</span>
-
-    <span class="c1">// Only pass t into top-level Convey calls</span>
-    <span class="n">Convey</span><span class="p">(</span><span class="s">&quot;Given some integer with a starting value&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">x</span> <span class="p">=</span> <span class="mi">1</span>
-
-        <span class="n">Convey</span><span class="p">(</span><span class="s">&quot;When the integer is incremented&quot;</span><span class="p">,</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
-            <span class="n">x</span><span class="p">++</span>
-
-            <span class="n">Convey</span><span class="p">(</span><span class="s">&quot;The value should be greater by one&quot;</span><span class="p">,</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
-                <span class="n">So</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ShouldEqual</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="p">})</span>
-        <span class="p">})</span>
-    <span class="p">})</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>Web UIから文章を入力することでテストコードをある程度自動生成することもできます。</p>
-<p>BDDスタイルはあんまり得意ではないので詳細は省略します。</p>
-<h2 id="_4">ターミナルから自動テスト</h2>
-<p>ブラウザなんて立ちあげたくない硬派な人向けにターミナルでファイル監視してテストを起動できるスクリプトも提供されています。
-emacsのロックファイルがあると落ちてしまう問題があったのですが、さっきpull requestだしたらすぐマージしてくれました。 <a href="https://github.com/smartystreets/goconvey/pull/88">https://github.com/smartystreets/goconvey/pull/88</a> </p>
-<div class="pygments_borland"><pre>$GOPATH/src/github.com/smartystreets/goconvey/scripts/idle.py -v
-</pre></div>
-
-<h2 id="tips">tips</h2>
-<ul>
-<li><code>localhost:8080/latest</code>にアクセスするとjsonでテスト結果がとれます</li>
-<li>goconveyのWeb UIは<code>GOPATH</code>以下のパッケージのディレクトリで起動する必要があります (例えば、<code>$GOPATH/src/github.com/yourname/packagename</code>)</li>
-</ul>
-<h2 id="_5">まとめ</h2>
-<p>goconveyを簡単に紹介しました。Web UIだけでも試す価値はあると思います。</p>
-<p>ビデオでの解説もあります。ぶっちゃけこの記事を読むより動画を見たほうが早いです。</p>
-<iframe width="420" height="315" src="//www.youtube.com/embed/vL_UD1oAF0E" frameborder="0" allowfullscreen></iframe>
-
-<h2 id="_6">その他参考</h2>
-<ul>
-<li><a href="http://qiita.com/takuan_osho/items/51c8856a3d28145d87bc">http://qiita.com/takuan_osho/items/51c8856a3d28145d87bc</a> </li>
-<li><a href="http://blog.satotaichi.info/testingframeworks-for-golang">http://blog.satotaichi.info/testingframeworks-for-golang</a> </li>
-</ul>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>残念なことにemacsやvimには対応していない&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:2">
-<p>ginkgoやtestifyのテストも実行できます。ただし、ginkgoのテスト結果はデフォルトだとエスケープシーケンスがそのまま表示されてしまいます&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>]]></content:encoded>
     </item>
   </channel>
 </rss>

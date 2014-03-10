@@ -102,6 +102,133 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="gitlab-6.6.4-ce-のゆるふわセットアップ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" rel="bookmark" title="Permanent Link to gitlab 6.6.4 CE のゆるふわセットアップ">gitlab 6.6.4 CE のゆるふわセットアップ</a></h2>
+  <small>March 11, 2014 at 02:08 AM | categories:
+
+<a href='/blog/category/chef'>chef</a>, <a href='/blog/category/git'>git</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/gitlab'>gitlab</a>
+ | <a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>gitlabもCentOSとUbuntuにはパッケージが提供されるようになったので、大分インストールが簡単になりました。</p>
+<p>とはいえ、このパッケージはgitlab専用のマシンにインストールすることを前提にしているのか、小規模プロジェクトのために軽く使いたいよう場合ではつらいデフォルト設定となっています。安いvpsとかだと確実にメモリ不足でまともに動きません。</p>
+<p>以下はとりあえずプライベートgitリポジトリが欲しいだけのような人のためのgitlabの設定の紹介です。</p>
+<h2 id="_1">準備</h2>
+<p><a href="https://www.gitlab.com/downloads/">https://www.gitlab.com/downloads/</a> </p>
+<p>ここからgitlabのパッケージをダウンロードします。
+<a href="https://github.com/opscode/omnibus-ruby">omnibus-ruby</a> でつくられた全部入りパッケージなのでインストールでのコンフリクトは発生しないはずですが、既に稼動中のサービス(apache等)のことはあまり考慮されてないので使用するポートについては個別対応が必要です。</p>
+<p>特に以下は注意が必要です。</p>
+<ul>
+<li>nginx</li>
+<li>redis</li>
+<li>postgresql</li>
+</ul>
+<p>ここでは、apacheが稼動しているubuntuにインストールします。</p>
+<h2 id="_2">インストール</h2>
+<p>普通にインストールします。</p>
+<div class="pygments_borland"><pre>$ sudo dpkg -i gitlab_6.6.4-omnibus-1.ubuntu.12.04_amd64.deb 
+$ sudo gitlab-ctl reconfigure
+</pre></div>
+
+<p>ちなみにgitユーザが既に存在しているとこけるので消しておきます</p>
+<p><code>$ sudo userdel -r git</code></p>
+<h2 id="gitlab">gitlabの設定</h2>
+<p>gitlabの設定は /etc/gitlab/gitlab.rb に設定をかいて、chefで設定します。</p>
+<div class="pygments_borland"><pre>$ cat /etc/gitlab/gitlab.rb
+external_url &quot;http://gitlab.example.com:8081&quot;
+unicorn[&quot;worker_processes&quot;] = 1
+postgresql[&quot;shared_buffers&quot;] = &quot;128MB&quot;
+postgresql[&quot;effective_cache_size&quot;] = &quot;32MB&quot;
+</pre></div>
+
+<p>とりあえずpostgresqlがメモリを大量に食うので適当に減らします。</p>
+<p>unicornもメモリ食いがちなので1プロセスにします。</p>
+<p><code>external_url</code>にポートも含めたURLをかきます。apacheが80番で起動してるとnginxが起動できないので適当にはずします。ちなみに8080はデフォルトだとgitlabのunicornがつかっています。</p>
+<p>このあたりは環境に応じて適当に設定してください。</p>
+<p><code>gitlab-ctl reconfigure</code> すると設定が反映されます。</p>
+<p>その他の設定できる項目は <code>/opt/gitlab/embedded/cookbooks/gitlab</code> 以下の<code>cookbook</code>をみるといいです。</p>
+<h2 id="web">webサーバの設定</h2>
+<p>80番で起動しているapacheがいる場合はnginxにproxyします。</p>
+<div class="pygments_borland"><pre>&lt;VirtualHost *:80&gt;
+  ServerName gitlab.example.com
+
+  DocumentRoot /opt/gitlab/embedded/service/gitlab-rails/public
+
+  CustomLog  /var/log/apache2/gitlab_access.log combined
+  ErrorLog   /var/log/apache2/gitlab_error.log
+
+  ErrorDocument 502 /502.html
+
+  &lt;Directory &quot;/opt/gitlab/embedded/service/gitlab-rails/public&quot;&gt;
+    Options FollowSymLinks
+  &lt;/Directory&gt;
+
+  &lt;Proxy *&gt;
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  &lt;/Proxy&gt;
+
+  ProxyVia On
+  ProxyPreserveHost On
+
+  ProxyRequests Off
+  ProxyPass /assets/ !
+  ProxyPass /uploads/      !
+
+  ProxyPass / http://localhost:8081/ retry=1
+  ProxyPassReverse / http://localhost:8081/
+
+&lt;/VirtualHost&gt;
+</pre></div>
+
+<p>以上ができたらapache再起動して、 http://gitlab.example.com にアクセスしてみてうまく表示できれば完了です。</p>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/03/07/dont-use-chef/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" class="hatena-bookmark-button" data-hatena-bookmark-title="gitlab 6.6.4 CE のゆるふわセットアップ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" data-text="gitlab 6.6.4 CE のゆるふわセットアップ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="chefを使うのを我慢したほうがいいとき"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/07/dont-use-chef/" rel="bookmark" title="Permanent Link to chefを使うのを我慢したほうがいいとき">chefを使うのを我慢したほうがいいとき</a></h2>
   <small>March 07, 2014 at 12:09 AM | categories:
@@ -141,6 +268,8 @@ href="/blog/feed/atom" />
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -555,74 +684,6 @@ UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" rel="bookmark" title="Permanent Link to シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法">シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a></h2>
-  <small>February 16, 2014 at 06:35 PM | categories:
-
-<a href='/blog/category/unix'>unix</a>, <a href='/blog/category/shell'>shell</a>
- | <a href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><code>flock(1)</code>を使うのが一番安全かつ簡単</p>
-<div class="pygments_borland"><pre><span class="nv">LOCKFILE</span><span class="o">=</span>/tmp/my.lockfile
-
-<span class="o">(</span>
-    flock -n 200 <span class="o">||</span> <span class="nb">exit </span>1
-
-    <span class="c"># do something</span>
-<span class="o">)</span> 200&gt;<span class="nv">$LOCKFILE</span>
-</pre></div>
-
-<p>タイムアウトを設定したければ<code>-w</code>オプションをつかえばよい。</p>
-<p>リードライトロックとしてつかえるので、更新系のスクリプトは1つしか起動したくないけど参照系は並列実行を許す、みたいなことも比較的簡単にできる。</p>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" class="hatena-bookmark-button" data-hatena-bookmark-title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" data-text="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/page/2">Next »</a>
 </div>
@@ -650,6 +711,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/05/difference-between-malloc-and-calloc/" title="malloc+memsetとcallocの違いについて"><p>malloc+memsetとcallocの違いについて</a><span style="font-size: 80%;">(March 05, 2014 at 09:25 PM)</span></li>
@@ -657,7 +719,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
       <li><a href="/blog/2014/02/13/tcp-options-skeeter-bubba/" title="TCPの黒歴史：謎のオプションskeeterとbubbaについて"><p>TCPの黒歴史：謎のオプションskeeterとbubbaについて</a><span style="font-size: 80%;">(February 13, 2014 at 06:00 PM)</span></li>
       <li><a href="/blog/2014/02/13/faster-github-pages/" title="あなたのgithub pagesを無料で高速化する方法"><p>あなたのgithub pagesを無料で高速化する方法</a><span style="font-size: 80%;">(February 13, 2014 at 09:10 AM)</span></li>
-      <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
     </ul>
   </div>
 
@@ -703,7 +764,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
-     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
@@ -712,7 +773,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/git">git</a> (<a href="/blog/category/git/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/github">github</a> (<a href="/blog/category/github/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/gitlab">gitlab</a> (<a href="/blog/category/gitlab/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/history">history</a> (<a href="/blog/category/history/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
@@ -748,7 +811,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (9)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
@@ -764,7 +827,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>

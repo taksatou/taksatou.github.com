@@ -102,6 +102,111 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="tomlノススメ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/26/toml/" rel="bookmark" title="Permanent Link to TOMLノススメ">TOMLノススメ</a></h2>
+  <small>April 26, 2013 at 08:21 PM | categories:
+
+<a href='/blog/category/tips'>tips</a>, <a href='/blog/category/toml'>toml</a>
+ | <a href="http://mojavy.com/blog/2013/04/26/toml/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="github" src="/images/github-logo-transparent-200.png" /> </p>
+<h2 id="toml">TOMLとは</h2>
+<p><a href="https://github.com/mojombo/toml">https://github.com/mojombo/toml</a> </p>
+<p>Tom's Obvious, Minimal Language (TOML) とはgithubの中の人が提案している設定ファイルのためのミニ言語で、以下のような特徴があります。</p>
+<ul>
+<li>人間が読み書きしやすい</li>
+<li>標準的なデータ型が利用できる</li>
+<li>曖昧さが発生する余地が極力排除されている</li>
+<li>パーサをかくのが簡単</li>
+</ul>
+<h2 id="toml_1">なぜTOML?</h2>
+<p>例えば、YAMLを設定ファイルに使っているシステムは多いですが、<a href="http://yaml.org/spec/1.2/spec.pdf">YAMLの仕様書</a>は80ページもあり正しく使うのは意外と大変です。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+<p>またJSONはカッコやダブルクオートの割合が多すぎますし、コメントも使えません。<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> </p>
+<p>TOMLをつかえばそのようなストレスはありません。</p>
+<h2 id="toml_2">TOMLの使い方</h2>
+<p>TOMLの書き方は<a href="https://github.com/mojombo/toml">本家のドキュメント</a> をみてもらえばすぐわかると思います。</p>
+<p>TOMLのライブラリは各種言語に対応したものが既にたくさんあります。
+言語によっては複数の実装が存在するものもありますが、とりあえずはgithub上でのstarの数が一番多いものから試すといいと思います。</p>
+<p>わざわざ説明するほどの内容でもないですが、ここでは一応rubyでの使い方を紹介します。
+<code>gem install toml</code>でインストールして、以下のようにするだけです。YAMLの場合と大体同じですね。</p>
+<div class="pygments_borland"><pre><span class="nb">require</span> <span class="s1">&#39;toml&#39;</span>
+
+<span class="no">TOML</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;thing = 9&quot;</span><span class="p">)</span>
+<span class="c1"># =&gt; {&quot;thing&quot; =&gt; 9}</span>
+
+<span class="no">TOML</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;my_file.toml&quot;</span><span class="p">)</span>
+<span class="c1"># =&gt; {&quot;whatever&quot; =&gt; &quot;keys&quot;}</span>
+</pre></div>
+
+<h3 id="_1">その他</h3>
+<ul>
+<li>TOMLでは日付型も定義されていて、それもUTC固定というのが地味にいいです</li>
+<li>githubのコードハイライトは既にTOMLに対応してます</li>
+<li>emacsユーザはtoml-modeというのがmelpaに登録されているので、<code>M-x list-packages</code>からインストールできます。</li>
+</ul>
+<h3 id="_2">まとめ</h3>
+<p>TOMLという設定ファイルのための新しいフォーマットを紹介しました。
+設定ファイルにYAMLやJSONつかってるひとはTOMLに移行すると幸せになれるかもしれません。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>仕様を正確に実装したYAMLパーサはほとんど存在しないとかいう話もちらほら&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://github.com/mojombo/toml/issues/2">https://github.com/mojombo/toml/issues/2</a> &#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/04/23/quicklinks5/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/04/28/raspberry-pi/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2013/04/26/toml/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/04/26/toml/" class="hatena-bookmark-button" data-hatena-bookmark-title="TOMLノススメ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/04/26/toml/" data-text="TOMLノススメ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2013/04/26/toml/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/04/26/toml/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="quicklinks-5"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/04/23/quicklinks5/" rel="bookmark" title="Permanent Link to Quicklinks 5">Quicklinks 5</a></h2>
   <small>April 23, 2013 at 08:20 PM | categories:
@@ -501,83 +606,6 @@ rake update_scripts
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="mac-osxでシェルスクリプトをキーボードショートカットに登録する方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" rel="bookmark" title="Permanent Link to Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法">Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法</a></h2>
-  <small>March 28, 2013 at 02:50 AM | categories:
-
-<a href='/blog/category/mac'>mac</a>, <a href='/blog/category/shell'>shell</a>, <a href='/blog/category/tips'>tips</a>
- | <a href="http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="automator" src="/images/automator.png" /></p>
-<p>概要を以下にメモ</p>
-<ol>
-<li>Automatorを起動</li>
-<li>サービスを選択</li>
-<li>右ペインの上部、「次の選択項目を受け取ります」を入力なしにする</li>
-<li>左ペインからシェルスクリプトを実行をダブルクリック</li>
-<li>デフォルトで<code>cat</code>になっている内容を任意のシェルスクリプトにする</li>
-<li>右上の実行ボタンからテスト</li>
-<li>適当な名前をつけて保存して閉じる</li>
-<li>システム環境設定＞キーボードを開く</li>
-<li>キーボードショートカットのタブを選択</li>
-<li>サービスを選択してさっき保存したautomatorの名前をみつける</li>
-<li>好きなショートカットを設定する</li>
-</ol>
-<p>参考: <a href="http://superuser.com/questions/45740/fast-user-switching-apple-menu/46308#46308">http://superuser.com/questions/45740/fast-user-switching-apple-menu/46308#46308</a></p>
-<h4 id="_1">備考</h4>
-<ul>
-<li>新規作成したworkflowは保存して閉じるまでシステム設定のキーボードショートカットの項目に反映されない</li>
-<li>workflowは$HOME/Library/Services に保存される</li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/03/26/jekyll-plugin/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/03/29/ruboto/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" class="hatena-bookmark-button" data-hatena-bookmark-title="Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" data-text="Mac OSXでシェルスクリプトをキーボードショートカットに登録する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/03/28/mac-shell-script-keyboard-shortcut/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../5">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -607,6 +635,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/05/difference-between-malloc-and-calloc/" title="malloc+memsetとcallocの違いについて"><p>malloc+memsetとcallocの違いについて</a><span style="font-size: 80%;">(March 05, 2014 at 09:25 PM)</span></li>
@@ -614,7 +643,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
       <li><a href="/blog/2014/02/13/tcp-options-skeeter-bubba/" title="TCPの黒歴史：謎のオプションskeeterとbubbaについて"><p>TCPの黒歴史：謎のオプションskeeterとbubbaについて</a><span style="font-size: 80%;">(February 13, 2014 at 06:00 PM)</span></li>
       <li><a href="/blog/2014/02/13/faster-github-pages/" title="あなたのgithub pagesを無料で高速化する方法"><p>あなたのgithub pagesを無料で高速化する方法</a><span style="font-size: 80%;">(February 13, 2014 at 09:10 AM)</span></li>
-      <li><a href="/blog/2014/02/10/search-engine-comparison/" title="全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch"><p>全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch</a><span style="font-size: 80%;">(February 10, 2014 at 01:05 AM)</span></li>
     </ul>
   </div>
 
@@ -660,7 +688,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
-     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
@@ -669,7 +697,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/git">git</a> (<a href="/blog/category/git/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/github">github</a> (<a href="/blog/category/github/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/gitlab">gitlab</a> (<a href="/blog/category/gitlab/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/history">history</a> (<a href="/blog/category/history/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
@@ -705,7 +735,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (8)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (9)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
@@ -721,7 +751,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(5)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
