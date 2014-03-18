@@ -27,7 +27,7 @@
     <category scheme="http://mojavy.com/blog" term="programming" />
     <summary type="html"><![CDATA[pthreadの取り消しポイント(cancellation point)についてのメモ]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/"><![CDATA[<p>cancellation pointsとは、スレッドのキャンセル種別が<code>deferred</code>のときに、そこに到達したときにはじめて実際にそのスレッドのキャンセル要求が処理されるような関数のこと。</p>
-<p>基本的にはブロックするような関数が、POSIX.1でcancellation pointsであることが要求されている。</p>
+<p>POSIX.1では、基本的にはブロックするような関数がcancellation pointsであることが要求されている。</p>
 <h2 id="_1">参考</h2>
 <ul>
 <li><a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html">http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html</a> </li>
