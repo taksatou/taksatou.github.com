@@ -114,8 +114,7 @@ href="/blog/feed/atom" />
     
 <div class="blogbody">
   <p>cancellation pointsとは、スレッドのキャンセル種別が<code>deferred</code>のときに、そこに到達したときにはじめて実際にそのスレッドのキャンセル要求が処理されるような関数のこと。</p>
-<p><code>POSIX.1</code> で定義している関数は取り消しポイント(<code>cancellation points</code>)であるかどうかが規定されている。</p>
-<p>基本的にはブロックするような関数は大体cancellation pointsになる。</p>
+<p>基本的にはブロックするような関数が、POSIX.1でcancellation pointsであることが要求されている。</p>
 <h2 id="_1">参考</h2>
 <ul>
 <li><a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html">http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html</a> </li>

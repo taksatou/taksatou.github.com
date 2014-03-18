@@ -6,9 +6,7 @@ title: pthreadの取り消しポイント(cancellation point)についてのメ�
 
 cancellation pointsとは、スレッドのキャンセル種別が`deferred`のときに、そこに到達したときにはじめて実際にそのスレッドのキャンセル要求が処理されるような関数のこと。
 
-`POSIX.1` で定義している関数は取り消しポイント(`cancellation points`)であるかどうかが規定されている。
-
-基本的にはブロックするような関数は大体cancellation pointsになる。
+基本的にはブロックするような関数が、POSIX.1でcancellation pointsであることが要求されている。
 
 ## 参考
 
