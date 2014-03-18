@@ -10,10 +10,27 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 11 Mar 2014 02:08:20 GMT</pubDate>
+    <pubDate>Tue, 18 Mar 2014 21:41:12 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>pthreadの取り消しポイント(cancellation point)についてのメモ</title>
+      <link>http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/</link>
+      <pubDate>Tue, 18 Mar 2014 21:41:12 JST</pubDate>
+      <category><![CDATA[unix]]></category>
+      <category><![CDATA[programming]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/</guid>
+      <description>pthreadの取り消しポイント(cancellation point)についてのメモ</description>
+      <content:encoded><![CDATA[<p>cancellation pointsとは、スレッドのキャンセル種別が<code>deferred</code>のときに、そこに到達したときにはじめて実際にそのスレッドのキャンセル要求が処理されるような関数のこと。</p>
+<p><code>POSIX.1</code> で定義している関数は取り消しポイント(<code>cancellation points</code>)であるかどうかが規定されている。</p>
+<p>基本的にはブロックするような関数は大体cancellation pointsになる。</p>
+<h2 id="_1">参考</h2>
+<ul>
+<li><a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html">http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html</a> </li>
+<li><a href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man3/pthread_cancel.3.html">pthread_cancel(3)</a> </li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>gitlab 6.6.4 CE のゆるふわセットアップ</title>
       <link>http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/</link>
@@ -710,103 +727,6 @@ Amazonはメリットも多いですが、現状では制限が多いので使�
 </li>
 </ol>
 </div>]]></content:encoded>
-    </item>
-    <item>
-      <title>Goのtemplateパッケージ簡易チートシート</title>
-      <link>http://mojavy.com/blog/2013/11/19/go-template/</link>
-      <pubDate>Tue, 19 Nov 2013 19:19:57 JST</pubDate>
-      <category><![CDATA[golang]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2013/11/19/go-template/</guid>
-      <description>Goのtemplateパッケージ簡易チートシート</description>
-      <content:encoded><![CDATA[<p>goに標準でついてるtemplateパッケージは便利なのだけど、<a href="http://golang.org/pkg/text/template/">マニュアル</a>が長すぎるのでよく使う機能だけまとめておく。</p>
-<p>そろそろだれかテンプレートエンジンを標準化してほしい。</p>
-<div class="toc">
-<ul>
-<li><a href="#_1">基本</a></li>
-<li><a href="#_2">変数展開</a></li>
-<li><a href="#_3">関数呼び出し</a></li>
-<li><a href="#_4">ループ</a></li>
-<li><a href="#_5">組み込み関数</a></li>
-</ul>
-</div>
-<h2 id="_1">基本</h2>
-<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
-
-<span class="k">import</span> <span class="p">(</span>
-    <span class="s">&quot;os&quot;</span>
-    <span class="s">&quot;text/template&quot;</span>
-<span class="p">)</span>
-
-<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">tmpl</span> <span class="p">:=</span> <span class="s">&quot;Hello, {{.template}}!&quot;</span>
-    <span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
-    <span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
-    <span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="k">map</span><span class="p">[</span><span class="nb">string</span><span class="p">]</span><span class="nb">string</span><span class="p">{</span><span class="s">&quot;template&quot;</span><span class="p">:</span> <span class="s">&quot;World&quot;</span><span class="p">})</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>ちなみに、<code>template.Must(t.Parse(tmpl))</code>は以下のショートカット</p>
-<div class="pygments_borland"><pre><span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="p">:=</span> <span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">err</span> <span class="p">!=</span> <span class="n">nil</span> <span class="p">{</span>
-    <span class="n">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-<span class="p">}</span>
-</pre></div>
-
-<h2 id="_2">変数展開</h2>
-<p>通常はmapのキーかstructのメンバを<code>.Key</code>のようにドット付きで指定するとでその値が展開される。
-ただし、該当するキーが見つからなかった場合、mapでは<code>&lt;no value&gt;</code>という文字列が出力されるが、structではエラーになる。</p>
-<div class="pygments_borland"><pre><span class="k">type</span> <span class="n">T</span> <span class="k">struct</span> <span class="p">{</span>
-    <span class="n">Name</span> <span class="nb">string</span>
-<span class="p">}</span>
-
-<span class="n">tmpl</span> <span class="p">:=</span> <span class="s">&quot;Hello, {{.Name}}!\n&quot;</span>
-<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
-<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
-
-<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="k">map</span><span class="p">[</span><span class="nb">string</span><span class="p">]</span><span class="nb">string</span><span class="p">{</span><span class="s">&quot;Name&quot;</span><span class="p">:</span> <span class="s">&quot;map&quot;</span><span class="p">})</span>
-<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="n">T</span><span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;struct&quot;</span><span class="p">})</span>
-<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="p">&amp;</span><span class="n">T</span><span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;struct reference&quot;</span><span class="p">})</span>
-</pre></div>
-
-<p><code>.</code>のようにドットだけを渡すと変数それ自体が展開される。</p>
-<div class="pygments_borland"><pre><span class="n">tmpl</span> <span class="p">:=</span> <span class="s">&quot;Hello, {{.}}!\n&quot;</span>
-<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
-<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
-<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="s">&quot;World&quot;</span><span class="p">)</span>
-</pre></div>
-
-<h2 id="_3">関数呼び出し</h2>
-<p>関数はシェルのパイプのように連結させて呼びだせる。テンプレート内で呼ぶ関数は<code>template.FuncMap</code>で渡す。</p>
-<div class="pygments_borland"><pre><span class="n">tmpl</span> <span class="p">:=</span> <span class="s">`Now {{now}}, {{&quot;hello&quot; | toupper}}`</span>
-<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
-<span class="n">t</span><span class="p">.</span><span class="n">Funcs</span><span class="p">(</span><span class="n">template</span><span class="p">.</span><span class="n">FuncMap</span><span class="p">{</span>
-    <span class="s">&quot;now&quot;</span><span class="p">:</span>     <span class="k">func</span><span class="p">()</span> <span class="nb">string</span> <span class="p">{</span> <span class="k">return</span> <span class="n">time</span><span class="p">.</span><span class="n">Now</span><span class="p">().</span><span class="n">String</span><span class="p">()</span> <span class="p">},</span>
-    <span class="s">&quot;toupper&quot;</span><span class="p">:</span> <span class="n">strings</span><span class="p">.</span><span class="n">ToUpper</span><span class="p">,</span>
-<span class="p">})</span>
-<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
-<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="n">nil</span><span class="p">)</span> <span class="c1">// =&gt; Now 2013-11-19 19:17:51.378063751 +0900 JST, HELLO</span>
-</pre></div>
-
-<h2 id="_4">ループ</h2>
-<p>組み込みの<code>range</code> Actionをつかえばよい。</p>
-<div class="pygments_borland"><pre><span class="k">type</span> <span class="n">T</span> <span class="k">struct</span><span class="p">{</span> <span class="n">Name</span> <span class="nb">string</span> <span class="p">}</span>
-<span class="n">tmpl</span> <span class="p">:=</span> <span class="s">`</span>
-<span class="s">{{range .}}- {{.Name}}</span>
-<span class="s">{{end}}</span>
-<span class="s">`</span>
-<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
-<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
-<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="p">[]</span><span class="n">T</span><span class="p">{</span>
-    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Alice&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Bob&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Charlie&quot;</span><span class="p">},</span>
-    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Dave&quot;</span><span class="p">},</span>
-<span class="p">})</span>
-</pre></div>
-
-<p>その他、条件分岐等のActionは <a href="http://golang.org/pkg/text/template/#hdr-Actions">マニュアルのActionsの</a> 参照</p>
-<h2 id="_5">組み込み関数</h2>
-<p>こちらも <a href="http://golang.org/pkg/text/template/#hdr-Functions">マニュアルのFunctionsの項</a> を参照</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

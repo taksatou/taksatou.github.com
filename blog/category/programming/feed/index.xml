@@ -10,10 +10,27 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 05 Mar 2014 21:25:23 GMT</pubDate>
+    <pubDate>Tue, 18 Mar 2014 21:41:12 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>pthreadの取り消しポイント(cancellation point)についてのメモ</title>
+      <link>http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/</link>
+      <pubDate>Tue, 18 Mar 2014 21:41:12 JST</pubDate>
+      <category><![CDATA[unix]]></category>
+      <category><![CDATA[programming]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/</guid>
+      <description>pthreadの取り消しポイント(cancellation point)についてのメモ</description>
+      <content:encoded><![CDATA[<p>cancellation pointsとは、スレッドのキャンセル種別が<code>deferred</code>のときに、そこに到達したときにはじめて実際にそのスレッドのキャンセル要求が処理されるような関数のこと。</p>
+<p><code>POSIX.1</code> で定義している関数は取り消しポイント(<code>cancellation points</code>)であるかどうかが規定されている。</p>
+<p>基本的にはブロックするような関数は大体cancellation pointsになる。</p>
+<h2 id="_1">参考</h2>
+<ul>
+<li><a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html">http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html</a> </li>
+<li><a href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man3/pthread_cancel.3.html">pthread_cancel(3)</a> </li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>malloc+memsetとcallocの違いについて</title>
       <link>http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/</link>

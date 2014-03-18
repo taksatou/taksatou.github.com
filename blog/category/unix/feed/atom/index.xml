@@ -7,12 +7,34 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2014-03-03T20:58:58Z</updated>
+  <updated>2014-03-18T21:41:12Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[pthreadの取り消しポイント(cancellation point)についてのメモ]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" />
+    <id>http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/</id>
+    <updated>2014-03-18T21:41:12Z</updated>
+    <published>2014-03-18T21:41:12Z</published>
+    <category scheme="http://mojavy.com/blog" term="unix" />
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <summary type="html"><![CDATA[pthreadの取り消しポイント(cancellation point)についてのメモ]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/"><![CDATA[<p>cancellation pointsとは、スレッドのキャンセル種別が<code>deferred</code>のときに、そこに到達したときにはじめて実際にそのスレッドのキャンセル要求が処理されるような関数のこと。</p>
+<p><code>POSIX.1</code> で定義している関数は取り消しポイント(<code>cancellation points</code>)であるかどうかが規定されている。</p>
+<p>基本的にはブロックするような関数は大体cancellation pointsになる。</p>
+<h2 id="_1">参考</h2>
+<ul>
+<li><a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html">http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html</a> </li>
+<li><a href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man3/pthread_cancel.3.html">pthread_cancel(3)</a> </li>
+</ul>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

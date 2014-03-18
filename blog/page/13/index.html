@@ -102,6 +102,222 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" rel="bookmark" title="Permanent Link to jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">jenkinsでiosアプリをビルドしてwifi経由で実機インストールする</a></h2>
+  <small>August 07, 2012 at 03:30 PM | categories:
+
+<a href='/blog/category/jenkins'>jenkins</a>, <a href='/blog/category/ios'>ios</a>
+ | <a href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="jenkins" src="/images/jenkins-logo.png" /></p>
+<p>はまりどころが多くて大変だったので今後同じことをやろうとする人のために一連の作業をメモしておきます。</p>
+<h2 id="_1">目的</h2>
+<ul>
+<li>jenkinsでiOSアプリをビルドする</li>
+<li>ビルドしたアプリは、UDIDの登録なしに実機インストールして確認してもらいたい</li>
+</ul>
+<h2 id="_2">手順</h2>
+<h3 id="ios-developer-enterprise-program">iOS Developer Enterprise Program への参加</h3>
+<p>実機インストールするだけなら通常のデベロッパーアカウントでも大丈夫ですが、UDIDの登録なしにwifiから配布するためにはエンタープライズプログラムに参加する必要があります。</p>
+<p>エンタープライズプログラムに参加すればapp storeを経由せずに自由にインストールできるようになりますが、アクセスできるのが特定の組織内に限定されるように適切に制限をかけなければ規約違反になります。</p>
+<p><a href="https://developer.apple.com/jp/programs/ios/enterprise/">https://developer.apple.com/jp/programs/ios/enterprise/</a></p>
+<h3 id="xcode">xcodeの設定</h3>
+<p><a href="http://golog.plus.vc/iphone/3355/">http://golog.plus.vc/iphone/3355/</a> などを参考に、xcodeからprovisioning profileを設定します。</p>
+<p>また、最近のxcodeではデフォルトではarmv7用バイナリしかビルドしないので、armv6用もビルドするように設定しておきます。
+Build SettingsのArchitectures に 'armv6' を手動で追記すれば大丈夫です。</p>
+<h3 id="_3">実機確認</h3>
+<p>jenkinsでビルドする際は後述のビルドスクリプトを使うのですが、provisioning profileの設定等が正しくされていることを確認するために、一旦ここでxcodeのUI上で作成したipaファイルをiPhone構成ユーティリティを使って実機インストールしてみます。
+xcodeでipaファイルをビルドする方法はすぐにでてくると思うので、適宜調べて下さい。</p>
+<p>ここで正常にインストールできなければ、provisioning profile等の状態を確認してください。</p>
+<h3 id="jenkins">jenkinsのセットアップ</h3>
+<p>jenkinsを用意します。ビルド専用macが用意できない場合でも、開発に用いているmacをJNLP経由でそのままスレーブとして使うことができます。</p>
+<p>jenkins自体の細かいセットアップ方法は割愛しますが、JNLP経由でスレーブを起動する場合は以下のようなスクリプトをバックグランドで起動するようにしておくと便利です。</p>
+<div class="pygments_borland"><pre><span class="c">#!/bin/sh</span>
+
+<span class="nb">eval</span> <span class="sb">`</span>ssh-agent<span class="sb">`</span>
+ssh-add ~/.ssh/id_rsa
+java -jar slave.jar -jnlpUrl http://jenkins.example.com/computer/mac1/slave-agent.jnlp
+</pre></div>
+
+<p>ここでの注意点は以下のとおりです。</p>
+<ul>
+<li>gitやsvnにssh経由でアクセスする場合は、パスワード無しでチェックアウトできるように適切に設定しておく必要がある。(上記の場合はssh-agentをあらかじめ起動するようにして、パスワード入力は起動時のみになるようにしています。)</li>
+<li>keychainに配布に使用するデベロッパーアカウントの証明書を登録しておく。</li>
+</ul>
+<h3 id="_4">ビルドスクリプトの作成</h3>
+<p>以下のようなmakefileをxcodeプロジェクトのトップディレクトリに配置します。
+(お好みのビルドツールを利用してください)</p>
+<p>ソースコードのコンパイルはxcodebuild, ipaファイルの生成はxcrunというコマンドを使います。</p>
+<div class="pygments_borland"><pre><span class="nv">APP_NAME</span> <span class="o">=</span> MyApp
+<span class="nv">SRCTOP</span> <span class="o">=</span> <span class="k">$(</span>shell <span class="nb">pwd</span><span class="k">)</span>
+<span class="nv">RELEASE_BUILD_DIR</span> <span class="o">=</span> <span class="k">$(</span>SRCTOP<span class="k">)</span>/build/Release-iphoneos
+<span class="nv">BUILD_HISTORY_DIR</span> <span class="o">=</span> <span class="k">$(</span>SRCTOP<span class="k">)</span>/build
+<span class="nv">DEVELOPER_NAME</span> <span class="o">=</span> <span class="s2">&quot;iPhone Distribution: XXXX.&quot;</span>
+<span class="nv">PROVISIONING_PROFILE</span> <span class="o">=</span> path/to/in_house.mobileprovision
+
+all:: dist
+.PHONY: clean compile dist
+
+dist: compile
+    /usr/bin/xcrun -sdk iphoneos PackageApplication -v <span class="k">${</span><span class="nv">RELEASE_BUILD_DIR</span><span class="k">}</span>/<span class="k">${</span><span class="nv">APP_NAME</span><span class="k">}</span>.app -o <span class="k">${</span><span class="nv">BUILD_HISTORY_DIR</span><span class="k">}</span>/<span class="k">${</span><span class="nv">APP_NAME</span><span class="k">}</span>.ipa --sign <span class="k">${</span><span class="nv">DEVELOPER_NAME</span><span class="k">}</span> --embed <span class="k">${</span><span class="nv">PROVISIONING_PROFILE</span><span class="k">}</span>
+    ./gen_dist_page.sh
+
+compile:
+    xcodebuild
+
+clean:
+    rm -rf build
+</pre></div>
+
+<p>配布用のplistとhtmlを生成するスクリプト(gen_dist_page.sh)は以下のようになります。(BUILD_NUMBERなどの変数はjenkinsの環境変数から取得できます)</p>
+<div class="pygments_borland"><pre><span class="nv">PACKAGE_NAME</span><span class="o">=</span>MyApp
+
+<span class="nv">PLIST</span><span class="o">=</span>build/<span class="k">${</span><span class="nv">PACKAGE_NAME</span><span class="k">}</span>.plist
+<span class="nv">INSTALL_PAGE</span><span class="o">=</span>build/<span class="k">${</span><span class="nv">PACKAGE_NAME</span><span class="k">}</span>.html
+
+cat <span class="s">&lt;&lt;__PLIST__ &gt; $PLIST</span>
+<span class="s">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+<span class="s">&lt;plist version=&quot;1.0&quot;&gt;</span>
+<span class="s">  &lt;dict&gt;</span>
+<span class="s">    &lt;key&gt;items&lt;/key&gt;</span>
+<span class="s">    &lt;array&gt;</span>
+<span class="s">      &lt;dict&gt;</span>
+<span class="s">        &lt;key&gt;assets&lt;/key&gt;</span>
+<span class="s">        &lt;array&gt;</span>
+<span class="s">          &lt;dict&gt;</span>
+<span class="s">            &lt;key&gt;kind&lt;/key&gt;</span>
+<span class="s">            &lt;string&gt;software-package&lt;/string&gt;</span>
+<span class="s">            &lt;key&gt;url&lt;/key&gt;</span>
+<span class="s">            &lt;string&gt;${DIST_URL}/build/${PACKAGE_NAME}.ipa&lt;/string&gt;</span>
+<span class="s">          &lt;/dict&gt;</span>
+<span class="s">          &lt;dict&gt;</span>
+<span class="s">            &lt;key&gt;kind&lt;/key&gt;</span>
+<span class="s">            &lt;string&gt;display-image&lt;/string&gt;</span>
+<span class="s">            &lt;key&gt;needs-shine&lt;/key&gt;</span>
+<span class="s">            &lt;true/&gt;</span>
+<span class="s">            &lt;key&gt;url&lt;/key&gt;</span>
+<span class="s">            &lt;string&gt;http://jenkins.example.com/job/myapp/ws/icon.png&lt;/string&gt;</span>
+<span class="s">          &lt;/dict&gt;</span>
+<span class="s">        &lt;/array&gt;</span>
+<span class="s">        &lt;key&gt;metadata&lt;/key&gt;</span>
+<span class="s">        &lt;dict&gt;</span>
+<span class="s">          &lt;key&gt;bundle-identifier&lt;/key&gt;</span>
+<span class="s">          &lt;string&gt;com.example.myapp.MyApp&lt;/string&gt;</span>
+<span class="s">          &lt;key&gt;kind&lt;/key&gt;</span>
+<span class="s">          &lt;string&gt;software&lt;/string&gt;</span>
+<span class="s">          &lt;key&gt;subtitle&lt;/key&gt;</span>
+<span class="s">          &lt;string&gt;b${BUILD_NUMBER}&lt;/string&gt;</span>
+<span class="s">          &lt;key&gt;title&lt;/key&gt;</span>
+<span class="s">          &lt;string&gt;${PACKAGE_NAME}&lt;/string&gt;</span>
+<span class="s">        &lt;/dict&gt;</span>
+<span class="s">      &lt;/dict&gt;</span>
+<span class="s">    &lt;/array&gt;</span>
+<span class="s">  &lt;/dict&gt;</span>
+<span class="s">&lt;/plist&gt;</span>
+<span class="s">__PLIST__</span>
+
+cat <span class="s">&lt;&lt;__HTML__ &gt; $INSTALL_PAGE</span>
+<span class="s">&lt;html&gt;</span>
+<span class="s">  &lt;head&gt;</span>
+<span class="s">    &lt;title&gt;${PACKAGE_NAME}: build #$BUILD_NUMBER&lt;/title&gt;</span>
+<span class="s">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0&quot;&gt;</span>
+<span class="s">    &lt;/head&gt;</span>
+<span class="s">    &lt;body&gt;</span>
+<span class="s">    &lt;div style=&quot;text-align: center; vertical-align: middle; margin-top: 100px&quot;&gt;</span>
+<span class="s">      &lt;div style=&quot;padding: 10px;&quot;&gt;$JOB_NAME&lt;/div&gt;</span>
+<span class="s">      &lt;a href=&quot;itms-services://?action=download-manifest&amp;url=${DIST_URL}/${PLIST}&quot;</span>
+<span class="s">         style=&quot;border: none; text-decoration: none; color: #888;&quot;&gt;</span>
+<span class="s">        &lt;img src=&quot;http://jenkins.example.com/job/myapp/ws/demo.png&quot;/&gt;</span>
+<span class="s">        &lt;br /&gt;&lt;br /&gt;</span>
+<span class="s">        Install ${PACKAGE_NAME} b$BUILD_NUMBER</span>
+<span class="s">      &lt;/a&gt;</span>
+<span class="s">    &lt;/div&gt;</span>
+<span class="s">  &lt;/body&gt;</span>
+<span class="s">&lt;/html&gt;</span>
+<span class="s">__HTML__</span>
+</pre></div>
+
+<p>htmlはリンク先さえあっていれば大丈夫なのですが、plistの方はいくつか注意が必要です。</p>
+<ul>
+<li>display-imageは必須。iOSのバージョンによってはなくてもよいようなのですが、iOS 5.1.1だとdisplay-imageがplistにないと「Appをダウンロードできません」というエラーになります。</li>
+<li>bundle-identifierはxcodeのBundle Identifierと一致させる。</li>
+</ul>
+<p>ここではxcodeデフォルトのsdkバージョンを使用していますが、必要に応じてxcodebuild等のコマンドラインオプションを追加してください。</p>
+<p>参考:  <a href="https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf">https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf</a></p>
+<h3 id="jenkinsjob">jenkinsのjob作成</h3>
+<p>通常通りjenkinsのjobを作ります。適切にソースコードをチェックアウトして、ビルドフェーズで上記スクリプトを実行するようにします。</p>
+<div class="pygments_borland"><pre>make clean <span class="o">&amp;&amp;</span> make <span class="nv">DIST_URL</span><span class="o">=</span><span class="k">${</span><span class="nv">BUILD_URL</span><span class="k">}</span>artifact
+</pre></div>
+
+<p>ビルドに成功するとipa, html, plistファイルが生成されるので、これらを成果物として保存します。
+成果物のhtmlページにiPhoneでアクセスしてみて、アプリがインストールできれば成功です。</p>
+<h2 id="_5">その他</h2>
+<p>今回は触れませんでしたが、以下についても考慮しておいたほうがよいと思います。</p>
+<ul>
+<li>iOSのSDKバージョン</li>
+<li>依存ライブラリ</li>
+<li>プロビジョニングプロファイルの管理</li>
+</ul>
+<p>また、<a href="https://testflightapp.com/">TestFlight</a> というサービスもあるのでそちらの利用も検討してみてもいいと思います。</p>
+<h2 id="_6">まとめ</h2>
+<p>iOSアプリをコマンドラインからビルドするスクリプトを作成して、jenkins上でビルドから配布までを行なうための手順を紹介しました。</p>
+<h2 id="_7">参考</h2>
+<ul>
+<li><a href="https://developer.apple.com/jp/programs/ios/enterprise/">https://developer.apple.com/jp/programs/ios/enterprise/</a></li>
+<li><a href="http://www.apple.com/jp/support/iphone/enterprise/">http://www.apple.com/jp/support/iphone/enterprise/</a></li>
+<li><a href="https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf">https://developer.apple.com/jp/devcenter/ios/library/documentation/FA_Wireless_Enterprise_App_Distribution.pdf</a></li>
+<li><a href="http://support.apple.com/kb/DL1465?viewlocale=ja_JP">http://support.apple.com/kb/DL1465?viewlocale=ja_JP</a></li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/25/ios-simulator-log/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/10/16/quick-links/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" class="hatena-bookmark-button" data-hatena-bookmark-title="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" data-text="jenkinsでiosアプリをビルドしてwifi経由で実機インストールする">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/08/07/jenkins-ios-build/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/25/ios-simulator-log/" rel="bookmark" title="Permanent Link to xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる">xcodeのiosエミュレータのコンソールログはsystem.logに吐かれる</a></h2>
   <small>July 25, 2012 at 08:30 PM | categories:
@@ -403,125 +619,6 @@ href="/blog/feed/atom" />
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="objective-cのプロトコルとデリゲーションについてのメモ"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" rel="bookmark" title="Permanent Link to objective-cのプロトコルとデリゲーションについてのメモ">objective-cのプロトコルとデリゲーションについてのメモ</a></h2>
-  <small>July 17, 2012 at 06:30 PM | categories:
-
-<a href='/blog/category/objective-c'>objective-c</a>
- | <a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
-<ul>
-<li>プロトコルとはクラス間で共有するメソッドのリスト。</li>
-<li>javaでいうinterfaceのようなもの。</li>
-<li>@optionalディレクティブ以降のメソッドは実装が任意。</li>
-<li>@requiredディレクティブで必須。</li>
-<li>プロトコルに必要なメソッドは直接そのクラスで実装してもいいし、継承元の親クラスで実装してもよい。</li>
-<li>requiredがすべて実装されていなかった場合、コンパイラーはワーニングを出す。(エラーではない)</li>
-<li>すべてのrequiredメソッドを実装したクラスはそのプロトコルにconform(もしくはadopt)したという。</li>
-<li>そのオブジェクトがconformしているかどうかチェックするには、conformsToProtocolメソッドを使う。</li>
-<li>そのオブジェクトがoptionalなメソッドを実装しているかどうかをチェックするには、respondsToSelectorを使う。</li>
-<li>コンパイル時に型チェックが行われる。型宣言に<protocol名>を含めるとよい。</li>
-<li>カテゴリもプロトコルにadoptできる。</li>
-<li>プロトコルの名前はユニークでなければならない。</li>
-<li>delegationとはプロトコルで定義されたメソッドを実装したクラスを定義すること。</li>
-<li>informal protocolというものもあるが、これは単に実装がないカテゴリのこと。abstract protocolともいう。ドキュメンテーションやモジュラリティのために用いる。コンパイル時チェックはなし。プロトコルの@optionalディレクトリはObjective-C 2.0で追加されたので、こちらをつかえばよい。</li>
-<li>eclipseでいうデリゲートは、Composite Objectとよばれる</li>
-</ul>
-<h2 id="_1">例</h2>
-<h3 id="myprotocolh">myProtocol.h</h3>
-<div class="pygments_borland"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
-
-<span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-<h3 id="myprotocolimplh">myProtocolImpl.h</h3>
-<div class="pygments_borland"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
-<span class="cp">#import &quot;myProtocol.h&quot;</span>
-
-<span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
-
-<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-<h3 id="myprotocolimplm">myProtocolImpl.m</h3>
-<div class="pygments_borland"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
-
-<span class="k">@implementation</span> <span class="nc">myProtocolImpl</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f1</span>
-<span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;called f0&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span>
-<span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;called f2&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-<h2 id="_2">参考</h2>
-<p><br>
-<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/07/13/objective-c-memo/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" class="hatena-bookmark-button" data-hatena-bookmark-title="objective-cのプロトコルとデリゲーションについてのメモ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" data-text="objective-cのプロトコルとデリゲーションについてのメモ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../12">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -551,6 +648,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
@@ -558,7 +656,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/03/implementing-thread-pool/" title="スレッドプールの実装方法について"><p>スレッドプールの実装方法について</a><span style="font-size: 80%;">(March 03, 2014 at 08:58 PM)</span></li>
       <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
       <li><a href="/blog/2014/02/13/tcp-options-skeeter-bubba/" title="TCPの黒歴史：謎のオプションskeeterとbubbaについて"><p>TCPの黒歴史：謎のオプションskeeterとbubbaについて</a><span style="font-size: 80%;">(February 13, 2014 at 06:00 PM)</span></li>
-      <li><a href="/blog/2014/02/13/faster-github-pages/" title="あなたのgithub pagesを無料で高速化する方法"><p>あなたのgithub pagesを無料で高速化する方法</a><span style="font-size: 80%;">(February 13, 2014 at 09:10 AM)</span></li>
     </ul>
   </div>
 
@@ -638,7 +735,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (8)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (9)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
@@ -656,7 +753,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
@@ -667,7 +764,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(5)</li>
+      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
