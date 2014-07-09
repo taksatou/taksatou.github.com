@@ -54,9 +54,11 @@
 </pre></div>
 
 <p>以下のようなコードをコンパイルしようとしてもエラーになる。</p>
-<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+<div class="pygments_borland"><pre><span class="kt">void</span> <span class="n">f1</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
     <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="n">d3</span><span class="p">;</span>
     <span class="n">d3</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 
 <div class="pygments_borland"><pre>      ambiguous conversion from derived class &#39;D3&#39; to base class &#39;Base&#39;:
@@ -73,12 +75,14 @@
 </pre></div>
 
 <p>これを回避するためには明示的に中継するクラスを指定してやる必要がある。</p>
-<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+<div class="pygments_borland"><pre><span class="kt">void</span> <span class="n">f2</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
     <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">D1</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">d3</span><span class="p">);</span>
     <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
     <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">=</span> <span class="mi">456</span><span class="p">;</span>
 
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>  <span class="c1">// =&gt; 123,456</span>
+<span class="p">}</span>
 </pre></div>
 
 <p>でも普通は継承元にそれぞれの別々の親を持つのではなく、共通の1つだけを持っていてほしい。
@@ -89,11 +93,13 @@
 </pre></div>
 
 <p>このようにすればBaseクラスのインスタンスは1つだけになって曖昧性が解消される。</p>
-<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+<div class="pygments_borland"><pre><span class="kt">void</span> <span class="n">f3</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
     <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="n">d3</span><span class="p">;</span>
     <span class="n">d3</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
 
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>  <span class="c1">// =&gt; 123,123</span>
+<span class="p">}</span>
 </pre></div>]]></content:encoded>
     </item>
   </channel>

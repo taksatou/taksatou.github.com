@@ -44,9 +44,11 @@ $$/code
 以下のようなコードをコンパイルしようとしてもエラーになる。
 
 $$code(lang=cpp)
+void f1() {
     D3 d3;
     Base &base = d3;
     d3.data = 123;
+}
 $$/code
 
 $$code
@@ -67,12 +69,14 @@ $$/code
 これを回避するためには明示的に中継するクラスを指定してやる必要がある。
 
 $$code(lang=cpp)
+void f2() {
     D3 d3;
     Base &base = dynamic_cast<D1&>(d3);
     d3.D1::data = 123;
     d3.D2::data = 456;
     
     cout << d3.D1::data << ',' << d3.D2::data << endl;  // => 123,456
+}
 $$/code
 
 でも普通は継承元にそれぞれの別々の親を持つのではなく、共通の1つだけを持っていてほしい。
@@ -87,11 +91,13 @@ $$/code
 このようにすればBaseクラスのインスタンスは1つだけになって曖昧性が解消される。
 
 $$code(lang=cpp)
+void f3() {
     D3 d3;
     Base &base = d3;
     d3.data = 123;
 
     cout << d3.D1::data << ',' << d3.D2::data << endl;  // => 123,123
+}
 $$/code
 
 
