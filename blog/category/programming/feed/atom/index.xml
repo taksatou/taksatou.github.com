@@ -7,12 +7,99 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2014-03-18T21:41:12Z</updated>
+  <updated>2014-07-09T21:56:32Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[C++のdreaded diamondについて]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" />
+    <id>http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/</id>
+    <updated>2014-07-09T21:56:32Z</updated>
+    <published>2014-07-09T21:56:32Z</published>
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <category scheme="http://mojavy.com/blog" term="c++" />
+    <summary type="html"><![CDATA[C++のdreaded diamondについて]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/"><![CDATA[<p>以下のようなダイアモンド継承をしたときに発生する問題のことを<code>dreaded diamond</code>と呼ぶらしい。</p>
+<div class="pygments_borland"><pre>    Base
+    /  \
+   D1  D2
+    \  /
+     D3
+</pre></div>
+
+<p>例えば以下のようなクラスではアップキャストをするときやBaseクラスのメンバにアクセスするときに曖昧性が生じる。</p>
+<div class="pygments_borland"><pre><span class="k">class</span> <span class="nc">Base</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">Base</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">D1</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">D1</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">D2</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">D2</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">D3</span> <span class="o">:</span> <span class="k">public</span> <span class="n">D1</span><span class="p">,</span> <span class="k">public</span> <span class="n">D2</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">D3</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>以下のようなコードをコンパイルしようとしてもエラーになる。</p>
+<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+</pre></div>
+
+<div class="pygments_borland"><pre>      ambiguous conversion from derived class &#39;D3&#39; to base class &#39;Base&#39;:
+    class D3 -&gt; class D1 -&gt; class Base
+    class D3 -&gt; class D2 -&gt; class Base
+    Base &amp;base = d3;
+                 ^~
+
+      non-static member &#39;data&#39; found in multiple base-class subobjects of type &#39;Base&#39;:
+    class D3 -&gt; class D1 -&gt; class Base
+    class D3 -&gt; class D2 -&gt; class Base
+    d3.data = 123;
+       ^
+</pre></div>
+
+<p>これを回避するためには明示的に中継するクラスを指定してやる必要がある。</p>
+<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">D1</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">d3</span><span class="p">);</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">=</span> <span class="mi">456</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>  <span class="c1">// =&gt; 123,456</span>
+</pre></div>
+
+<p>でも普通は継承元にそれぞれの別々の親を持つのではなく、共通の1つだけを持っていてほしい。
+それを解決するには仮想継承を使う。</p>
+<div class="pygments_borland"><pre><span class="k">class</span> <span class="nc">D1</span> <span class="o">:</span> <span class="k">public</span> <span class="k">virtual</span> <span class="n">Base</span> <span class="p">{</span> <span class="cm">/* 省略 */</span> <span class="p">};</span>
+<span class="k">class</span> <span class="nc">D2</span> <span class="o">:</span> <span class="k">public</span> <span class="k">virtual</span> <span class="n">Base</span> <span class="p">{</span> <span class="cm">/* 省略 */</span> <span class="p">};</span>
+<span class="k">class</span> <span class="nc">D3</span> <span class="o">:</span> <span class="k">public</span> <span class="n">D1</span><span class="p">,</span> <span class="k">public</span> <span class="n">D2</span> <span class="p">{</span> <span class="cm">/* 省略 */</span> <span class="p">};</span>
+</pre></div>
+
+<p>このようにすればBaseクラスのインスタンスは1つだけになって曖昧性が解消される。</p>
+<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>  <span class="c1">// =&gt; 123,123</span>
+</pre></div>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>

@@ -102,6 +102,133 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="c++のdreaded-diamondについて"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" rel="bookmark" title="Permanent Link to C++のdreaded diamondについて">C++のdreaded diamondについて</a></h2>
+  <small>July 09, 2014 at 09:56 PM | categories:
+
+<a href='/blog/category/programming'>programming</a>, <a href='/blog/category/c++'>c++</a>
+ | <a href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>以下のようなダイアモンド継承をしたときに発生する問題のことを<code>dreaded diamond</code>と呼ぶらしい。</p>
+<div class="pygments_borland"><pre>    Base
+    /  \
+   D1  D2
+    \  /
+     D3
+</pre></div>
+
+<p>例えば以下のようなクラスではアップキャストをするときやBaseクラスのメンバにアクセスするときに曖昧性が生じる。</p>
+<div class="pygments_borland"><pre><span class="k">class</span> <span class="nc">Base</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">Base</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">D1</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">D1</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">D2</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">D2</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">D3</span> <span class="o">:</span> <span class="k">public</span> <span class="n">D1</span><span class="p">,</span> <span class="k">public</span> <span class="n">D2</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">D3</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>以下のようなコードをコンパイルしようとしてもエラーになる。</p>
+<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+</pre></div>
+
+<div class="pygments_borland"><pre>      ambiguous conversion from derived class &#39;D3&#39; to base class &#39;Base&#39;:
+    class D3 -&gt; class D1 -&gt; class Base
+    class D3 -&gt; class D2 -&gt; class Base
+    Base &amp;base = d3;
+                 ^~
+
+      non-static member &#39;data&#39; found in multiple base-class subobjects of type &#39;Base&#39;:
+    class D3 -&gt; class D1 -&gt; class Base
+    class D3 -&gt; class D2 -&gt; class Base
+    d3.data = 123;
+       ^
+</pre></div>
+
+<p>これを回避するためには明示的に中継するクラスを指定してやる必要がある。</p>
+<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">D1</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">d3</span><span class="p">);</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">=</span> <span class="mi">456</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>  <span class="c1">// =&gt; 123,456</span>
+</pre></div>
+
+<p>でも普通は継承元にそれぞれの別々の親を持つのではなく、共通の1つだけを持っていてほしい。
+それを解決するには仮想継承を使う。</p>
+<div class="pygments_borland"><pre><span class="k">class</span> <span class="nc">D1</span> <span class="o">:</span> <span class="k">public</span> <span class="k">virtual</span> <span class="n">Base</span> <span class="p">{</span> <span class="cm">/* 省略 */</span> <span class="p">};</span>
+<span class="k">class</span> <span class="nc">D2</span> <span class="o">:</span> <span class="k">public</span> <span class="k">virtual</span> <span class="n">Base</span> <span class="p">{</span> <span class="cm">/* 省略 */</span> <span class="p">};</span>
+<span class="k">class</span> <span class="nc">D3</span> <span class="o">:</span> <span class="k">public</span> <span class="n">D1</span><span class="p">,</span> <span class="k">public</span> <span class="n">D2</span> <span class="p">{</span> <span class="cm">/* 省略 */</span> <span class="p">};</span>
+</pre></div>
+
+<p>このようにすればBaseクラスのインスタンスは1つだけになって曖昧性が解消される。</p>
+<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>  <span class="c1">// =&gt; 123,123</span>
+</pre></div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" class="hatena-bookmark-button" data-hatena-bookmark-title="C++のdreaded diamondについて" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" data-text="C++のdreaded diamondについて">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="pthreadの取り消しポイント(cancellation-point)についてのメモ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" rel="bookmark" title="Permanent Link to pthreadの取り消しポイント(cancellation point)についてのメモ">pthreadの取り消しポイント(cancellation point)についてのメモ</a></h2>
   <small>March 18, 2014 at 09:41 PM | categories:
@@ -129,6 +256,8 @@ href="/blog/feed/atom" />
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -431,80 +560,6 @@ postgresql[&quot;effective_cache_size&quot;] = &quot;32MB&quot;
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="malloc+memsetとcallocの違いについて"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/" rel="bookmark" title="Permanent Link to malloc+memsetとcallocの違いについて">malloc+memsetとcallocの違いについて</a></h2>
-  <small>March 05, 2014 at 09:25 PM | categories:
-
-<a href='/blog/category/os'>os</a>, <a href='/blog/category/programming'>programming</a>
- | <a href="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><code>malloc</code>と<code>calloc</code>の違いは、表面的には引数の数と<code>calloc</code>は確保した領域を0で初期化するという点くらいですが、以下のコードを大きな<code>n</code>で実行すると、今時のOSだと<code>malloc</code> + <code>memset</code>のほうが大幅に遅くなる可能性があります。</p>
-<div class="pygments_borland"><pre><span class="kt">void</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">type</span><span class="p">));</span>
-<span class="n">memset</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">type</span><span class="p">));</span>
-</pre></div>
-
-<div class="pygments_borland"><pre><span class="kt">void</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">type</span><span class="p">));</span>
-</pre></div>
-
-<p>カーネルはセキュリティ上の理由からメモリを0で初期化してからユーザプロセスに渡します。</p>
-<p>しかし、仮想メモリをサポートしたシステムでは、実際にそのメモリに書き込みが発生するまでカーネルはread onlyな領域を複数プロセスで共有させることができるため、既に初期化してあるページであればこの処理を省略できる場合があります。</p>
-<p><code>brk</code>で拡張した領域は0で初期化されているので、<code>calloc</code>は新規確保した領域は初期化を省略することができ、結果的に<code>calloc</code>を実行したタイミングでは初期化が実際にはほとんど発生しない、ということがありえます。</p>
-<p>一方<code>memset</code>の場合は実際にメモリへの書込みが発生する上、ページの共有もできなくなるためswapする可能性もあります。</p>
-<p><br>
-<br></p>
-<p>ちなみに、(カーネルではなく)<code>calloc</code>自身が0初期化する処理と、<code>memset</code>の処理は微妙に違います。
-なぜなら、<code>memset</code>は対象の領域がアラインされているかどうかについての情報なしに処理する必要があるので、境界部分は1byteずつやるしかありません。</p>
-<p>じゃあ<code>memset</code>のほうが遅いのかというと、コンパイラによってはアラインされていることを推測できる場合もあったり、callocはライブラリ関数なので移植性のために最適化しにくかったりするので、結局のところ微妙です。</p>
-<p>参考： <a href="http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc">http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc</a> </p>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/" class="hatena-bookmark-button" data-hatena-bookmark-title="malloc+memsetとcallocの違いについて" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/" data-text="malloc+memsetとcallocの違いについて">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/page/2">Next »</a>
 </div>
@@ -532,6 +587,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
@@ -539,7 +595,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/05/difference-between-malloc-and-calloc/" title="malloc+memsetとcallocの違いについて"><p>malloc+memsetとcallocの違いについて</a><span style="font-size: 80%;">(March 05, 2014 at 09:25 PM)</span></li>
       <li><a href="/blog/2014/03/03/implementing-thread-pool/" title="スレッドプールの実装方法について"><p>スレッドプールの実装方法について</a><span style="font-size: 80%;">(March 03, 2014 at 08:58 PM)</span></li>
       <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
-      <li><a href="/blog/2014/02/13/tcp-options-skeeter-bubba/" title="TCPの黒歴史：謎のオプションskeeterとbubbaについて"><p>TCPの黒歴史：謎のオプションskeeterとbubbaについて</a><span style="font-size: 80%;">(February 13, 2014 at 06:00 PM)</span></li>
     </ul>
   </div>
 
@@ -585,6 +640,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/c++">c++</a> (<a href="/blog/category/c++/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
@@ -619,7 +675,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
@@ -648,6 +704,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>

@@ -102,6 +102,70 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="the-p-convention"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/24/the-p-convention/" rel="bookmark" title="Permanent Link to The P Convention">The P Convention</a></h2>
+  <small>February 24, 2013 at 02:42 PM | categories:
+
+<a href='/blog/category/lisp'>lisp</a>, <a href='/blog/category/programming'>programming</a>
+ | <a href="http://mojavy.com/blog/2013/02/24/the-p-convention/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="lisp" src="/images/lisplogo_fancy_128.png" /></p>
+<p>Lispには'p'という接尾辞がつく名前の関数があるが、この'p'はpredicateのこと。</p>
+<p><a href="http://catb.org/jargon/html/p-convention.html">The -P Convention</a></p>
+<p>ところが、HaskellやOCamlにも'p'という接尾辞がつく関数があって、そちらはprimeの意味で使うらしい。
+シングルクオート(ダッシュ)記号は英語だとprimeというので、例えば<code>foo'</code>という名前の関数は<code>foo</code>という名前のヘルパー関数的なもの、ということになる。</p>
+<p><a href="http://stackoverflow.com/questions/5279286/foop-a-naming-convention-its-a-helper-recursive-function-for-foo-what-do">“foop”: a naming convention? It's a helper recursive function for “foo”; what does the suffix “p” mean?</a></p>
+<p>ちなみに、OCamlだとシングルクオートが識別子につかえるのでfoo'という名前の関数も結構あるらしい。</p>
+<p>まぎらわしい、かと思ったけど使う文脈が違うし意外とそうでもないか。</p>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/02/27/building-python-debian-package/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2013/02/24/the-p-convention/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/24/the-p-convention/" class="hatena-bookmark-button" data-hatena-bookmark-title="The P Convention" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/24/the-p-convention/" data-text="The P Convention">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2013/02/24/the-p-convention/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/24/the-p-convention/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="telnetでメールを送信する方法"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/23/telnet-smtp/" rel="bookmark" title="Permanent Link to telnetでメールを送信する方法">telnetでメールを送信する方法</a></h2>
   <small>February 23, 2013 at 06:17 PM | categories:
@@ -150,7 +214,7 @@ Authoritative answers can be found from:
 smtpプロトコルの詳細は省略しますが、最低限必要なコマンドは以下の5つだけ。</p>
 <ul>
 <li>HELO - 通信開始</li>
-<li>MAIL FROM - 送信元メールアドレス。ドメインのIPと送信元のIPが一致している必要がある。dynamic DNSのドメイン名でも大丈夫。ユーザ名部分は実際に存在しなくてもよい(その場合は返信を受けとれない)</li>
+<li>MAIL FROM - 送信元メールアドレス。<del>ドメインのIPと送信元のIPが一致している必要がある。dynamic DNSのドメイン名でも大丈夫。ユーザ名部分は実際に存在しなくてもよい(その場合は返信を受けとれない)</del> smtpサーバ側次第。postfixの設定によっては任意に設定できる。</li>
 <li>RCPT TO - 送信先メールアドレス</li>
 <li>DATA - メール本体の開始。'.'(ピリオド)だけの行で本文終了。本文のFromとToはなんでもよい。普通のメーラのfromやtoで表示されるのはここの情報</li>
 <li>QUIT - 通信終了</li>
@@ -183,7 +247,8 @@ Connection closed by foreign host.
 <p>gmail上でメールがきているか確認します。DATA部分を適当に書くとスパム判定されてしまいますが一応届くはず。</p>
 <h2 id="postfix">postfixの設定メモ</h2>
 <p>上記は直接gmailのsmtpサーバで送信しましたが、mailコマンドからローカルのpostfix経由で送るにはpostfixを適切に設定する必要があります。</p>
-<p>MAIL FROMで使われるのはmyoriginの値になるようなので、送信だけでよいのであればmyoriginのIPが送信元のグローバルIPに一致するように設定しさえすればよいということですかね。</p>
+<p>MAIL FROMのドメイン部分を省略した場合は、myoriginの値になった
+<del>MAIL FROMで使われるのはmyoriginの値になるようなので、送信だけでよいのであればmyoriginのIPが送信元のグローバルIPに一致するように設定しさえすればよいということですかね。</del></p>
 <p>ちなみに、debianのaptからpostfixを「ローカルのみ」の設定でインストールしてしまうと、デフォルトのmain.cfにリレーしない設定になっているので、main.cfを以下のようにコメントアウト。</p>
 <div class="pygments_borland"><pre># default_transport = error
 # relay_transport = error
@@ -510,94 +575,6 @@ each time -- so you can't use VECTOR or #(...) for the value).</p>
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="quicklinks-4"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/02/06/quicklinks4/" rel="bookmark" title="Permanent Link to Quicklinks 4">Quicklinks 4</a></h2>
-  <small>February 06, 2013 at 09:50 PM | categories:
-
-<a href='/blog/category/quicklinks'>quicklinks</a>
- | <a href="http://mojavy.com/blog/2013/02/06/quicklinks4/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><a href="http://mojavy.com/blog/2012/11/14/quicklinks3/">前回</a> から2ヵ月くらいあいてしまいました。古いブックマークはブックマークしたこと自体を忘れてしまうのでもうちょいまめにまとめたいです。</p>
-<h4 id="q-gears"><a href="http://q-gears.sourceforge.net/index.phtml?content=1">Q-Gears</a></h4>
-<p>FF7のゲームエンジンのクローンを目指したものだそうです。
-LinuxやWindowsで動くようにクロスプラットフォームな設計になっていて、将来的にはsquareの他のゲームも動かすためのフレームワークとしても提供することも考えているようです。</p>
-<ul>
-<li><a href="http://q-gears.sourceforge.net/gears.pdf">http://q-gears.sourceforge.net/gears.pdf</a></li>
-</ul>
-<p>この資料にはシステムの概要が書かれてます。リバースエンジニアリングして集めた情報と思われますが、読み物としてもおもしろそうです。</p>
-<h4 id="riemann"><a href="http://riemann.io/">Riemann</a></h4>
-<p>Clojureで書かれたnetwork event stream processing systemとのこと。</p>
-<p><a href="http://riemann.io/concepts.html">ここ</a>のイラストと説明を見れば大体イメージはわくと思います。
-コンセプト的にはfluentdに近い気がしますが、集める対象がログではなくイベントそれ自体なので守備範囲はちょっと違うようです。
-Riemann自体が落ちたときにどうなるか、とか実際に運用するとなると色々気になるところはありそうですが試してみる価値はありそうです。</p>
-<p>設定をClojureで書けるというのもとがってていいと思います。</p>
-<h4 id="whistlepig"><a href="https://github.com/wmorgan/whistlepig">whistlepig</a></h4>
-<p>Cで書かれた軽量なリアルタイム全文検索のためのライブラリです。
-複数プロセスでも同時にインデックスを読み書きできるようで、なかなか便利そうです。今度詳細を調べてみようと思います。</p>
-<h4 id="montezuma"><a href="http://code.google.com/p/montezuma/">Montezuma</a></h4>
-<p>こっちはFerretをCommon Lispに移植したもの。ちなみにFerretはLuceneをRubyに移植したものです。
-これはこれで便利だと思います。</p>
-<h4 id="openrtb"><a href="http://code.google.com/p/openrtb/">OpenRTB</a></h4>
-<p>広告業界ではread-time biddingが最近のトレンドのようなので、関係者はこれを読んで理解を深めましょう。</p>
-<h4 id="ios-security-internals"><a href="http://365.rsaconference.com/servlet/JiveServlet/previewBody/3488-102-1-4589/MBS-402.pdf">iOS Security Internals</a></h4>
-<p>jailbreakやったりする人がつくった資料のようです。
-これもなかなか興味深いです。</p>
-<h4 id="unreal4"><a href="http://www.unrealengine.com/unreal_engine_4/">UNREAL4</a></h4>
-<p>Unity3でも十分すごいと思いましたが、最近のゲームエンジンはどれもすごいですね。</p>
-<ul>
-<li>http://www.wmtdesigners.com/wordpress/game-2012-06-19</li>
-</ul>
-<h4 id="leap-motion"><a href="https://www.leapmotion.com/">Leap Motion</a></h4>
-<p>xboxのkinect的なものですが、それよりはるかに上回る精度らしいです。プレオーダーしたので届いたら色々遊んでみます。</p>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/02/05/popular-programming-languages/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/02/09/sbcl-defconstant/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/02/06/quicklinks4/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/02/06/quicklinks4/" class="hatena-bookmark-button" data-hatena-bookmark-title="Quicklinks 4" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/02/06/quicklinks4/" data-text="Quicklinks 4">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/02/06/quicklinks4/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/02/06/quicklinks4/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../7">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -627,6 +604,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
@@ -634,7 +612,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/05/difference-between-malloc-and-calloc/" title="malloc+memsetとcallocの違いについて"><p>malloc+memsetとcallocの違いについて</a><span style="font-size: 80%;">(March 05, 2014 at 09:25 PM)</span></li>
       <li><a href="/blog/2014/03/03/implementing-thread-pool/" title="スレッドプールの実装方法について"><p>スレッドプールの実装方法について</a><span style="font-size: 80%;">(March 03, 2014 at 08:58 PM)</span></li>
       <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
-      <li><a href="/blog/2014/02/13/tcp-options-skeeter-bubba/" title="TCPの黒歴史：謎のオプションskeeterとbubbaについて"><p>TCPの黒歴史：謎のオプションskeeterとbubbaについて</a><span style="font-size: 80%;">(February 13, 2014 at 06:00 PM)</span></li>
     </ul>
   </div>
 
@@ -680,6 +657,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/c++">c++</a> (<a href="/blog/category/c++/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
@@ -714,7 +692,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
@@ -743,6 +721,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>

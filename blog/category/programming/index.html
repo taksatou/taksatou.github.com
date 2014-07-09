@@ -102,6 +102,133 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="c++のdreaded-diamondについて"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" rel="bookmark" title="Permanent Link to C++のdreaded diamondについて">C++のdreaded diamondについて</a></h2>
+  <small>July 09, 2014 at 09:56 PM | categories:
+
+<a href='/blog/category/programming'>programming</a>, <a href='/blog/category/c++'>c++</a>
+ | <a href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>以下のようなダイアモンド継承をしたときに発生する問題のことを<code>dreaded diamond</code>と呼ぶらしい。</p>
+<div class="pygments_borland"><pre>    Base
+    /  \
+   D1  D2
+    \  /
+     D3
+</pre></div>
+
+<p>例えば以下のようなクラスではアップキャストをするときやBaseクラスのメンバにアクセスするときに曖昧性が生じる。</p>
+<div class="pygments_borland"><pre><span class="k">class</span> <span class="nc">Base</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">Base</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">D1</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">D1</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">D2</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">D2</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">D3</span> <span class="o">:</span> <span class="k">public</span> <span class="n">D1</span><span class="p">,</span> <span class="k">public</span> <span class="n">D2</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">D3</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>以下のようなコードをコンパイルしようとしてもエラーになる。</p>
+<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+</pre></div>
+
+<div class="pygments_borland"><pre>      ambiguous conversion from derived class &#39;D3&#39; to base class &#39;Base&#39;:
+    class D3 -&gt; class D1 -&gt; class Base
+    class D3 -&gt; class D2 -&gt; class Base
+    Base &amp;base = d3;
+                 ^~
+
+      non-static member &#39;data&#39; found in multiple base-class subobjects of type &#39;Base&#39;:
+    class D3 -&gt; class D1 -&gt; class Base
+    class D3 -&gt; class D2 -&gt; class Base
+    d3.data = 123;
+       ^
+</pre></div>
+
+<p>これを回避するためには明示的に中継するクラスを指定してやる必要がある。</p>
+<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">D1</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">d3</span><span class="p">);</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">=</span> <span class="mi">456</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>  <span class="c1">// =&gt; 123,456</span>
+</pre></div>
+
+<p>でも普通は継承元にそれぞれの別々の親を持つのではなく、共通の1つだけを持っていてほしい。
+それを解決するには仮想継承を使う。</p>
+<div class="pygments_borland"><pre><span class="k">class</span> <span class="nc">D1</span> <span class="o">:</span> <span class="k">public</span> <span class="k">virtual</span> <span class="n">Base</span> <span class="p">{</span> <span class="cm">/* 省略 */</span> <span class="p">};</span>
+<span class="k">class</span> <span class="nc">D2</span> <span class="o">:</span> <span class="k">public</span> <span class="k">virtual</span> <span class="n">Base</span> <span class="p">{</span> <span class="cm">/* 省略 */</span> <span class="p">};</span>
+<span class="k">class</span> <span class="nc">D3</span> <span class="o">:</span> <span class="k">public</span> <span class="n">D1</span><span class="p">,</span> <span class="k">public</span> <span class="n">D2</span> <span class="p">{</span> <span class="cm">/* 省略 */</span> <span class="p">};</span>
+</pre></div>
+
+<p>このようにすればBaseクラスのインスタンスは1つだけになって曖昧性が解消される。</p>
+<div class="pygments_borland"><pre>    <span class="n">D3</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">Base</span> <span class="o">&amp;</span><span class="n">base</span> <span class="o">=</span> <span class="n">d3</span><span class="p">;</span>
+    <span class="n">d3</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D1</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d3</span><span class="p">.</span><span class="n">D2</span><span class="o">::</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>  <span class="c1">// =&gt; 123,123</span>
+</pre></div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" class="hatena-bookmark-button" data-hatena-bookmark-title="C++のdreaded diamondについて" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" data-text="C++のdreaded diamondについて">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="pthreadの取り消しポイント(cancellation-point)についてのメモ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" rel="bookmark" title="Permanent Link to pthreadの取り消しポイント(cancellation point)についてのメモ">pthreadの取り消しポイント(cancellation point)についてのメモ</a></h2>
   <small>March 18, 2014 at 09:41 PM | categories:
@@ -129,6 +256,8 @@ href="/blog/feed/atom" />
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -590,93 +719,6 @@ UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="c言語でtuple"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/07/10/c-tuple/" rel="bookmark" title="Permanent Link to C言語でtuple">C言語でtuple</a></h2>
-  <small>July 10, 2013 at 09:02 PM | categories:
-
-<a href='/blog/category/c'>C</a>, <a href='/blog/category/programming'>programming</a>
- | <a href="http://mojavy.com/blog/2013/07/10/c-tuple/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>Cをつかってるとtupleっぽいものがあれば便利なのに、と思うときが時々あります。</p>
-<p>別にtupleなんてなくても</p>
-<div class="pygments_borland"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-   <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
-   <span class="kt">int</span> <span class="o">*</span><span class="n">i</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">tuple</span><span class="p">;</span>
-</pre></div>
-
-<p>のようにして構造体をつかえばいいのですが、必要になるたびにこれをするのはちょっとめんどくさいですよね。</p>
-<p>というわけで色々試行錯誤してみたところ、以下のようにしてunionの配列にするというのがそこそこ便利だったので紹介します。</p>
-<p>以下は使用例です。</p>
-<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
-
-<span class="k">typedef</span> <span class="k">union</span> <span class="p">{</span>
-    <span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
-    <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">tuple_u</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">tuple_u</span> <span class="n">tuple</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-    <span class="n">tuple</span> <span class="n">t</span> <span class="o">=</span> <span class="p">{</span> <span class="p">{</span> <span class="p">.</span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;hoge&quot;</span> <span class="p">},</span> <span class="p">{</span> <span class="p">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">123</span> <span class="p">}</span> <span class="p">};</span>
-
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s, %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">i</span><span class="p">);</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>C99のdesignated initializerをつかえば初期化もまあそこそこ書きやすいし、型の組み合わせもある程度柔軟にできます。</p>
-<p>C++ではなくあえてCをつかうような人の多くは独自のコンテナライブラリのようなものをもってると思いますが、上記のようなtupleがあれば便利な場面は結構あるのではないかと思います。</p>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/06/15/quicklinks6/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/07/12/reptyr/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/07/10/c-tuple/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/07/10/c-tuple/" class="hatena-bookmark-button" data-hatena-bookmark-title="C言語でtuple" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/07/10/c-tuple/" data-text="C言語でtuple">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/07/10/c-tuple/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/07/10/c-tuple/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/category/programming/2">Next »</a>
 </div>
@@ -704,6 +746,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
@@ -711,7 +754,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/05/difference-between-malloc-and-calloc/" title="malloc+memsetとcallocの違いについて"><p>malloc+memsetとcallocの違いについて</a><span style="font-size: 80%;">(March 05, 2014 at 09:25 PM)</span></li>
       <li><a href="/blog/2014/03/03/implementing-thread-pool/" title="スレッドプールの実装方法について"><p>スレッドプールの実装方法について</a><span style="font-size: 80%;">(March 03, 2014 at 08:58 PM)</span></li>
       <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
-      <li><a href="/blog/2014/02/13/tcp-options-skeeter-bubba/" title="TCPの黒歴史：謎のオプションskeeterとbubbaについて"><p>TCPの黒歴史：謎のオプションskeeterとbubbaについて</a><span style="font-size: 80%;">(February 13, 2014 at 06:00 PM)</span></li>
     </ul>
   </div>
 
@@ -757,6 +799,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/c++">c++</a> (<a href="/blog/category/c++/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
@@ -791,7 +834,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
@@ -820,6 +863,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
