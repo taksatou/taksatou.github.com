@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Thu, 10 Jul 2014 20:01:50 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>EmacsでFlappy Birdっぽいもの書きました</title>
+      <link>http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/</link>
+      <pubDate>Thu, 10 Jul 2014 20:01:50 JST</pubDate>
+      <category><![CDATA[game]]></category>
+      <category><![CDATA[emacs]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/</guid>
+      <description>EmacsでFlappy Birdっぽいもの書きました</description>
+      <content:encoded><![CDATA[<p><a href="http://mattn.kaoriya.net/software/vim/20140709202034.htm">flappyvird</a> にインスパイアされてEmacs版のFlappy Bird書きました。</p>
+<p><img alt="flappymacs" src="https://raw.githubusercontent.com/taksatou/flappymacs/master/data/screenshot.png" /> </p>
+<p><code>flappymacs.el</code>をロードして、<code>M-x flappymacs</code>で遊べます。</p>
+<p>台風で早退したヒマな皆様は遊んでみて下さい。</p>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

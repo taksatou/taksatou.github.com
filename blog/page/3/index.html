@@ -102,6 +102,176 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="あなたのgithub-pagesを無料で高速化する方法"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/02/13/faster-github-pages/" rel="bookmark" title="Permanent Link to あなたのgithub pagesを無料で高速化する方法">あなたのgithub pagesを無料で高速化する方法</a></h2>
+  <small>February 13, 2014 at 09:10 AM | categories:
+
+<a href='/blog/category/web'>web</a>, <a href='/blog/category/github'>github</a>
+ | <a href="http://mojavy.com/blog/2014/02/13/faster-github-pages/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="github" src="/images/github-logo-transparent-200.png" /> </p>
+<p>このブログはgithub pages上に構築していますが、github pagesに引きずられて自分のブログも重くなるということが時々ありました。</p>
+<p>がんばってブログを書いた次の日にアクセスできなくなってたりすると悲しいので何とか高速かつ安定した配信をする方法ないかなーと思って調べてみたところ、なんとgithub pagesに置いたコンテンツをCDNから配信させることができるようになったらしいです!</p>
+<p><a href="https://github.com/blog/1715-faster-more-awesome-github-pages">Faster, More Awesome GitHub Pages</a> </p>
+<p>どういうドメインでgithub pagesを配信しているかによって対応方法は違うので以下を読んで各自適切な設定をして下さい。</p>
+<p><strong>目次</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#github-pages-usernamegithubio">デフォルトのgithub pagesのドメイン( username.github.io ) を使用している場合</a></li>
+<li><a href="#wwwexamplecom">カスタムサブドメイン ( www.example.com ) を使用している場合</a></li>
+<li><a href="#apex-examplecom">Apexドメイン ( example.com ) を使用している場合</a><ul>
+<li><a href="#comdnsimple">お名前.comからDNSimpleに移行する場合</a><ul>
+<li><a href="#1-dnsimple">1. DNSimpleに登録する</a></li>
+<li><a href="#2-dnsimplegithub-pages">2. DNSimpleでgithub pagesとの連携を開始する</a></li>
+<li><a href="#3">3. ネームサーバの設定をする</a></li>
+<li><a href="#4-dns">4. dnsの更新を確認する</a></li>
+<li><a href="#5-cdn">5. CDNの確認</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_1">その他参考</a></li>
+<li><a href="#_2">まとめ</a></li>
+</ul>
+</div>
+<h2 id="github-pages-usernamegithubio">デフォルトのgithub pagesのドメイン( username.github.io ) を使用している場合</h2>
+<p>既に対応しています。
+なにもやる必要はありません。</p>
+<h2 id="wwwexamplecom">カスタムサブドメイン ( www.example.com ) を使用している場合</h2>
+<p>CNAMEの向き先をusername.github.io に向けるだけで対応できます。</p>
+<h2 id="apex-examplecom">Apexドメイン ( example.com ) を使用している場合</h2>
+<p>Apexドメインというのはサブドメインでない基本のドメイン部分のことで、そこを直接github pagesにIPに向くようにAレコードに設定している場合です。</p>
+<p>この場合はDNSのプロバイダがALIASレコードをサポートしていれば、ALIASが <code>username.github.io</code> を向くようにすることで対応できます。</p>
+<p>ALIASレコードに対応していない場合は残念ながらCDNを有効にできません。ちなみにお名前.comはALIASには対応していないので、その場合は他のDNSプロバイダに移行するしかありません。</p>
+<h3 id="comdnsimple">お名前.comからDNSimpleに移行する場合</h3>
+<p>このブログは残念ながらお名前.comでApexドメインをgithub pagesのIPに向けていたのでDNSimpleに移行することにしました。以下はお名前.comからDNSimpleに移行した際の手順です。</p>
+<p>なお、この場合はタイトルに反して無料ではありません。</p>
+<p>(ちなみにここではドメインの移管はせずに、DNSの設定だけをDNSimpleに移しました)</p>
+<h4 id="1-dnsimple">1. DNSimpleに登録する</h4>
+<p>DNSimpleはユーザビリティに主眼を置いたDNSサービスのようで<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 、APIでDNSレコードを更新したりAWSやHerokuやgithub pagesといったクラウドサービスとの連携が簡単にできます。</p>
+<p><a href="https://dnsimple.com/r/4388f43fedebae">
+<img alt="dnsimple" src="/images/dnsimple.png" /> </p>
+<p><strong>DNSimple</strong>
+</a></p>
+<p>登録時に対象ドメインを聞かれるので、そのとき移行したいドメインを入力します。</p>
+<p>ちなみに月額3ドルから<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> ですが30日は無料でつかえます。誰かを紹介すると、紹介した人とされた人の両方の無料期間が伸びます。上のリンクにはキャンペーンコードが埋め込まれているので、この記事を読んだ人はぜひ上のリンクから登録してください。</p>
+<p>登録が完了するだけで一通りのUIが使えるようになりますが、DNS機能が有効になるのは決済情報を入力してからです。</p>
+<h4 id="2-dnsimplegithub-pages">2. DNSimpleでgithub pagesとの連携を開始する</h4>
+<p><a href="https://dnsimple.com/domains">dnsimpleの管理画面</a> に行くとServicesというボタンがあるのでそこからgithub pagesと連携を開始します。</p>
+<h4 id="3">3. ネームサーバの設定をする</h4>
+<p>お名前.com の以下のページの「他のネームサーバーを利用」からDNSimpleのネームサーバを指定します。</p>
+<p><a href="https://www.onamae.com/domain/navi/ns_update/input?btn_id=navi_menu_domain_nsupdate_leftmenu_12">https://www.onamae.com/domain/navi/ns_update/input?btn_id=navi_menu_domain_nsupdate_leftmenu_12</a> </p>
+<p>登録するサーバは以下です。</p>
+<ul>
+<li>ns1.dnsimple.com</li>
+<li>ns2.dnsimple.com</li>
+<li>ns3.dnsimple.com</li>
+<li>ns4.dnsimple.com</li>
+</ul>
+<p><a href="http://support.dnsimple.com/articles/dnsimple-nameservers">参考 - DNSimple Name Servers</a> </p>
+<p>この段階ではお名前.com側で設定しているAレコードはそのまま残しておきます。変更するのはネームサーバのみです。
+そうしておかないと、ネームサーバの変更が伝搬するまでの間にお名前.comに問いあわせが来た場合NXDOMAIN扱いになってします。</p>
+<h4 id="4-dns">4. dnsの更新を確認する</h4>
+<p>更新前は以下</p>
+<div class="pygments_borland"><pre>% dig mojavy.com
+mojavy.com.             259     IN      A       207.97.227.245
+</pre></div>
+
+<p>もしくは以下</p>
+<div class="pygments_borland"><pre>% dig mojavy.com
+mojavy.com.             259     IN      A       204.232.175.78
+</pre></div>
+
+<p>のようになっていたはずですが、反映が完了すれば上記とは違うIPが返ってくるはずです。
+反映までには時間がかかるので気長に待ちます。完全に反映されるには3日ほどかかるようです。</p>
+<div class="pygments_borland"><pre>% dig mojavy.com
+mojavy.com.             3600    IN      A       103.245.222.133
+
+% dig taksatou.github.io
+taksatou.github.io.     2973    IN      CNAME   github.map.fastly.net.
+github.map.fastly.net.  15      IN      A       103.245.222.133
+</pre></div>
+
+<h4 id="5-cdn">5. CDNの確認</h4>
+<p><a href="http://www.webpagetest.org/">webpagetest</a> のような計測ツールを使ってもいいですが、CDNからのレスポンスは<code>X-xxx</code>のようなヘッダがつくようなのでcurlでも確認できます。</p>
+<div class="pygments_borland"><pre>% curl -v mojavy.com 2&gt;&amp;1  &gt; /dev/null  | grep &#39;X-&#39;
+&lt; X-Served-By: cache-ty67-TYO
+&lt; X-Cache: HIT
+&lt; X-Cache-Hits: 5
+&lt; X-Timer: S1392104522.668435574,VS0,VE0
+</pre></div>
+
+<p>もう完全に反映されたと思ったらお名前.com側で設定しているAレコードは無効にして大丈夫です。</p>
+<h2 id="_1">その他参考</h2>
+<ul>
+<li><a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">https://help.github.com/articles/setting-up-a-custom-domain-with-pages</a> </li>
+</ul>
+<h2 id="_2">まとめ</h2>
+<ul>
+<li>github pagesをつかえば無料でCDNから配信できる!</li>
+<li>Apexドメインは慎重に使うべきだったという教訓を得た</li>
+<li>DNSimple便利</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>The satisfaction of not having to use GoDaddy!  らしい&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>登録ドメイン数に応じて自動的にプランが切りかわるようです。&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/02/13/faster-github-pages/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/02/13/faster-github-pages/" class="hatena-bookmark-button" data-hatena-bookmark-title="あなたのgithub pagesを無料で高速化する方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/02/13/faster-github-pages/" data-text="あなたのgithub pagesを無料で高速化する方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/02/13/faster-github-pages/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/02/13/faster-github-pages/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="全文検索システムの比較---elasticsearch-vs-solr-vs-amazon-cloudsearch"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/" rel="bookmark" title="Permanent Link to 全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch">全文検索システムの比較 - Elasticsearch vs Solr vs Amazon CloudSearch</a></h2>
   <small>February 10, 2014 at 01:05 AM | categories:
@@ -703,185 +873,6 @@ emacsのロックファイルがあると落ちてしまう問題があったの
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="r-tutorial-part2-chapter08-(numerical-measures)"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" rel="bookmark" title="Permanent Link to R Tutorial Part2 Chapter08 (Numerical Measures)">R Tutorial Part2 Chapter08 (Numerical Measures)</a></h2>
-  <small>October 28, 2013 at 02:11 AM | categories:
-
-<a href='/blog/category/note'>note</a>, <a href='/blog/category/statistics'>statistics</a>, <a href='/blog/category/r'>R</a>
- | <a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>これは<a href="http://www.r-tutor.com/elementary-statistics/numerical-measures">R Tutorial Part2 Chapter08 (Numerical Measures)</a> のノートです。
-<a href="/slide/2013/10/26/r-tutor-chap08/">slideはこちら</a> 。</p>
-<h3 id="mean-median">mean, median</h3>
-<ul>
-<li>mean: 平均</li>
-<li>median: 中央値、中間値。データ数が偶数個の場合は前後の2つの数の平均。</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; library(MASS)
-&gt; mean(faithful$eruption)
-[1] 3.487783
-&gt; median(faithful$eruption)
-[1] 4
-</pre></div>
-
-<h3 id="quartile-quantile-percentile">quartile, quantile, percentile</h3>
-<ul>
-<li>first quartile, lower quartile: ソートされたデータの数を１：３に分ける位置の値。 第１四分位</li>
-<li>second quartile, median: 中間値</li>
-<li>third quartile, upper quartile: 第３四分位</li>
-<li>quantile: 変位値</li>
-<li>percentile: 百分位数</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; quantile(faithful$eruption)
-     0%     25%     50%     75%    100% 
-1.60000 2.16275 4.00000 4.45425 5.10000 
-&gt; x = sort(faithful$eruption)
-&gt; x[1+floor((length(x) - 1)/4)] + (x[1+ceiling((length(x) - 1)/4)] - x[1+floor((length(x) - 1)/4)]) * 3 / 4
-[1] 2.16275
-&gt; quantile(faithful$eruption, c(.32, .57, .98))
-    32%     57%     98% 
-2.39524 4.13300 4.93300 
-</pre></div>
-
-<h3 id="max-min-range">max, min, range</h3>
-<div class="pygments_borland"><pre>&gt; max(faithful$eruption)
-[1] 5.1
-&gt; min(faithful$eruption)
-[1] 1.6
-&gt; max(faithful$eruption) - min(faithful$eruption)
-[1] 3.5
-</pre></div>
-
-<h3 id="interquartile-range">interquartile range</h3>
-<ul>
-<li>interquartile range: 四分位範囲, upper quartile - lower quartile</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; IQR(faithful$eruption)
-[1] 2.2915
-&gt; x = quantile(faithful$eruption)
-&gt; x[4] - x[2]
-   75% 
-2.2915 
-</pre></div>
-
-<h3 id="box-plot">box plot</h3>
-<ul>
-<li>boxplot: 箱ひげ図</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; boxplot(faithful$eruption, horizontal=TRUE)
-</pre></div>
-
-<p><img alt="boxplot" src="/images/numerical-measures4x.png" /> </p>
-<p>※ 箱のなかの線はmedian</p>
-<h3 id="variance-standard-deviation">variance, standard deviation</h3>
-<ul>
-<li>variance: 分散。Rのvar関数は<a href="http://www.sist.ac.jp/~kanakubo/research/statistic/fuhenbunsan.html">不偏分散</a> </li>
-<li>standard deviation: 標準偏差</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; var(faithful$eruption)
-[1] 1.302728
-&gt; sd(faithful$eruption)
-[1] 1.141371
-
-&gt; var2 &lt;- function(x) { sum((x - mean(x)) ^ 2) / length(x) }   # 普通の分散
-&gt; var2(faithful$eruption)
-[1] 1.297939
-</pre></div>
-
-<h3 id="covariance-correlation-coefficient">covariance, correlation coefficient</h3>
-<ul>
-<li>covariance: 共分散。2 組の対応するデータ間での、平均からの偏差の積の平均値。</li>
-<li>correlation coefficient: 相関係数。共分散をそれぞれのデータの標準偏差の積で割ったもの。</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; cov(faithful$eruption, faithful$waiting)
-[1] 13.97781
-&gt; cor(faithful$eruption, faithful$waiting)
-[1] 0.9008112
-</pre></div>
-
-<p>correlation coefficientが1に近いほど正の相関があるといえる</p>
-<h3 id="e1071">e1071</h3>
-<blockquote>
-<p>Functions for latent class analysis, short time Fourier transform, fuzzy clustering, support vector machines, shortest path computation, bagged clustering, naive Bayes classifier</p>
-</blockquote>
-<div class="pygments_borland"><pre>&gt; install.packages(&#39;e1071&#39;)
-</pre></div>
-
-<p><a href="http://cran.r-project.org/web/packages/e1071/index.html">http://cran.r-project.org/web/packages/e1071/index.html</a> </p>
-<h3 id="central-moment">central moment</h3>
-<ul>
-<li>central moment： 中心積率。標本分散は2次のcentral moment</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; library(e1071)
-&gt; moment(faithful$eruption, order=3, center=TRUE)
-[1] -0.6149059
-</pre></div>
-
-<h3 id="skewness-kurtosis">skewness, kurtosis</h3>
-<ul>
-<li>skewness: 歪度。対象性の度合いの指標。一般に、skewness &lt; 0 ならばmean &lt; median でそのデータの分散はleft skewed という。skewness &gt; 0 ならばmean &gt; median でright skewed という。</li>
-<li>kurtosis: 尖度。分布の尖り具合の指標。kurtosis &lt; 0 ならフラットな分布になりplatykurtic(緩尖な)という。kurtosis &gt; 0ならとがった分布になりleptokurticという。正規分布の場合は0になりmesokurticという。</li>
-</ul>
-<div class="pygments_borland"><pre>&gt; skewness(faithful$eruption)
-[1] -0.4135498
-&gt; kurtosis(faithful$eruption)
-[1] -1.511605
-</pre></div>
-
-<h3 id="misc">misc</h3>
-<ul>
-<li>この項は統計でよくつかう関数のまとめになってます</li>
-<li>各関数の詳細はhelpを参照</li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/10/18/revealjs/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" class="hatena-bookmark-button" data-hatena-bookmark-title="R Tutorial Part2 Chapter08 (Numerical Measures)" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" data-text="R Tutorial Part2 Chapter08 (Numerical Measures)">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../2">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -911,6 +902,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
       <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
@@ -918,7 +910,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/05/difference-between-malloc-and-calloc/" title="malloc+memsetとcallocの違いについて"><p>malloc+memsetとcallocの違いについて</a><span style="font-size: 80%;">(March 05, 2014 at 09:25 PM)</span></li>
       <li><a href="/blog/2014/03/03/implementing-thread-pool/" title="スレッドプールの実装方法について"><p>スレッドプールの実装方法について</a><span style="font-size: 80%;">(March 03, 2014 at 08:58 PM)</span></li>
-      <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
     </ul>
   </div>
 
@@ -971,8 +962,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/game">game</a> (<a href="/blog/category/game/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/git">git</a> (<a href="/blog/category/git/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/github">github</a> (<a href="/blog/category/github/feed">rss</a>) (1)</li>
@@ -1028,7 +1020,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>

@@ -102,6 +102,185 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="r-tutorial-part2-chapter08-(numerical-measures)"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" rel="bookmark" title="Permanent Link to R Tutorial Part2 Chapter08 (Numerical Measures)">R Tutorial Part2 Chapter08 (Numerical Measures)</a></h2>
+  <small>October 28, 2013 at 02:11 AM | categories:
+
+<a href='/blog/category/note'>note</a>, <a href='/blog/category/statistics'>statistics</a>, <a href='/blog/category/r'>R</a>
+ | <a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>これは<a href="http://www.r-tutor.com/elementary-statistics/numerical-measures">R Tutorial Part2 Chapter08 (Numerical Measures)</a> のノートです。
+<a href="/slide/2013/10/26/r-tutor-chap08/">slideはこちら</a> 。</p>
+<h3 id="mean-median">mean, median</h3>
+<ul>
+<li>mean: 平均</li>
+<li>median: 中央値、中間値。データ数が偶数個の場合は前後の2つの数の平均。</li>
+</ul>
+<div class="pygments_borland"><pre>&gt; library(MASS)
+&gt; mean(faithful$eruption)
+[1] 3.487783
+&gt; median(faithful$eruption)
+[1] 4
+</pre></div>
+
+<h3 id="quartile-quantile-percentile">quartile, quantile, percentile</h3>
+<ul>
+<li>first quartile, lower quartile: ソートされたデータの数を１：３に分ける位置の値。 第１四分位</li>
+<li>second quartile, median: 中間値</li>
+<li>third quartile, upper quartile: 第３四分位</li>
+<li>quantile: 変位値</li>
+<li>percentile: 百分位数</li>
+</ul>
+<div class="pygments_borland"><pre>&gt; quantile(faithful$eruption)
+     0%     25%     50%     75%    100% 
+1.60000 2.16275 4.00000 4.45425 5.10000 
+&gt; x = sort(faithful$eruption)
+&gt; x[1+floor((length(x) - 1)/4)] + (x[1+ceiling((length(x) - 1)/4)] - x[1+floor((length(x) - 1)/4)]) * 3 / 4
+[1] 2.16275
+&gt; quantile(faithful$eruption, c(.32, .57, .98))
+    32%     57%     98% 
+2.39524 4.13300 4.93300 
+</pre></div>
+
+<h3 id="max-min-range">max, min, range</h3>
+<div class="pygments_borland"><pre>&gt; max(faithful$eruption)
+[1] 5.1
+&gt; min(faithful$eruption)
+[1] 1.6
+&gt; max(faithful$eruption) - min(faithful$eruption)
+[1] 3.5
+</pre></div>
+
+<h3 id="interquartile-range">interquartile range</h3>
+<ul>
+<li>interquartile range: 四分位範囲, upper quartile - lower quartile</li>
+</ul>
+<div class="pygments_borland"><pre>&gt; IQR(faithful$eruption)
+[1] 2.2915
+&gt; x = quantile(faithful$eruption)
+&gt; x[4] - x[2]
+   75% 
+2.2915 
+</pre></div>
+
+<h3 id="box-plot">box plot</h3>
+<ul>
+<li>boxplot: 箱ひげ図</li>
+</ul>
+<div class="pygments_borland"><pre>&gt; boxplot(faithful$eruption, horizontal=TRUE)
+</pre></div>
+
+<p><img alt="boxplot" src="/images/numerical-measures4x.png" /> </p>
+<p>※ 箱のなかの線はmedian</p>
+<h3 id="variance-standard-deviation">variance, standard deviation</h3>
+<ul>
+<li>variance: 分散。Rのvar関数は<a href="http://www.sist.ac.jp/~kanakubo/research/statistic/fuhenbunsan.html">不偏分散</a> </li>
+<li>standard deviation: 標準偏差</li>
+</ul>
+<div class="pygments_borland"><pre>&gt; var(faithful$eruption)
+[1] 1.302728
+&gt; sd(faithful$eruption)
+[1] 1.141371
+
+&gt; var2 &lt;- function(x) { sum((x - mean(x)) ^ 2) / length(x) }   # 普通の分散
+&gt; var2(faithful$eruption)
+[1] 1.297939
+</pre></div>
+
+<h3 id="covariance-correlation-coefficient">covariance, correlation coefficient</h3>
+<ul>
+<li>covariance: 共分散。2 組の対応するデータ間での、平均からの偏差の積の平均値。</li>
+<li>correlation coefficient: 相関係数。共分散をそれぞれのデータの標準偏差の積で割ったもの。</li>
+</ul>
+<div class="pygments_borland"><pre>&gt; cov(faithful$eruption, faithful$waiting)
+[1] 13.97781
+&gt; cor(faithful$eruption, faithful$waiting)
+[1] 0.9008112
+</pre></div>
+
+<p>correlation coefficientが1に近いほど正の相関があるといえる</p>
+<h3 id="e1071">e1071</h3>
+<blockquote>
+<p>Functions for latent class analysis, short time Fourier transform, fuzzy clustering, support vector machines, shortest path computation, bagged clustering, naive Bayes classifier</p>
+</blockquote>
+<div class="pygments_borland"><pre>&gt; install.packages(&#39;e1071&#39;)
+</pre></div>
+
+<p><a href="http://cran.r-project.org/web/packages/e1071/index.html">http://cran.r-project.org/web/packages/e1071/index.html</a> </p>
+<h3 id="central-moment">central moment</h3>
+<ul>
+<li>central moment： 中心積率。標本分散は2次のcentral moment</li>
+</ul>
+<div class="pygments_borland"><pre>&gt; library(e1071)
+&gt; moment(faithful$eruption, order=3, center=TRUE)
+[1] -0.6149059
+</pre></div>
+
+<h3 id="skewness-kurtosis">skewness, kurtosis</h3>
+<ul>
+<li>skewness: 歪度。対象性の度合いの指標。一般に、skewness &lt; 0 ならばmean &lt; median でそのデータの分散はleft skewed という。skewness &gt; 0 ならばmean &gt; median でright skewed という。</li>
+<li>kurtosis: 尖度。分布の尖り具合の指標。kurtosis &lt; 0 ならフラットな分布になりplatykurtic(緩尖な)という。kurtosis &gt; 0ならとがった分布になりleptokurticという。正規分布の場合は0になりmesokurticという。</li>
+</ul>
+<div class="pygments_borland"><pre>&gt; skewness(faithful$eruption)
+[1] -0.4135498
+&gt; kurtosis(faithful$eruption)
+[1] -1.511605
+</pre></div>
+
+<h3 id="misc">misc</h3>
+<ul>
+<li>この項は統計でよくつかう関数のまとめになってます</li>
+<li>各関数の詳細はhelpを参照</li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/10/18/revealjs/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" class="hatena-bookmark-button" data-hatena-bookmark-title="R Tutorial Part2 Chapter08 (Numerical Measures)" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" data-text="R Tutorial Part2 Chapter08 (Numerical Measures)">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="reveal.js-をつかってブログ記事からスライドを生成する"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/18/revealjs/" rel="bookmark" title="Permanent Link to reveal.js をつかってブログ記事からスライドを生成する">reveal.js をつかってブログ記事からスライドを生成する</a></h2>
   <small>October 18, 2013 at 10:00 PM | categories:
@@ -538,98 +717,6 @@ href="/blog/feed/atom" />
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="chef-soloでauthenticationfailedといわれたときの対応"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" rel="bookmark" title="Permanent Link to chef soloでAuthenticationFailedといわれたときの対応">chef soloでAuthenticationFailedといわれたときの対応</a></h2>
-  <small>September 09, 2013 at 08:43 PM | categories:
-
-<a href='/blog/category/chef'>chef</a>, <a href='/blog/category/ruby'>ruby</a>
- | <a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>公開鍵認証なホストに対してパスフレーズ入力無しでsshログインができるにもかかわらず、</p>
-<div class="pygments_borland"><pre><span class="nv">$ </span>knife solo cook myhost
-Running Chef on myhost...
-Checking Chef version...
-Enter the password <span class="k">for </span>username@myhost:
-ERROR: Net::SSH::AuthenticationFailed: username
-</pre></div>
-
-<p>のようにいわれてchef soloの実行に失敗してしまうときがある。</p>
-<p>パスフレーズ入力無しでsshできたということは、普通は以下のうちの少くとも1つは満たされている。</p>
-<ol>
-<li>ssh-agentに対象の秘密鍵が登録されている</li>
-<li>デフォルトパス($HOME/.ssh/id_rsa とか)に対象のパスフレーズ無し秘密鍵が保存されている</li>
-<li>ssh_configでパスフレーズ無し秘密鍵を指定している</li>
-</ol>
-<p>それなのに<code>AuthenticationFailed</code>失敗してしまうのは、Net:SSHがデフォルトでは公開鍵認証を試行しない場合があるため。 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
-これを回避するには、ssh_configで<code>PubkeyAuthentication yes</code>を明示すればよい。</p>
-<p>なお、<code>Net::SSH</code>がどのような動きをしているかは以下のスニペットを試すとよい。</p>
-<div class="pygments_borland"><pre><span class="nb">require</span> <span class="s1">&#39;net/ssh&#39;</span>
-<span class="no">Net</span><span class="o">::</span><span class="no">SSH</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="s2">&quot;myhost&quot;</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="ss">:verbose</span> <span class="o">=&gt;</span> <span class="ss">:debug</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">p</span> <span class="n">x</span> <span class="p">}</span>
-</pre></div>
-
-<h3 id="_1">備考</h3>
-<p>使ったのは以下のバージョン</p>
-<ul>
-<li>chef: 11.6.0</li>
-<li>knife-solo: 0.3.0</li>
-</ul>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>この挙動は<code>knife solo</code>コマンドに<code>-i</code>オプションを渡しても変わらなかった。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/07/12/reptyr/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" class="hatena-bookmark-button" data-hatena-bookmark-title="chef soloでAuthenticationFailedといわれたときの対応" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" data-text="chef soloでAuthenticationFailedといわれたときの対応">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../3">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -659,6 +746,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
       <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
@@ -666,7 +754,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
       <li><a href="/blog/2014/03/05/difference-between-malloc-and-calloc/" title="malloc+memsetとcallocの違いについて"><p>malloc+memsetとcallocの違いについて</a><span style="font-size: 80%;">(March 05, 2014 at 09:25 PM)</span></li>
       <li><a href="/blog/2014/03/03/implementing-thread-pool/" title="スレッドプールの実装方法について"><p>スレッドプールの実装方法について</a><span style="font-size: 80%;">(March 03, 2014 at 08:58 PM)</span></li>
-      <li><a href="/blog/2014/02/16/shell-script-ensure-one-process/" title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"><p>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a><span style="font-size: 80%;">(February 16, 2014 at 06:35 PM)</span></li>
     </ul>
   </div>
 
@@ -719,8 +806,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/game">game</a> (<a href="/blog/category/game/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/git">git</a> (<a href="/blog/category/git/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/github">github</a> (<a href="/blog/category/github/feed">rss</a>) (1)</li>
@@ -776,7 +864,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>
       <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
       <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>

@@ -10,10 +10,23 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sun, 21 Apr 2013 16:56:41 GMT</pubDate>
+    <pubDate>Thu, 10 Jul 2014 20:01:50 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>EmacsでFlappy Birdっぽいもの書きました</title>
+      <link>http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/</link>
+      <pubDate>Thu, 10 Jul 2014 20:01:50 JST</pubDate>
+      <category><![CDATA[game]]></category>
+      <category><![CDATA[emacs]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/</guid>
+      <description>EmacsでFlappy Birdっぽいもの書きました</description>
+      <content:encoded><![CDATA[<p><a href="http://mattn.kaoriya.net/software/vim/20140709202034.htm">flappyvird</a> にインスパイアされてEmacs版のFlappy Bird書きました。</p>
+<p><img alt="flappymacs" src="https://raw.githubusercontent.com/taksatou/flappymacs/master/data/screenshot.png" /> </p>
+<p><code>flappymacs.el</code>をロードして、<code>M-x flappymacs</code>で遊べます。</p>
+<p>台風で早退したヒマな皆様は遊んでみて下さい。</p>]]></content:encoded>
+    </item>
     <item>
       <title>inf-php.elがmelpaに登録されました</title>
       <link>http://mojavy.com/blog/2013/04/21/inf-php-on-melpa/</link>
