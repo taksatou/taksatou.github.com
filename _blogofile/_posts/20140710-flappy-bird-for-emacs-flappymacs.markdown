@@ -10,4 +10,4 @@ title: EmacsでFlappy Birdっぽいもの書きました
 
 `flappymacs.el`をロードして、`M-x flappymacs`で遊べます。
 
-台風で早退したヒマな皆様は遊んでみて下さい。
+台風で早退してヒマな皆様は遊んでみて下さい。

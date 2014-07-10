@@ -25,7 +25,7 @@
       <content:encoded><![CDATA[<p><a href="http://mattn.kaoriya.net/software/vim/20140709202034.htm">flappyvird</a> にインスパイアされてEmacs版のFlappy Bird書きました。</p>
 <p><img alt="flappymacs" src="https://raw.githubusercontent.com/taksatou/flappymacs/master/data/screenshot.png" /> </p>
 <p><code>flappymacs.el</code>をロードして、<code>M-x flappymacs</code>で遊べます。</p>
-<p>台風で早退したヒマな皆様は遊んでみて下さい。</p>]]></content:encoded>
+<p>台風で早退してヒマな皆様は遊んでみて下さい。</p>]]></content:encoded>
     </item>
     <item>
       <title>C++のdreaded diamondについて</title>
