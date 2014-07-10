@@ -4,7 +4,7 @@ date: 2014/07/10 20:01:50
 title: EmacsでFlappy Birdっぽいもの書きました
 ---
 
-[flappyvird](http://mattn.kaoriya.net/software/vim/20140709202034.htm) にインスパイアされてEmacs版のFlappy Bird書きました。
+[flappyvird](http://mattn.kaoriya.net/software/vim/20140709202034.htm) にインスパイアされて[Emacs版のFlappy Bird](https://github.com/taksatou/flappymacs)書きました。
 
 [flappymacs](https://github.com/taksatou/flappymacs ) 
 

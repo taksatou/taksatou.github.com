@@ -22,7 +22,7 @@
       <category><![CDATA[emacs]]></category>
       <guid isPermaLink="true">http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/</guid>
       <description>EmacsでFlappy Birdっぽいもの書きました</description>
-      <content:encoded><![CDATA[<p><a href="http://mattn.kaoriya.net/software/vim/20140709202034.htm">flappyvird</a> にインスパイアされてEmacs版のFlappy Bird書きました。</p>
+      <content:encoded><![CDATA[<p><a href="http://mattn.kaoriya.net/software/vim/20140709202034.htm">flappyvird</a> にインスパイアされて<a href="https://github.com/taksatou/flappymacs">Emacs版のFlappy Bird</a>書きました。</p>
 <p><a href="https://github.com/taksatou/flappymacs">flappymacs</a> </p>
 <p><img alt="flappymacs" src="https://raw.githubusercontent.com/taksatou/flappymacs/master/data/screenshot.png" /> </p>
 <p><code>flappymacs.el</code>をロードして、<code>M-x flappymacs</code>で遊べます。</p>
