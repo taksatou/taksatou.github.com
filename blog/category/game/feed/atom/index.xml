@@ -27,7 +27,8 @@
     <category scheme="http://mojavy.com/blog" term="emacs" />
     <summary type="html"><![CDATA[flappymacs がMELPAに登録されました]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2014/07/16/flappymacs-melpa/"><![CDATA[<p><a href="http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/">flappymacs</a> がMELPAに登録されました。</p>
-<div class="pygments_borland"><pre>(add-to-list &#39;package-archives &#39;(&quot;melpa&quot; . &quot;http://melpa.milkbox.net/packages/&quot;) t)
+<div class="pygments_borland"><pre>(add-to-list
+ &#39;package-archives &#39;(&quot;melpa&quot; . &quot;http://melpa.milkbox.net/packages/&quot;) t)
 </pre></div>
 
 <p>を設定して、<code>M-x package-list-packages</code> からflappymacsを探してインストールするとすぐに遊べます。</p>]]></content>
