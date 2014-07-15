@@ -50,6 +50,7 @@
 <p><a href="https://github.com/taksatou/flappymacs">flappymacs</a> </p>
 <p><img alt="flappymacs" src="https://raw.githubusercontent.com/taksatou/flappymacs/master/data/screenshot.png" /> </p>
 <p><code>flappymacs.el</code>をロードして、<code>M-x flappymacs</code>で遊べます。</p>
-<p>台風で早退してヒマな皆様は遊んでみて下さい。</p>]]></content>
+<h4 id="20140716">2014/07/16 追記</h4>
+<p><a href="http://mojavy.com/blog/2014/07/16/flappymacs-melpa/">MELPAに登録されました</a> </p>]]></content>
   </entry>
 </feed>

@@ -12,4 +12,7 @@ title: EmacsでFlappy Birdっぽいもの書きました
 
 `flappymacs.el`をロードして、`M-x flappymacs`で遊べます。
 
-台風で早退してヒマな皆様は遊んでみて下さい。
+
+#### 2014/07/16 追記 
+
+[MELPAに登録されました](http://mojavy.com/blog/2014/07/16/flappymacs-melpa/ ) 
