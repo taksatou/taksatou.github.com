@@ -23,7 +23,10 @@
       <guid isPermaLink="true">http://mojavy.com/blog/2014/07/16/flappymacs-melpa/</guid>
       <description>flappymacs がMELPAに登録されました</description>
       <content:encoded><![CDATA[<p><a href="http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/">flappymacs</a> がMELPAに登録されました。</p>
-<p><code>(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)</code> を設定して、<code>M-x package-list-packages</code> からflappymacsを探してインストールするとすぐに遊べます。</p>]]></content:encoded>
+<div class="pygments_borland"><pre>(add-to-list &#39;package-archives &#39;(&quot;melpa&quot; . &quot;http://melpa.milkbox.net/packages/&quot;) t)
+</pre></div>
+
+<p>を設定して、<code>M-x package-list-packages</code> からflappymacsを探してインストールするとすぐに遊べます。</p>]]></content:encoded>
     </item>
     <item>
       <title>EmacsでFlappy Birdっぽいもの書きました</title>
