@@ -7,12 +7,28 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2014-07-10T20:01:50Z</updated>
+  <updated>2014-07-16T01:07:04Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[flappymacs がMELPAに登録されました]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/07/16/flappymacs-melpa/" />
+    <id>http://mojavy.com/blog/2014/07/16/flappymacs-melpa/</id>
+    <updated>2014-07-16T01:07:04Z</updated>
+    <published>2014-07-16T01:07:04Z</published>
+    <category scheme="http://mojavy.com/blog" term="game" />
+    <category scheme="http://mojavy.com/blog" term="emacs" />
+    <summary type="html"><![CDATA[flappymacs がMELPAに登録されました]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2014/07/16/flappymacs-melpa/"><![CDATA[<p><a href="http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/">flappymacs</a> がMELPAに登録されました。</p>
+<p><code>(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)</code> を設定して、<code>M-x package-list-packages</code> からflappymacsを探してインストールするとすぐに遊べます。</p>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -548,59 +564,5 @@ UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通�
 
 <p>タイムアウトを設定したければ<code>-w</code>オプションをつかえばよい。</p>
 <p>リードライトロックとしてつかえるので、更新系のスクリプトは1つしか起動したくないけど参照系は並列実行を許す、みたいなことも比較的簡単にできる。</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[TCPの黒歴史：謎のオプションskeeterとbubbaについて]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/" />
-    <id>http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/</id>
-    <updated>2014-02-13T18:00:22Z</updated>
-    <published>2014-02-13T18:00:22Z</published>
-    <category scheme="http://mojavy.com/blog" term="web" />
-    <category scheme="http://mojavy.com/blog" term="history" />
-    <summary type="html"><![CDATA[TCPの黒歴史：謎のオプションskeeterとbubbaについて]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/"><![CDATA[<p><img alt="ns" src="/images/netscape-150.png" /> </p>
-<p>TCPについて調べてたら、<code>skeeter</code>と<code>bubba</code>という謎のオプションを見つけた。
-調べてみたところ、TCPを策定した人達の黒歴史らしい。</p>
-<ul>
-<li><a href="http://mailman.postel.org/pipermail/internet-history/2001-November/000073.html">TCP options: Bubba and Skeeter</a> </li>
-</ul>
-<p>以下意訳です。</p>
-<hr>
-
-<p>あー、これは忘れられそうもないんだけど黒歴史だね。</p>
-<p>ben levyとstevと私<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> がFTPをやってたときにつくったものなんだ。
-Bridghan<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>とstevがけしかけたんだけど、アイディアはシンプルで、鍵管理システムなしに暗号化できるように、デフィー・ヘルマン鍵共有をtcpで直接するためのものだった。
-それには認証の仕組みは想定してなくて、パスワードみたいなものが共有されている前提だったんだ。
-シンプルな実装で大体は動いてたんだけど、介入者攻撃には脆弱だったのが欠点だった。</p>
-<p>なんで"skeeter"<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>  と"bubba"<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> かって？それはstevに聞いてくれ。</p>
-<hr>
-
-<p>なかなかセンスのあるネーミングですね。気になる人はstev氏に聞いてみてください。</p>
-<p><strong>参考</strong></p>
-<ul>
-<li><a href="http://www.iana.org/assignments/tcp-parameters/tcp-parameters.xhtml">Transmission Control Protocol (TCP) Parameters</a> </li>
-<li><a href="http://www.ietf.org/mail-archive/web/tcpm/current/msg05424.html">Re: [tcpm] IANA TCP options registry ...</a> </li>
-</ul>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>Kastenholz, Frank&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:2">
-<p>たぶんDave Bridgham のこと <a href="http://en.wikipedia.org/wiki/FTP_Software">http://en.wikipedia.org/wiki/FTP_Software</a>&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-<li id="fn:3">
-<p>トンボのことらしい&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-<li id="fn:4">
-<p>でかい人のことらしい&#160;<a href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>]]></content>
   </entry>
 </feed>

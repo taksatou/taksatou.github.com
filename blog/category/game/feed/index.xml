@@ -10,10 +10,21 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Thu, 10 Jul 2014 20:01:50 GMT</pubDate>
+    <pubDate>Wed, 16 Jul 2014 01:07:04 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>flappymacs がMELPAに登録されました</title>
+      <link>http://mojavy.com/blog/2014/07/16/flappymacs-melpa/</link>
+      <pubDate>Wed, 16 Jul 2014 01:07:04 JST</pubDate>
+      <category><![CDATA[game]]></category>
+      <category><![CDATA[emacs]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/07/16/flappymacs-melpa/</guid>
+      <description>flappymacs がMELPAに登録されました</description>
+      <content:encoded><![CDATA[<p><a href="http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/">flappymacs</a> がMELPAに登録されました。</p>
+<p><code>(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)</code> を設定して、<code>M-x package-list-packages</code> からflappymacsを探してインストールするとすぐに遊べます。</p>]]></content:encoded>
+    </item>
     <item>
       <title>EmacsでFlappy Birdっぽいもの書きました</title>
       <link>http://mojavy.com/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/</link>
