@@ -10,10 +10,29 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Wed, 16 Jul 2014 01:07:04 GMT</pubDate>
+    <pubDate>Mon, 06 Oct 2014 21:05:33 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>www2014のアドテク関連のResearch Trackメモ</title>
+      <link>http://mojavy.com/blog/2014/10/06/www2014-adtech-research-trach/</link>
+      <pubDate>Mon, 06 Oct 2014 21:05:33 JST</pubDate>
+      <category><![CDATA[adtech]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/10/06/www2014-adtech-research-trach/</guid>
+      <description>www2014のアドテク関連のResearch Trackメモ</description>
+      <content:encoded><![CDATA[<p><a href="http://www2014.kr/program/research-track/">www2014</a> のResearch Trackに<code>Online Experiments &amp; Advertising</code>というのがあったので、概要だけメモ。</p>
+<h2 id="adscape-harvesting-and-analyzing-online-display-ads"><a href="http://dl.acm.org/citation.cfm?id=2567992">Adscape: Harvesting and Analyzing Online Display Ads</a></h2>
+<p>クローラを用いて広告データを収集することによって、現状のディスプレイ広告でどのようなターゲティングが行われているのかについてを分析している。
+340通りのユーザプロファイルを用いて180件のウェブサイトをクロールし、17万5000件の広告を収集したとのこと。</p>
+<p>プロファイルの内容によってどのカテゴリの広告が配信されやすいか、とかウェブページあたりの広告主数の分布とか実験結果は結構おもしろい。</p>
+<h2 id="statistical-inference-in-two-stage-online-controlled-experiments-with-treatment-selection-and-validation"><a href="http://dl.acm.org/citation.cfm?id=2568028">Statistical Inference in Two-Stage Online Controlled Experiments with Treatment Selection and Validation</a></h2>
+<p>より進んだA/Bテストの方法について。Bingのデータを用いているが、他の分野でも適用できる。
+Bonferroni法やHolm法といった従来の多重比較における補正方法より実用的なものが紹介されている。</p>
+<h2 id="an-experimental-evaluation-of-bidders-behavior-in-ad-auctions"><a href="http://dl.acm.org/citation.cfm?id=2568004">An Experimental Evaluation of Bidders’ Behavior in Ad Auctions</a></h2>
+<p>実際に人間を使ってadwords的なオークションのゲームを行い、理論通りの挙動をするかを検証するというもの。
+概ね期待通りの価格に近づくが、予想に反して平衡に逹しないという結果が得られたとのこと。</p>]]></content:encoded>
+    </item>
     <item>
       <title>flappymacs がMELPAに登録されました</title>
       <link>http://mojavy.com/blog/2014/07/16/flappymacs-melpa/</link>
@@ -499,27 +518,6 @@ UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通�
 </li>
 </ol>
 </div>]]></content:encoded>
-    </item>
-    <item>
-      <title>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</title>
-      <link>http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/</link>
-      <pubDate>Sun, 16 Feb 2014 18:35:51 JST</pubDate>
-      <category><![CDATA[unix]]></category>
-      <category><![CDATA[shell]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/</guid>
-      <description>シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</description>
-      <content:encoded><![CDATA[<p><code>flock(1)</code>を使うのが一番安全かつ簡単</p>
-<div class="pygments_borland"><pre><span class="nv">LOCKFILE</span><span class="o">=</span>/tmp/my.lockfile
-
-<span class="o">(</span>
-    flock -n 200 <span class="o">||</span> <span class="nb">exit </span>1
-
-    <span class="c"># do something</span>
-<span class="o">)</span> 200&gt;<span class="nv">$LOCKFILE</span>
-</pre></div>
-
-<p>タイムアウトを設定したければ<code>-w</code>オプションをつかえばよい。</p>
-<p>リードライトロックとしてつかえるので、更新系のスクリプトは1つしか起動したくないけど参照系は並列実行を許す、みたいなことも比較的簡単にできる。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>
