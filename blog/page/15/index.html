@@ -102,6 +102,125 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="objective-cのプロトコルとデリゲーションについてのメモ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" rel="bookmark" title="Permanent Link to objective-cのプロトコルとデリゲーションについてのメモ">objective-cのプロトコルとデリゲーションについてのメモ</a></h2>
+  <small>July 17, 2012 at 06:30 PM | categories:
+
+<a href='/blog/category/objective-c'>objective-c</a>
+ | <a href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="objective-c" src="/images/nextstep-logo.png" /></p>
+<ul>
+<li>プロトコルとはクラス間で共有するメソッドのリスト。</li>
+<li>javaでいうinterfaceのようなもの。</li>
+<li>@optionalディレクティブ以降のメソッドは実装が任意。</li>
+<li>@requiredディレクティブで必須。</li>
+<li>プロトコルに必要なメソッドは直接そのクラスで実装してもいいし、継承元の親クラスで実装してもよい。</li>
+<li>requiredがすべて実装されていなかった場合、コンパイラーはワーニングを出す。(エラーではない)</li>
+<li>すべてのrequiredメソッドを実装したクラスはそのプロトコルにconform(もしくはadopt)したという。</li>
+<li>そのオブジェクトがconformしているかどうかチェックするには、conformsToProtocolメソッドを使う。</li>
+<li>そのオブジェクトがoptionalなメソッドを実装しているかどうかをチェックするには、respondsToSelectorを使う。</li>
+<li>コンパイル時に型チェックが行われる。型宣言に<protocol名>を含めるとよい。</li>
+<li>カテゴリもプロトコルにadoptできる。</li>
+<li>プロトコルの名前はユニークでなければならない。</li>
+<li>delegationとはプロトコルで定義されたメソッドを実装したクラスを定義すること。</li>
+<li>informal protocolというものもあるが、これは単に実装がないカテゴリのこと。abstract protocolともいう。ドキュメンテーションやモジュラリティのために用いる。コンパイル時チェックはなし。プロトコルの@optionalディレクトリはObjective-C 2.0で追加されたので、こちらをつかえばよい。</li>
+<li>eclipseでいうデリゲートは、Composite Objectとよばれる</li>
+</ul>
+<h2 id="_1">例</h2>
+<h3 id="myprotocolh">myProtocol.h</h3>
+<div class="pygments_borland"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="k">@protocol</span> <span class="nc">myProtocol</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplh">myProtocolImpl.h</h3>
+<div class="pygments_borland"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+<span class="cp">#import &quot;myProtocol.h&quot;</span>
+
+<span class="k">@interface</span> <span class="nc">myProtocolImpl</span> : <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">myProtocol</span><span class="o">&gt;</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">f1</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h3 id="myprotocolimplm">myProtocolImpl.m</h3>
+<div class="pygments_borland"><pre><span class="cp">#import &quot;myProtocolImpl.h&quot;</span>
+
+<span class="k">@implementation</span> <span class="nc">myProtocolImpl</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f1</span>
+<span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;called f0&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">f2:</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj0</span> <span class="nf">withObject1:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">obj1</span>
+<span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;called f2&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+<h2 id="_2">参考</h2>
+<p><br>
+<iframe src="http://rcm-jp.amazon.co.jp/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=0321811909" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/07/13/objective-c-memo/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/07/18/objective-c-memo-memory-management/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" class="hatena-bookmark-button" data-hatena-bookmark-title="objective-cのプロトコルとデリゲーションについてのメモ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" data-text="objective-cのプロトコルとデリゲーションについてのメモ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/07/17/objective-c-memo-protocol/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="objective-cのカテゴリついてのメモ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/07/13/objective-c-memo/" rel="bookmark" title="Permanent Link to objective-cのカテゴリついてのメモ">objective-cのカテゴリついてのメモ</a></h2>
   <small>July 13, 2012 at 06:30 PM | categories:
@@ -405,82 +524,6 @@ xcodeのkey bindingsの設定に読ませることができると思います。
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="debian-lennyのend-of-life対応"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/" rel="bookmark" title="Permanent Link to debian lennyのEnd Of Life対応">debian lennyのEnd Of Life対応</a></h2>
-  <small>June 06, 2012 at 10:30 AM | categories:
-
-<a href='/blog/category/python'>python</a>
- | <a href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="debian" src="/images/debian_logo.png" /></p>
-<p>debian lennyは2012-02-06にEnd of lifeを迎えました。
-それに伴いlennyのリポジトリもoldstable扱いとなりパスが変わったため、デフォルトのsources.listでは404 Not Foundとなってパッケージがインストールできなくなってしまいました。
-早めにアップデートしたほうが好ましいですが、そのまま引き続きlennyを使いたい場合もあると思います。
-そのような場合は以下のようにsources.listを変更してやれば今までどおりパッケージをとれるようになります。</p>
-<div class="pygments_borland"><pre>deb http://archive.debian.org/debian-security/ lenny/updates main
-deb-src http://archive.debian.org/debian-security/ lenny/updates main
-
-deb http://archive.debian.org/debian/ lenny main
-deb-src http://archive.debian.org/debian/ lenny main
-</pre></div>
-
-<p>backportsなどもarchiveのほうにあるのでお好みで追加してください。</p>
-<h1 id="_1">参考</h1>
-<ul>
-<li><a href="http://archive.debian.org/">http://archive.debian.org/</a></li>
-<li><a href="http://wiki.debian.org/DebianLenny">http://wiki.debian.org/DebianLenny</a></li>
-<li><a href="http://wiki.debian.org/DebianOldStable">http://wiki.debian.org/DebianOldStable</a></li>
-</ul>
-<p><br></p>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/04/22/virtualenv-burrito/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/07/06/common-lisp-list-of-slots/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/" class="hatena-bookmark-button" data-hatena-bookmark-title="debian lennyのEnd Of Life対応" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/" data-text="debian lennyのEnd Of Life対応">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/06/06/debian-lenny-oldstable/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../14">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -510,6 +553,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/12/23/dnsimple-dynamic-dns/" title="dnsimpleでダイナミックDNSをつかう"><p>dnsimpleでダイナミックDNSをつかう</a><span style="font-size: 80%;">(December 23, 2014 at 08:02 PM)</span></li>
       <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
@@ -517,7 +561,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
-      <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
     </ul>
   </div>
 
@@ -568,6 +611,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/dns">dns</a> (<a href="/blog/category/dns/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
@@ -619,7 +663,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -629,6 +673,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/10/1" title="October 2014">October 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>

@@ -102,6 +102,151 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="goのtemplateパッケージ簡易チートシート"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/11/19/go-template/" rel="bookmark" title="Permanent Link to Goのtemplateパッケージ簡易チートシート">Goのtemplateパッケージ簡易チートシート</a></h2>
+  <small>November 19, 2013 at 07:19 PM | categories:
+
+<a href='/blog/category/golang'>golang</a>
+ | <a href="http://mojavy.com/blog/2013/11/19/go-template/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>goに標準でついてるtemplateパッケージは便利なのだけど、<a href="http://golang.org/pkg/text/template/">マニュアル</a>が長すぎるのでよく使う機能だけまとめておく。</p>
+<p>そろそろだれかテンプレートエンジンを標準化してほしい。</p>
+<div class="toc">
+<ul>
+<li><a href="#_1">基本</a></li>
+<li><a href="#_2">変数展開</a></li>
+<li><a href="#_3">関数呼び出し</a></li>
+<li><a href="#_4">ループ</a></li>
+<li><a href="#_5">組み込み関数</a></li>
+</ul>
+</div>
+<h2 id="_1">基本</h2>
+<div class="pygments_borland"><pre><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;text/template&quot;</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">tmpl</span> <span class="p">:=</span> <span class="s">&quot;Hello, {{.template}}!&quot;</span>
+    <span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+    <span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+    <span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="k">map</span><span class="p">[</span><span class="nb">string</span><span class="p">]</span><span class="nb">string</span><span class="p">{</span><span class="s">&quot;template&quot;</span><span class="p">:</span> <span class="s">&quot;World&quot;</span><span class="p">})</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>ちなみに、<code>template.Must(t.Parse(tmpl))</code>は以下のショートカット</p>
+<div class="pygments_borland"><pre><span class="n">_</span><span class="p">,</span> <span class="n">err</span> <span class="p">:=</span> <span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">err</span> <span class="p">!=</span> <span class="n">nil</span> <span class="p">{</span>
+    <span class="n">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="_2">変数展開</h2>
+<p>通常はmapのキーかstructのメンバを<code>.Key</code>のようにドット付きで指定するとでその値が展開される。
+ただし、該当するキーが見つからなかった場合、mapでは<code>&lt;no value&gt;</code>という文字列が出力されるが、structではエラーになる。</p>
+<div class="pygments_borland"><pre><span class="k">type</span> <span class="n">T</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="n">Name</span> <span class="nb">string</span>
+<span class="p">}</span>
+
+<span class="n">tmpl</span> <span class="p">:=</span> <span class="s">&quot;Hello, {{.Name}}!\n&quot;</span>
+<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="k">map</span><span class="p">[</span><span class="nb">string</span><span class="p">]</span><span class="nb">string</span><span class="p">{</span><span class="s">&quot;Name&quot;</span><span class="p">:</span> <span class="s">&quot;map&quot;</span><span class="p">})</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="n">T</span><span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;struct&quot;</span><span class="p">})</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="p">&amp;</span><span class="n">T</span><span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;struct reference&quot;</span><span class="p">})</span>
+</pre></div>
+
+<p><code>.</code>のようにドットだけを渡すと変数それ自体が展開される。</p>
+<div class="pygments_borland"><pre><span class="n">tmpl</span> <span class="p">:=</span> <span class="s">&quot;Hello, {{.}}!\n&quot;</span>
+<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="s">&quot;World&quot;</span><span class="p">)</span>
+</pre></div>
+
+<h2 id="_3">関数呼び出し</h2>
+<p>関数はシェルのパイプのように連結させて呼びだせる。テンプレート内で呼ぶ関数は<code>template.FuncMap</code>で渡す。</p>
+<div class="pygments_borland"><pre><span class="n">tmpl</span> <span class="p">:=</span> <span class="s">`Now {{now}}, {{&quot;hello&quot; | toupper}}`</span>
+<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Funcs</span><span class="p">(</span><span class="n">template</span><span class="p">.</span><span class="n">FuncMap</span><span class="p">{</span>
+    <span class="s">&quot;now&quot;</span><span class="p">:</span>     <span class="k">func</span><span class="p">()</span> <span class="nb">string</span> <span class="p">{</span> <span class="k">return</span> <span class="n">time</span><span class="p">.</span><span class="n">Now</span><span class="p">().</span><span class="n">String</span><span class="p">()</span> <span class="p">},</span>
+    <span class="s">&quot;toupper&quot;</span><span class="p">:</span> <span class="n">strings</span><span class="p">.</span><span class="n">ToUpper</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="n">nil</span><span class="p">)</span> <span class="c1">// =&gt; Now 2013-11-19 19:17:51.378063751 +0900 JST, HELLO</span>
+</pre></div>
+
+<h2 id="_4">ループ</h2>
+<p>組み込みの<code>range</code> Actionをつかえばよい。</p>
+<div class="pygments_borland"><pre><span class="k">type</span> <span class="n">T</span> <span class="k">struct</span><span class="p">{</span> <span class="n">Name</span> <span class="nb">string</span> <span class="p">}</span>
+<span class="n">tmpl</span> <span class="p">:=</span> <span class="s">`</span>
+<span class="s">{{range .}}- {{.Name}}</span>
+<span class="s">{{end}}</span>
+<span class="s">`</span>
+<span class="n">t</span> <span class="p">:=</span> <span class="n">template</span><span class="p">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">template</span><span class="p">.</span><span class="n">Must</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">tmpl</span><span class="p">))</span>
+<span class="n">t</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">Stdout</span><span class="p">,</span> <span class="p">[]</span><span class="n">T</span><span class="p">{</span>
+    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Alice&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Bob&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Charlie&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="n">Name</span><span class="p">:</span> <span class="s">&quot;Dave&quot;</span><span class="p">},</span>
+<span class="p">})</span>
+</pre></div>
+
+<p>その他、条件分岐等のActionは <a href="http://golang.org/pkg/text/template/#hdr-Actions">マニュアルのActionsの</a> 参照</p>
+<h2 id="_5">組み込み関数</h2>
+<p>こちらも <a href="http://golang.org/pkg/text/template/#hdr-Functions">マニュアルのFunctionsの項</a> を参照</p>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/11/17/goconvey/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/02/10/search-engine-comparison/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2013/11/19/go-template/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/11/19/go-template/" class="hatena-bookmark-button" data-hatena-bookmark-title="Goのtemplateパッケージ簡易チートシート" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/11/19/go-template/" data-text="Goのtemplateパッケージ簡易チートシート">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2013/11/19/go-template/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/11/19/go-template/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="goconveyでgoプロジェクトをブラウザからテストする"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/11/17/goconvey/" rel="bookmark" title="Permanent Link to GoConveyでGoプロジェクトをブラウザからテストする">GoConveyでGoプロジェクトをブラウザからテストする</a></h2>
   <small>November 17, 2013 at 12:30 AM | categories:
@@ -669,119 +814,6 @@ emacsのロックファイルがあると落ちてしまう問題があったの
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="オーバーフローしにくい組み合わせの数の計算方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/17/calculate-combinations/" rel="bookmark" title="Permanent Link to オーバーフローしにくい組み合わせの数の計算方法">オーバーフローしにくい組み合わせの数の計算方法</a></h2>
-  <small>October 17, 2013 at 09:13 PM | categories:
-
-<a href='/blog/category/algorithms'>algorithms</a>, <a href='/blog/category/programming'>programming</a>
- | <a href="http://mojavy.com/blog/2013/10/17/calculate-combinations/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>Cで組み合わせの数を計算するときに定義通り計算するとすぐにオーバーフローしてしまう。
-例えば以下のような実装だと、<img src="/images/cca79b0e713c769c64899333d0fe43e6.png"> 程度でも結果がおかしくなってしまう。</p>
-<div class="pygments_borland"><pre><span class="cp">#include &lt;iostream&gt;</span>
-
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-
-<span class="n">uint64_t</span> <span class="n">fac</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-    <span class="k">else</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">uint64_t</span> <span class="n">combinations</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">fac</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">fac</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">));</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 10</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 252</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 184756</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 0 !?</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>とりあえず素因数分解してやれば解決するのでいままでそうしてたのだけど、もっとかっこいい方法がないものかと思って探してみたらKnuth先生の本で以下のようなアルゴリズムが紹介されているらしい。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> 
-これはかっこいい。</p>
-<div class="pygments_borland"><pre><span class="n">uint64_t</span> <span class="n">combinations2</span><span class="p">(</span><span class="n">uint64_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">uint64_t</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">uint64_t</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">uint64_t</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">d</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">;</span> <span class="o">++</span><span class="n">d</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">r</span> <span class="o">*=</span> <span class="n">n</span><span class="o">--</span><span class="p">;</span>
-        <span class="n">r</span> <span class="o">/=</span> <span class="n">d</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 155117520</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// =&gt; 118264581564861424</span>
-
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">combinations2</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// これはオーバーフローする</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-<p>結果の値が範囲内ならオーバーフローしないのか、というとそういうわけではないけどナイーブな実装に比べるとずっと計算できる範囲が広いので、値のレンジがあらかじめわかっているのであればこれで十分ですね。</p>
-<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=armyofpigs-22&o=9&p=8&l=as4&m=amazon&f=ifr&ref=ss_til&asins=4756145434" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p><a href="http://stackoverflow.com/questions/1838368/calculating-the-amount-of-combinations">http://stackoverflow.com/questions/1838368/calculating-the-amount-of-combinations</a>   残念ながらvol2は手元にはない&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/10/01/mustache-quick-master/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/10/18/revealjs/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/10/17/calculate-combinations/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/10/17/calculate-combinations/" class="hatena-bookmark-button" data-hatena-bookmark-title="オーバーフローしにくい組み合わせの数の計算方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/10/17/calculate-combinations/" data-text="オーバーフローしにくい組み合わせの数の計算方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/10/17/calculate-combinations/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/10/17/calculate-combinations/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../3">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -811,6 +843,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/12/23/dnsimple-dynamic-dns/" title="dnsimpleでダイナミックDNSをつかう"><p>dnsimpleでダイナミックDNSをつかう</a><span style="font-size: 80%;">(December 23, 2014 at 08:02 PM)</span></li>
       <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
@@ -818,7 +851,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
-      <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
     </ul>
   </div>
 
@@ -869,6 +901,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/dns">dns</a> (<a href="/blog/category/dns/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
@@ -920,7 +953,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -930,6 +963,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/10/1" title="October 2014">October 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>

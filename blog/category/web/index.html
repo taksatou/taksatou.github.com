@@ -102,6 +102,68 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="dnsimpleでダイナミックdnsをつかう"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" rel="bookmark" title="Permanent Link to dnsimpleでダイナミックDNSをつかう">dnsimpleでダイナミックDNSをつかう</a></h2>
+  <small>December 23, 2014 at 08:02 PM | categories:
+
+<a href='/blog/category/web'>web</a>, <a href='/blog/category/dns'>dns</a>
+ | <a href="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="dnsimple" src="/images/dnsimple.png" /> </p>
+<p><a href="https://dnsimple.com/r/4388f43fedebae">dnsimple</a> ではAPIからのDNSレコードアップデートができるので、簡単にダイナミックDNSがつかえる。 </p>
+<p>手順は以下の通り。</p>
+<ol>
+<li>普通にdnsimpleでAレコードを登録する</li>
+<li>登録したレコードのrecord idをしらべる。 record id は管理画面のURL <code>https://dnsimple.com/domains/example.com/records/&lt;record id&gt;/edit</code> をみればわかる。</li>
+<li>レコードを更新するスクリプトをcronに登録する。 スクリプトは <a href="http://developer.dnsimple.com/ddns/">http://developer.dnsimple.com/ddns/</a> でダウンロードできる。 <code>RECORD_ID</code>には上記の値、<code>DOMAIN_ID</code>にはApexドメインを設定する。</li>
+</ol>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/10/06/www2014-adtech-research-trach/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" class="hatena-bookmark-button" data-hatena-bookmark-title="dnsimpleでダイナミックDNSをつかう" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" data-text="dnsimpleでダイナミックDNSをつかう">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="tcpの黒歴史：謎のオプションskeeterとbubbaについて"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/" rel="bookmark" title="Permanent Link to TCPの黒歴史：謎のオプションskeeterとbubbaについて">TCPの黒歴史：謎のオプションskeeterとbubbaについて</a></h2>
   <small>February 13, 2014 at 06:00 PM | categories:
@@ -716,76 +778,6 @@ CSSセレクタかxpathに名前をつけて設定するだけでよしなにや
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="twitter-apiで404:-{"errors":[{"message":"sorry,-that-page-does-not-exist","code":34}]}"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/18/twitter-api-error/" rel="bookmark" title="Permanent Link to twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}">twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}</a></h2>
-  <small>October 18, 2012 at 10:00 PM | categories:
-
-<a href='/blog/category/web'>web</a>, <a href='/blog/category/twitter'>twitter</a>
- | <a href="http://mojavy.com/blog/2012/10/18/twitter-api-error/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="twitter" src="/images/twitter-logo.png" /></p>
-<p>最近twitter apiをつかっているサービスで以下のようなエラーがでた。</p>
-<div class="pygments_borland"><pre><span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Sorry, that page does not exist&quot;</span><span class="p">,</span><span class="s2">&quot;code&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">}]}</span>
-</pre></div>
-
-<p><a href="https://dev.twitter.com/discussions/11595">twitterのデベロッパフォーラム</a>によると、先週くらいにバージョンがついてないエンドポイントは /oauth を除いて廃止されたらしい。また、ドメインもapi.twitter.comに統一されたらしい。</p>
-<p>つまり、api.twitter.com/account/verify_credentials.json とか twitter.com/1/account/verify_credentials.json とか twitter.com/account/verify_credentials.json ではだめで、api.twitter.com/1/account/verify_credentials.json を使えということ。</p>
-<p>ログイン直後にverify_credentialsをつかってるアプリは多いと思われるが、その場合ログインに失敗したように見えるので認証まわりをライブラリ任せにしてると原因がわかりにくいかも。</p>
-<p>とりあえず<a href="https://dev.twitter.com/blog">twitterの開発ブログ</a>まめにチェックしたほうがよさそう。</p>
-<h1 id="_1">参考</h1>
-<ul>
-<li><a href="https://dev.twitter.com/blog">https://dev.twitter.com/blog</a></li>
-<li><a href="https://dev.twitter.com/discussions/11595">https://dev.twitter.com/discussions/11595</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/10/24/cl-practice/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2012/10/18/twitter-api-error/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/18/twitter-api-error/" class="hatena-bookmark-button" data-hatena-bookmark-title="twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/10/18/twitter-api-error/" data-text="twitter apiで404: {"errors":[{"message":"Sorry, that page does not exist","code":34}]}">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2012/10/18/twitter-api-error/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/10/18/twitter-api-error/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/category/web/2">Next »</a>
 </div>
@@ -813,6 +805,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/12/23/dnsimple-dynamic-dns/" title="dnsimpleでダイナミックDNSをつかう"><p>dnsimpleでダイナミックDNSをつかう</a><span style="font-size: 80%;">(December 23, 2014 at 08:02 PM)</span></li>
       <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
@@ -820,7 +813,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
-      <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
     </ul>
   </div>
 
@@ -871,6 +863,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/dns">dns</a> (<a href="/blog/category/dns/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
@@ -922,7 +915,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -932,6 +925,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/10/1" title="October 2014">October 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>

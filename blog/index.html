@@ -102,6 +102,68 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="dnsimpleでダイナミックdnsをつかう"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" rel="bookmark" title="Permanent Link to dnsimpleでダイナミックDNSをつかう">dnsimpleでダイナミックDNSをつかう</a></h2>
+  <small>December 23, 2014 at 08:02 PM | categories:
+
+<a href='/blog/category/web'>web</a>, <a href='/blog/category/dns'>dns</a>
+ | <a href="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="dnsimple" src="/images/dnsimple.png" /> </p>
+<p><a href="https://dnsimple.com/r/4388f43fedebae">dnsimple</a> ではAPIからのDNSレコードアップデートができるので、簡単にダイナミックDNSがつかえる。 </p>
+<p>手順は以下の通り。</p>
+<ol>
+<li>普通にdnsimpleでAレコードを登録する</li>
+<li>登録したレコードのrecord idをしらべる。 record id は管理画面のURL <code>https://dnsimple.com/domains/example.com/records/&lt;record id&gt;/edit</code> をみればわかる。</li>
+<li>レコードを更新するスクリプトをcronに登録する。 スクリプトは <a href="http://developer.dnsimple.com/ddns/">http://developer.dnsimple.com/ddns/</a> でダウンロードできる。 <code>RECORD_ID</code>には上記の値、<code>DOMAIN_ID</code>にはApexドメインを設定する。</li>
+</ol>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/10/06/www2014-adtech-research-trach/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" class="hatena-bookmark-button" data-hatena-bookmark-title="dnsimpleでダイナミックDNSをつかう" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" data-text="dnsimpleでダイナミックDNSをつかう">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="www2014のアドテク関連のresearch-trackメモ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/10/06/www2014-adtech-research-trach/" rel="bookmark" title="Permanent Link to www2014のアドテク関連のResearch Trackメモ">www2014のアドテク関連のResearch Trackメモ</a></h2>
   <small>October 06, 2014 at 09:05 PM | categories:
@@ -133,6 +195,8 @@ Bonferroni法やHolm法といった従来の多重比較における補正方法
 
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2014/07/16/flappymacs-melpa/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -424,69 +488,6 @@ Bonferroni法やHolm法といった従来の多重比較における補正方法
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="pthreadの取り消しポイント(cancellation-point)についてのメモ"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" rel="bookmark" title="Permanent Link to pthreadの取り消しポイント(cancellation point)についてのメモ">pthreadの取り消しポイント(cancellation point)についてのメモ</a></h2>
-  <small>March 18, 2014 at 09:41 PM | categories:
-
-<a href='/blog/category/unix'>unix</a>, <a href='/blog/category/programming'>programming</a>
- | <a href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>cancellation pointsとは、スレッドのキャンセル種別が<code>deferred</code>のときに、そこに到達したときにはじめて実際にそのスレッドのキャンセル要求が処理されるような関数のこと。</p>
-<p>POSIX.1では、基本的にはブロックするような関数がcancellation pointsであることが要求されている。</p>
-<h2 id="_1">参考</h2>
-<ul>
-<li><a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html">http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html</a> </li>
-<li><a href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man3/pthread_cancel.3.html">pthread_cancel(3)</a> </li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" class="hatena-bookmark-button" data-hatena-bookmark-title="pthreadの取り消しポイント(cancellation point)についてのメモ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" data-text="pthreadの取り消しポイント(cancellation point)についてのメモ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="/blog/page/2">Next »</a>
 </div>
@@ -514,6 +515,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/12/23/dnsimple-dynamic-dns/" title="dnsimpleでダイナミックDNSをつかう"><p>dnsimpleでダイナミックDNSをつかう</a><span style="font-size: 80%;">(December 23, 2014 at 08:02 PM)</span></li>
       <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
@@ -521,7 +523,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
-      <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
     </ul>
   </div>
 
@@ -572,6 +573,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/dns">dns</a> (<a href="/blog/category/dns/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
@@ -623,7 +625,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -633,6 +635,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/10/1" title="October 2014">October 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>

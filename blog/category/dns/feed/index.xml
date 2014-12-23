@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Tue, 23 Dec 2014 20:02:30 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>dnsimpleでダイナミックDNSをつかう</title>
+      <link>http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/</link>
+      <pubDate>Tue, 23 Dec 2014 20:02:30 JST</pubDate>
+      <category><![CDATA[web]]></category>
+      <category><![CDATA[dns]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2014/12/23/dnsimple-dynamic-dns/</guid>
+      <description>dnsimpleでダイナミックDNSをつかう</description>
+      <content:encoded><![CDATA[<p><img alt="dnsimple" src="/images/dnsimple.png" /> </p>
+<p><a href="https://dnsimple.com/r/4388f43fedebae">dnsimple</a> ではAPIからのDNSレコードアップデートができるので、簡単にダイナミックDNSがつかえる。 </p>
+<p>手順は以下の通り。</p>
+<ol>
+<li>普通にdnsimpleでAレコードを登録する</li>
+<li>登録したレコードのrecord idをしらべる。 record id は管理画面のURL <code>https://dnsimple.com/domains/example.com/records/&lt;record id&gt;/edit</code> をみればわかる。</li>
+<li>レコードを更新するスクリプトをcronに登録する。 スクリプトは <a href="http://developer.dnsimple.com/ddns/">http://developer.dnsimple.com/ddns/</a> でダウンロードできる。 <code>RECORD_ID</code>には上記の値、<code>DOMAIN_ID</code>にはApexドメインを設定する。</li>
+</ol>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

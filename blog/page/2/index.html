@@ -102,6 +102,69 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="pthreadの取り消しポイント(cancellation-point)についてのメモ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" rel="bookmark" title="Permanent Link to pthreadの取り消しポイント(cancellation point)についてのメモ">pthreadの取り消しポイント(cancellation point)についてのメモ</a></h2>
+  <small>March 18, 2014 at 09:41 PM | categories:
+
+<a href='/blog/category/unix'>unix</a>, <a href='/blog/category/programming'>programming</a>
+ | <a href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>cancellation pointsとは、スレッドのキャンセル種別が<code>deferred</code>のときに、そこに到達したときにはじめて実際にそのスレッドのキャンセル要求が処理されるような関数のこと。</p>
+<p>POSIX.1では、基本的にはブロックするような関数がcancellation pointsであることが要求されている。</p>
+<h2 id="_1">参考</h2>
+<ul>
+<li><a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html">http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html</a> </li>
+<li><a href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man3/pthread_cancel.3.html">pthread_cancel(3)</a> </li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/07/09/cpp-dreaded-diamond/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" class="hatena-bookmark-button" data-hatena-bookmark-title="pthreadの取り消しポイント(cancellation point)についてのメモ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" data-text="pthreadの取り消しポイント(cancellation point)についてのメモ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="gitlab-6.6.4-ce-のゆるふわセットアップ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" rel="bookmark" title="Permanent Link to gitlab 6.6.4 CE のゆるふわセットアップ">gitlab 6.6.4 CE のゆるふわセットアップ</a></h2>
   <small>March 11, 2014 at 02:08 AM | categories:
@@ -444,248 +507,6 @@ postgresql[&quot;effective_cache_size&quot;] = &quot;32MB&quot;
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="スレッドプールの実装方法について"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" rel="bookmark" title="Permanent Link to スレッドプールの実装方法について">スレッドプールの実装方法について</a></h2>
-  <small>March 03, 2014 at 08:58 PM | categories:
-
-<a href='/blog/category/unix'>unix</a>, <a href='/blog/category/programming'>programming</a>
- | <a href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>スレッドプール(thread pool)を実装するには、暇なときはthreadを寝かせておいて必要なときに起こす、というイベント通知の仕組みが必要になる。
-UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通だと思われるが、適当なファイルディスクリプタをopenしておいてread等でブロックさせる方法でも実装できそう。</p>
-<p>どのようなやり方が一般的なのか、いくつか有名どころのOSSの実装を調べてみた。</p>
-<h3 id="libuv">libuvの場合</h3>
-<p><a href="https://github.com/joyent/libuv">https://github.com/joyent/libuv</a> </p>
-<p>単純に<code>pthread_cond_wait</code>をつかっている <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
-<div class="pygments_borland"><pre><span class="k">static</span> <span class="kt">void</span> <span class="nf">worker</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">struct</span> <span class="n">uv__work</span><span class="o">*</span> <span class="n">w</span><span class="p">;</span>
-  <span class="n">QUEUE</span><span class="o">*</span> <span class="n">q</span><span class="p">;</span>
-
-  <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">arg</span><span class="p">;</span>
-
-  <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
-    <span class="n">uv_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
-
-    <span class="k">while</span> <span class="p">(</span><span class="n">QUEUE_EMPTY</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wq</span><span class="p">))</span>
-      <span class="n">uv_cond_wait</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cond</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
-
-    <span class="n">q</span> <span class="o">=</span> <span class="n">QUEUE_HEAD</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wq</span><span class="p">);</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">exit_message</span><span class="p">)</span>
-      <span class="n">uv_cond_signal</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cond</span><span class="p">);</span>
-    <span class="k">else</span> <span class="p">{</span>
-      <span class="n">QUEUE_REMOVE</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>
-      <span class="n">QUEUE_INIT</span><span class="p">(</span><span class="n">q</span><span class="p">);</span>  <span class="cm">/* Signal uv_cancel() that the work req is</span>
-<span class="cm">                             executing. */</span>
-    <span class="p">}</span>
-
-    <span class="n">uv_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mutex</span><span class="p">);</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">exit_message</span><span class="p">)</span>
-      <span class="k">break</span><span class="p">;</span>
-
-    <span class="n">w</span> <span class="o">=</span> <span class="n">QUEUE_DATA</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="k">struct</span> <span class="n">uv__work</span><span class="p">,</span> <span class="n">wq</span><span class="p">);</span>
-    <span class="n">w</span><span class="o">-&gt;</span><span class="n">work</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
-
-    <span class="n">uv_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq_mutex</span><span class="p">);</span>
-    <span class="n">w</span><span class="o">-&gt;</span><span class="n">work</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>  <span class="cm">/* Signal uv_cancel() that the work req is done</span>
-<span class="cm">                        executing. */</span>
-    <span class="n">QUEUE_INSERT_TAIL</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">wq</span><span class="p">);</span>
-    <span class="n">uv_async_send</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq_async</span><span class="p">);</span>
-    <span class="n">uv_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">w</span><span class="o">-&gt;</span><span class="n">loop</span><span class="o">-&gt;</span><span class="n">wq_mutex</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3 id="boostasio">Boost.Asioの場合</h3>
-<p><a href="http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio.html">http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio.html</a> </p>
-<p><code>Boost.Asio</code>にスレッドプールそのものは提供されてないが以下のようにして簡単に実装することができる</p>
-<div class="pygments_borland"><pre><span class="cp">#include &lt;thread&gt;</span>
-<span class="cp">#include &lt;functional&gt;</span>
-<span class="cp">#include &lt;boost/asio.hpp&gt;</span>
-
-<span class="kt">int</span> <span class="n">main</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[]</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="n">asio</span><span class="o">::</span><span class="n">io_service</span> <span class="n">io_service</span><span class="p">;</span>
-    <span class="n">asio</span><span class="o">::</span><span class="n">io_service</span><span class="o">::</span><span class="n">work</span> <span class="n">work</span><span class="p">(</span><span class="n">io_service</span><span class="p">);</span>
-
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;</span> <span class="n">threadPool</span><span class="p">;</span>
-
-    <span class="k">for</span><span class="p">(</span><span class="n">size_t</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">::</span><span class="n">hardware_concurrency</span><span class="p">();</span> <span class="n">t</span><span class="o">++</span><span class="p">){</span>
-        <span class="n">threadPool</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="kr">thread</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">asio</span><span class="o">::</span><span class="n">io_service</span><span class="o">::</span><span class="n">run</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">io_service</span><span class="p">)));</span>
-    <span class="p">}</span>
-
-    <span class="n">io_service</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">an_expensive_calculation</span><span class="p">,</span> <span class="mi">42</span><span class="p">));</span>
-    <span class="n">io_service</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">a_long_running_task</span><span class="p">,</span> <span class="mi">123</span><span class="p">));</span>
-
-    <span class="c1">//Do some things with the main thread</span>
-
-    <span class="n">io_service</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
-    <span class="k">for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&amp;</span> <span class="n">t</span> <span class="o">:</span> <span class="n">threadPool</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">t</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-<p><a href="http://stackoverflow.com/questions/14265676/using-boostasio-thread-pool-for-general-purpose-tasks">http://stackoverflow.com/questions/14265676/using-boostasio-thread-pool-for-general-purpose-tasks</a> </p>
-<p>長くなるのでコードは省略するが、<code>io_service::post</code>するとunixの場合は最終的には<code>task_io_service::wake_one_idle_thread_and_unlock</code>から<code>pthread_cond_signal</code>が呼ばれる。</p>
-<h3 id="memcached">memcachedの場合</h3>
-<p><a href="https://github.com/memcached/memcached">https://github.com/memcached/memcached</a> </p>
-<p><code>libevent</code>のイベント通知機能を利用して実装している。それぞれのthread初期化の際にpipeをつくって、そのfdをlibeventに渡す。 <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>  libevent内部でそのfdを<code>epoll</code>なり<code>kqueue</code>なりでブロックして待つ。</p>
-<div class="pygments_borland"><pre><span class="c1">//</span>
-<span class="c1">// memcached.c</span>
-<span class="c1">//</span>
-<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
-    <span class="n">pthread_t</span> <span class="n">thread_id</span><span class="p">;</span>        <span class="cm">/* unique ID of this thread */</span>
-    <span class="k">struct</span> <span class="n">event_base</span> <span class="o">*</span><span class="n">base</span><span class="p">;</span>    <span class="cm">/* libevent handle this thread uses */</span>
-    <span class="k">struct</span> <span class="n">event</span> <span class="n">notify_event</span><span class="p">;</span>  <span class="cm">/* listen event for notify pipe */</span>
-    <span class="kt">int</span> <span class="n">notify_receive_fd</span><span class="p">;</span>      <span class="cm">/* receiving end of notify pipe */</span>
-    <span class="kt">int</span> <span class="n">notify_send_fd</span><span class="p">;</span>         <span class="cm">/* sending end of notify pipe */</span>
-    <span class="k">struct</span> <span class="n">thread_stats</span> <span class="n">stats</span><span class="p">;</span>  <span class="cm">/* Stats generated by this thread */</span>
-    <span class="k">struct</span> <span class="n">conn_queue</span> <span class="o">*</span><span class="n">new_conn_queue</span><span class="p">;</span> <span class="cm">/* queue of new connections to handle */</span>
-    <span class="n">cache_t</span> <span class="o">*</span><span class="n">suffix_cache</span><span class="p">;</span>      <span class="cm">/* suffix cache */</span>
-    <span class="kt">uint8_t</span> <span class="n">item_lock_type</span><span class="p">;</span>     <span class="cm">/* use fine-grained or global item lock */</span>
-<span class="p">}</span> <span class="n">LIBEVENT_THREAD</span><span class="p">;</span>
-
-<span class="c1">//</span>
-<span class="c1">// thread.c</span>
-<span class="c1">//</span>
-<span class="kt">void</span> <span class="nf">thread_init</span><span class="p">(</span><span class="kt">int</span> <span class="n">nthreads</span><span class="p">,</span> <span class="k">struct</span> <span class="n">event_base</span> <span class="o">*</span><span class="n">main_base</span><span class="p">)</span> <span class="p">{</span>
-<span class="c1">//</span>
-<span class="c1">// 中略</span>
-<span class="c1">//</span>
-    <span class="n">threads</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="n">nthreads</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">LIBEVENT_THREAD</span><span class="p">));</span>
-<span class="c1">//</span>
-<span class="c1">// さらに中略</span>
-<span class="c1">//</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nthreads</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">fds</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">fds</span><span class="p">))</span> <span class="p">{</span>
-            <span class="n">perror</span><span class="p">(</span><span class="s">&quot;Can&#39;t create notify pipe&quot;</span><span class="p">);</span>
-            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">notify_receive_fd</span> <span class="o">=</span> <span class="n">fds</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-        <span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">notify_send_fd</span> <span class="o">=</span> <span class="n">fds</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-
-        <span class="n">setup_thread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-        <span class="cm">/* Reserve three fds for the libevent base, and two for the pipe */</span>
-        <span class="n">stats</span><span class="p">.</span><span class="n">reserved_fds</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="cm">/* Create threads after we&#39;ve done all the libevent setup. */</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nthreads</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">create_worker</span><span class="p">(</span><span class="n">worker_libevent</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="p">}</span>
-
-    <span class="cm">/* Wait for all the threads to set themselves up before returning. */</span>
-    <span class="n">pthread_mutex_lock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">init_lock</span><span class="p">);</span>
-    <span class="n">wait_for_thread_registration</span><span class="p">(</span><span class="n">nthreads</span><span class="p">);</span>
-    <span class="n">pthread_mutex_unlock</span><span class="p">(</span><span class="o">&amp;</span><span class="n">init_lock</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-
-<h3 id="pthread_cond_wait">pthread_cond_waitの実装</h3>
-<p>脱線するが、pthread_cond_waitがどのようにsleepにはいってるのか気になったので調べた。</p>
-<p><a href="https://sourceware.org/git/?p=glibc.git;a=tree;f=nptl;hb=HEAD">https://sourceware.org/git/?p=glibc.git;a=tree;f=nptl;hb=HEAD</a> </p>
-<p><code>pthread_cond_wait</code>のソースコードは<code>glibc</code>の<code>nptl</code>以下にある。
-<code>__pthread_cond_wait</code>が<code>lll_futex_wait</code>を呼んでおり、これは以下のように実装されている。(以下はx86_64のもの) </p>
-<div class="pygments_borland"><pre><span class="cp">#define lll_futex_wait(futex, val, private) \</span>
-<span class="cp">  lll_futex_timed_wait(futex, val, NULL, private)</span>
-
-<span class="cp">#define lll_futex_timed_wait(futex, val, timeout, private) \</span>
-<span class="cp">  ({                                         \</span>
-<span class="cp">    register const struct timespec *__to __asm (&quot;r10&quot;) = timeout;          \</span>
-<span class="cp">    int __status;                                \</span>
-<span class="cp">    register __typeof (val) _val __asm (&quot;edx&quot;) = (val);                \</span>
-<span class="cp">    __asm __volatile (&quot;syscall&quot;                            \</span>
-<span class="cp">             : &quot;=a&quot; (__status)                         \</span>
-<span class="cp">             : &quot;0&quot; (SYS_futex), &quot;D&quot; (futex),                 \</span>
-<span class="cp">           &quot;S&quot; (__lll_private_flag (FUTEX_WAIT, private)),         \</span>
-<span class="cp">           &quot;d&quot; (_val), &quot;r&quot; (__to)                    \</span>
-<span class="cp">             : &quot;memory&quot;, &quot;cc&quot;, &quot;r11&quot;, &quot;cx&quot;);                 \</span>
-<span class="cp">    __status;                                    \</span>
-<span class="cp">  })</span>
-</pre></div>
-
-<p>上記アセンブラは大体以下のような意味<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
-<div class="pygments_borland"><pre><span class="n">futex</span><span class="p">(</span><span class="n">futex</span><span class="p">,</span> <span class="n">FUTEX_WAIT</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>  <span class="c1">// 便宜上、上記コードの引数の変数名をそのままつかっているが、</span>
-                                                  <span class="c1">// 1つめのfutexはシステムコールのfutexで、</span>
-                                                  <span class="c1">// 2つめは引数のpthread_cond_tの__futexメンバ変数のアドレス</span>
-</pre></div>
-
-<blockquote>
-<p>futex() システムコールは、 指定したアドレスの値が変更されるのをプログラムが待つ手段や 特定のアドレスに対して待機中のプロセスを wake (起床) させる手段を提供する </p>
-<p><a href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man2/futex.2.html">futex(2) http://linuxjm.sourceforge.jp/html/LDP_man-pages/man2/futex.2.html</a></p>
-</blockquote>
-<p>とのこと。</p>
-<h3 id="_1">まとめ</h3>
-<ul>
-<li>pthread_cond_waitをつかったもののほうが普通は高速なはず</li>
-<li>memcachedのようなやりかただとユーザプロセス側でスレッドプール管理のための排他制御がほとんど不要になるので多少実装が簡単か</li>
-</ul>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p><code>pthread_cond_wait</code>はunixの場合。windowsの場合は<code>pSleepConditionVariableCS</code>、これが使えない場合は疑似的に同様の動作をするようなラッパを定義している。&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:2">
-<p>memcachedでは使用してないが、libeventはシグナルを通知する際もfdをつかう。Boost.Asioもシグナル通知はpipeを経由する。&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-<li id="fn:3">
-<p>厳密には違う。&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" class="hatena-bookmark-button" data-hatena-bookmark-title="スレッドプールの実装方法について" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" data-text="スレッドプールの実装方法について">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../1">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -715,6 +536,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2014/12/23/dnsimple-dynamic-dns/" title="dnsimpleでダイナミックDNSをつかう"><p>dnsimpleでダイナミックDNSをつかう</a><span style="font-size: 80%;">(December 23, 2014 at 08:02 PM)</span></li>
       <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
@@ -722,7 +544,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
       <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
-      <li><a href="/blog/2014/03/07/high-contrast-pdf-osx/" title="自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X"><p>自炊した書籍のpdfのコントラストを3clickくらいで上げる方法 on Mac OS X</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
     </ul>
   </div>
 
@@ -773,6 +594,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
      <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/dns">dns</a> (<a href="/blog/category/dns/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
@@ -824,7 +646,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
-     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
     </ul>
@@ -834,6 +656,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/10/1" title="October 2014">October 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(3)</li>
       <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>
