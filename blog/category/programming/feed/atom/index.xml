@@ -49,7 +49,7 @@
 <p>起動直後は色々設定を聞かれますが、特につまるようなところはないので省略します。</p>
 <h2 id="phabricator_1">Phabricatorでのコードレビュー</h2>
 <h3 id="pre-push-differential">pre-push型のコードレビュー (Differential)</h3>
-<p>pre-push型のコードレビューは、フロー的にはGithubでのPull Requestに似ていますが、レビュー対象のコードをpushするのではなく、パッチを送る点が異なります。Phabricatorでは以下のようなフローで作業することになります。</p>
+<p>pre-push型のコードレビューは、フロー的にはGithubでのPull Requestに似ていますが、レビュー対象のcommitをpushするのではなく、パッチを送る点が異なります。Phabricatorでは以下のようなフローで作業することになります。</p>
 <ol>
 <li>コードを修正した人(author)は、レビュワー(reviewer)を指定して変更内容をDifferentialに送る</li>
 <li>reviewerは通知を受けてレビューをする</li>

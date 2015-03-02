@@ -42,7 +42,7 @@ dockerを使わずに普通にインストールする場合は [https://secure.
 
 ### pre-push型のコードレビュー (Differential)
 
-pre-push型のコードレビューは、フロー的にはGithubでのPull Requestに似ていますが、レビュー対象のコードをpushするのではなく、パッチを送る点が異なります。Phabricatorでは以下のようなフローで作業することになります。
+pre-push型のコードレビューは、フロー的にはGithubでのPull Requestに似ていますが、レビュー対象のcommitをpushするのではなく、パッチを送る点が異なります。Phabricatorでは以下のようなフローで作業することになります。
 
 1. コードを修正した人(author)は、レビュワー(reviewer)を指定して変更内容をDifferentialに送る
 2. reviewerは通知を受けてレビューをする
