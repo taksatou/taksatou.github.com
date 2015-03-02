@@ -23,9 +23,9 @@
     <id>http://mojavy.com/blog/2015/03/02/phabricator-workflow/</id>
     <updated>2015-03-02T20:55:43Z</updated>
     <published>2015-03-02T20:55:43Z</published>
-    <category scheme="http://mojavy.com/blog" term="project managing" />
-    <category scheme="http://mojavy.com/blog" term="programming" />
     <category scheme="http://mojavy.com/blog" term="tools" />
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <category scheme="http://mojavy.com/blog" term="project management" />
     <summary type="html"><![CDATA[Phabricatorを使ったワークフローについて]]></summary>
     <content type="html" xml:base="http://mojavy.com/blog/2015/03/02/phabricator-workflow/"><![CDATA[<p><img alt="phabricator" src="/images/phabricator-logo.png" /> </p>
 <p>最近 <a href="http://phabricator.org/">Phabricator</a> を使ったワークフローを試しています。FacebookやDropboxをはじめとして海外では割と良く使われているようですが、あまり国内には情報がないようなのでまとめておきます。</p>
