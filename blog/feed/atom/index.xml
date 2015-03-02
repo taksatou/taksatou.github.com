@@ -7,12 +7,78 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2014-12-23T20:02:30Z</updated>
+  <updated>2015-03-02T20:55:43Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Phabricatorを使ったワークフローについて]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2015/03/02/phabricator-workflow/" />
+    <id>http://mojavy.com/blog/2015/03/02/phabricator-workflow/</id>
+    <updated>2015-03-02T20:55:43Z</updated>
+    <published>2015-03-02T20:55:43Z</published>
+    <category scheme="http://mojavy.com/blog" term="project managing" />
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <category scheme="http://mojavy.com/blog" term="tools" />
+    <summary type="html"><![CDATA[Phabricatorを使ったワークフローについて]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2015/03/02/phabricator-workflow/"><![CDATA[<p><img alt="phabricator" src="/images/phabricator-logo.png" /> </p>
+<p>最近 <a href="http://phabricator.org/">Phabricator</a> を使ったワークフローを試しています。FacebookやDropboxをはじめとして海外では割と良く使われているようですが、あまり国内には情報がないようなのでまとめておきます。</p>
+<h2 id="phabricator">Phabricatorでできること</h2>
+<p>Phabricatorはコードレビューがメイン機能のようですが、それに留まらずソフトウェアの開発で必要なものがワンストップでまとまったプロジェクト管理ツールになっています。</p>
+<p>メニューのネーミングが独特でとっつきづらいですが、主に以下のような機能があります。</p>
+<ul>
+<li><code>Differential</code>: pre push型のコードレビュー</li>
+<li><code>Audit</code>: post push型のコードレビュー</li>
+<li><code>Maniphest</code>: タスクとバグの管理</li>
+<li><code>Diffusion</code>: リポジトリの管理</li>
+<li><code>Harald</code>: commitやタスクの更新イベントにフックして起動する処理の管理</li>
+<li><code>Phriction</code>: Wiki</li>
+</ul>
+<p>また、<a href="https://github.com/phacility/arcanist">arcanist</a> というコマンドラインから操作するためのツールも別途提供されており、開発のワークフローも含めた統合が意図されているようです。</p>
+<h2 id="_1">セットアップ</h2>
+<p>docker環境があるなら <code>docker run yesnault/docker-phabricator</code> ですぐ試せます。</p>
+<p><a href="https://registry.hub.docker.com/u/yesnault/docker-phabricator/">https://registry.hub.docker.com/u/yesnault/docker-phabricator/</a> </p>
+<p>ただし、上記dockerfileから構築したコンテナはデフォルトだとメールは外部に送信できない設定になっています。admin以外のユーザ登録ではメールアドレス認証が必要なので、<code>docker exec -it &lt;container_id&gt; bash</code> でコンテナに入ってメール設定を適宜修正して下さい。</p>
+<p>dockerを使わずに普通にインストールする場合は <a href="https://secure.phabricator.com/book/phabricator/article/installation_guide/">https://secure.phabricator.com/book/phabricator/article/installation_guide/</a> を参照してください。</p>
+<p>起動直後は色々設定を聞かれますが、特につまるようなところはないので省略します。</p>
+<h2 id="phabricator_1">Phabricatorでのコードレビュー</h2>
+<h3 id="pre-push-differential">pre-push型のコードレビュー (Differential)</h3>
+<p>pre-push型のコードレビューは、フロー的にはGithubでのPull Requestに似ていますが、レビュー対象のコードをpushするのではなく、パッチを送る点が異なります。Phabricatorでは以下のようなフローで作業することになります。</p>
+<ol>
+<li>コードを修正した人(author)は、レビュワー(reviewer)を指定して変更内容をDifferentialに送る</li>
+<li>reviewerは通知を受けてレビューをする</li>
+<li>reviwerがacceptしたら、authorはupstreamにpushする</li>
+</ol>
+<p>diffをPhabricatorにコピペして登録することもできますが、基本的にはarcanist経由で作業することになります。</p>
+<p>PhabricatorのUser Guideには<a href="https://secure.phabricator.com/book/phabricator/article/reviews_vs_audit/">Differentialの良さ</a> が長々と書かれてますが、実際のところ、長所として挙げられている項目はどれもPull Requestベースでも達成できます。
+ただ、Defferentialとarcanistを使えば簡単にレビュー依頼が投げられるので、開発者が自発的に適切な粒度でレビュー依頼する助けにはなりそうです。</p>
+<h3 id="post-push-audit">post-push型のコードレビュー (Audit)</h3>
+<p>Differentialではレビューが完了するまでpushを待つ必要がありますが、Auditはレビューを待たずにpushしてその後にレビューを実施するための機能です。</p>
+<p>例えば、急いでリリースする必要がある場合でも、Auditを用いてあとからレビューすることができます。このときに問題が見つかれば<code>Problem Commits</code>というフラグをたてておいてタスクに積む、というような使い方になるようです。</p>
+<p><code>Harald</code>という機能を使えば特定の条件に合致するcommit(例えば変更が大きい、Differentialでレビューされていない、等)があった場合は自動的にAuditを生成させることもできます。</p>
+<p>Auditをpull requestのように使うこともできますが、推奨はされていないようです。</p>
+<h2 id="_2">所感</h2>
+<p>もし開発管理のためにredmineやjiraをつかっているのであればPhabricatorは良い代替になりそうです。開発者向けに特化してる分、プロジェクトのタスクやバグ管理がソースコードとうまく統合されていて、ダッシュボードも柔軟にカスタマイズできます。githubのissueに不満を感じている人もPhabricatorのワークフローは試してみる価値があると思います。</p>
+<p>レビューツール単体としてみると、(Differentialをつかうなら)開発者にarcanistの導入をしてもらう必要がある分、Pull Requestの手軽さに比べるとやや煩雑に感じました。既にPull Requestベースの開発が定着していて、単によりよいレビューツールを探しているのであれば<a href="https://code.google.com/p/gerrit/">Gerrit</a> 等のほうが導入しやすいかもしれません。</p>
+<h2 id="_3">その他</h2>
+<ul>
+<li><a href="https://showoff.phab.io/">https://showoff.phab.io/</a> でデモPhabricatorが使えるので一通り試せます。</li>
+<li>デフォルトではかなりの頻度でリポジトリに対してポーリングしに行きます。負荷をかけ過ぎないように注意が必要です。</li>
+<li>Phabricator自体もそれなりの性能のマシンが必要です。環境によってはworker数を減らしたりmysqlのメモリサイズを調整しておく必要があります。</li>
+</ul>
+<h2 id="_4">参考</h2>
+<ul>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/differential/">https://secure.phabricator.com/book/phabricator/article/differential/</a> </li>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/audit/">https://secure.phabricator.com/book/phabricator/article/audit/</a> </li>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/reviews_vs_audit/">https://secure.phabricator.com/book/phabricator/article/reviews_vs_audit/</a> </li>
+</ul>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -357,37 +423,5 @@ postgresql[&quot;effective_cache_size&quot;] = &quot;32MB&quot;
 <p><img alt="before" src="/images/20140307/before300.png" />  <img alt="after" src="/images/20140307/after300.png" /> </p>
 <p>大きいファイルサイズのpdfだとそれなりに時間(数分くらい)はかかるので注意。</p>
 <p>参考： <a href="http://osxdaily.com/2011/10/24/increase-the-contrast-of-a-pdf-to-sharpen-darken-text/">http://osxdaily.com/2011/10/24/increase-the-contrast-of-a-pdf-to-sharpen-darken-text/</a> </p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[malloc+memsetとcallocの違いについて]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/" />
-    <id>http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/</id>
-    <updated>2014-03-05T21:25:23Z</updated>
-    <published>2014-03-05T21:25:23Z</published>
-    <category scheme="http://mojavy.com/blog" term="os" />
-    <category scheme="http://mojavy.com/blog" term="programming" />
-    <summary type="html"><![CDATA[malloc+memsetとcallocの違いについて]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/"><![CDATA[<p><code>malloc</code>と<code>calloc</code>の違いは、表面的には引数の数と<code>calloc</code>は確保した領域を0で初期化するという点くらいですが、以下のコードを大きな<code>n</code>で実行すると、今時のOSだと<code>malloc</code> + <code>memset</code>のほうが大幅に遅くなる可能性があります。</p>
-<div class="pygments_borland"><pre><span class="kt">void</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">type</span><span class="p">));</span>
-<span class="n">memset</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">type</span><span class="p">));</span>
-</pre></div>
-
-<div class="pygments_borland"><pre><span class="kt">void</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">calloc</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">type</span><span class="p">));</span>
-</pre></div>
-
-<p>カーネルはセキュリティ上の理由からメモリを0で初期化してからユーザプロセスに渡します。</p>
-<p>しかし、仮想メモリをサポートしたシステムでは、実際にそのメモリに書き込みが発生するまでカーネルはread onlyな領域を複数プロセスで共有させることができるため、既に初期化してあるページであればこの処理を省略できる場合があります。</p>
-<p><code>brk</code>で拡張した領域は0で初期化されているので、<code>calloc</code>は新規確保した領域は初期化を省略することができ、結果的に<code>calloc</code>を実行したタイミングでは初期化が実際にはほとんど発生しない、ということがありえます。</p>
-<p>一方<code>memset</code>の場合は実際にメモリへの書込みが発生する上、ページの共有もできなくなるためswapする可能性もあります。</p>
-<p><br>
-<br></p>
-<p>ちなみに、(カーネルではなく)<code>calloc</code>自身が0初期化する処理と、<code>memset</code>の処理は微妙に違います。
-なぜなら、<code>memset</code>は対象の領域がアラインされているかどうかについての情報なしに処理する必要があるので、境界部分は1byteずつやるしかありません。</p>
-<p>じゃあ<code>memset</code>のほうが遅いのかというと、コンパイラによってはアラインされていることを推測できる場合もあったり、callocはライブラリ関数なので移植性のために最適化しにくかったりするので、結局のところ微妙です。</p>
-<p>参考： <a href="http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc">http://stackoverflow.com/questions/2688466/why-mallocmemset-is-slower-than-calloc</a> </p>]]></content>
   </entry>
 </feed>

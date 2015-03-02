@@ -7,12 +7,78 @@
   <title type="text">mojavy.com</title>
   <subtitle type="text"></subtitle>
 
-  <updated>2014-07-09T21:56:32Z</updated>
+  <updated>2015-03-02T20:55:43Z</updated>
   <generator uri="http://blogofile.com/">Blogofile</generator>
 
   <link rel="alternate" type="text/html" href="http://mojavy.com/blog" />
   <id>http://mojavy.com/blog/feed/atom/</id>
   <link rel="self" type="application/atom+xml" href="http://mojavy.com/blog/feed/atom/" />
+  <entry>
+    <author>
+      <name></name>
+      <uri>http://mojavy.com/blog</uri>
+    </author>
+    <title type="html"><![CDATA[Phabricatorを使ったワークフローについて]]></title>
+    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2015/03/02/phabricator-workflow/" />
+    <id>http://mojavy.com/blog/2015/03/02/phabricator-workflow/</id>
+    <updated>2015-03-02T20:55:43Z</updated>
+    <published>2015-03-02T20:55:43Z</published>
+    <category scheme="http://mojavy.com/blog" term="project managing" />
+    <category scheme="http://mojavy.com/blog" term="programming" />
+    <category scheme="http://mojavy.com/blog" term="tools" />
+    <summary type="html"><![CDATA[Phabricatorを使ったワークフローについて]]></summary>
+    <content type="html" xml:base="http://mojavy.com/blog/2015/03/02/phabricator-workflow/"><![CDATA[<p><img alt="phabricator" src="/images/phabricator-logo.png" /> </p>
+<p>最近 <a href="http://phabricator.org/">Phabricator</a> を使ったワークフローを試しています。FacebookやDropboxをはじめとして海外では割と良く使われているようですが、あまり国内には情報がないようなのでまとめておきます。</p>
+<h2 id="phabricator">Phabricatorでできること</h2>
+<p>Phabricatorはコードレビューがメイン機能のようですが、それに留まらずソフトウェアの開発で必要なものがワンストップでまとまったプロジェクト管理ツールになっています。</p>
+<p>メニューのネーミングが独特でとっつきづらいですが、主に以下のような機能があります。</p>
+<ul>
+<li><code>Differential</code>: pre push型のコードレビュー</li>
+<li><code>Audit</code>: post push型のコードレビュー</li>
+<li><code>Maniphest</code>: タスクとバグの管理</li>
+<li><code>Diffusion</code>: リポジトリの管理</li>
+<li><code>Harald</code>: commitやタスクの更新イベントにフックして起動する処理の管理</li>
+<li><code>Phriction</code>: Wiki</li>
+</ul>
+<p>また、<a href="https://github.com/phacility/arcanist">arcanist</a> というコマンドラインから操作するためのツールも別途提供されており、開発のワークフローも含めた統合が意図されているようです。</p>
+<h2 id="_1">セットアップ</h2>
+<p>docker環境があるなら <code>docker run yesnault/docker-phabricator</code> ですぐ試せます。</p>
+<p><a href="https://registry.hub.docker.com/u/yesnault/docker-phabricator/">https://registry.hub.docker.com/u/yesnault/docker-phabricator/</a> </p>
+<p>ただし、上記dockerfileから構築したコンテナはデフォルトだとメールは外部に送信できない設定になっています。admin以外のユーザ登録ではメールアドレス認証が必要なので、<code>docker exec -it &lt;container_id&gt; bash</code> でコンテナに入ってメール設定を適宜修正して下さい。</p>
+<p>dockerを使わずに普通にインストールする場合は <a href="https://secure.phabricator.com/book/phabricator/article/installation_guide/">https://secure.phabricator.com/book/phabricator/article/installation_guide/</a> を参照してください。</p>
+<p>起動直後は色々設定を聞かれますが、特につまるようなところはないので省略します。</p>
+<h2 id="phabricator_1">Phabricatorでのコードレビュー</h2>
+<h3 id="pre-push-differential">pre-push型のコードレビュー (Differential)</h3>
+<p>pre-push型のコードレビューは、フロー的にはGithubでのPull Requestに似ていますが、レビュー対象のコードをpushするのではなく、パッチを送る点が異なります。Phabricatorでは以下のようなフローで作業することになります。</p>
+<ol>
+<li>コードを修正した人(author)は、レビュワー(reviewer)を指定して変更内容をDifferentialに送る</li>
+<li>reviewerは通知を受けてレビューをする</li>
+<li>reviwerがacceptしたら、authorはupstreamにpushする</li>
+</ol>
+<p>diffをPhabricatorにコピペして登録することもできますが、基本的にはarcanist経由で作業することになります。</p>
+<p>PhabricatorのUser Guideには<a href="https://secure.phabricator.com/book/phabricator/article/reviews_vs_audit/">Differentialの良さ</a> が長々と書かれてますが、実際のところ、長所として挙げられている項目はどれもPull Requestベースでも達成できます。
+ただ、Defferentialとarcanistを使えば簡単にレビュー依頼が投げられるので、開発者が自発的に適切な粒度でレビュー依頼する助けにはなりそうです。</p>
+<h3 id="post-push-audit">post-push型のコードレビュー (Audit)</h3>
+<p>Differentialではレビューが完了するまでpushを待つ必要がありますが、Auditはレビューを待たずにpushしてその後にレビューを実施するための機能です。</p>
+<p>例えば、急いでリリースする必要がある場合でも、Auditを用いてあとからレビューすることができます。このときに問題が見つかれば<code>Problem Commits</code>というフラグをたてておいてタスクに積む、というような使い方になるようです。</p>
+<p><code>Harald</code>という機能を使えば特定の条件に合致するcommit(例えば変更が大きい、Differentialでレビューされていない、等)があった場合は自動的にAuditを生成させることもできます。</p>
+<p>Auditをpull requestのように使うこともできますが、推奨はされていないようです。</p>
+<h2 id="_2">所感</h2>
+<p>もし開発管理のためにredmineやjiraをつかっているのであればPhabricatorは良い代替になりそうです。開発者向けに特化してる分、プロジェクトのタスクやバグ管理がソースコードとうまく統合されていて、ダッシュボードも柔軟にカスタマイズできます。githubのissueに不満を感じている人もPhabricatorのワークフローは試してみる価値があると思います。</p>
+<p>レビューツール単体としてみると、(Differentialをつかうなら)開発者にarcanistの導入をしてもらう必要がある分、Pull Requestの手軽さに比べるとやや煩雑に感じました。既にPull Requestベースの開発が定着していて、単によりよいレビューツールを探しているのであれば<a href="https://code.google.com/p/gerrit/">Gerrit</a> 等のほうが導入しやすいかもしれません。</p>
+<h2 id="_3">その他</h2>
+<ul>
+<li><a href="https://showoff.phab.io/">https://showoff.phab.io/</a> でデモPhabricatorが使えるので一通り試せます。</li>
+<li>デフォルトではかなりの頻度でリポジトリに対してポーリングしに行きます。負荷をかけ過ぎないように注意が必要です。</li>
+<li>Phabricator自体もそれなりの性能のマシンが必要です。環境によってはworker数を減らしたりmysqlのメモリサイズを調整しておく必要があります。</li>
+</ul>
+<h2 id="_4">参考</h2>
+<ul>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/differential/">https://secure.phabricator.com/book/phabricator/article/differential/</a> </li>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/audit/">https://secure.phabricator.com/book/phabricator/article/audit/</a> </li>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/reviews_vs_audit/">https://secure.phabricator.com/book/phabricator/article/reviews_vs_audit/</a> </li>
+</ul>]]></content>
+  </entry>
   <entry>
     <author>
       <name></name>
@@ -638,107 +704,5 @@ void f2(void) {
 
 <p>などということを今更ながら考えて悶々としていたのだけど、結局のところこういう類の便利機能は欲しくなってくるわけで、便利さのために不合理を許容するとなるとこのあたりが妥当な落とし所のような気もしてきた。</p>
 <p>まとめ：プログラミング言語を考える人はすごい</p>]]></content>
-  </entry>
-  <entry>
-    <author>
-      <name></name>
-      <uri>http://mojavy.com/blog</uri>
-    </author>
-    <title type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></title>
-    <link rel="alternate" type="text/html" href="http://mojavy.com/blog/2012/10/24/cl-practice/" />
-    <id>http://mojavy.com/blog/2012/10/24/cl-practice/</id>
-    <updated>2012-10-24T18:00:00Z</updated>
-    <published>2012-10-24T18:00:00Z</published>
-    <category scheme="http://mojavy.com/blog" term="programming" />
-    <category scheme="http://mojavy.com/blog" term="common lisp" />
-    <summary type="html"><![CDATA[Common Lisp練習 - CodeChef : TSORT]]></summary>
-    <content type="html" xml:base="http://mojavy.com/blog/2012/10/24/cl-practice/"><![CDATA[<p><img alt="codechef" src="/images/codechef-logo.png" /></p>
-<p>Common Lispの練習にCodeChefの↓の練習問題をやってみた。</p>
-<p><a href="http://www.codechef.com/problems/TSORT">http://www.codechef.com/problems/TSORT</a></p>
-<p>問題自体は全然難しくないけど、Common Lispで解こうとしたらTime Limit Exceededでおちてしまった。</p>
-<p>最初は以下のように書いて、</p>
-<div class="pygments_borland"><pre>(let ((_n (parse-integer (read-line)))
-      (lis ()))
-  (dotimes (i _n)
-    (push (parse-integer (read-line)) lis))
-  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
-  (dolist (x lis) (format t &quot;~a~%&quot; x)))
-</pre></div>
-
-<p>以下の用にして時間を測ったところ</p>
-<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
-ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.19s user 0.01s system 91% cpu 1.311 total
-sbcl --script turbosort.cl &gt; /dev/null  3.42s user 0.43s system 97% cpu 3.938 total
-</pre></div>
-
-<p>ローカルだと3.42s程度だった。codechef上での制限は5secなのでセーフかと思ったけどTime Limit Exceededだった。</p>
-<p>そこで、vectorを使うように改良</p>
-<div class="pygments_borland"><pre>(let* ((_n (parse-integer (read-line)))
-       (lis (make-array _n :fill-pointer 0)))
-  (dotimes (i _n)
-    (vector-push (parse-integer (read-line)) lis))
-  (setf lis (sort lis #&#39;(lambda (x y) (&lt; x y))))
-  (loop for i across lis do (format t &quot;~a~%&quot; i)))
-</pre></div>
-
-<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
-ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.21s user 0.01s system 94% cpu 1.289 total
-sbcl --script turbosort.cl &gt; /dev/null  2.64s user 0.44s system 98% cpu 3.137 total
-</pre></div>
-
-<p>若干改善されたが、まだTime Limit Exceededだった。</p>
-<p>read-sequenceで読み込んだほうが早いかと思って以下のように書いてみた。</p>
-<div class="pygments_borland"><pre>(defun parse-input (str)
-  (loop
-     for i = 0 then (+ 1 j)
-     as j = (position #\Newline str :start i)
-     as k = (parse-integer (subseq str i j) :junk-allowed t)
-     if (not (null k))
-     collect k
-     while j))
-
-(let* ((_n (parse-integer (read-line)))
-       (lis (make-array (* _n 20) :element-type &#39;character))
-       (nums ())
-       )
-  (read-sequence lis *standard-input*)
-  (setf nums (sort (parse-input lis) #&#39;(lambda (x y) (&lt; x y))))
-  (loop for i in nums do (format t &quot;~a~%&quot; i)))
-</pre></div>
-
-<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | sbcl --script turbosort.cl &gt; /dev/null
-ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  1.13s user 0.01s system 97% cpu 1.159 total
-sbcl --script turbosort.cl &gt; /dev/null  3.67s user 0.48s system 96% cpu 4.297 total
-</pre></div>
-
-<p>残念ながら逆に遅くなってしまった。parse-inputの部分で60%くらい時間がかかっていた。
-あと、<code>#'(lambda (x y) (&lt; x y))</code>の部分を <code>#'&lt;</code>にするとなぜか遅くなる。</p>
-<p><a href="http://www.codechef.com/status/TSORT?language=31&amp;status=All&amp;handle=&amp;sort_by=All&amp;sorting_order=asc&amp;Submit=GO">まだ誰もlispではパスしてない模様。</a>こういうのをもっと高速に書く方法あるのだろうか。</p>
-<p>ちなみにCだと余裕。ローカルだと0.2秒くらいだけどリモートでは3秒くらいかかってた。そもそもCodeChefの実行環境がしょぼすぎる疑惑が。。</p>
-<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
-<span class="cp">#include &lt;stdlib.h&gt;</span>
-
-<span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">j</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
-    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
-
-    <span class="kt">int</span> <span class="n">lis</span><span class="p">[</span><span class="n">num</span><span class="p">];</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">stdin</span><span class="p">));</span>
-    <span class="p">}</span>
-    <span class="n">qsort</span><span class="p">(</span><span class="n">lis</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span> <span class="n">f</span><span class="p">);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">lis</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="p">}</span>
-</pre></div>
-
-<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">time </span>ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span> | ./a.out &gt; /dev/null
-ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).to_i}&#39;</span>  0.99s user 0.01s system 99% cpu 1.006 total
-./a.out &gt; /dev/null  0.18s user 0.01s system 17% cpu 1.116 total
-</pre></div>]]></content>
   </entry>
 </feed>

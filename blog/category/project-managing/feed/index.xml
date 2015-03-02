@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     >
+  <channel>
+    <title>mojavy.com</title>
+    <link>http://mojavy.com/blog</link>
+    <description></description>
+    <pubDate>Mon, 02 Mar 2015 20:55:43 GMT</pubDate>
+    <generator>Blogofile</generator>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>Phabricatorを使ったワークフローについて</title>
+      <link>http://mojavy.com/blog/2015/03/02/phabricator-workflow/</link>
+      <pubDate>Mon, 02 Mar 2015 20:55:43 JST</pubDate>
+      <category><![CDATA[project managing]]></category>
+      <category><![CDATA[programming]]></category>
+      <category><![CDATA[tools]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2015/03/02/phabricator-workflow/</guid>
+      <description>Phabricatorを使ったワークフローについて</description>
+      <content:encoded><![CDATA[<p><img alt="phabricator" src="/images/phabricator-logo.png" /> </p>
+<p>最近 <a href="http://phabricator.org/">Phabricator</a> を使ったワークフローを試しています。FacebookやDropboxをはじめとして海外では割と良く使われているようですが、あまり国内には情報がないようなのでまとめておきます。</p>
+<h2 id="phabricator">Phabricatorでできること</h2>
+<p>Phabricatorはコードレビューがメイン機能のようですが、それに留まらずソフトウェアの開発で必要なものがワンストップでまとまったプロジェクト管理ツールになっています。</p>
+<p>メニューのネーミングが独特でとっつきづらいですが、主に以下のような機能があります。</p>
+<ul>
+<li><code>Differential</code>: pre push型のコードレビュー</li>
+<li><code>Audit</code>: post push型のコードレビュー</li>
+<li><code>Maniphest</code>: タスクとバグの管理</li>
+<li><code>Diffusion</code>: リポジトリの管理</li>
+<li><code>Harald</code>: commitやタスクの更新イベントにフックして起動する処理の管理</li>
+<li><code>Phriction</code>: Wiki</li>
+</ul>
+<p>また、<a href="https://github.com/phacility/arcanist">arcanist</a> というコマンドラインから操作するためのツールも別途提供されており、開発のワークフローも含めた統合が意図されているようです。</p>
+<h2 id="_1">セットアップ</h2>
+<p>docker環境があるなら <code>docker run yesnault/docker-phabricator</code> ですぐ試せます。</p>
+<p><a href="https://registry.hub.docker.com/u/yesnault/docker-phabricator/">https://registry.hub.docker.com/u/yesnault/docker-phabricator/</a> </p>
+<p>ただし、上記dockerfileから構築したコンテナはデフォルトだとメールは外部に送信できない設定になっています。admin以外のユーザ登録ではメールアドレス認証が必要なので、<code>docker exec -it &lt;container_id&gt; bash</code> でコンテナに入ってメール設定を適宜修正して下さい。</p>
+<p>dockerを使わずに普通にインストールする場合は <a href="https://secure.phabricator.com/book/phabricator/article/installation_guide/">https://secure.phabricator.com/book/phabricator/article/installation_guide/</a> を参照してください。</p>
+<p>起動直後は色々設定を聞かれますが、特につまるようなところはないので省略します。</p>
+<h2 id="phabricator_1">Phabricatorでのコードレビュー</h2>
+<h3 id="pre-push-differential">pre-push型のコードレビュー (Differential)</h3>
+<p>pre-push型のコードレビューは、フロー的にはGithubでのPull Requestに似ていますが、レビュー対象のコードをpushするのではなく、パッチを送る点が異なります。Phabricatorでは以下のようなフローで作業することになります。</p>
+<ol>
+<li>コードを修正した人(author)は、レビュワー(reviewer)を指定して変更内容をDifferentialに送る</li>
+<li>reviewerは通知を受けてレビューをする</li>
+<li>reviwerがacceptしたら、authorはupstreamにpushする</li>
+</ol>
+<p>diffをPhabricatorにコピペして登録することもできますが、基本的にはarcanist経由で作業することになります。</p>
+<p>PhabricatorのUser Guideには<a href="https://secure.phabricator.com/book/phabricator/article/reviews_vs_audit/">Differentialの良さ</a> が長々と書かれてますが、実際のところ、長所として挙げられている項目はどれもPull Requestベースでも達成できます。
+ただ、Defferentialとarcanistを使えば簡単にレビュー依頼が投げられるので、開発者が自発的に適切な粒度でレビュー依頼する助けにはなりそうです。</p>
+<h3 id="post-push-audit">post-push型のコードレビュー (Audit)</h3>
+<p>Differentialではレビューが完了するまでpushを待つ必要がありますが、Auditはレビューを待たずにpushしてその後にレビューを実施するための機能です。</p>
+<p>例えば、急いでリリースする必要がある場合でも、Auditを用いてあとからレビューすることができます。このときに問題が見つかれば<code>Problem Commits</code>というフラグをたてておいてタスクに積む、というような使い方になるようです。</p>
+<p><code>Harald</code>という機能を使えば特定の条件に合致するcommit(例えば変更が大きい、Differentialでレビューされていない、等)があった場合は自動的にAuditを生成させることもできます。</p>
+<p>Auditをpull requestのように使うこともできますが、推奨はされていないようです。</p>
+<h2 id="_2">所感</h2>
+<p>もし開発管理のためにredmineやjiraをつかっているのであればPhabricatorは良い代替になりそうです。開発者向けに特化してる分、プロジェクトのタスクやバグ管理がソースコードとうまく統合されていて、ダッシュボードも柔軟にカスタマイズできます。githubのissueに不満を感じている人もPhabricatorのワークフローは試してみる価値があると思います。</p>
+<p>レビューツール単体としてみると、(Differentialをつかうなら)開発者にarcanistの導入をしてもらう必要がある分、Pull Requestの手軽さに比べるとやや煩雑に感じました。既にPull Requestベースの開発が定着していて、単によりよいレビューツールを探しているのであれば<a href="https://code.google.com/p/gerrit/">Gerrit</a> 等のほうが導入しやすいかもしれません。</p>
+<h2 id="_3">その他</h2>
+<ul>
+<li><a href="https://showoff.phab.io/">https://showoff.phab.io/</a> でデモPhabricatorが使えるので一通り試せます。</li>
+<li>デフォルトではかなりの頻度でリポジトリに対してポーリングしに行きます。負荷をかけ過ぎないように注意が必要です。</li>
+<li>Phabricator自体もそれなりの性能のマシンが必要です。環境によってはworker数を減らしたりmysqlのメモリサイズを調整しておく必要があります。</li>
+</ul>
+<h2 id="_4">参考</h2>
+<ul>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/differential/">https://secure.phabricator.com/book/phabricator/article/differential/</a> </li>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/audit/">https://secure.phabricator.com/book/phabricator/article/audit/</a> </li>
+<li><a href="https://secure.phabricator.com/book/phabricator/article/reviews_vs_audit/">https://secure.phabricator.com/book/phabricator/article/reviews_vs_audit/</a> </li>
+</ul>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

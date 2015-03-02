@@ -102,6 +102,135 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="reveal.js-をつかってブログ記事からスライドを生成する"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/18/revealjs/" rel="bookmark" title="Permanent Link to reveal.js をつかってブログ記事からスライドを生成する">reveal.js をつかってブログ記事からスライドを生成する</a></h2>
+  <small>October 18, 2013 at 10:00 PM | categories:
+
+<a href='/blog/category/blog'>blog</a>, <a href='/blog/category/reveal.js'>reveal.js</a>, <a href='/blog/category/blogofile'>blogofile</a>
+ | <a href="http://mojavy.com/blog/2013/10/18/revealjs/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <h3 id="_1">はじめに</h3>
+<p>これは以下のような人を対象にしたポストです</p>
+<ul>
+<li class="fragment">スライドをmarkdownでつくりたい</li>
+<li class="fragment">ブログはmarkdownでかいている</li>
+<li class="fragment">ずぼらするためには努力を惜しまない</li>
+</ul>
+
+<h3 id="_2">デモ</h3>
+<p>とりあえず以下のスライドをみてください。</p>
+<ul>
+<li><a href="/slide/2013/10/18/revealjs/">/slide/2013/10/18/revealjs/</a> </li>
+</ul>
+<h3 id="revealjs">reveal.jsとは</h3>
+<p>HTMLでかけるプレゼンツールです。詳細は以下等を参照してください。</p>
+<ul>
+<li><a href="http://lab.hakim.se/reveal-js">http://lab.hakim.se/reveal-js/</a> </li>
+</ul>
+<h3 id="static-cms">static CMS</h3>
+<p>説明は省略します。このブログはblogofileでできていますが、jekyllやhakyllのようなものでもほぼ同等なことができます。</p>
+<ul>
+<li><a href="http://jekyllrb.com/">http://jekyllrb.com/</a> </li>
+<li><a href="http://www.blogofile.com/">http://www.blogofile.com/</a> </li>
+<li><a href="http://jaspervdj.be/hakyll/">http://jaspervdj.be/hakyll/</a> </li>
+</ul>
+<h3 id="_3">やり方</h3>
+<p>reveal.jsのmarkdown埋め込み機能をつかうだけです。reveal.jsのREADMEを読むとめんどうなように見えますが、 <a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a>  のようにテンプレートを書くだけ。とはいえ多少のコーディングが必要です。</p>
+<p>詳細は以下のソースをみてください。</p>
+<ul>
+<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_templates/revealjs.mako">revealjs.mako</a> </li>
+<li><a href="https://github.com/taksatou/taksatou.github.com/blob/master/_blogofile/_controllers/blog/slide.py">slide.py</a> </li>
+</ul>
+<h2 id="code-highlight">code highlight</h2>
+<p>コードハイライトつかえます。</p>
+<div class="pygments_borland"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="c1">// highlight test</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3 id="fragment">fragment</h3>
+<p>fragmentもつかえます。</p>
+<p class="fragment">... to step through ...</p>
+
+<ol>
+<li class="fragment"><code>any type</code></li>
+<li class="fragment"><em>of view</em></li>
+<li class="fragment"><strong>fragments</strong></li>
+</ol>
+
+<h3 id="_4">長所</h3>
+<ul>
+<li class="fragment">ブログ書くついてでにスライドもできる</li>
+<li class="fragment">スライドの共有が簡単</li>
+<li class="fragment">パワポ不要</li>
+<li class="fragment">さりげなくギークっぽさがアピールできる</li>
+</ul>
+
+<h3 id="_5">短所</h3>
+<ul>
+<li class="fragment">ブログとスライドのそれぞれの完成度を両立した記事にまとめるのは難しい</li>
+<li class="fragment">多少はhtmlを書く必要があるときもある</li>
+</ul>
+
+<h3 id="_6">まとめ</h3>
+<ul>
+<li class="fragment">blogofileにreveal.jsを組み込んだ話を紹介しました</li>
+<li class="fragment">reveal.jsかっこいいです</li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/10/17/calculate-combinations/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2013/10/18/revealjs/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/10/18/revealjs/" class="hatena-bookmark-button" data-hatena-bookmark-title="reveal.js をつかってブログ記事からスライドを生成する" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/10/18/revealjs/" data-text="reveal.js をつかってブログ記事からスライドを生成する">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2013/10/18/revealjs/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/10/18/revealjs/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="オーバーフローしにくい組み合わせの数の計算方法"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/10/17/calculate-combinations/" rel="bookmark" title="Permanent Link to オーバーフローしにくい組み合わせの数の計算方法">オーバーフローしにくい組み合わせの数の計算方法</a></h2>
   <small>October 17, 2013 at 09:13 PM | categories:
@@ -501,128 +630,6 @@ ERROR: Net::SSH::AuthenticationFailed: username
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/07/12/reptyr/" rel="bookmark" title="Permanent Link to ptraceを駆使してscreenifyっぽいことをするreptyrがすごい">ptraceを駆使してscreenifyっぽいことをするreptyrがすごい</a></h2>
-  <small>July 12, 2013 at 07:15 PM | categories:
-
-<a href='/blog/category/c'>C</a>, <a href='/blog/category/linux'>linux</a>
- | <a href="http://mojavy.com/blog/2013/07/12/reptyr/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>reptyrというおもしろいものをみつけたのでご紹介</p>
-<h2 id="reptyr">reptyr とは</h2>
-<p>reptyrとは"re-ptying"するためのプログラムで、起動中のプロセスを新しい別のターミナルにもってくることができます。
-例えば、うっかりscreenやtmuxの外で起動してしまった長い時間のかかるバッチ処理を、起動したままscreenの中にもってくることができます。</p>
-<p><a href="https://github.com/nelhage/reptyr">https://github.com/nelhage/reptyr</a> </p>
-<h2 id="_1">使い方</h2>
-<div class="pygments_borland"><pre><span class="nv">$ </span>reptyr PID
-</pre></div>
-
-<p>現在のターミナル内にもってきたいプロセスのpidを引数にします。
-attach後は、そのプロセスの入出力は^Cや^Zも含めて新しいターミナル側を向きます。</p>
-<h2 id="screenify">それscreenifyでできるよ</h2>
-<p>screenifyと呼ばれるスクリプトが昔からあって、それはgdbつかって似たようなことをやってるらしいです。
-でもreptyrならもっとうまくできます。</p>
-<p>例えば従来のscreenifyには以下のような問題がありました。</p>
-<ul>
-<li>screenifyでattachしたプロセスは、元のターミナルから入力をうけつけてしまう</li>
-<li>ncursesをつかってるプログラムをscreenifyすると、そのプログラムはwindowのリサイズがとれなくなる</li>
-<li>screenifyした新しいターミナルでは^Cがきかない</li>
-</ul>
-<p>reptyrはこういった問題を全部解決できます。</p>
-<h2 id="_2">移植性</h2>
-<p>reptyrは対象プロセスを操作するのにptraceをつかっているのでLinuxに強く依存しており、Linuxだけをサポートしています。
-SolarisやBSDに移植することも技術的には可能ですが、現状はプラットフォーム固有の部分を抽象化するようにはデザインされていないようです。</p>
-<p>reptyrは現状ではi386, x86_64, ARMをサポートしています。他のアーキテクチャへの対応はarch以下に対応コードを追加すれば比較的容易です。</p>
-<h2 id="ptrace_scope-on-ubuntu-maverick-and-up">ptrace_scope on Ubuntu Maverick and up</h2>
-<p>Ubuntu Maverick以降ではptraceの機能がデフォルトで無効になっています。
-以下コマンドで一時的に有効にできます。</p>
-<div class="pygments_borland"><pre><span class="nv">$ </span><span class="nb">echo </span>0 &gt; /proc/sys/kernel/yama/ptrace_scope
-</pre></div>
-
-<p>rootで<code>/etc/sysctl.d/10-ptrace.conf</code>を編集すると永続的に変更できます。また<code>ptrace_scope</code>に関する詳細な説明もここに書いてあります。</p>
-<h2 id="_3">どうやってるの？</h2>
-<p>ソースを追ってみたところ以下のような処理をしているようです。</p>
-<ol>
-<li>reptyrプロセス側でptyをつくる</li>
-<li>attach対象のプロセスのttyのtermios設定をptyにコピーする</li>
-<li>ptraceで対象プロセスをattachしてレジスタ内容を一旦退避</li>
-<li>attachしたプロセス側でmmapし、そこにreptyrプロセス側でつくったptyをコピー</li>
-<li>attachしたプロセス側でコピーしたptyをopenし、setsid〜ioctlでそこに制御端末を割り当てる</li>
-<li>attachしたプロセス側でdup2して入出力をttyに向ける</li>
-<li>レジスタ内容を復元、後始末してptraceをdetach</li>
-</ol>
-<p>reptyrのキモは5の制御端末をptyに割り当てるところで、これをすることによって従来のscreenifyの問題が回避できます。</p>
-<p>しかし、単に<code>ioctl</code>の<code>TIOCSCTTY</code>するだけではうまくいかないのでちょっとしたトリックが必要です。詳細は<a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> に解説があります。
-reptyrの作者は自力でこの方法を思いついたそうですが、同様のテクニックは <a href="https://github.com/ThomasHabets/injcode">injcode</a> や<a href="http://www.ohloh.net/p/neercs">neercs</a> でも使用されているそうです。</p>
-<h2 id="reptyr_1">reptyrってどう読むの？</h2>
-<p><code>repeater</code>のように発音してもいいけど曖昧なので<code>re-P-T-Y-er</code> (たぶんリ・ピーティーワイアー)のように発音してもよいそうです。</p>
-<h2 id="_4">制約</h2>
-<ul>
-<li>backgroundにしたときは前のターミナルでbgやfgを実行する必要があります。background制御はshellがやっているので、これを直すにはshell側に手をいれる必要があります。</li>
-<li>現状では子プロセスがあるプロセスはattachできません</li>
-</ul>
-<h2 id="_5">類似のもの</h2>
-<ul>
-<li><a href="https://github.com/ThomasHabets/injcode">injcode</a> </li>
-<li><a href="http://www.ohloh.net/p/neercs">neercs</a> </li>
-</ul>
-<h2 id="_6">参考</h2>
-<ul>
-<li><a href="http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/">http://blog.nelhage.com/2011/01/reptyr-attach-a-running-process-to-a-new-terminal/</a> </li>
-<li><a href="http://blog.nelhage.com/2011/02/changing-ctty/">http://blog.nelhage.com/2011/02/changing-ctty/</a> </li>
-<li><a href="http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal">http://blog.habets.pp.se/2009/03/Moving-a-process-to-another-terminal</a> </li>
-</ul>
-<h2 id="_7">まとめ</h2>
-<p>reptyrは1000行くらいの小さなプログラムですが、なかなかおもしろいハックだと思うので興味がある方はソースを読んでみて下さい。</p>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/07/10/c-tuple/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/07/12/reptyr/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/07/12/reptyr/" class="hatena-bookmark-button" data-hatena-bookmark-title="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/07/12/reptyr/" data-text="ptraceを駆使してscreenifyっぽいことをするreptyrがすごい">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/07/12/reptyr/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/07/12/reptyr/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../4">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -652,6 +659,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2015/03/02/phabricator-workflow/" title="Phabricatorを使ったワークフローについて"><p>Phabricatorを使ったワークフローについて</a><span style="font-size: 80%;">(March 02, 2015 at 08:55 PM)</span></li>
       <li><a href="/blog/2014/12/23/dnsimple-dynamic-dns/" title="dnsimpleでダイナミックDNSをつかう"><p>dnsimpleでダイナミックDNSをつかう</a><span style="font-size: 80%;">(December 23, 2014 at 08:02 PM)</span></li>
       <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
@@ -659,7 +667,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
       <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
       <li><a href="/blog/2014/03/11/latest-gitlab-setup/" title="gitlab 6.6.4 CE のゆるふわセットアップ"><p>gitlab 6.6.4 CE のゆるふわセットアップ</a><span style="font-size: 80%;">(March 11, 2014 at 02:08 AM)</span></li>
-      <li><a href="/blog/2014/03/07/dont-use-chef/" title="chefを使うのを我慢したほうがいいとき"><p>chefを使うのを我慢したほうがいいとき</a><span style="font-size: 80%;">(March 07, 2014 at 12:09 AM)</span></li>
     </ul>
   </div>
 
@@ -743,7 +750,8 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (10)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (11)</li>
+     <li><a href="/blog/category/project-managing">project managing</a> (<a href="/blog/category/project-managing/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
@@ -759,6 +767,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (9)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/tools">tools</a> (<a href="/blog/category/tools/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
@@ -772,6 +781,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2015/03/1" title="March 2015">March 2015</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/10/1" title="October 2014">October 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(3)</li>
