@@ -1,5 +1,5 @@
 ---
-categories: programming, project managing, tools
+categories: programming, project management, tools
 date: 2015/03/02 20:55:43
 title: Phabricatorを使ったワークフローについて
 image: /images/phabricator-logo.png
