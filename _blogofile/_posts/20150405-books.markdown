@@ -112,6 +112,12 @@ MCMCについて理解を深めるため。[イジングモデルとか](http://
 swiftを書く必要にせまられたので。知りたいところだけ拾い読みした。前から思っていたが、kindleは技術本を拾い読みするにはあまり向かない。
 
 
+### <a href="http://www.amazon.co.jp/gp/product/B00GRKD6XU/ref=as_li_ss_tl?ie=UTF8&camp=247&creative=7399&creativeASIN=B00GRKD6XU&linkCode=as2&tag=armyofpigs-22">エリック・エヴァンスのドメイン駆動設計</a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=B00GRKD6XU" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
+
+<a href="http://www.amazon.co.jp/gp/product/B00GRKD6XU/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeASIN=B00GRKD6XU&linkCode=as2&tag=armyofpigs-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00GRKD6XU&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=armyofpigs-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=B00GRKD6XU" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
+買ったのは年末だけど最近になってまじめに読みはじめた。まだDDDを理解してない気がするのでノーコメント。
 
 [^1]: 読んだというのは読了したという意味ではない
 
