@@ -102,6 +102,70 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="debianパッケージをchefで削除する場合はpurgeを使う方がよい"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/" rel="bookmark" title="Permanent Link to debianパッケージをchefで削除する場合はpurgeを使う方がよい">debianパッケージをchefで削除する場合はpurgeを使う方がよい</a></h2>
+  <small>September 10, 2013 at 07:39 PM | categories:
+
+<a href='/blog/category/chef'>chef</a>, <a href='/blog/category/ruby'>ruby</a>, <a href='/blog/category/debian'>debian</a>
+ | <a href="http://mojavy.com/blog/2013/09/10/chef-purge-package/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>apt-getコマンドにはパッケージを削除するためのコマンドが2種類ある</p>
+<ul>
+<li>remove: パッケージを削除するが設定ファイルはそのまま残す</li>
+<li>purge: パッケージを削除するとき設定ファイルも削除する</li>
+</ul>
+<p>chefをつかっているということは設定ファイルもchefで管理しているはずなので、設定ファイルを残す必要はない。
+さらに、依存で入ったパッケージも一緒に削除されるように、<code>options "--auto-remove"</code>などとしてやるとよい。</p>
+<p>ゴミは混乱の元なので早めに消すべし。</p>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/10/01/mustache-quick-master/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2013/09/10/chef-purge-package/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/09/10/chef-purge-package/" class="hatena-bookmark-button" data-hatena-bookmark-title="debianパッケージをchefで削除する場合はpurgeを使う方がよい" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/09/10/chef-purge-package/" data-text="debianパッケージをchefで削除する場合はpurgeを使う方がよい">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2013/09/10/chef-purge-package/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/09/10/chef-purge-package/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="chef-soloでauthenticationfailedといわれたときの対応"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/09/09/chef-solo-ssh-config/" rel="bookmark" title="Permanent Link to chef soloでAuthenticationFailedといわれたときの対応">chef soloでAuthenticationFailedといわれたときの対応</a></h2>
   <small>September 09, 2013 at 08:43 PM | categories:
@@ -511,139 +575,6 @@ reptyrの作者は自力でこの方法を思いついたそうですが、同�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="暗号利用モードについて"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" rel="bookmark" title="Permanent Link to 暗号利用モードについて">暗号利用モードについて</a></h2>
-  <small>June 12, 2013 at 08:36 AM | categories:
-
-<a href='/blog/category/security'>security</a>
- | <a href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p>AESを使おうと思ったけどどの暗号利用モードをつかえばいいかわからなかったので調べたことをまとめておきます。</p>
-<h2 id="_1">暗号利用モードとは</h2>
-<p><a href="http://ja.wikipedia.org/wiki/%E6%9A%97%E5%8F%B7%E5%88%A9%E7%94%A8%E3%83%A2%E3%83%BC%E3%83%89">Wikipedia/暗号利用モード</a></p>
-<blockquote>
-<p>暗号利用モード（あんごうりようモード、Block cipher modes of operation）とは、ブロック暗号を利用して、ブロック長よりも長いメッセージを暗号化するメカニズムのことである。
-<br>
-ECBモード（単純なブロック暗号の利用法）では、ある鍵で同一の平文を暗号化すると、同一の暗号文になる。したがって、長いメッセージ（画像データなど）のある部分が他の部分と同じであるかどうかが、暗号文の比較によって判断できてしまうので、他のモードが必要となった。
-<br>
-暗号利用モードには、秘匿用の利用モードと、認証用の利用モードとがある。
-<br>
-<br></p>
-</blockquote>
-<h2 id="_2">秘匿用利用モード</h2>
-<p><a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation">Wikipediaの図</a> も参考にするとわかりやすい。
-以下は概要だけ。</p>
-<h3 id="ecb">ECB</h3>
-<p>各ブロックを単純に一つずつ処理するだけ。暗号が一致したブロックは復号した平文も一致する。
-1つ以上のブロックを単一のパスワードで暗号化するのであれば使うべきではない。</p>
-<h3 id="cbc">CBC</h3>
-<p>直前の暗号テキストブロックを次の平文テキストブロックにXORしてからブロック暗号処理することを繰り返す。
-最初のブロックはIV(<a href="https://en.wikipedia.org/wiki/Initialization_vector">Initialization Vector</a>)をつかって暗号化する。</p>
-<p>暗号化は前から順番にする必要があるが、複合は1つ前のブロック前が分かればできるので並列化が可能。</p>
-<h3 id="cfb">CFB</h3>
-<p>CBCと似ているが、直前の暗号テキストブロックを再度ブロック暗号処理したものに次の平文テキストブロックをXORしたものを暗号テキストとする。
-最初のブロックはIVだけブロック暗号処理してXORする。
-CBCとはXORのタイミングが違うだけ。</p>
-<p>特徴もCBCと同じで、暗号化処理は並列化できないが複合は可能。</p>
-<h3 id="ofb">OFB</h3>
-<p>IVを繰り返しブロック暗号処理したものにそれぞれ平文ブロックをXORしていったものを暗号テキストとする。
-すべての操作で直前のものが必要となるので暗号化・復号の両方とも並列化はできないが、IVのブロック暗号処理は事前に計算することができる。</p>
-<h3 id="ctr-icm-sic">CTR (ICM, SIC)</h3>
-<p>OFBに似ているが、IVではなくカウンターの値をインクリメントしつつブロック暗号処理したものに平文ブロックをXORする。
-カウンターは十分に長い間繰り返しが発生しない一意な値を出力する任意の関数であれば何でもよいが、単に1ずつ増やすカウンターを使うことが多い。</p>
-<p>暗号・復号いずれも並列化が可能だが、入力に決定的な値を使うことについては議論の余地がある。</p>
-<h3 id="_3">ディスク用のもの</h3>
-<p>ディスクを暗号化するには特別な考慮が必要になるため専用のものがいくつか存在する。</p>
-<ul>
-<li>LRW</li>
-<li>XEX</li>
-<li>XTS</li>
-<li>CMC</li>
-</ul>
-<h4 id="_4">参考</h4>
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/Disk_encryption_theory">http://en.wikipedia.org/wiki/Disk_encryption_theory</a></li>
-<li><a href="http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf">http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf</a></li>
-<li><a href="http://axelkenzo.ru/downloads/1619-2007-NIST-Submission.pdf">http://axelkenzo.ru/downloads/1619-2007-NIST-Submission.pdf</a></li>
-</ul>
-<h2 id="_5">認証用の利用モード</h2>
-<p>秘匿化とあわせて認証とデータの完全性を保証するためのモード。
-通常はMAC(Massage Authentication Code, authentication tag)を組みあわせることで実現する。</p>
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/CCM_mode">CCM</a></li>
-<li><a href="http://en.wikipedia.org/wiki/CWC_mode">CWC</a></li>
-<li><a href="http://en.wikipedia.org/wiki/OCB_mode">OCB</a></li>
-<li><a href="http://en.wikipedia.org/wiki/EAX_mode">EAX</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM</a></li>
-</ul>
-<h2 id="_6">その他</h2>
-<ul>
-<li>上記では触れなかったが、並列化できるかどうかの他にもエラー検出が可能かどうかや組み合わせて使用するブロック暗号化方式の特徴なども考慮して選択する必要がある</li>
-<li>特許になっているものも多いので使用する際は要確認</li>
-<li>mysqlのaes_encrypt()ではECBをつかっているのでセキュリティ強度的にはあまりよろしくない</li>
-</ul>
-<h2 id="_7">参考</h2>
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation">http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Authenticated_encryption">http://en.wikipedia.org/wiki/Authenticated_encryption</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Message_authentication_code">http://en.wikipedia.org/wiki/Message_authentication_code</a></li>
-<li><a href="http://en.wikipedia.org/wiki/OCB_mode">http://en.wikipedia.org/wiki/OCB_mode</a></li>
-<li><a href="http://www.heliontech.com/aes_modes_basic.htm">http://www.heliontech.com/aes_modes_basic.htm</a></li>
-<li><a href="http://www.triplefalcon.com/Lexicon/Encryption-Block-Mode-1.htm">http://www.triplefalcon.com/Lexicon/Encryption-Block-Mode-1.htm</a></li>
-<li><a href="http://www.schneier.com/blog/archives/2009/07/another_new_aes.html">http://www.schneier.com/blog/archives/2009/07/another_new_aes.html</a></li>
-<li><a href="http://stackoverflow.com/questions/1220751/how-to-choose-an-aes-encryption-mode-cbc-ecb-ctr-ocb-cfb">http://stackoverflow.com/questions/1220751/how-to-choose-an-aes-encryption-mode-cbc-ecb-ctr-ocb-cfb</a></li>
-<li><a href="http://stackoverflow.com/questions/2797692/whats-the-best-way-to-store-sensitive-data-in-mysql">http://stackoverflow.com/questions/2797692/whats-the-best-way-to-store-sensitive-data-in-mysql</a></li>
-<li><a href="http://www.cs.ucdavis.edu/~rogaway/ocb/license.htm">http://www.cs.ucdavis.edu/~rogaway/ocb/license.htm</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/05/17/mach-o-rpath/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/06/15/quicklinks6/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" class="hatena-bookmark-button" data-hatena-bookmark-title="暗号利用モードについて" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" data-text="暗号利用モードについて">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/06/12/block-cipher-modes-of-operation/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../5">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -673,6 +604,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2015/04/21/embedded-languages-benchmarks/" title="組み込み用プログラミング言語のパフォーマンス比較"><p>組み込み用プログラミング言語のパフォーマンス比較</a><span style="font-size: 80%;">(April 21, 2015 at 01:10 AM)</span></li>
       <li><a href="/blog/2015/04/05/books/" title="最近読んだ本"><p>最近読んだ本</a><span style="font-size: 80%;">(April 05, 2015 at 01:23 PM)</span></li>
       <li><a href="/blog/2015/03/02/phabricator-workflow/" title="Phabricatorを使ったワークフローについて"><p>Phabricatorを使ったワークフローについて</a><span style="font-size: 80%;">(March 02, 2015 at 08:55 PM)</span></li>
       <li><a href="/blog/2014/12/23/dnsimple-dynamic-dns/" title="dnsimpleでダイナミックDNSをつかう"><p>dnsimpleでダイナミックDNSをつかう</a><span style="font-size: 80%;">(December 23, 2014 at 08:02 PM)</span></li>
@@ -680,7 +612,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
       <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
-      <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
     </ul>
   </div>
 
@@ -750,8 +681,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (4)</li>
-     <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/lua">lua</a> (<a href="/blog/category/lua/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/mach-o">mach-o</a> (<a href="/blog/category/mach-o/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
@@ -765,14 +697,14 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (11)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (12)</li>
      <li><a href="/blog/category/project-management">project management</a> (<a href="/blog/category/project-management/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/reveal.js">reveal.js</a> (<a href="/blog/category/reveal.js/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (2)</li>
@@ -786,6 +718,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/v8">v8</a> (<a href="/blog/category/v8/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
@@ -796,7 +729,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2015/04/1" title="April 2015">April 2015</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2015/04/1" title="April 2015">April 2015</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2015/03/1" title="March 2015">March 2015</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/10/1" title="October 2014">October 2014</a>&nbsp;(1)</li>

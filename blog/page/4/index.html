@@ -102,6 +102,102 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="tcpの黒歴史：謎のオプションskeeterとbubbaについて"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/" rel="bookmark" title="Permanent Link to TCPの黒歴史：謎のオプションskeeterとbubbaについて">TCPの黒歴史：謎のオプションskeeterとbubbaについて</a></h2>
+  <small>February 13, 2014 at 06:00 PM | categories:
+
+<a href='/blog/category/web'>web</a>, <a href='/blog/category/history'>history</a>
+ | <a href="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="ns" src="/images/netscape-150.png" /> </p>
+<p>TCPについて調べてたら、<code>skeeter</code>と<code>bubba</code>という謎のオプションを見つけた。
+調べてみたところ、TCPを策定した人達の黒歴史らしい。</p>
+<ul>
+<li><a href="http://mailman.postel.org/pipermail/internet-history/2001-November/000073.html">TCP options: Bubba and Skeeter</a> </li>
+</ul>
+<p>以下意訳です。</p>
+<hr>
+
+<p>あー、これは忘れられそうもないんだけど黒歴史だね。</p>
+<p>ben levyとstevと私<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> がFTPをやってたときにつくったものなんだ。
+Bridghan<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>とstevがけしかけたんだけど、アイディアはシンプルで、鍵管理システムなしに暗号化できるように、デフィー・ヘルマン鍵共有をtcpで直接するためのものだった。
+それには認証の仕組みは想定してなくて、パスワードみたいなものが共有されている前提だったんだ。
+シンプルな実装で大体は動いてたんだけど、介入者攻撃には脆弱だったのが欠点だった。</p>
+<p>なんで"skeeter"<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>  と"bubba"<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> かって？それはstevに聞いてくれ。</p>
+<hr>
+
+<p>なかなかセンスのあるネーミングですね。気になる人はstev氏に聞いてみてください。</p>
+<p><strong>参考</strong></p>
+<ul>
+<li><a href="http://www.iana.org/assignments/tcp-parameters/tcp-parameters.xhtml">Transmission Control Protocol (TCP) Parameters</a> </li>
+<li><a href="http://www.ietf.org/mail-archive/web/tcpm/current/msg05424.html">Re: [tcpm] IANA TCP options registry ...</a> </li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Kastenholz, Frank&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>たぶんDave Bridgham のこと <a href="http://en.wikipedia.org/wiki/FTP_Software">http://en.wikipedia.org/wiki/FTP_Software</a>&#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>トンボのことらしい&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>でかい人のことらしい&#160;<a href="#fnref:4" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/02/13/faster-github-pages/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/" class="hatena-bookmark-button" data-hatena-bookmark-title="TCPの黒歴史：謎のオプションskeeterとbubbaについて" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/" data-text="TCPの黒歴史：謎のオプションskeeterとbubbaについて">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="あなたのgithub-pagesを無料で高速化する方法"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/02/13/faster-github-pages/" rel="bookmark" title="Permanent Link to あなたのgithub pagesを無料で高速化する方法">あなたのgithub pagesを無料で高速化する方法</a></h2>
   <small>February 13, 2014 at 09:10 AM | categories:
@@ -764,115 +860,6 @@ emacsのロックファイルがあると落ちてしまう問題があったの
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="ベイズの定理から見るガン検査"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" rel="bookmark" title="Permanent Link to ベイズの定理から見るガン検査">ベイズの定理から見るガン検査</a></h2>
-  <small>November 12, 2013 at 03:01 AM | categories:
-
-<a href='/blog/category/statistics'>statistics</a>
- | <a href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><a href="http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html">http://www.huffingtonpost.jp/2013/11/10/cancer-test_n_4252707.html</a> </p>
-<p>高校生がすい臓がん発見の画期的方法を開発したという記事が話題になってます。</p>
-<p>この検査法の改善が統計的にどういう意味をもつのか実際にベイズの定理をつかって計算してみます。</p>
-<p>ここでは以下のような問題を考えることとします。</p>
-<blockquote>
-<p>あるガン検査法は、被験者ががんの場合はp1の確率で陽性になり、被験者ががんでなければp2の確率で陰性になります。被験者ががん患者である確率がp3のとき、がん患者が検査の結果実際に陽性だと判定される確率を求めなさい。</p>
-</blockquote>
-<p>Xを被検査者はガンであるという事象、Yを検査の結果が被検査者はガンであると示す事象として、それぞれ以下のように置き換えることができます。</p>
-<p><img src="/images/874a5aeecf9b35cdbf1134ce65609eb8.png">
-</p>
-
-<p>
-ただし、<img src="/images/33690e97dbeaa68d615e68dba167db2a.png"> はBが起こったときにAが起こる確率(条件付き確率)、<img src="/images/f679168b61f35c21700eef5eb88dc82d.png"> はAが起こらないという事象(補事象)を表します。
-</p>
-
-<p>求めたい確率は<img src="/images/7082016653a57c45dae6f7d57ceea8ba.png"> なので、ベイズの定理より
-<p><img src="/images/227eb2fa21aa259a48119a03e888a78c.png">
-</p></p>
-<p>ここで<img src="/images/0c3d72395d7576ab13b9e9389f865960.png"> は検査結果が真陽性となる確率と偽陰性となる確率を足したものなので、
-<p><img src="/images/e2fb081253f2ada10b84e8c39da103d6.png">
-</p></p>
-<p>また、
-<p><img src="/images/18b3d7224708203cb4000f3539856aab.png"> 
-</p>
-なので、</p>
-<p><img src="/images/298c37b1f601ada40fbe0808816d66a3.png"> 
-</p>
-
-<p>となります。</p>
-<p>以上の結果に実際に値をあてはめてみます。</p>
-<p>2008年のすい臓がん推定患者数は29584 <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>、同年の人口は127692000 <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>なので、<code>p3=0.23168 * 10^-3</code>。
-また、簡単のためにp1, p2をひとまとめに誤検出の確率と仮定して<code>p1=p2=q</code>おくと、P(Y|X)が70%となるようなqは、<strong>q=0.99990</strong>となります。</p>
-<p>このことから、99.99%の精度をもつ検出方法でも実際には30%も見逃してしまうということがわかります。</p>
-<p>さらに、「400倍の精度で検査できる」という部分を誤検出の確率が400分の1になったという意味だと解釈して、
-<code>q'=1-(1-q)/400</code>とおいてがん患者が検査の結果実際に陽性だと判定される確率を再度計算すると<strong>P(Y|X)=0.99892</strong>となります。</p>
-<p>つまり30%見逃していたのが1%程度まで減ったということです。
-これはすばらしい成果といえるのではないでしょうか。</p>
-<p>最初は30%も見逃すとかどんなひどい検査だったんだ、などと思ってしまうかもしれませんが、上記の計算で実際はそれほど単純な話ではないことがわかると思います。</p>
-<p><a href="http://www.amazon.co.jp/gp/product/4130420658/ref=as_li_ss_il?ie=UTF8&camp=247&creative=7399&creativeXSIN=4130420658&linkCode=as2&tag=armyofpigs-22"><img border="0" src="http://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4130420658&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=armyofpigs-22" ></a><img src="http://ir-jp.amazon-adsystem.com/e/ir?t=armyofpigs-22&l=as2&o=9&a=4130420658" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> <sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> </p>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p><a href="http://ganjoho.jp/professional/statistics/statistics.html">国立がん研究センターがん対策情報センター - http://ganjoho.jp/professional/statistics/statistics.html</a> &#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:2">
-<p><a href="http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002">http://www.e-stat.go.jp/SG1/estat/List.do?lid=000001054002</a> &#160;<a href="#fnref:2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-<li id="fn:3">
-<p>この問題は統計学入門の練習問題4.7を参考にしています。&#160;<a href="#fnref:3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2013/10/28/r-tutor-chap08/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2013/11/17/goconvey/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" class="hatena-bookmark-button" data-hatena-bookmark-title="ベイズの定理から見るガン検査" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" data-text="ベイズの定理から見るガン検査">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/11/12/bayes-theorem-and-detecting-cancer/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../3">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -902,6 +889,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2015/04/21/embedded-languages-benchmarks/" title="組み込み用プログラミング言語のパフォーマンス比較"><p>組み込み用プログラミング言語のパフォーマンス比較</a><span style="font-size: 80%;">(April 21, 2015 at 01:10 AM)</span></li>
       <li><a href="/blog/2015/04/05/books/" title="最近読んだ本"><p>最近読んだ本</a><span style="font-size: 80%;">(April 05, 2015 at 01:23 PM)</span></li>
       <li><a href="/blog/2015/03/02/phabricator-workflow/" title="Phabricatorを使ったワークフローについて"><p>Phabricatorを使ったワークフローについて</a><span style="font-size: 80%;">(March 02, 2015 at 08:55 PM)</span></li>
       <li><a href="/blog/2014/12/23/dnsimple-dynamic-dns/" title="dnsimpleでダイナミックDNSをつかう"><p>dnsimpleでダイナミックDNSをつかう</a><span style="font-size: 80%;">(December 23, 2014 at 08:02 PM)</span></li>
@@ -909,7 +897,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
       <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
-      <li><a href="/blog/2014/03/18/pthread-cancellation-point/" title="pthreadの取り消しポイント(cancellation point)についてのメモ"><p>pthreadの取り消しポイント(cancellation point)についてのメモ</a><span style="font-size: 80%;">(March 18, 2014 at 09:41 PM)</span></li>
     </ul>
   </div>
 
@@ -979,8 +966,9 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (4)</li>
-     <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/lua">lua</a> (<a href="/blog/category/lua/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/mach-o">mach-o</a> (<a href="/blog/category/mach-o/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
@@ -994,14 +982,14 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (11)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (12)</li>
      <li><a href="/blog/category/project-management">project management</a> (<a href="/blog/category/project-management/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
      <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
      <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/reveal.js">reveal.js</a> (<a href="/blog/category/reveal.js/feed">rss</a>) (1)</li>
-     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (2)</li>
@@ -1015,6 +1003,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/v8">v8</a> (<a href="/blog/category/v8/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (7)</li>
      <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
@@ -1025,7 +1014,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
-      <li><a href="/blog/archive/2015/04/1" title="April 2015">April 2015</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2015/04/1" title="April 2015">April 2015</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2015/03/1" title="March 2015">March 2015</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/10/1" title="October 2014">October 2014</a>&nbsp;(1)</li>

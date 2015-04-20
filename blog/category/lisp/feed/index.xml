@@ -10,10 +10,57 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Sun, 24 Feb 2013 14:42:00 GMT</pubDate>
+    <pubDate>Tue, 21 Apr 2015 01:10:40 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>組み込み用プログラミング言語のパフォーマンス比較</title>
+      <link>http://mojavy.com/blog/2015/04/21/embedded-languages-benchmarks/</link>
+      <pubDate>Tue, 21 Apr 2015 01:10:40 JST</pubDate>
+      <category><![CDATA[v8]]></category>
+      <category><![CDATA[lua]]></category>
+      <category><![CDATA[lisp]]></category>
+      <category><![CDATA[programming]]></category>
+      <category><![CDATA[ruby]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2015/04/21/embedded-languages-benchmarks/</guid>
+      <description>組み込み用プログラミング言語のパフォーマンス比較</description>
+      <content:encoded><![CDATA[<p>組み込み用のプログラミング言語といえばLuaがよく使われるけど、最近はmrubyやsquirrelもあって選択肢が広がってきた感があるのでどういう特徴があるのかを知るためにベンチマークをやってみた。</p>
+<p>今回対象にしたのは以下。</p>
+<ul>
+<li>Lua - v5.1</li>
+<li>LuaJIT - v2.0.2</li>
+<li>squirrel - v3.0.7</li>
+<li>V8 - v3.30</li>
+<li>mruby - v1.1.0</li>
+<li>ecl (Embeddable Common-Lisp) - v15.3.7</li>
+</ul>
+<p>ここでのベンチマークは言語自体のスピードの比較ではなく、どちらかというと組み込む際に必要なオーバーヘッドやホスト言語側での処理にかかる部分に重点を置いた。</p>
+<p>ベンチマークの処理には、関数呼出し比較用の<code>echo</code>関数と、テーブル操作比較用の<code>invert</code>関数をつかった。</p>
+<p>また、なるべく公平になるように、組み込み言語側の関数は初期化時にグローバルスコープ(組み込み言語側のグローバルスコープ)に登録しておき、すべて同じインターフェースから呼ぶようにした。</p>
+<p>使用したコードは以下。そのうち別の言語とか追加するかもしれない。</p>
+<p><a href="https://github.com/taksatou/embench">https://github.com/taksatou/embench</a> </p>
+<h2 id="_1">結果</h2>
+<h4 id="echo-100000">echo 100000 回実行</h4>
+<p><img alt="echo" src="/images/embench-echo-100000.png" /> </p>
+<h4 id="invert-100000">invert 100000 回実行</h4>
+<p><img alt="invert" src="/images/embench-invert-100000.png" /> </p>
+<p><a href="https://gist.github.com/taksatou/8de85bbfe79548864cf5#file-result-md">https://gist.github.com/taksatou/8de85bbfe79548864cf5#file-result-md</a> </p>
+<h4 id="_2">備考</h4>
+<ul>
+<li>control は同等の処理をホスト言語側で実装したもの</li>
+<li>LuaJITは<code>LD_PRELOAD</code>で切り替えた</li>
+<li>eclはechoが遅くてやるきを失ったのでinvertのほうは省略</li>
+</ul>
+<h2 id="_3">所感</h2>
+<ul>
+<li>Luaがパフォーマンスと組み込みやすさの点でやはり一番使いやすい。LuaJITをつかうとさらに数割速くなる。</li>
+<li>squirrelは言語機能的にはluaのスーパーセットという感じで、パフォーマンスもluaと同じ程度。ただしドキュメントはあまりない。</li>
+<li>V8はマルチスレッド環境や大規模なものには向いてるかもしれない。組み込みはちょっとめんどくさい。</li>
+<li>mrubyはechoだと意外と健闘しているがテーブル操作は速くない。組み込みはLuaと同じくらい簡単。</li>
+<li>eclにはもうちょっとがんばってほしい。組み込み方法に問題があるのかもしれない。</li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>The P Convention</title>
       <link>http://mojavy.com/blog/2013/02/24/the-p-convention/</link>
