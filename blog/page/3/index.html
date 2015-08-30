@@ -102,36 +102,90 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
-  <a name="chefを使うのを我慢したほうがいいとき"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/07/dont-use-chef/" rel="bookmark" title="Permanent Link to chefを使うのを我慢したほうがいいとき">chefを使うのを我慢したほうがいいとき</a></h2>
-  <small>March 07, 2014 at 12:09 AM | categories:
+  <a name="gitlab-6.6.4-ce-のゆるふわセットアップ"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" rel="bookmark" title="Permanent Link to gitlab 6.6.4 CE のゆるふわセットアップ">gitlab 6.6.4 CE のゆるふわセットアップ</a></h2>
+  <small>March 11, 2014 at 02:08 AM | categories:
 
-<a href='/blog/category/chef'>chef</a>
- | <a href="http://mojavy.com/blog/2014/03/07/dont-use-chef/#disqus_thread"></a>
+<a href='/blog/category/chef'>chef</a>, <a href='/blog/category/git'>git</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/gitlab'>gitlab</a>
+ | <a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/#disqus_thread"></a>
 </small>
 <p/>
   <div class="post_prose">
     
 <div class="blogbody">
-  <p>chefを使いはじめるとあらゆるもののセットアップをchefレシピ書かずにやるのが気持ち悪くなってしまうけど、chefでやらないほうがいいものって結構あると思う。</p>
+  <p>gitlabもCentOSとUbuntuにはパッケージが提供されるようになったので、大分インストールが簡単になりました。</p>
+<p>とはいえ、このパッケージはgitlab専用のマシンにインストールすることを前提にしているのか、小規模プロジェクトのために軽く使いたいよう場合ではつらいデフォルト設定となっています。安いvpsとかだと確実にメモリ不足でまともに動きません。</p>
+<p>以下はとりあえずプライベートgitリポジトリが欲しいだけのような人のためのgitlabの設定の紹介です。</p>
+<h2 id="_1">準備</h2>
+<p><a href="https://www.gitlab.com/downloads/">https://www.gitlab.com/downloads/</a> </p>
+<p>ここからgitlabのパッケージをダウンロードします。
+<a href="https://github.com/opscode/omnibus-ruby">omnibus-ruby</a> でつくられた全部入りパッケージなのでインストールでのコンフリクトは発生しないはずですが、既に稼動中のサービス(apache等)のことはあまり考慮されてないので使用するポートについては個別対応が必要です。</p>
+<p>特に以下は注意が必要です。</p>
 <ul>
-<li>redmine</li>
-<li>gitlab</li>
-<li>小規模なシステムのzabbixのマスター</li>
-<li>etc...</li>
+<li>nginx</li>
+<li>redis</li>
+<li>postgresql</li>
 </ul>
-<p>この手のものは、実際に使いはじめると多少は手作業での運用が必要になるので、誰かがつくったcookbookでいれてしまうよりかは手作業でいれてある程度どこになにがあるか把握しておいたほうがやりやすい。</p>
-<p>自前でレシピ書いてもいいけど、当面は1台あれば十分なのであれば単なる二度手間でしかないのでセットアップ手順をメモに残す程度で十分。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
-<p>ある程度運用経験があってとりあえずすぐに動く環境を作りたい、という場合のみ出来合いのcookbookをそのまま使えばいいと思う。</p>
-<p>などということを、1ヶ月くらいかけていろいろcookbook書いたあげく心が折れたときに感じた。</p>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>まめにredmineみたいなものをアップデートしたいような人もたぶんあんまりいない&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
+<p>ここでは、apacheが稼動しているubuntuにインストールします。</p>
+<h2 id="_2">インストール</h2>
+<p>普通にインストールします。</p>
+<div class="pygments_borland"><pre>$ sudo dpkg -i gitlab_6.6.4-omnibus-1.ubuntu.12.04_amd64.deb 
+$ sudo gitlab-ctl reconfigure
+</pre></div>
+
+<p>ちなみにgitユーザが既に存在しているとこけるので消しておきます</p>
+<p><code>$ sudo userdel -r git</code></p>
+<h2 id="gitlab">gitlabの設定</h2>
+<p>gitlabの設定は /etc/gitlab/gitlab.rb に設定をかいて、chefで設定します。</p>
+<div class="pygments_borland"><pre>$ cat /etc/gitlab/gitlab.rb
+external_url &quot;http://gitlab.example.com:8081&quot;
+unicorn[&quot;worker_processes&quot;] = 1
+postgresql[&quot;shared_buffers&quot;] = &quot;128MB&quot;
+postgresql[&quot;effective_cache_size&quot;] = &quot;32MB&quot;
+</pre></div>
+
+<p>とりあえずpostgresqlがメモリを大量に食うので適当に減らします。</p>
+<p>unicornもメモリ食いがちなので1プロセスにします。</p>
+<p><code>external_url</code>にポートも含めたURLをかきます。apacheが80番で起動してるとnginxが起動できないので適当にはずします。ちなみに8080はデフォルトだとgitlabのunicornがつかっています。</p>
+<p>このあたりは環境に応じて適当に設定してください。</p>
+<p><code>gitlab-ctl reconfigure</code> すると設定が反映されます。</p>
+<p>その他の設定できる項目は <code>/opt/gitlab/embedded/cookbooks/gitlab</code> 以下の<code>cookbook</code>をみるといいです。</p>
+<h2 id="web">webサーバの設定</h2>
+<p>80番で起動しているapacheがいる場合はnginxにproxyします。</p>
+<div class="pygments_borland"><pre>&lt;VirtualHost *:80&gt;
+  ServerName gitlab.example.com
+
+  DocumentRoot /opt/gitlab/embedded/service/gitlab-rails/public
+
+  CustomLog  /var/log/apache2/gitlab_access.log combined
+  ErrorLog   /var/log/apache2/gitlab_error.log
+
+  ErrorDocument 502 /502.html
+
+  &lt;Directory &quot;/opt/gitlab/embedded/service/gitlab-rails/public&quot;&gt;
+    Options FollowSymLinks
+  &lt;/Directory&gt;
+
+  &lt;Proxy *&gt;
+    AddDefaultCharset off
+    Order deny,allow
+    Allow from all
+  &lt;/Proxy&gt;
+
+  ProxyVia On
+  ProxyPreserveHost On
+
+  ProxyRequests Off
+  ProxyPass /assets/ !
+  ProxyPass /uploads/      !
+
+  ProxyPass / http://localhost:8081/ retry=1
+  ProxyPassReverse / http://localhost:8081/
+
+&lt;/VirtualHost&gt;
+</pre></div>
+
+<p>以上ができたらapache再起動して、 http://gitlab.example.com にアクセスしてみてうまく表示できれば完了です。</p>
 </div>
 
   </div>
@@ -142,7 +196,7 @@ href="/blog/feed/atom" />
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"> previous post </a>
     |
-  <a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/"> next post </a>
+  <a href="http://mojavy.com/blog/2014/03/18/pthread-cancellation-point/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -150,24 +204,24 @@ href="/blog/feed/atom" />
   <ul style="list-style:none;">
     
     <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2014/03/07/dont-use-chef/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
     </li>
 
     <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/03/07/dont-use-chef/" class="hatena-bookmark-button" data-hatena-bookmark-title="chefを使うのを我慢したほうがいいとき" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" class="hatena-bookmark-button" data-hatena-bookmark-title="gitlab 6.6.4 CE のゆるふわセットアップ" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
     </li>
     
     <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/03/07/dont-use-chef/" data-text="chefを使うのを我慢したほうがいいとき">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" data-text="gitlab 6.6.4 CE のゆるふわセットアップ">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     </li>
 
     <li>
-      <a data-save-url="http://mojavy.com/blog/2014/03/07/dont-use-chef/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <a data-save-url="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
       <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
     </li>
 
     <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/07/dont-use-chef/"></div>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/"></div>
     </li>
 
   </ul>
@@ -206,9 +260,9 @@ href="/blog/feed/atom" />
 
 
 <div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/"> previous post </a>
+  <a href="http://mojavy.com/blog/2014/03/07/dont-use-chef/"> previous post </a>
     |
-  <a href="http://mojavy.com/blog/2014/03/07/dont-use-chef/"> next post </a>
+  <a href="http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -234,6 +288,81 @@ href="/blog/feed/atom" />
 
     <li>
       <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
+  <a name="chefを使うのを我慢したほうがいいとき"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/03/07/dont-use-chef/" rel="bookmark" title="Permanent Link to chefを使うのを我慢したほうがいいとき">chefを使うのを我慢したほうがいいとき</a></h2>
+  <small>March 07, 2014 at 12:09 AM | categories:
+
+<a href='/blog/category/chef'>chef</a>
+ | <a href="http://mojavy.com/blog/2014/03/07/dont-use-chef/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>chefを使いはじめるとあらゆるもののセットアップをchefレシピ書かずにやるのが気持ち悪くなってしまうけど、chefでやらないほうがいいものって結構あると思う。</p>
+<ul>
+<li>redmine</li>
+<li>gitlab</li>
+<li>小規模なシステムのzabbixのマスター</li>
+<li>etc...</li>
+</ul>
+<p>この手のものは、実際に使いはじめると多少は手作業での運用が必要になるので、誰かがつくったcookbookでいれてしまうよりかは手作業でいれてある程度どこになにがあるか把握しておいたほうがやりやすい。</p>
+<p>自前でレシピ書いてもいいけど、当面は1台あれば十分なのであれば単なる二度手間でしかないのでセットアップ手順をメモに残す程度で十分。<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> </p>
+<p>ある程度運用経験があってとりあえずすぐに動く環境を作りたい、という場合のみ出来合いのcookbookをそのまま使えばいいと思う。</p>
+<p>などということを、1ヶ月くらいかけていろいろcookbook書いたあげく心が折れたときに感じた。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>まめにredmineみたいなものをアップデートしたいような人もたぶんあんまりいない&#160;<a href="#fnref:1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2014/03/05/difference-between-malloc-and-calloc/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2014/03/07/dont-use-chef/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/03/07/dont-use-chef/" class="hatena-bookmark-button" data-hatena-bookmark-title="chefを使うのを我慢したほうがいいとき" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/03/07/dont-use-chef/" data-text="chefを使うのを我慢したほうがいいとき">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2014/03/07/dont-use-chef/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/03/07/dont-use-chef/"></div>
     </li>
 
   </ul>
@@ -282,7 +411,7 @@ href="/blog/feed/atom" />
 <div id="prev_next_link">
   <a href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/"> previous post </a>
     |
-  <a href="http://mojavy.com/blog/2014/03/07/high-contrast-pdf-osx/"> next post </a>
+  <a href="http://mojavy.com/blog/2014/03/07/dont-use-chef/"> next post </a>
 </div>
 <hr class="intersocial">
 
@@ -557,74 +686,6 @@ UnixでC/C++で実装するときはpthreadの条件変数を使うのが普通�
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" rel="bookmark" title="Permanent Link to シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法">シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法</a></h2>
-  <small>February 16, 2014 at 06:35 PM | categories:
-
-<a href='/blog/category/unix'>unix</a>, <a href='/blog/category/shell'>shell</a>
- | <a href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><code>flock(1)</code>を使うのが一番安全かつ簡単</p>
-<div class="pygments_borland"><pre><span class="nv">LOCKFILE</span><span class="o">=</span>/tmp/my.lockfile
-
-<span class="o">(</span>
-    flock -n 200 <span class="o">||</span> <span class="nb">exit </span>1
-
-    <span class="c"># do something</span>
-<span class="o">)</span> 200&gt;<span class="nv">$LOCKFILE</span>
-</pre></div>
-
-<p>タイムアウトを設定したければ<code>-w</code>オプションをつかえばよい。</p>
-<p>リードライトロックとしてつかえるので、更新系のスクリプトは1つしか起動したくないけど参照系は並列実行を許す、みたいなことも比較的簡単にできる。</p>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2014/02/13/tcp-options-skeeter-bubba/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2014/03/03/implementing-thread-pool/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" class="hatena-bookmark-button" data-hatena-bookmark-title="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" data-text="シェルスクリプトでプロセスの多重起動を防止する簡単で安全な方法">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2014/02/16/shell-script-ensure-one-process/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../2">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -654,6 +715,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2015/08/30/95_5_mbps/" title="95/5 Mbps とは"><p>95/5 Mbps とは</a><span style="font-size: 80%;">(August 30, 2015 at 04:22 PM)</span></li>
       <li><a href="/blog/2015/04/21/embedded-languages-benchmarks/" title="組み込み用プログラミング言語のパフォーマンス比較"><p>組み込み用プログラミング言語のパフォーマンス比較</a><span style="font-size: 80%;">(April 21, 2015 at 01:10 AM)</span></li>
       <li><a href="/blog/2015/04/05/books/" title="最近読んだ本"><p>最近読んだ本</a><span style="font-size: 80%;">(April 05, 2015 at 01:23 PM)</span></li>
       <li><a href="/blog/2015/03/02/phabricator-workflow/" title="Phabricatorを使ったワークフローについて"><p>Phabricatorを使ったワークフローについて</a><span style="font-size: 80%;">(March 02, 2015 at 08:55 PM)</span></li>
@@ -661,7 +723,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
-      <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
     </ul>
   </div>
 
@@ -727,6 +788,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/history">history</a> (<a href="/blog/category/history/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/internet">internet</a> (<a href="/blog/category/internet/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
@@ -761,7 +823,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/tools">tools</a> (<a href="/blog/category/tools/feed">rss</a>) (1)</li>
@@ -779,6 +841,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2015/08/1" title="August 2015">August 2015</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2015/04/1" title="April 2015">April 2015</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2015/03/1" title="March 2015">March 2015</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>

@@ -10,10 +10,29 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 11 Mar 2014 02:08:20 GMT</pubDate>
+    <pubDate>Sun, 30 Aug 2015 16:22:20 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>95/5 Mbps とは</title>
+      <link>http://mojavy.com/blog/2015/08/30/95_5_mbps/</link>
+      <pubDate>Sun, 30 Aug 2015 16:22:20 JST</pubDate>
+      <category><![CDATA[tips]]></category>
+      <category><![CDATA[internet]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2015/08/30/95_5_mbps/</guid>
+      <description>95/5 Mbps とは</description>
+      <content:encoded><![CDATA[<p>Akamaiの<a href="https://developer.akamai.com/api/luna/billing-usage/overview.html">Billing Center API</a> では、95/5 Mbpsという単位のデータが取得できる。</p>
+<p>95/5 Mbps というのは、特定の期間の平均Mbpsを5分間隔でサンプルしたものをソートした時の95パーセンタイルの値ということらしい。</p>
+<p>なぜこのような数字が使われるのかというと、単純にピークのトラフィックを基準にして課金されると利用者側にとってつらいという問題があるからだ。
+インターネットのトラフィックは往々にしてスパイクが発生するので、それだと普段はほとんど帯域を使わないのに一瞬のアクセス急増があっただけでコストが大きく増大してしまう。</p>
+<p>そこで、あるISPが95/5 Mbpsで課金するようにしたところ市場で支持を得たため、これが一般的な課金形式として広まったらしい。</p>
+<h3 id="_1">参考</h3>
+<ul>
+<li><a href="http://drpeering.net/AskDrPeering/blog/articles/Ask_DrPeering/Entries/2011/4/29_The_Origins_of_95_5.html">http://drpeering.net/AskDrPeering/blog/articles...</a> </li>
+<li><a href="https://en.wikipedia.org/wiki/Burstable_billing">https://en.wikipedia.org/wiki/Burstable_billing</a> </li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>gitlab 6.6.4 CE のゆるふわセットアップ</title>
       <link>http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/</link>

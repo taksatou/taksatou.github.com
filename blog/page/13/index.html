@@ -102,6 +102,215 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="細かすぎて伝わらないandroid開発のはまりどころまとめ-その1"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/11/07/android-pitfalls/" rel="bookmark" title="Permanent Link to 細かすぎて伝わらないAndroid開発のはまりどころまとめ その1">細かすぎて伝わらないAndroid開発のはまりどころまとめ その1</a></h2>
+  <small>November 07, 2012 at 12:00 PM | categories:
+
+<a href='/blog/category/android'>android</a>, <a href='/blog/category/tips'>tips</a>
+ | <a href="http://mojavy.com/blog/2012/11/07/android-pitfalls/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="android" src="/images/android-logo.png" /></p>
+<p>これまでandroidアプリを開発しててはまったことがたまってきたのでまとめておきます。順不同です。
+その2はまたねたがたまってきたらたぶんそのうち。</p>
+<h2 id="_1">目次</h2>
+<div class="toc">
+<ul>
+<li><a href="#_1">目次</a></li>
+<li><a href="#onanimationendviewnullpointerexception">onAnimationEndでviewの階層を操作するとNullPointerExceptionでおちる</a></li>
+<li><a href="#animation">Animationが動かない</a></li>
+<li><a href="#windowmanageraddview">WindowManagerにaddViewしたときの挙動</a></li>
+<li><a href="#activity">Activityが横向きでスタートした場合と縦向きでスタートしたときで表示倍率が違う</a></li>
+<li><a href="#oncreate">onCreateが何回もよばれる</a></li>
+<li><a href="#popupwindow">popupWindowのサイズが変わらない</a></li>
+<li><a href="#httpurlconnection-0byteresponse">HttpURLConnectionが 0byteのresponseを返す</a></li>
+<li><a href="#orgapachehttpimplclientdefaulthttpclient">org.apache.http.impl.client.DefaultHttpClientがすごく遅い</a></li>
+<li><a href="#eclipseandroid-plugin">eclipseのAndroid pluginが動かなくなった</a></li>
+<li><a href="#webview">WebViewで表示されるコンテンツが小さすぎる</a></li>
+<li><a href="#javalangruntimeexception-stub">java.lang.RuntimeException: Stub!</a></li>
+<li><a href="#jarandroid">jarとして配布するandroidライブラリ内にリソースを埋め込むことはできない</a></li>
+<li><a href="#android-maven-plugin-mvn-eclipseeclipse-eclipse">android-maven-plugin から mvn eclipse:eclipse でeclipse用にエクスポートすることはできない</a></li>
+</ul>
+</div>
+<h2 id="onanimationendviewnullpointerexception">onAnimationEndでviewの階層を操作するとNullPointerExceptionでおちる</h2>
+<p>Viewをフェードアウトして親Viewからremoveする、というような動作をしたい場合に、普通にonAnimationEndの中でremoveViewとかするとNullPointerExceptionでおちます。onAnimationEndの中でViewの階層構造を操作するような処理をしてはだめらしいです。回避するには、Handlerをつかってタイミングをずらしてやるとよいです。</p>
+<ul>
+<li>参考: <a href="http://stackoverflow.com/questions/5569267/nullpointerexception-that-doesnt-point-to-any-line-in-my-code">http://stackoverflow.com/questions/5569267/nullpointerexception-that-doesnt-point-to-any-line-in-my-code</a></li>
+</ul>
+<h2 id="animation">Animationが動かない</h2>
+<p>AnimationさせるViewには親Viewが存在している必要があります。WindowManagerはViewではないので、WindowManagerにaddViewしたViewをアニメーションさせたい場合は空のRelativeLayoutとかにaddViewしてから、RelativeLayoutのほうをWindowManagerにaddViewしてやる必要があります。</p>
+<h2 id="windowmanageraddview">WindowManagerにaddViewしたときの挙動</h2>
+<p>WindowManagerにもaddViewできますが、通常のViewとは挙動が違います。</p>
+<ul>
+<li>背景透過はWindowManager.LayoutParam.format に TRANSLUCENT をセットすればよいです。</li>
+<li>dimでフェードインできますが、その際のdurationを変更する方法は分かりませんでした。</li>
+<li>BACKボタンはきかなくなります。自分でKeyEventを処理してやる必要があります。android.widget.PopupWindowのdispathKeyEventのソースが参考になります。</li>
+</ul>
+<h2 id="activity">Activityが横向きでスタートした場合と縦向きでスタートしたときで表示倍率が違う</h2>
+<ul>
+<li>参考：<a href="http://d.hatena.ne.jp/acidgraphix/20110126/1296018143">http://d.hatena.ne.jp/acidgraphix/20110126/1296018143</a></li>
+</ul>
+<h2 id="oncreate">onCreateが何回もよばれる</h2>
+<p>回転やキーボード表示のタイミングでもonCreateがよばれます。AndroidManifest.xmlでconfigChangesを設定することで回避できます。</p>
+<ul>
+<li>参考: <a href="http://stackoverflow.com/questions/2606470/unexpected-resume-of-package-name-while-already-resumed-in-package-name-err">http://stackoverflow.com/questions/2606470/unexpected-resume-of-package-name-while-already-resumed-in-package-name-err</a></li>
+</ul>
+<h2 id="popupwindow">popupWindowのサイズが変わらない</h2>
+<p>popupWindowのsetWidth, setHeightは次回以降の表示サイズしか変えられません。既に表示しているポップアップウィンドウのサイズはそのままです。invalidateしても無駄です。</p>
+<h2 id="httpurlconnection-0byteresponse">HttpURLConnectionが 0byteのresponseを返す</h2>
+<p>コネクションプールとkeepaliveがらみで問題が発生する場合があるみたいです。SDKのバージョンとウェブサーバ側の設定も影響します。
+<code>System.setProperty("http.keepAlive", "false")</code> で回避はできるようです。これに遭遇したときは、org.apache.http.impl.client.DefaultHttpClientの方を使うことにしたので詳細は追ってません。</p>
+<ul>
+<li>参考: <a href="http://stackoverflow.com/questions/1440957/httpurlconnection-getresponsecode-returns-1-on-second-invocation">http://stackoverflow.com/questions/1440957/httpurlconnection-getresponsecode-returns-1-on-second-invocation</a></li>
+</ul>
+<h2 id="orgapachehttpimplclientdefaulthttpclient">org.apache.http.impl.client.DefaultHttpClientがすごく遅い</h2>
+<p>httpsでリクエストを投げると、ウェブサーバ側の負荷が高いわけでもネットワークが細いわけでもないのに、返ってくるまでなぜか数秒かかる場合があります。こちらもkeepaliveがらみの問題っぽいです。これもウェブサーバ側の設定が影響します。
+試した限りでは以下のような状況でした。</p>
+<ul>
+<li>setHeader("Connection", "close") しても効果なし</li>
+<li>setKeepAliveStrategyでdurationを 0とか1にしても効果なし</li>
+<li>Connection closeしないウェブサーバならすぐレスポンスが返ってくる</li>
+<li>httpならすぐレスポンスが返ってくる</li>
+</ul>
+<p><a href="http://hc.apache.org/httpclient-3.x/sslguide.html">ここ( http://hc.apache.org/httpclient-3.x/sslguide.html )</a> のKnown limitations and problemsをみるとそれっぽい既知の問題があるようですが、根が深そうだったので詳細は追ってません。</p>
+<h2 id="eclipseandroid-plugin">eclipseのAndroid pluginが動かなくなった</h2>
+<p>なぜかeclipseでAndroid pluginが動かなくなるときがありました。詳細をメモるのを忘れてしまいましたが、以下の手順で直ったような気がします。</p>
+<ol>
+<li>Android Support Libraryをアンインストール</li>
+<li>eclipse再起動</li>
+<li>新しいAndroidプロジェクトを作るとダイアログでライブラリのインストールを促されるのでそれに従う</li>
+<li>android プラグインをアップデート</li>
+</ol>
+<h2 id="webview">WebViewで表示されるコンテンツが小さすぎる</h2>
+<p>通常ビューのスケールとWebViewのスケールは別です。setScaleで調整する必要があります。
+これはたぶんiOSでも同様かと。</p>
+<h2 id="javalangruntimeexception-stub">java.lang.RuntimeException: Stub!</h2>
+<p>android.jar内のコードはdalvikvmの外で実行することはできません。問答無用でタイトルの例外が飛びます。
+エラーメッセージはもうちょいなんとかならなかったのか。</p>
+<p>参考</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/7247502/using-android-jar-in-java-project-runtimeexception-stub">http://stackoverflow.com/questions/7247502/using-android-jar-in-java-project-runtimeexception-stub</a></li>
+<li><a href="http://www.slideshare.net/miyatay/abc2011w">http://www.slideshare.net/miyatay/abc2011w</a></li>
+</ul>
+<h2 id="jarandroid">jarとして配布するandroidライブラリ内にリソースを埋め込むことはできない</h2>
+<p>リソースIDを列挙しているRパッケージはjarにそのまま入れることはできますが、そのリソースIDは不正なものとなります。
+ライブラリにリソースを含めたい場合は、ソースも含めたプロジェクトをまるごと配布するしかないようです。</p>
+<p>ごく小さなアイコン画像だけとかであればバイナリデータをソース中に埋め込んでしまう、というのも手です。
+iOSならBundleという仕組みがあります。</p>
+<h2 id="android-maven-plugin-mvn-eclipseeclipse-eclipse">android-maven-plugin から mvn eclipse:eclipse でeclipse用にエクスポートすることはできない</h2>
+<p>androidでもmavenは使えますが、androidのmavenプロジェクトは通常の方法(mvn eclipse:eclipse)ではeclipseにインポートできません。
+以下のファイルを手動でつくってみたらとりあえずいけました。</p>
+<ul>
+<li>.classpath</li>
+</ul>
+<div class="pygments_borland"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;classpath&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;src/main/java&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;src&quot;</span> <span class="na">path=</span><span class="s">&quot;gen&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;con&quot;</span> <span class="na">path=</span><span class="s">&quot;com.android.ide.eclipse.adt.ANDROID_FRAMEWORK&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;con&quot;</span> <span class="na">path=</span><span class="s">&quot;com.android.ide.eclipse.adt.LIBRARIES&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;classpathentry</span> <span class="na">kind=</span><span class="s">&quot;output&quot;</span> <span class="na">path=</span><span class="s">&quot;bin/classes&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/classpath&gt;</span>
+</pre></div>
+
+<ul>
+<li>.project</li>
+</ul>
+<div class="pygments_borland"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;projectDescription&gt;</span>
+        <span class="nt">&lt;name&gt;</span>project-name<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;comment&gt;&lt;/comment&gt;</span>
+        <span class="nt">&lt;projects&gt;</span>
+        <span class="nt">&lt;/projects&gt;</span>
+        <span class="nt">&lt;buildSpec&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.ResourceManagerBuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.PreCompilerBuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>org.eclipse.jdt.core.javabuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+                <span class="nt">&lt;buildCommand&gt;</span>
+                        <span class="nt">&lt;name&gt;</span>com.android.ide.eclipse.adt.ApkBuilder<span class="nt">&lt;/name&gt;</span>
+                        <span class="nt">&lt;arguments&gt;</span>
+                        <span class="nt">&lt;/arguments&gt;</span>
+                <span class="nt">&lt;/buildCommand&gt;</span>
+        <span class="nt">&lt;/buildSpec&gt;</span>
+        <span class="nt">&lt;natures&gt;</span>
+                <span class="nt">&lt;nature&gt;</span>com.android.ide.eclipse.adt.AndroidNature<span class="nt">&lt;/nature&gt;</span>
+                <span class="nt">&lt;nature&gt;</span>org.eclipse.jdt.core.javanature<span class="nt">&lt;/nature&gt;</span>
+        <span class="nt">&lt;/natures&gt;</span>
+<span class="nt">&lt;/projectDescription&gt;</span>
+</pre></div>
+
+<ul>
+<li>project.properties</li>
+</ul>
+<div class="pygments_borland"><pre><span class="c"># Project target.</span>
+<span class="na">target</span><span class="o">=</span><span class="s">android-10</span>
+
+<span class="c"># if it is a library</span>
+<span class="c"># android.library=true</span>
+</pre></div>
+
+<p>まあ、なんというか、Androidはいろいろ残念ですね。</p>
+<p>iOSはこういう仕様なのかバグなのかよくわからないようなものが少ないし、OSバージョンの入れ換わりが早くて対応バージョンも少なくて済む分、個人的な体感ではandroidアプリの工数はiOSの3割増しという感じ。</p>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2012/11/09/common-lisp-declare/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2012/11/07/android-pitfalls/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/11/07/android-pitfalls/" class="hatena-bookmark-button" data-hatena-bookmark-title="細かすぎて伝わらないAndroid開発のはまりどころまとめ その1" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/11/07/android-pitfalls/" data-text="細かすぎて伝わらないAndroid開発のはまりどころまとめ その1">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2012/11/07/android-pitfalls/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/11/07/android-pitfalls/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ubuntuでpdfの日本語フォントが表示できないときの対処メモ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/11/02/ubuntu-pdf/" rel="bookmark" title="Permanent Link to UbuntuでPDFの日本語フォントが表示できないときの対処メモ">UbuntuでPDFの日本語フォントが表示できないときの対処メモ</a></h2>
   <small>November 02, 2012 at 12:00 PM | categories:
@@ -478,278 +687,6 @@ ruby -e <span class="s1">&#39;n=1000000;puts n; n.times{puts (rand * 10000000).t
 
 
   <div class="interblog-sep"><hr class="interblog" /></div>
-  
-<div class="blog_post">
-  <a name="iosでzeromqを試す"></a>
-  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/" rel="bookmark" title="Permanent Link to iOSでZeroMQを試す">iOSでZeroMQを試す</a></h2>
-  <small>October 18, 2012 at 06:00 PM | categories:
-
-<a href='/blog/category/objective-c'>objective-c</a>, <a href='/blog/category/ios'>ios</a>, <a href='/blog/category/zeromq'>zeromq</a>, <a href='/blog/category/common-lisp'>common lisp</a>
- | <a href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/#disqus_thread"></a>
-</small>
-<p/>
-  <div class="post_prose">
-    
-<div class="blogbody">
-  <p><img alt="zeromq" src="/images/zeromq-logo.png" /></p>
-<p><a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/">前回Common LispでZeroMQを試してみた</a>が、今度はiOSからも試してみた。<a href="http://www.zeromq.org/area:licensing">ZeroMQのライセンス</a>はLGPLだが、static linking exceptionがあるのでiPhoneアプリに組み込んでもソースは公開しなくて大丈夫なはず。(勘違いしてたらごめんなさい)</p>
-<h1 id="zeromqiphone">ZeroMQをiPhone用にビルド</h1>
-<p>ZeroMQはautotoolsで作成されておりconfigure &amp;&amp; make でビルドできるようになっているが、iPhone用にクロスコンパイルをするためには適切なオプションを与えてやる必要がある。</p>
-<p>一応、<a href="http://www.zeromq.org/build:iphone">本家サイト上にもドキュメント</a>はあるが最新のXcodeではうごかない。また、シミュレータ用でもうごかせるようにしておきたい。というわけで、以下のようなビルドスクリプトを書いた。</p>
-<script src="https://gist.github.com/3899653.js"> </script>
-
-<p>これをZeroMQのtarを展開してできたディレクトリにbuild.shとかで保存して実行すると、armv7とi386に対応したlibzmq.aができる。</p>
-<div class="pygments_borland"><pre><span class="nv">$ </span>tar xzf zeromq-2.2.0.tar.gz
-<span class="nv">$ </span><span class="nb">cd </span>zeromq-2.2.0
-<span class="nv">$ </span>./build.sh
-<span class="nv">$ </span>file libzmq.a
-libzmq.a: Mach-O universal binary with 2 architectures
-libzmq.a <span class="o">(</span><span class="k">for </span>architecture armv7<span class="o">)</span>:      current ar archive random library
-libzmq.a <span class="o">(</span><span class="k">for </span>architecture i386<span class="o">)</span>:       current ar archive random library
-</pre></div>
-
-<p>このlibzmq.aと、includeディレクトリの中身をXcodeにインポートしてやればよい。
-このときに、XcodeでOther Linker Flags に -lstdc++ を追加してやるのを忘れないように。</p>
-<h1 id="zeromq">ZeroMQを用いた簡易チャットアプリ</h1>
-<p>サンプルとしてチャットアプリを実装してみる。
-チャットでの発言はREQ/REPを用いてアプリ→サーバに渡し、PUB/SUBを用いてサーバ→アプリにブロードキャストする。</p>
-<h2 id="_1">サーバ側</h2>
-<p>サーバ側はCommon Lispで実装した。単に、rep-sockから発言を受け取ってpub-sockにそのまま流すだけ。</p>
-<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-
-(defun pull-and-publish ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (rep-sock ctx zmq:rep)
-      (zmq:bind rep-sock &quot;tcp://127.0.0.1:5555&quot;)
-
-      (zmq:with-context (ctx2 1)
-        (zmq:with-socket (pub-sock ctx2 zmq:pub)
-          (zmq:bind pub-sock &quot;tcp://127.0.0.1:5556&quot;)
-
-          (loop
-             (let ((msg (make-instance &#39;zmq:msg)))
-               (zmq:recv rep-sock msg)
-               (zmq:send rep-sock (make-instance &#39;zmq:msg :data &quot;ok&quot;))
-               (zmq:send pub-sock msg))))))))
-
-(pull-and-publish)
-</pre></div>
-
-<p>REQ/REPではなくPULL/PUSHでもできるはずだが、なぜかcl-zmqではpullがつかえなかったのでREQ/REPをつかった。</p>
-<h2 id="_2">アプリ側</h2>
-<p><a href="https://github.com/jeremy-w/objc-zmq">objective-c版ZeroMQ</a>もあるけど、今回はそのままCのAPIを利用した。
-以下はソースの抜粋。</p>
-<div class="pygments_borland"><pre><span class="cp">#import &quot;ChatViewController.h&quot;</span>
-<span class="cp">#import &quot;include/zmq.h&quot;</span>
-
-<span class="k">@interface</span> <span class="nc">ChatViewController</span> <span class="p">()</span> <span class="p">{</span>
-
-    <span class="kt">void</span> <span class="o">*</span><span class="n">ctx1</span><span class="p">,</span> <span class="o">*</span><span class="n">ctx2</span><span class="p">;</span>
-    <span class="kt">void</span> <span class="o">*</span><span class="n">subsock</span><span class="p">,</span> <span class="o">*</span><span class="n">reqsock</span><span class="p">;</span>
-
-    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">messageList</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="k">@end</span>
-
-<span class="err">@</span><span class="n">implementation</span> <span class="n">ChatViewController</span>
-
-<span class="k">@synthesize</span> <span class="n">nickname</span><span class="p">;</span>
-<span class="k">@synthesize</span> <span class="n">timer</span><span class="p">;</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
-
-    <span class="n">ctx1</span> <span class="o">=</span> <span class="n">zmq_init</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-    <span class="n">subsock</span> <span class="o">=</span> <span class="n">zmq_socket</span><span class="p">(</span><span class="n">ctx1</span><span class="p">,</span> <span class="n">ZMQ_SUB</span><span class="p">);</span>
-    <span class="n">zmq_setsockopt</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="n">ZMQ_SUBSCRIBE</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_connect</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="s">&quot;tcp://127.0.0.1:5556&quot;</span><span class="p">);</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-
-    <span class="n">ctx2</span> <span class="o">=</span> <span class="n">zmq_init</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-    <span class="n">reqsock</span> <span class="o">=</span> <span class="n">zmq_socket</span><span class="p">(</span><span class="n">ctx1</span><span class="p">,</span> <span class="n">ZMQ_REQ</span><span class="p">);</span>
-    <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_connect</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="s">&quot;tcp://127.0.0.1:5555&quot;</span><span class="p">);</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-
-    <span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSTimer</span> <span class="nl">scheduledTimerWithTimeInterval:</span><span class="mi">1</span> <span class="nl">target:</span><span class="n">self</span> <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="n">observeSocket</span><span class="p">)</span> <span class="nl">userInfo:</span><span class="nb">nil</span> <span class="nl">repeats:</span><span class="n">YES</span><span class="p">];</span>
-    <span class="n">messageList</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewWillDisappear:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">animated</span>
-<span class="p">{</span>
-    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">timer</span> <span class="n">invalidate</span><span class="p">];</span>
-    <span class="n">zmq_close</span><span class="p">(</span><span class="n">subsock</span><span class="p">);</span>
-    <span class="n">zmq_close</span><span class="p">(</span><span class="n">reqsock</span><span class="p">);</span>
-    <span class="n">zmq_term</span><span class="p">(</span><span class="n">ctx1</span><span class="p">);</span>
-    <span class="n">zmq_term</span><span class="p">(</span><span class="n">ctx2</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">observeSocket</span>
-<span class="p">{</span>
-    <span class="n">zmq_msg_t</span> <span class="n">msg</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_msg_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-
-    <span class="k">do</span> <span class="p">{</span>
-        <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_recv</span><span class="p">(</span><span class="n">subsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="n">ZMQ_NOBLOCK</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EAGAIN</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;no data available&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ENOTSUP</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ENOTSUP&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EFSM</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EFSM&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ETERM</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ETERM&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">ENOTSOCK</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;ENOTSOCK&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EINTR</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EINTR&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="n">EFAULT</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;EFAULT&quot;</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">size_t</span> <span class="n">siz</span> <span class="o">=</span> <span class="n">zmq_msg_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-            <span class="kt">void</span> <span class="o">*</span><span class="n">dat</span> <span class="o">=</span> <span class="n">zmq_msg_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-            <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSString</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithData:</span><span class="p">[</span><span class="n">NSData</span> <span class="nl">dataWithBytes:</span><span class="n">dat</span> <span class="nl">length:</span><span class="n">siz</span><span class="p">]</span> <span class="nl">encoding:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
-            <span class="p">[</span><span class="n">messageList</span> <span class="nl">insertObject:</span><span class="n">str</span> <span class="nl">atIndex:</span><span class="mi">0</span><span class="p">];</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;unknown&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="n">zmq_msg_close</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span> <span class="nf">saySomething:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
-<span class="p">{</span>
-    <span class="n">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle:</span><span class="s">@&quot;text input&quot;</span>
-                                <span class="nl">message:</span><span class="s">@&quot;&quot;</span>
-                               <span class="nl">delegate:</span><span class="n">self</span>
-                      <span class="nl">cancelButtonTitle:</span><span class="s">@&quot;cancel&quot;</span>
-                      <span class="nl">otherButtonTitles:</span><span class="s">@&quot;ok&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-    <span class="n">alert</span><span class="p">.</span><span class="n">alertViewStyle</span> <span class="o">=</span> <span class="n">UIAlertViewStylePlainTextInput</span><span class="p">;</span>
-    <span class="p">[</span><span class="n">alert</span> <span class="n">show</span><span class="p">];</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alertView:</span><span class="p">(</span><span class="n">UIAlertView</span><span class="o">*</span><span class="p">)</span><span class="nv">alertView</span> <span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span>
-<span class="p">{</span>
-    <span class="n">zmq_msg_t</span> <span class="n">msg</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">rc</span><span class="p">;</span>
-    <span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-    <span class="n">NSString</span> <span class="o">*</span><span class="n">str</span><span class="p">;</span>
-
-    <span class="k">switch</span> <span class="p">(</span><span class="n">buttonIndex</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
-            <span class="n">str</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nl">stringWithFormat:</span><span class="s">@&quot;%@: %@&quot;</span><span class="p">,</span> <span class="n">nickname</span><span class="p">,</span> <span class="p">[</span><span class="n">alertView</span> <span class="nl">textFieldAtIndex:</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span><span class="p">];</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">str</span> <span class="nl">dataUsingEncoding:</span><span class="n">NSUTF8StringEncoding</span><span class="p">];</span>
-            <span class="n">rc</span> <span class="o">=</span> <span class="n">zmq_msg_init_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="p">[</span><span class="n">data</span> <span class="n">length</span><span class="p">]);</span>
-            <span class="n">assert</span><span class="p">(</span><span class="n">rc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-            <span class="n">memcpy</span><span class="p">(</span><span class="n">zmq_msg_data</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">),</span> <span class="p">[</span><span class="n">data</span> <span class="n">bytes</span><span class="p">],</span> <span class="p">[</span><span class="n">data</span> <span class="n">length</span><span class="p">]);</span>
-
-            <span class="n">zmq_send</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-            <span class="n">zmq_recv</span><span class="p">(</span><span class="n">reqsock</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-            <span class="n">zmq_msg_close</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="k">default</span><span class="o">:</span>
-            <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-<p>以下補足</p>
-<ul>
-<li>簡単のためタイマーで1秒ごとにソケットにメッセージがあるかどうかobserveSocketでチェックしているが、別スレッドにしたほうがスマート</li>
-<li><a href="http://api.zeromq.org/2-2:zmq-recv">zmq_recvのマニュアル</a>によると、zmq_recvをZMQ_NOBLOCKで呼んだときにメッセージがなかった場合はEAGAINが返るとなっているが、-1がかえってきていた。</li>
-<li>上記ソースはUITableViewControllerで発言を表示する想定になっているが、UIまわりのコードは省略</li>
-</ul>
-<h2 id="common-lisp">オマケ(Common Lisp版コマンドライン用チャットクライアント)</h2>
-<div class="pygments_borland"><pre>(load &quot;~/.sbclrc&quot;)
-(ql:quickload :zeromq)
-(ql:quickload :bordeaux-threads)
-
-(defun sub ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:sub)
-      (zmq:setsockopt socket zmq:subscribe &quot;&quot;)
-      (zmq:connect socket &quot;tcp://127.0.0.1:5556&quot;)
-      (loop
-         (let ((query (make-instance &#39;zmq:msg)))
-           (zmq:recv socket query)
-           (format t &quot;received message: ~a~%&quot; (zmq:msg-data-as-string query)))))))
-
-(defun client ()
-  (zmq:with-context (ctx 1)
-    (zmq:with-socket (socket ctx zmq:req)
-      (zmq:connect socket &quot;tcp://127.0.0.1:5555&quot;)
-      (loop
-         (zmq:send socket (make-instance &#39;zmq:msg
-                                         :data (read-line)))
-         (let ((result (make-instance &#39;zmq:msg)))
-           (zmq:recv socket result))))))
-
-(bordeaux-threads:make-thread #&#39;sub)
-(client)
-</pre></div>
-
-<h1 id="_3">まとめ</h1>
-<ul>
-<li>iPhoneでZeroMQを動かしてみた</li>
-<li>ZeroMQのREQ/REPとPUB/SUBを使用してチャットをつくってみた</li>
-<li>appleの審査を通過するかどうかは知らない(一応実績はあるらしい)</li>
-</ul>
-<h1 id="_4">参考</h1>
-<ul>
-<li><a href="http://api.zeromq.org/2-2:_start">http://api.zeromq.org/2-2:_start</a></li>
-<li><a href="http://www.zeromq.org/area:licensing">http://www.zeromq.org/area:licensing</a></li>
-<li><a href="http://www.zeromq.org/intro:commercial-support">http://www.zeromq.org/intro:commercial-support</a></li>
-</ul>
-</div>
-
-  </div>
-</div>
-
-
-
-<div id="prev_next_link">
-  <a href="http://mojavy.com/blog/2012/10/17/common-lisp-zeromq/"> previous post </a>
-    |
-  <a href="http://mojavy.com/blog/2012/10/18/twitter-api-error/"> next post </a>
-</div>
-<hr class="intersocial">
-
-<div class="socialbuttons">
-  <ul style="list-style:none;">
-    
-    <li>
-      <div class="fb-like" data-href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-    </li>
-
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2012/10/18/objective-c-zeromq/" class="hatena-bookmark-button" data-hatena-bookmark-title="iOSでZeroMQを試す" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    
-    <li>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/" data-text="iOSでZeroMQを試す">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </li>
-
-    <li>
-      <a data-save-url="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
-    </li>
-
-    <li>
-      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2012/10/18/objective-c-zeromq/"></div>
-    </li>
-
-  </ul>
-</div>
-
-
-  <div class="interblog-sep"><hr class="interblog" /></div>
 <div style="text-align: right;">
  <a href="../12">« Previous</a>
   <span style="margin: 0px 3px 0px 3px">...</span>  
@@ -779,6 +716,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2015/08/30/95_5_mbps/" title="95/5 Mbps とは"><p>95/5 Mbps とは</a><span style="font-size: 80%;">(August 30, 2015 at 04:22 PM)</span></li>
       <li><a href="/blog/2015/04/21/embedded-languages-benchmarks/" title="組み込み用プログラミング言語のパフォーマンス比較"><p>組み込み用プログラミング言語のパフォーマンス比較</a><span style="font-size: 80%;">(April 21, 2015 at 01:10 AM)</span></li>
       <li><a href="/blog/2015/04/05/books/" title="最近読んだ本"><p>最近読んだ本</a><span style="font-size: 80%;">(April 05, 2015 at 01:23 PM)</span></li>
       <li><a href="/blog/2015/03/02/phabricator-workflow/" title="Phabricatorを使ったワークフローについて"><p>Phabricatorを使ったワークフローについて</a><span style="font-size: 80%;">(March 02, 2015 at 08:55 PM)</span></li>
@@ -786,7 +724,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
-      <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
     </ul>
   </div>
 
@@ -852,6 +789,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/history">history</a> (<a href="/blog/category/history/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/internet">internet</a> (<a href="/blog/category/internet/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
@@ -886,7 +824,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/tools">tools</a> (<a href="/blog/category/tools/feed">rss</a>) (1)</li>
@@ -904,6 +842,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2015/08/1" title="August 2015">August 2015</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2015/04/1" title="April 2015">April 2015</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2015/03/1" title="March 2015">March 2015</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>

@@ -102,6 +102,111 @@ href="/blog/feed/atom" />
 <div id="blogleft">
   
 <div class="blog_post">
+  <a name="おやつの時間をお知らせしてくれるunixコマンド：at-teatime-(他...)"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" rel="bookmark" title="Permanent Link to おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)</a></h2>
+  <small>January 08, 2013 at 08:30 PM | categories:
+
+<a href='/blog/category/unix'>unix</a>, <a href='/blog/category/tips'>tips</a>, <a href='/blog/category/linux'>linux</a>
+ | <a href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p><img alt="banana" src="/images/banana-200.png" /></p>
+<p><a href="http://clippy.in/b/YJLM9W">Favorite Linux Commands(http://clippy.in/b/YJLM9W)</a> で紹介されてたコマンドのうち知らなかったものをメモ。</p>
+<h2 id="at">at</h2>
+<p>入力されたコマンドを指定されたタイミングで実行するようにスケジュールする。
+cronに登録するほどでもない単発のコマンドを実行したいときとかにつかう。
+時間の指定には現在の時刻からの経過時間や絶対時間の他にteatimeやmidnightといった文字列もつかえる。
+ちなみにteatimeは午後4時。
+出力先を指定しなければコマンドの出力はcronと同じようにメールにとぶ。$TTYにリダイレクトしてやればコマンドを実行した端末に表示させることもできる。</p>
+<p>例</p>
+<div class="pygments_borland"><pre>echo &quot;echo おやつの時間です &gt; $TTY&quot;| at teatime
+echo &quot;echo はろー &gt; $TTY&quot; | at now + 3 minute
+</pre></div>
+
+<h2 id="mtr">mtr</h2>
+<p>tracerouteとpingをあわせたようなもの。tracerouteより表示がみやすい。
+ネットワークのどこで時間がかかってるのか一目でわかる。</p>
+<p>例</p>
+<div class="pygments_borland"><pre>mtr mojavy.com
+</pre></div>
+
+<h2 id="column">column</h2>
+<p>入力テキストをいい感じのカラム表示にフォーマットしてくれる。
+縦に長い出力するコマンドとか、そのままだと出力がみづらいときとかにつかう。</p>
+<p>例</p>
+<div class="pygments_borland"><pre>gem list | column
+mount | column -t
+grep -v &#39;^#&#39; /etc/apt/sources.list | column -t
+</pre></div>
+
+<h2 id="reset">reset</h2>
+<p>端末をリセットする。
+うっかりバイナリファイルをcatとかしてしまって端末が壊れてしまった場合に端末を閉じずに復帰できる。</p>
+<h2 id="sshfs">sshfs</h2>
+<p>ssh経由でリモートのファイルシステムをマウントできる。</p>
+<p>例</p>
+<div class="pygments_borland"><pre>sshfs name@server:/path/to/dir /path/to/mount/point
+fusermount -u /path/to/mount/point  # unmount
+</pre></div>
+
+<h2 id="_1">その他</h2>
+<p>以下はコマンド自体の機能ではないけど覚えておくと便利かもしれないもの</p>
+<h3 id="curl-ifconfigme">curl ifconfig.me</h3>
+<p>ifconfig.meというサイトがある。自分のグローバルIPがわかる。</p>
+<h3 id="dig-short-txt-wzxhzdk5wpdgcx">dig +short txt <keyword>.wp.dg.cx</h3>
+<p>dnsクエリでwikipediaのエントリーがみれる。</p>
+<p>例</p>
+<div class="pygments_borland"><pre><span class="nv">$ </span>dig +short txt banana.wp.dg.cx
+<span class="s2">&quot;Banana is the common name for herbaceous plants of the genus Musa and for the fruit they produce. It is one of the oldest cultivated plants. They are native to tropical South and Southeast Asia, and are likely to have been first domesticated in Papua New &quot;</span> <span class="s2">&quot;Guinea. Today, they are cultivated throughout the tropics. They are grown in at least 107 countries, primarily for their... http://en.wikipedia.org/wiki/Banana&quot;</span>
+</pre></div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2013/01/08/2012-summary/"> previous post </a>
+    |
+  <a href="http://mojavy.com/blog/2013/01/09/yaml-mode-ext/"> next post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2013/01/08/favorite-linux-command/" class="hatena-bookmark-button" data-hatena-bookmark-title="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" data-text="おやつの時間をお知らせしてくれるUnixコマンド：at teatime (他...)">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2013/01/08/favorite-linux-command/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2013/01/08/favorite-linux-command/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+  <div class="interblog-sep"><hr class="interblog" /></div>
+  
+<div class="blog_post">
   <a name="ウェブエンジニアのためのオンラインツールまとめ"></a>
   <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2012/11/20/web-engineers-online-toolbox/" rel="bookmark" title="Permanent Link to ウェブエンジニアのためのオンラインツールまとめ">ウェブエンジニアのためのオンラインツールまとめ</a></h2>
   <small>November 20, 2012 at 02:30 AM | categories:
@@ -632,6 +737,7 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
   <div id="recent_posts">			
     <h1>Recent posts</h1>
     <ul>
+      <li><a href="/blog/2015/08/30/95_5_mbps/" title="95/5 Mbps とは"><p>95/5 Mbps とは</a><span style="font-size: 80%;">(August 30, 2015 at 04:22 PM)</span></li>
       <li><a href="/blog/2015/04/21/embedded-languages-benchmarks/" title="組み込み用プログラミング言語のパフォーマンス比較"><p>組み込み用プログラミング言語のパフォーマンス比較</a><span style="font-size: 80%;">(April 21, 2015 at 01:10 AM)</span></li>
       <li><a href="/blog/2015/04/05/books/" title="最近読んだ本"><p>最近読んだ本</a><span style="font-size: 80%;">(April 05, 2015 at 01:23 PM)</span></li>
       <li><a href="/blog/2015/03/02/phabricator-workflow/" title="Phabricatorを使ったワークフローについて"><p>Phabricatorを使ったワークフローについて</a><span style="font-size: 80%;">(March 02, 2015 at 08:55 PM)</span></li>
@@ -639,7 +745,6 @@ $(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
       <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
       <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
       <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
-      <li><a href="/blog/2014/07/09/cpp-dreaded-diamond/" title="C++のdreaded diamondについて"><p>C++のdreaded diamondについて</a><span style="font-size: 80%;">(July 09, 2014 at 09:56 PM)</span></li>
     </ul>
   </div>
 
@@ -705,6 +810,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (2)</li>
      <li><a href="/blog/category/history">history</a> (<a href="/blog/category/history/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/internet">internet</a> (<a href="/blog/category/internet/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
@@ -739,7 +845,7 @@ Hatena.BookmarkWidget.load();
      <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
-     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (9)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (10)</li>
      <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
      <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
      <li><a href="/blog/category/tools">tools</a> (<a href="/blog/category/tools/feed">rss</a>) (1)</li>
@@ -757,6 +863,7 @@ Hatena.BookmarkWidget.load();
   <div id="archives">			
     <h1>Archives</h1>
     <ul>
+      <li><a href="/blog/archive/2015/08/1" title="August 2015">August 2015</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2015/04/1" title="April 2015">April 2015</a>&nbsp;(2)</li>
       <li><a href="/blog/archive/2015/03/1" title="March 2015">March 2015</a>&nbsp;(1)</li>
       <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>

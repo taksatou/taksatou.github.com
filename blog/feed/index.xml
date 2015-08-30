@@ -10,10 +10,29 @@
     <title>mojavy.com</title>
     <link>http://mojavy.com/blog</link>
     <description></description>
-    <pubDate>Tue, 21 Apr 2015 01:10:40 GMT</pubDate>
+    <pubDate>Sun, 30 Aug 2015 16:22:20 GMT</pubDate>
     <generator>Blogofile</generator>
     <sy:updatePeriod>hourly</sy:updatePeriod>
     <sy:updateFrequency>1</sy:updateFrequency>
+    <item>
+      <title>95/5 Mbps とは</title>
+      <link>http://mojavy.com/blog/2015/08/30/95_5_mbps/</link>
+      <pubDate>Sun, 30 Aug 2015 16:22:20 JST</pubDate>
+      <category><![CDATA[tips]]></category>
+      <category><![CDATA[internet]]></category>
+      <guid isPermaLink="true">http://mojavy.com/blog/2015/08/30/95_5_mbps/</guid>
+      <description>95/5 Mbps とは</description>
+      <content:encoded><![CDATA[<p>Akamaiの<a href="https://developer.akamai.com/api/luna/billing-usage/overview.html">Billing Center API</a> では、95/5 Mbpsという単位のデータが取得できる。</p>
+<p>95/5 Mbps というのは、特定の期間の平均Mbpsを5分間隔でサンプルしたものをソートした時の95パーセンタイルの値ということらしい。</p>
+<p>なぜこのような数字が使われるのかというと、単純にピークのトラフィックを基準にして課金されると利用者側にとってつらいという問題があるからだ。
+インターネットのトラフィックは往々にしてスパイクが発生するので、それだと普段はほとんど帯域を使わないのに一瞬のアクセス急増があっただけでコストが大きく増大してしまう。</p>
+<p>そこで、あるISPが95/5 Mbpsで課金するようにしたところ市場で支持を得たため、これが一般的な課金形式として広まったらしい。</p>
+<h3 id="_1">参考</h3>
+<ul>
+<li><a href="http://drpeering.net/AskDrPeering/blog/articles/Ask_DrPeering/Entries/2011/4/29_The_Origins_of_95_5.html">http://drpeering.net/AskDrPeering/blog/articles...</a> </li>
+<li><a href="https://en.wikipedia.org/wiki/Burstable_billing">https://en.wikipedia.org/wiki/Burstable_billing</a> </li>
+</ul>]]></content:encoded>
+    </item>
     <item>
       <title>組み込み用プログラミング言語のパフォーマンス比較</title>
       <link>http://mojavy.com/blog/2015/04/21/embedded-languages-benchmarks/</link>
@@ -356,90 +375,6 @@ Bonferroni法やHolm法といった従来の多重比較における補正方法
 <li><a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html">http://pubs.opengroup.org/onlinepubs/009695399/functions/xsh_chap02_09.html</a> </li>
 <li><a href="http://linuxjm.sourceforge.jp/html/LDP_man-pages/man3/pthread_cancel.3.html">pthread_cancel(3)</a> </li>
 </ul>]]></content:encoded>
-    </item>
-    <item>
-      <title>gitlab 6.6.4 CE のゆるふわセットアップ</title>
-      <link>http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/</link>
-      <pubDate>Tue, 11 Mar 2014 02:08:20 JST</pubDate>
-      <category><![CDATA[chef]]></category>
-      <category><![CDATA[git]]></category>
-      <category><![CDATA[tips]]></category>
-      <category><![CDATA[gitlab]]></category>
-      <guid isPermaLink="true">http://mojavy.com/blog/2014/03/11/latest-gitlab-setup/</guid>
-      <description>gitlab 6.6.4 CE のゆるふわセットアップ</description>
-      <content:encoded><![CDATA[<p>gitlabもCentOSとUbuntuにはパッケージが提供されるようになったので、大分インストールが簡単になりました。</p>
-<p>とはいえ、このパッケージはgitlab専用のマシンにインストールすることを前提にしているのか、小規模プロジェクトのために軽く使いたいよう場合ではつらいデフォルト設定となっています。安いvpsとかだと確実にメモリ不足でまともに動きません。</p>
-<p>以下はとりあえずプライベートgitリポジトリが欲しいだけのような人のためのgitlabの設定の紹介です。</p>
-<h2 id="_1">準備</h2>
-<p><a href="https://www.gitlab.com/downloads/">https://www.gitlab.com/downloads/</a> </p>
-<p>ここからgitlabのパッケージをダウンロードします。
-<a href="https://github.com/opscode/omnibus-ruby">omnibus-ruby</a> でつくられた全部入りパッケージなのでインストールでのコンフリクトは発生しないはずですが、既に稼動中のサービス(apache等)のことはあまり考慮されてないので使用するポートについては個別対応が必要です。</p>
-<p>特に以下は注意が必要です。</p>
-<ul>
-<li>nginx</li>
-<li>redis</li>
-<li>postgresql</li>
-</ul>
-<p>ここでは、apacheが稼動しているubuntuにインストールします。</p>
-<h2 id="_2">インストール</h2>
-<p>普通にインストールします。</p>
-<div class="pygments_borland"><pre>$ sudo dpkg -i gitlab_6.6.4-omnibus-1.ubuntu.12.04_amd64.deb 
-$ sudo gitlab-ctl reconfigure
-</pre></div>
-
-<p>ちなみにgitユーザが既に存在しているとこけるので消しておきます</p>
-<p><code>$ sudo userdel -r git</code></p>
-<h2 id="gitlab">gitlabの設定</h2>
-<p>gitlabの設定は /etc/gitlab/gitlab.rb に設定をかいて、chefで設定します。</p>
-<div class="pygments_borland"><pre>$ cat /etc/gitlab/gitlab.rb
-external_url &quot;http://gitlab.example.com:8081&quot;
-unicorn[&quot;worker_processes&quot;] = 1
-postgresql[&quot;shared_buffers&quot;] = &quot;128MB&quot;
-postgresql[&quot;effective_cache_size&quot;] = &quot;32MB&quot;
-</pre></div>
-
-<p>とりあえずpostgresqlがメモリを大量に食うので適当に減らします。</p>
-<p>unicornもメモリ食いがちなので1プロセスにします。</p>
-<p><code>external_url</code>にポートも含めたURLをかきます。apacheが80番で起動してるとnginxが起動できないので適当にはずします。ちなみに8080はデフォルトだとgitlabのunicornがつかっています。</p>
-<p>このあたりは環境に応じて適当に設定してください。</p>
-<p><code>gitlab-ctl reconfigure</code> すると設定が反映されます。</p>
-<p>その他の設定できる項目は <code>/opt/gitlab/embedded/cookbooks/gitlab</code> 以下の<code>cookbook</code>をみるといいです。</p>
-<h2 id="web">webサーバの設定</h2>
-<p>80番で起動しているapacheがいる場合はnginxにproxyします。</p>
-<div class="pygments_borland"><pre>&lt;VirtualHost *:80&gt;
-  ServerName gitlab.example.com
-
-  DocumentRoot /opt/gitlab/embedded/service/gitlab-rails/public
-
-  CustomLog  /var/log/apache2/gitlab_access.log combined
-  ErrorLog   /var/log/apache2/gitlab_error.log
-
-  ErrorDocument 502 /502.html
-
-  &lt;Directory &quot;/opt/gitlab/embedded/service/gitlab-rails/public&quot;&gt;
-    Options FollowSymLinks
-  &lt;/Directory&gt;
-
-  &lt;Proxy *&gt;
-    AddDefaultCharset off
-    Order deny,allow
-    Allow from all
-  &lt;/Proxy&gt;
-
-  ProxyVia On
-  ProxyPreserveHost On
-
-  ProxyRequests Off
-  ProxyPass /assets/ !
-  ProxyPass /uploads/      !
-
-  ProxyPass / http://localhost:8081/ retry=1
-  ProxyPassReverse / http://localhost:8081/
-
-&lt;/VirtualHost&gt;
-</pre></div>
-
-<p>以上ができたらapache再起動して、 http://gitlab.example.com にアクセスしてみてうまく表示できれば完了です。</p>]]></content:encoded>
     </item>
   </channel>
 </rss>

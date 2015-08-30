@@ -1,0 +1,409 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+  <title>
+95/5 Mbps とは
+</title>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/blog/feed" />
+<link rel="alternate" type="application/atom+xml" title="Atom 1.0"
+href="/blog/feed/atom" />
+<link rel='stylesheet' href='/css/pygments_borland.css' type='text/css' />
+
+
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold' rel='stylesheet' type='text/css'>
+<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script><![endif]-->
+
+<link rel='stylesheet' href="/styles/styles.css" type='text/css' />
+<link rel='stylesheet' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/pepper-grinder/jquery-ui.css' type='text/css' />
+<script src="https://www.google.com/jsapi?key=ABQIAAAAcOj4HIzbhVG_glmoxqtIlhSZ8YWc9pfyrPx-qTk3ymJ7vBNWbhSCYgWPuVGOqTugaARvpRrNszeUJQ" type="text/javascript"></script>
+<script language="Javascript" type="text/javascript">
+  google.load("search", "1");
+  google.load("jquery", "1.6.4");
+  google.load("jqueryui", "1.8.16");
+
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26834066-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- coderwall -->
+<link href="http://coderwall.com/stylesheets/jquery.coderwall.css" media="all" rel="stylesheet" type="text/css">
+<script src="http://coderwall.com/javascripts/jquery.coderwall.js"></script>
+
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <rdf:Description rdf:about="http://mojavy.com/">
+    <foaf:maker rdf:parseType="Resource">
+      <foaf:holdsAccount>
+        <foaf:OnlineAccount foaf:accountName="armyofpigs">
+          <foaf:accountServiceHomepage rdf:resource="http://www.hatena.ne.jp/" />
+        </foaf:OnlineAccount>
+      </foaf:holdsAccount>
+    </foaf:maker>
+  </rdf:Description>
+</rdf:RDF>
+
+
+  </head>
+  <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=169540733170142";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <div id="content">
+      
+  <div id="headerwrap">
+  <header id="mainheader" class="bodywidth">
+    <hgroup id="websitetitle">
+      <h1><span class="bold"><a href="/">mojavy.com</a></h1>
+      <h2></h2>
+    </hgroup>
+    <nav>
+      <ul>
+        <li><a href="/" title="Home">Home</a></li>
+        <li><a href="/blog" title="Blog">Blog</a></li>
+        <li><a href="/apps.html" title="Apps">Apps</a></li>
+        <li><a href="http://twitter.com/#!/taksatou" title="Twitter">Twitter</a></li>
+        <li><a href="https://github.com/taksatou" title="github">github</a></li>
+        <li><a href="/about.html" title="About">About</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+
+      <div id="main_block">
+        <div id="prose_block">
+          
+<div id="maincontent2" class="bodywidth">
+<div id="blogleft">
+
+<div class="blog_post">
+  <a name="95/5-mbps-とは"></a>
+  <h2 class="blog_post_title"><a href="http://mojavy.com/blog/2015/08/30/95_5_mbps/" rel="bookmark" title="Permanent Link to 95/5 Mbps とは">95/5 Mbps とは</a></h2>
+  <small>August 30, 2015 at 04:22 PM | categories:
+
+<a href='/blog/category/tips'>tips</a>, <a href='/blog/category/internet'>internet</a>
+ | <a href="http://mojavy.com/blog/2015/08/30/95_5_mbps/#disqus_thread"></a>
+</small>
+<p/>
+  <div class="post_prose">
+    
+<div class="blogbody">
+  <p>Akamaiの<a href="https://developer.akamai.com/api/luna/billing-usage/overview.html">Billing Center API</a> では、95/5 Mbpsという単位のデータが取得できる。</p>
+<p>95/5 Mbps というのは、特定の期間の平均Mbpsを5分間隔でサンプルしたものをソートした時の95パーセンタイルの値ということらしい。</p>
+<p>なぜこのような数字が使われるのかというと、単純にピークのトラフィックを基準にして課金されると利用者側にとってつらいという問題があるからだ。
+インターネットのトラフィックは往々にしてスパイクが発生するので、それだと普段はほとんど帯域を使わないのに一瞬のアクセス急増があっただけでコストが大きく増大してしまう。</p>
+<p>そこで、あるISPが95/5 Mbpsで課金するようにしたところ市場で支持を得たため、これが一般的な課金形式として広まったらしい。</p>
+<h3 id="_1">参考</h3>
+<ul>
+<li><a href="http://drpeering.net/AskDrPeering/blog/articles/Ask_DrPeering/Entries/2011/4/29_The_Origins_of_95_5.html">http://drpeering.net/AskDrPeering/blog/articles...</a> </li>
+<li><a href="https://en.wikipedia.org/wiki/Burstable_billing">https://en.wikipedia.org/wiki/Burstable_billing</a> </li>
+</ul>
+</div>
+
+  </div>
+</div>
+
+
+
+<div id="prev_next_link">
+  <a href="http://mojavy.com/blog/2015/04/21/embedded-languages-benchmarks/"> previous post </a>
+</div>
+<hr class="intersocial">
+
+<div class="socialbuttons">
+  <ul style="list-style:none;">
+    
+    <li>
+      <div class="fb-like" data-href="http://mojavy.com/blog/2015/08/30/95_5_mbps/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </li>
+
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://mojavy.com/blog/2015/08/30/95_5_mbps/" class="hatena-bookmark-button" data-hatena-bookmark-title="95/5 Mbps とは" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    
+    <li>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://mojavy.com/blog/2015/08/30/95_5_mbps/" data-text="95/5 Mbps とは">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li>
+      <a data-save-url="http://mojavy.com/blog/2015/08/30/95_5_mbps/" data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
+      <script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+    </li>
+
+    <li>
+      <div class="g-plusone" data-size="medium" data-href="http://mojavy.com/blog/2015/08/30/95_5_mbps/"></div>
+    </li>
+
+  </ul>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  var disqus_url = "http://mojavy.com/blog/2015/08/30/95_5_mbps/";
+</script>
+<script type="text/javascript" src="http://disqus.com/forums/mojavy/embed.js"></script>
+<noscript><a href="http://mojavy.disqus.com/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+<section id="blogright">
+  <div id="aboutme">
+    <h1>About Me</h1>
+    <table>
+      <td>
+        <img src="http://www.gravatar.com/avatar/69238498491bce19f67cf79d528f08ee.png?s=150" alt="pic" />
+      </td><td>
+        <script>
+$(document).ready(function(){$("#aboutme li.msg").html("雑食です");});
+        </script>
+        <h6>mojavy</h6>
+        <ul>
+          <li class="msg"></li>
+        </ul>
+      </td>
+    </table>
+  </div>
+
+<hr />
+  <div id="recent_posts">			
+    <h1>Recent posts</h1>
+    <ul>
+      <li><a href="/blog/2015/08/30/95_5_mbps/" title="95/5 Mbps とは"><p>95/5 Mbps とは</a><span style="font-size: 80%;">(August 30, 2015 at 04:22 PM)</span></li>
+      <li><a href="/blog/2015/04/21/embedded-languages-benchmarks/" title="組み込み用プログラミング言語のパフォーマンス比較"><p>組み込み用プログラミング言語のパフォーマンス比較</a><span style="font-size: 80%;">(April 21, 2015 at 01:10 AM)</span></li>
+      <li><a href="/blog/2015/04/05/books/" title="最近読んだ本"><p>最近読んだ本</a><span style="font-size: 80%;">(April 05, 2015 at 01:23 PM)</span></li>
+      <li><a href="/blog/2015/03/02/phabricator-workflow/" title="Phabricatorを使ったワークフローについて"><p>Phabricatorを使ったワークフローについて</a><span style="font-size: 80%;">(March 02, 2015 at 08:55 PM)</span></li>
+      <li><a href="/blog/2014/12/23/dnsimple-dynamic-dns/" title="dnsimpleでダイナミックDNSをつかう"><p>dnsimpleでダイナミックDNSをつかう</a><span style="font-size: 80%;">(December 23, 2014 at 08:02 PM)</span></li>
+      <li><a href="/blog/2014/10/06/www2014-adtech-research-trach/" title="www2014のアドテク関連のResearch Trackメモ"><p>www2014のアドテク関連のResearch Trackメモ</a><span style="font-size: 80%;">(October 06, 2014 at 09:05 PM)</span></li>
+      <li><a href="/blog/2014/07/16/flappymacs-melpa/" title="flappymacs がMELPAに登録されました"><p>flappymacs がMELPAに登録されました</a><span style="font-size: 80%;">(July 16, 2014 at 01:07 AM)</span></li>
+      <li><a href="/blog/2014/07/10/flappy-bird-for-emacs-flappymacs/" title="EmacsでFlappy Birdっぽいもの書きました"><p>EmacsでFlappy Birdっぽいもの書きました</a><span style="font-size: 80%;">(July 10, 2014 at 08:01 PM)</span></li>
+    </ul>
+  </div>
+
+<hr />
+  <div id="hatena_popular">
+    <h1>Recent Popular posts</h1>
+<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript">
+Hatena.BookmarkWidget.url   = "http://mojavy.com/";
+Hatena.BookmarkWidget.title = "";
+Hatena.BookmarkWidget.sort  = "";
+Hatena.BookmarkWidget.width = 0;
+Hatena.BookmarkWidget.num   = 5;
+Hatena.BookmarkWidget.theme = "hatenadiary";
+Hatena.BookmarkWidget.load();
+</script>
+  </div><br>
+
+<hr />
+<div id="hatena_popular">
+  <h1>Popular posts</h1>
+  <script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+  <script language="javascript" type="text/javascript">
+    Hatena.BookmarkWidget.url   = "http://mojavy.com/";
+    Hatena.BookmarkWidget.title = "";
+    Hatena.BookmarkWidget.sort  = "count";
+    Hatena.BookmarkWidget.width = 0;
+    Hatena.BookmarkWidget.num   = 5;
+    Hatena.BookmarkWidget.theme = "hatenadiary";
+    Hatena.BookmarkWidget.load();
+  </script>
+</div><br>
+
+<hr />
+  <div id="categories">
+    <h1>Categories</h1>
+    <ul>
+     <li><a href="/blog/category/c">C</a> (<a href="/blog/category/c/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/r">R</a> (<a href="/blog/category/r/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/adtech">adtech</a> (<a href="/blog/category/adtech/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/advent-calendar">advent calendar</a> (<a href="/blog/category/advent-calendar/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/algorithms">algorithms</a> (<a href="/blog/category/algorithms/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/android">android</a> (<a href="/blog/category/android/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/aws">aws</a> (<a href="/blog/category/aws/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/blog">blog</a> (<a href="/blog/category/blog/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/blogofile">blogofile</a> (<a href="/blog/category/blogofile/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/books">books</a> (<a href="/blog/category/books/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/c++">c++</a> (<a href="/blog/category/c++/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/chef">chef</a> (<a href="/blog/category/chef/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/common-lisp">common lisp</a> (<a href="/blog/category/common-lisp/feed">rss</a>) (10)</li>
+     <li><a href="/blog/category/debian">debian</a> (<a href="/blog/category/debian/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/dns">dns</a> (<a href="/blog/category/dns/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/elasticsearch">elasticsearch</a> (<a href="/blog/category/elasticsearch/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/elf">elf</a> (<a href="/blog/category/elf/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/elisp">elisp</a> (<a href="/blog/category/elisp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/emacs">emacs</a> (<a href="/blog/category/emacs/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/english">english</a> (<a href="/blog/category/english/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/game">game</a> (<a href="/blog/category/game/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/gearman">gearman</a> (<a href="/blog/category/gearman/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/git">git</a> (<a href="/blog/category/git/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/github">github</a> (<a href="/blog/category/github/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/gitlab">gitlab</a> (<a href="/blog/category/gitlab/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/golang">golang</a> (<a href="/blog/category/golang/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/history">history</a> (<a href="/blog/category/history/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/impress.js">impress.js</a> (<a href="/blog/category/impress.js/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/internet">internet</a> (<a href="/blog/category/internet/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ios">ios</a> (<a href="/blog/category/ios/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/jekyll">jekyll</a> (<a href="/blog/category/jekyll/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/jenkins">jenkins</a> (<a href="/blog/category/jenkins/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/linux">linux</a> (<a href="/blog/category/linux/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/lisp">lisp</a> (<a href="/blog/category/lisp/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/ltsv">ltsv</a> (<a href="/blog/category/ltsv/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/lua">lua</a> (<a href="/blog/category/lua/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/mac">mac</a> (<a href="/blog/category/mac/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/mach-o">mach-o</a> (<a href="/blog/category/mach-o/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/memo">memo</a> (<a href="/blog/category/memo/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/mustache">mustache</a> (<a href="/blog/category/mustache/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/note">note</a> (<a href="/blog/category/note/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/objective-c">objective-c</a> (<a href="/blog/category/objective-c/feed">rss</a>) (4)</li>
+     <li><a href="/blog/category/os">os</a> (<a href="/blog/category/os/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/osx">osx</a> (<a href="/blog/category/osx/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/others">others</a> (<a href="/blog/category/others/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/paco">paco</a> (<a href="/blog/category/paco/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/pdf">pdf</a> (<a href="/blog/category/pdf/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/php">php</a> (<a href="/blog/category/php/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/postfix">postfix</a> (<a href="/blog/category/postfix/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/programming">programming</a> (<a href="/blog/category/programming/feed">rss</a>) (12)</li>
+     <li><a href="/blog/category/project-management">project management</a> (<a href="/blog/category/project-management/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/python">python</a> (<a href="/blog/category/python/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/quicklinks">quicklinks</a> (<a href="/blog/category/quicklinks/feed">rss</a>) (6)</li>
+     <li><a href="/blog/category/raspberry-pi">raspberry pi</a> (<a href="/blog/category/raspberry-pi/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/redmine">redmine</a> (<a href="/blog/category/redmine/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/reveal.js">reveal.js</a> (<a href="/blog/category/reveal.js/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ruby">ruby</a> (<a href="/blog/category/ruby/feed">rss</a>) (10)</li>
+     <li><a href="/blog/category/sbcl">sbcl</a> (<a href="/blog/category/sbcl/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/security">security</a> (<a href="/blog/category/security/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/shell">shell</a> (<a href="/blog/category/shell/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/smtp">smtp</a> (<a href="/blog/category/smtp/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/solr">solr</a> (<a href="/blog/category/solr/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/statistics">statistics</a> (<a href="/blog/category/statistics/feed">rss</a>) (2)</li>
+     <li><a href="/blog/category/tips">tips</a> (<a href="/blog/category/tips/feed">rss</a>) (10)</li>
+     <li><a href="/blog/category/tmux">tmux</a> (<a href="/blog/category/tmux/feed">rss</a>) (3)</li>
+     <li><a href="/blog/category/toml">toml</a> (<a href="/blog/category/toml/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/tools">tools</a> (<a href="/blog/category/tools/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/twitter">twitter</a> (<a href="/blog/category/twitter/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/ubuntu">ubuntu</a> (<a href="/blog/category/ubuntu/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/unix">unix</a> (<a href="/blog/category/unix/feed">rss</a>) (5)</li>
+     <li><a href="/blog/category/v8">v8</a> (<a href="/blog/category/v8/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/web">web</a> (<a href="/blog/category/web/feed">rss</a>) (7)</li>
+     <li><a href="/blog/category/xcode">xcode</a> (<a href="/blog/category/xcode/feed">rss</a>) (1)</li>
+     <li><a href="/blog/category/zeromq">zeromq</a> (<a href="/blog/category/zeromq/feed">rss</a>) (2)</li>
+    </ul>
+  </div> 
+
+<hr />
+  <div id="archives">			
+    <h1>Archives</h1>
+    <ul>
+      <li><a href="/blog/archive/2015/08/1" title="August 2015">August 2015</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2015/04/1" title="April 2015">April 2015</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2015/03/1" title="March 2015">March 2015</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2014/12/1" title="December 2014">December 2014</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2014/10/1" title="October 2014">October 2014</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2014/07/1" title="July 2014">July 2014</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2014/03/1" title="March 2014">March 2014</a>&nbsp;(6)</li>
+      <li><a href="/blog/archive/2014/02/1" title="February 2014">February 2014</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2013/11/1" title="November 2013">November 2013</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2013/10/1" title="October 2013">October 2013</a>&nbsp;(4)</li>
+      <li><a href="/blog/archive/2013/09/1" title="September 2013">September 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/07/1" title="July 2013">July 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/06/1" title="June 2013">June 2013</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2013/05/1" title="May 2013">May 2013</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2013/04/1" title="April 2013">April 2013</a>&nbsp;(6)</li>
+      <li><a href="/blog/archive/2013/03/1" title="March 2013">March 2013</a>&nbsp;(3)</li>
+      <li><a href="/blog/archive/2013/02/1" title="February 2013">February 2013</a>&nbsp;(8)</li>
+      <li><a href="/blog/archive/2013/01/1" title="January 2013">January 2013</a>&nbsp;(5)</li>
+      <li><a href="/blog/archive/2012/12/1" title="December 2012">December 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/11/1" title="November 2012">November 2012</a>&nbsp;(6)</li>
+      <li><a href="/blog/archive/2012/10/1" title="October 2012">October 2012</a>&nbsp;(7)</li>
+      <li><a href="/blog/archive/2012/08/1" title="August 2012">August 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/07/1" title="July 2012">July 2012</a>&nbsp;(9)</li>
+      <li><a href="/blog/archive/2012/06/1" title="June 2012">June 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2012/04/1" title="April 2012">April 2012</a>&nbsp;(1)</li>
+      <li><a href="/blog/archive/2011/12/1" title="December 2011">December 2011</a>&nbsp;(2)</li>
+      <li><a href="/blog/archive/2011/11/1" title="November 2011">November 2011</a>&nbsp;(2)</li>
+    </ul>
+  </div>
+
+<hr />
+  <div id="coderwall">
+    <h1>Badges</h1>
+    <section class="coderwall" data-coderwall-username="taksatou" data-coderwall-orientation="vertical"></section>
+  </div><br>
+
+</section>
+</div>
+
+        </div><!-- End Prose Block -->
+      </div><!-- End Main Block -->
+      <div id="footer">
+        
+  <div id="feedicon">
+  <a href="/blog/feed"><img src="/images/rss_icon.png" alt="rss" /></a>
+  </div>
+
+<div id="footerwrap">
+  <script type="text/javascript">
+    (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+
+  <footer id="mainfooter" class="bodywidth">
+    
+    <p class="copyright">Powered by <a href="http://www.blogofile.com">Blogofile</a>.<br>Copyright &copy; 2011 <a href="/" title="">mojavy</a>. </p>
+    
+
+  </footer>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+		var links = document.getElementsByTagName('a');
+		var query = '?';
+		for(var i = 0; i < links.length; i++) {
+			if(links[i].href.indexOf('#disqus_thread') >= 0) {
+				query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+			}
+		}
+		document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/mojavy/get_num_replies.js' + query + '"></' + 'script>');
+	})();
+//]]>
+</script>
+
+
+      </div> <!-- End Footer -->
+    </div> <!-- End Content -->
+
+  </body>
+</html>
+
+
+
+
